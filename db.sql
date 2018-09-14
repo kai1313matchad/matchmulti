@@ -11,7 +11,7 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Dumping structure for table mtpd2.account_journal
+-- Dumping structure for table mtpdmulti.account_journal
 DROP TABLE IF EXISTS `account_journal`;
 CREATE TABLE IF NOT EXISTS `account_journal` (
   `JOU_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -29,10 +29,13 @@ CREATE TABLE IF NOT EXISTS `account_journal` (
   KEY `FK_R53` (`BRANCH_ID`),
   CONSTRAINT `FK_R50` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`),
   CONSTRAINT `FK_R53` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.appr_cost_det
+-- Dumping data for table mtpdmulti.account_journal: ~0 rows (approximately)
+/*!40000 ALTER TABLE `account_journal` DISABLE KEYS */;
+/*!40000 ALTER TABLE `account_journal` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.appr_cost_det
 DROP TABLE IF EXISTS `appr_cost_det`;
 CREATE TABLE IF NOT EXISTS `appr_cost_det` (
   `CSTDT_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -42,10 +45,13 @@ CREATE TABLE IF NOT EXISTS `appr_cost_det` (
   PRIMARY KEY (`CSTDT_ID`),
   KEY `FK_R55` (`APPR_ID`),
   CONSTRAINT `FK_R55` FOREIGN KEY (`APPR_ID`) REFERENCES `trx_approvalbill` (`APPR_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.appr_permit_det
+-- Dumping data for table mtpdmulti.appr_cost_det: ~0 rows (approximately)
+/*!40000 ALTER TABLE `appr_cost_det` DISABLE KEYS */;
+/*!40000 ALTER TABLE `appr_cost_det` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.appr_permit_det
 DROP TABLE IF EXISTS `appr_permit_det`;
 CREATE TABLE IF NOT EXISTS `appr_permit_det` (
   `APPRPRMT_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -58,10 +64,13 @@ CREATE TABLE IF NOT EXISTS `appr_permit_det` (
   KEY `FK_R17` (`PRMTTYP_ID`),
   CONSTRAINT `FK_R16` FOREIGN KEY (`APPR_ID`) REFERENCES `trx_approvalbill` (`APPR_ID`),
   CONSTRAINT `FK_R17` FOREIGN KEY (`PRMTTYP_ID`) REFERENCES `master_permit_type` (`PRMTTYP_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.appr_terms_det
+-- Dumping data for table mtpdmulti.appr_permit_det: ~0 rows (approximately)
+/*!40000 ALTER TABLE `appr_permit_det` DISABLE KEYS */;
+/*!40000 ALTER TABLE `appr_permit_det` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.appr_terms_det
 DROP TABLE IF EXISTS `appr_terms_det`;
 CREATE TABLE IF NOT EXISTS `appr_terms_det` (
   `TERMSDET_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -81,10 +90,13 @@ CREATE TABLE IF NOT EXISTS `appr_terms_det` (
   PRIMARY KEY (`TERMSDET_ID`),
   KEY `FK_R15` (`APPR_ID`),
   CONSTRAINT `FK_R15` FOREIGN KEY (`APPR_ID`) REFERENCES `trx_approvalbill` (`APPR_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.bankin_det
+-- Dumping data for table mtpdmulti.appr_terms_det: ~0 rows (approximately)
+/*!40000 ALTER TABLE `appr_terms_det` DISABLE KEYS */;
+/*!40000 ALTER TABLE `appr_terms_det` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.bankin_det
 DROP TABLE IF EXISTS `bankin_det`;
 CREATE TABLE IF NOT EXISTS `bankin_det` (
   `BNKDET_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -101,10 +113,13 @@ CREATE TABLE IF NOT EXISTS `bankin_det` (
   KEY `FK_R102` (`COA_ID`),
   CONSTRAINT `FK_R101` FOREIGN KEY (`BNK_ID`) REFERENCES `trx_bankin` (`BNK_ID`),
   CONSTRAINT `FK_R102` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.bankin_trxdet
+-- Dumping data for table mtpdmulti.bankin_det: ~0 rows (approximately)
+/*!40000 ALTER TABLE `bankin_det` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bankin_det` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.bankin_trxdet
 DROP TABLE IF EXISTS `bankin_trxdet`;
 CREATE TABLE IF NOT EXISTS `bankin_trxdet` (
   `BNKTRX_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -117,10 +132,13 @@ CREATE TABLE IF NOT EXISTS `bankin_trxdet` (
   PRIMARY KEY (`BNKTRX_ID`),
   KEY `FK_R100` (`BNK_ID`),
   CONSTRAINT `FK_R100` FOREIGN KEY (`BNK_ID`) REFERENCES `trx_bankin` (`BNK_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.bankout_det
+-- Dumping data for table mtpdmulti.bankin_trxdet: ~0 rows (approximately)
+/*!40000 ALTER TABLE `bankin_trxdet` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bankin_trxdet` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.bankout_det
 DROP TABLE IF EXISTS `bankout_det`;
 CREATE TABLE IF NOT EXISTS `bankout_det` (
   `BNKODET_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -137,10 +155,13 @@ CREATE TABLE IF NOT EXISTS `bankout_det` (
   KEY `FK_R121` (`COA_ID`),
   CONSTRAINT `FK_R120` FOREIGN KEY (`BNKO_ID`) REFERENCES `trx_bankout` (`BNKO_ID`),
   CONSTRAINT `FK_R121` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.bankout_trxdet
+-- Dumping data for table mtpdmulti.bankout_det: ~0 rows (approximately)
+/*!40000 ALTER TABLE `bankout_det` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bankout_det` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.bankout_trxdet
 DROP TABLE IF EXISTS `bankout_trxdet`;
 CREATE TABLE IF NOT EXISTS `bankout_trxdet` (
   `BNKTRXO_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -153,10 +174,13 @@ CREATE TABLE IF NOT EXISTS `bankout_trxdet` (
   PRIMARY KEY (`BNKTRXO_ID`),
   KEY `FK_R119` (`BNKO_ID`),
   CONSTRAINT `FK_R119` FOREIGN KEY (`BNKO_ID`) REFERENCES `trx_bankout` (`BNKO_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.bapp_details
+-- Dumping data for table mtpdmulti.bankout_trxdet: ~0 rows (approximately)
+/*!40000 ALTER TABLE `bankout_trxdet` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bankout_trxdet` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.bapp_details
 DROP TABLE IF EXISTS `bapp_details`;
 CREATE TABLE IF NOT EXISTS `bapp_details` (
   `DETBAPP_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -167,10 +191,13 @@ CREATE TABLE IF NOT EXISTS `bapp_details` (
   PRIMARY KEY (`DETBAPP_ID`),
   KEY `FK_R48` (`BAPP_ID`),
   CONSTRAINT `FK_R48` FOREIGN KEY (`BAPP_ID`) REFERENCES `trx_bapp` (`BAPP_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.brcppn_details
+-- Dumping data for table mtpdmulti.bapp_details: ~0 rows (approximately)
+/*!40000 ALTER TABLE `bapp_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bapp_details` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.brcppn_details
 DROP TABLE IF EXISTS `brcppn_details`;
 CREATE TABLE IF NOT EXISTS `brcppn_details` (
   `BPPNDET_ID` int(11) NOT NULL,
@@ -186,8 +213,11 @@ CREATE TABLE IF NOT EXISTS `brcppn_details` (
   CONSTRAINT `BPPNDETFK1` FOREIGN KEY (`BPPN_ID`) REFERENCES `trx_brc_ppn` (`BPPN_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.budget_det
+-- Dumping data for table mtpdmulti.brcppn_details: ~0 rows (approximately)
+/*!40000 ALTER TABLE `brcppn_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `brcppn_details` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.budget_det
 DROP TABLE IF EXISTS `budget_det`;
 CREATE TABLE IF NOT EXISTS `budget_det` (
   `BUDDET_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -203,10 +233,13 @@ CREATE TABLE IF NOT EXISTS `budget_det` (
   KEY `FK_R107` (`COA_ID`),
   CONSTRAINT `FK_R106` FOREIGN KEY (`BUD_ID`) REFERENCES `trx_budget` (`BUD_ID`),
   CONSTRAINT `FK_R107` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.buku_bank
+-- Dumping data for table mtpdmulti.budget_det: ~0 rows (approximately)
+/*!40000 ALTER TABLE `budget_det` DISABLE KEYS */;
+/*!40000 ALTER TABLE `budget_det` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.buku_bank
 DROP TABLE IF EXISTS `buku_bank`;
 CREATE TABLE IF NOT EXISTS `buku_bank` (
   `BNKBOOK_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -220,10 +253,13 @@ CREATE TABLE IF NOT EXISTS `buku_bank` (
   `BNK_INFO` varchar(1024) NOT NULL,
   `BNK_AMOUNT` bigint(20) NOT NULL,
   PRIMARY KEY (`BNKBOOK_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.buku_giro
+-- Dumping data for table mtpdmulti.buku_bank: ~0 rows (approximately)
+/*!40000 ALTER TABLE `buku_bank` DISABLE KEYS */;
+/*!40000 ALTER TABLE `buku_bank` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.buku_giro
 DROP TABLE IF EXISTS `buku_giro`;
 CREATE TABLE IF NOT EXISTS `buku_giro` (
   `GRBOOK_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -242,10 +278,13 @@ CREATE TABLE IF NOT EXISTS `buku_giro` (
   `BLOKIR_STS` int(11) NOT NULL,
   `GR_AMOUNT` int(11) NOT NULL,
   PRIMARY KEY (`GRBOOK_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.buku_kas
+-- Dumping data for table mtpdmulti.buku_giro: ~0 rows (approximately)
+/*!40000 ALTER TABLE `buku_giro` DISABLE KEYS */;
+/*!40000 ALTER TABLE `buku_giro` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.buku_kas
 DROP TABLE IF EXISTS `buku_kas`;
 CREATE TABLE IF NOT EXISTS `buku_kas` (
   `CSHBOOK_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -259,10 +298,13 @@ CREATE TABLE IF NOT EXISTS `buku_kas` (
   `CSH_INFO` varchar(1024) NOT NULL,
   `CSH_AMOUNT` bigint(20) NOT NULL,
   PRIMARY KEY (`CSHBOOK_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.cashin_det
+-- Dumping data for table mtpdmulti.buku_kas: ~0 rows (approximately)
+/*!40000 ALTER TABLE `buku_kas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `buku_kas` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.cashin_det
 DROP TABLE IF EXISTS `cashin_det`;
 CREATE TABLE IF NOT EXISTS `cashin_det` (
   `CSHINDET_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -277,10 +319,13 @@ CREATE TABLE IF NOT EXISTS `cashin_det` (
   KEY `FK_R94` (`COA_ID`),
   CONSTRAINT `FK_R93` FOREIGN KEY (`CSH_ID`) REFERENCES `trx_cash_in` (`CSH_ID`),
   CONSTRAINT `FK_R94` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.cashout_det
+-- Dumping data for table mtpdmulti.cashin_det: ~0 rows (approximately)
+/*!40000 ALTER TABLE `cashin_det` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cashin_det` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.cashout_det
 DROP TABLE IF EXISTS `cashout_det`;
 CREATE TABLE IF NOT EXISTS `cashout_det` (
   `CSHODET_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -295,14 +340,18 @@ CREATE TABLE IF NOT EXISTS `cashout_det` (
   KEY `FK_R98` (`CSHO_ID`),
   CONSTRAINT `FK_R127` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`),
   CONSTRAINT `FK_R98` FOREIGN KEY (`CSHO_ID`) REFERENCES `trx_cash_out` (`CSHO_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.chart_of_account
+-- Dumping data for table mtpdmulti.cashout_det: ~0 rows (approximately)
+/*!40000 ALTER TABLE `cashout_det` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cashout_det` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.chart_of_account
 DROP TABLE IF EXISTS `chart_of_account`;
 CREATE TABLE IF NOT EXISTS `chart_of_account` (
   `COA_ID` int(11) NOT NULL AUTO_INCREMENT,
   `PAR_ID` int(11) DEFAULT NULL,
+  `BRANCH_ID` int(11) DEFAULT NULL,
   `COA_ACC` char(30) DEFAULT NULL,
   `COA_ACCNAME` char(100) DEFAULT NULL,
   `COA_OWNER` char(100) DEFAULT NULL,
@@ -312,11 +361,16 @@ CREATE TABLE IF NOT EXISTS `chart_of_account` (
   `COA_DTSTS` char(1) DEFAULT NULL,
   PRIMARY KEY (`COA_ID`),
   KEY `FK_R49` (`PAR_ID`),
-  CONSTRAINT `FK_R49` FOREIGN KEY (`PAR_ID`) REFERENCES `parent_chart` (`PAR_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
+  KEY `FK_chart_of_account_master_branch` (`BRANCH_ID`),
+  CONSTRAINT `FK_R49` FOREIGN KEY (`PAR_ID`) REFERENCES `parent_chart` (`PAR_ID`),
+  CONSTRAINT `FK_chart_of_account_master_branch` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.giroin_det
+-- Dumping data for table mtpdmulti.chart_of_account: ~0 rows (approximately)
+/*!40000 ALTER TABLE `chart_of_account` DISABLE KEYS */;
+/*!40000 ALTER TABLE `chart_of_account` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.giroin_det
 DROP TABLE IF EXISTS `giroin_det`;
 CREATE TABLE IF NOT EXISTS `giroin_det` (
   `GRINDET_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -331,10 +385,13 @@ CREATE TABLE IF NOT EXISTS `giroin_det` (
   KEY `FKGIRDET1` (`GIR_ID`),
   CONSTRAINT `FKGIRDET1` FOREIGN KEY (`GIR_ID`) REFERENCES `giroin_record` (`GIR_ID`),
   CONSTRAINT `FK_R133` FOREIGN KEY (`GRIN_ID`) REFERENCES `trx_giro_in` (`GRIN_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.giroin_record
+-- Dumping data for table mtpdmulti.giroin_det: ~0 rows (approximately)
+/*!40000 ALTER TABLE `giroin_det` DISABLE KEYS */;
+/*!40000 ALTER TABLE `giroin_det` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.giroin_record
 DROP TABLE IF EXISTS `giroin_record`;
 CREATE TABLE IF NOT EXISTS `giroin_record` (
   `GIR_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -347,10 +404,13 @@ CREATE TABLE IF NOT EXISTS `giroin_record` (
   PRIMARY KEY (`GIR_ID`),
   KEY `FKGRC1` (`BNKTRX_ID`),
   CONSTRAINT `FKGRC1` FOREIGN KEY (`BNKTRX_ID`) REFERENCES `bankin_trxdet` (`BNKTRX_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.giroout_det
+-- Dumping data for table mtpdmulti.giroin_record: ~0 rows (approximately)
+/*!40000 ALTER TABLE `giroin_record` DISABLE KEYS */;
+/*!40000 ALTER TABLE `giroin_record` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.giroout_det
 DROP TABLE IF EXISTS `giroout_det`;
 CREATE TABLE IF NOT EXISTS `giroout_det` (
   `GROUTDET_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -365,10 +425,13 @@ CREATE TABLE IF NOT EXISTS `giroout_det` (
   KEY `FKGORDET1` (`GOR_ID`),
   CONSTRAINT `FKGORDET1` FOREIGN KEY (`GOR_ID`) REFERENCES `giroout_record` (`GOR_ID`),
   CONSTRAINT `FK_R134` FOREIGN KEY (`GROUT_ID`) REFERENCES `trx_giro_out` (`GROUT_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.giroout_record
+-- Dumping data for table mtpdmulti.giroout_det: ~0 rows (approximately)
+/*!40000 ALTER TABLE `giroout_det` DISABLE KEYS */;
+/*!40000 ALTER TABLE `giroout_det` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.giroout_record
 DROP TABLE IF EXISTS `giroout_record`;
 CREATE TABLE IF NOT EXISTS `giroout_record` (
   `GOR_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -381,10 +444,13 @@ CREATE TABLE IF NOT EXISTS `giroout_record` (
   PRIMARY KEY (`GOR_ID`),
   KEY `FKGORC1` (`BNKTRXO_ID`),
   CONSTRAINT `FKGORC1` FOREIGN KEY (`BNKTRXO_ID`) REFERENCES `bankout_trxdet` (`BNKTRXO_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.goods_history
+-- Dumping data for table mtpdmulti.giroout_record: ~0 rows (approximately)
+/*!40000 ALTER TABLE `giroout_record` DISABLE KEYS */;
+/*!40000 ALTER TABLE `giroout_record` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.goods_history
 DROP TABLE IF EXISTS `goods_history`;
 CREATE TABLE IF NOT EXISTS `goods_history` (
   `GDHIS_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -400,8 +466,11 @@ CREATE TABLE IF NOT EXISTS `goods_history` (
   CONSTRAINT `FK_R54` FOREIGN KEY (`GD_ID`) REFERENCES `master_goods` (`GD_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.group_master
+-- Dumping data for table mtpdmulti.goods_history: ~0 rows (approximately)
+/*!40000 ALTER TABLE `goods_history` DISABLE KEYS */;
+/*!40000 ALTER TABLE `goods_history` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.group_master
 DROP TABLE IF EXISTS `group_master`;
 CREATE TABLE IF NOT EXISTS `group_master` (
   `USER_ID` int(11) NOT NULL,
@@ -412,8 +481,11 @@ CREATE TABLE IF NOT EXISTS `group_master` (
   CONSTRAINT `FKGRMST2` FOREIGN KEY (`MST_CODE`) REFERENCES `master_menumaster` (`MST_CODE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.group_trx
+-- Dumping data for table mtpdmulti.group_master: ~0 rows (approximately)
+/*!40000 ALTER TABLE `group_master` DISABLE KEYS */;
+/*!40000 ALTER TABLE `group_master` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.group_trx
 DROP TABLE IF EXISTS `group_trx`;
 CREATE TABLE IF NOT EXISTS `group_trx` (
   `USER_ID` int(11) NOT NULL,
@@ -424,8 +496,11 @@ CREATE TABLE IF NOT EXISTS `group_trx` (
   CONSTRAINT `FKGRTRX2` FOREIGN KEY (`TRX_CODE`) REFERENCES `master_menutrx` (`TRX_CODE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.group_user
+-- Dumping data for table mtpdmulti.group_trx: ~0 rows (approximately)
+/*!40000 ALTER TABLE `group_trx` DISABLE KEYS */;
+/*!40000 ALTER TABLE `group_trx` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.group_user
 DROP TABLE IF EXISTS `group_user`;
 CREATE TABLE IF NOT EXISTS `group_user` (
   `USER_ID` int(11) NOT NULL,
@@ -436,8 +511,33 @@ CREATE TABLE IF NOT EXISTS `group_user` (
   CONSTRAINT `GUFK2` FOREIGN KEY (`MENU_CODE`) REFERENCES `master_menu` (`MENU_CODE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_adj
+-- Dumping data for table mtpdmulti.group_user: ~21 rows (approximately)
+/*!40000 ALTER TABLE `group_user` DISABLE KEYS */;
+INSERT INTO `group_user` (`USER_ID`, `MENU_CODE`) VALUES
+	(1, 'ACC'),
+	(1, 'BNK'),
+	(1, 'BRC'),
+	(1, 'COA'),
+	(1, 'CURR'),
+	(1, 'CUST'),
+	(1, 'DEPT'),
+	(1, 'FIN'),
+	(1, 'GA'),
+	(1, 'GD'),
+	(1, 'INVT'),
+	(1, 'LOC'),
+	(1, 'LOG'),
+	(1, 'MKT'),
+	(1, 'PAT'),
+	(1, 'PMT'),
+	(1, 'REK'),
+	(1, 'SLS'),
+	(1, 'SUPP'),
+	(1, 'TRX'),
+	(1, 'USR');
+/*!40000 ALTER TABLE `group_user` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_adj
 DROP TABLE IF EXISTS `his_adj`;
 CREATE TABLE IF NOT EXISTS `his_adj` (
   `HISADJ_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -451,10 +551,13 @@ CREATE TABLE IF NOT EXISTS `his_adj` (
   PRIMARY KEY (`HISADJ_ID`),
   KEY `FKHISADJ1` (`ADJ_ID`),
   CONSTRAINT `FKHISADJ1` FOREIGN KEY (`ADJ_ID`) REFERENCES `trx_adjustment` (`ADJ_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_adjga
+-- Dumping data for table mtpdmulti.his_adj: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_adj` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_adj` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_adjga
 DROP TABLE IF EXISTS `his_adjga`;
 CREATE TABLE IF NOT EXISTS `his_adjga` (
   `HISADJGA_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -468,10 +571,13 @@ CREATE TABLE IF NOT EXISTS `his_adjga` (
   PRIMARY KEY (`HISADJGA_ID`),
   KEY `FKHISADJGA1` (`ADJGA_ID`),
   CONSTRAINT `FKHISADJGA1` FOREIGN KEY (`ADJGA_ID`) REFERENCES `trx_adj_ga` (`ADJGA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_approvalbill
+-- Dumping data for table mtpdmulti.his_adjga: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_adjga` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_adjga` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_approvalbill
 DROP TABLE IF EXISTS `his_approvalbill`;
 CREATE TABLE IF NOT EXISTS `his_approvalbill` (
   `HISAPPR_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -485,10 +591,13 @@ CREATE TABLE IF NOT EXISTS `his_approvalbill` (
   PRIMARY KEY (`HISAPPR_ID`),
   KEY `FK_R9` (`APPR_ID`),
   CONSTRAINT `FK_R9` FOREIGN KEY (`APPR_ID`) REFERENCES `trx_approvalbill` (`APPR_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_bankin
+-- Dumping data for table mtpdmulti.his_approvalbill: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_approvalbill` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_approvalbill` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_bankin
 DROP TABLE IF EXISTS `his_bankin`;
 CREATE TABLE IF NOT EXISTS `his_bankin` (
   `HISBNK_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -502,10 +611,13 @@ CREATE TABLE IF NOT EXISTS `his_bankin` (
   PRIMARY KEY (`HISBNK_ID`),
   KEY `FKHISBNK1` (`BNK_ID`),
   CONSTRAINT `FKHISBNK1` FOREIGN KEY (`BNK_ID`) REFERENCES `trx_bankin` (`BNK_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_bankout
+-- Dumping data for table mtpdmulti.his_bankin: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_bankin` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_bankin` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_bankout
 DROP TABLE IF EXISTS `his_bankout`;
 CREATE TABLE IF NOT EXISTS `his_bankout` (
   `HISBNKO_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -519,10 +631,13 @@ CREATE TABLE IF NOT EXISTS `his_bankout` (
   PRIMARY KEY (`HISBNKO_ID`),
   KEY `FKHISBNKO1` (`BNKO_ID`),
   CONSTRAINT `FKHISBNKO1` FOREIGN KEY (`BNKO_ID`) REFERENCES `trx_bankout` (`BNKO_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_bapp
+-- Dumping data for table mtpdmulti.his_bankout: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_bankout` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_bankout` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_bapp
 DROP TABLE IF EXISTS `his_bapp`;
 CREATE TABLE IF NOT EXISTS `his_bapp` (
   `HISBAPP_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -536,10 +651,13 @@ CREATE TABLE IF NOT EXISTS `his_bapp` (
   PRIMARY KEY (`HISBAPP_ID`),
   KEY `FK_R88` (`BAPP_ID`),
   CONSTRAINT `FK_R88` FOREIGN KEY (`BAPP_ID`) REFERENCES `trx_bapp` (`BAPP_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_bapplog
+-- Dumping data for table mtpdmulti.his_bapp: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_bapp` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_bapp` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_bapplog
 DROP TABLE IF EXISTS `his_bapplog`;
 CREATE TABLE IF NOT EXISTS `his_bapplog` (
   `HISBALG_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -553,10 +671,13 @@ CREATE TABLE IF NOT EXISTS `his_bapplog` (
   PRIMARY KEY (`HISBALG_ID`),
   KEY `FKHISBALG1` (`BALG_ID`),
   CONSTRAINT `FKHISBALG1` FOREIGN KEY (`BALG_ID`) REFERENCES `trx_bapplog` (`BALG_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_budget
+-- Dumping data for table mtpdmulti.his_bapplog: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_bapplog` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_bapplog` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_budget
 DROP TABLE IF EXISTS `his_budget`;
 CREATE TABLE IF NOT EXISTS `his_budget` (
   `HISBDG_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -570,10 +691,13 @@ CREATE TABLE IF NOT EXISTS `his_budget` (
   PRIMARY KEY (`HISBDG_ID`),
   KEY `FKHISBDG1` (`BUD_ID`),
   CONSTRAINT `FKHISBDG1` FOREIGN KEY (`BUD_ID`) REFERENCES `trx_budget` (`BUD_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_cashin
+-- Dumping data for table mtpdmulti.his_budget: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_budget` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_budget` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_cashin
 DROP TABLE IF EXISTS `his_cashin`;
 CREATE TABLE IF NOT EXISTS `his_cashin` (
   `HISCSHIN_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -587,10 +711,13 @@ CREATE TABLE IF NOT EXISTS `his_cashin` (
   PRIMARY KEY (`HISCSHIN_ID`),
   KEY `FKHISCSHIN1` (`CSH_ID`),
   CONSTRAINT `FKHISCSHIN1` FOREIGN KEY (`CSH_ID`) REFERENCES `trx_cash_in` (`CSH_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_cashout
+-- Dumping data for table mtpdmulti.his_cashin: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_cashin` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_cashin` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_cashout
 DROP TABLE IF EXISTS `his_cashout`;
 CREATE TABLE IF NOT EXISTS `his_cashout` (
   `HISCSHO_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -604,10 +731,13 @@ CREATE TABLE IF NOT EXISTS `his_cashout` (
   PRIMARY KEY (`HISCSHO_ID`),
   KEY `FKHISCSHO1` (`CSHO_ID`),
   CONSTRAINT `FKHISCSHO1` FOREIGN KEY (`CSHO_ID`) REFERENCES `trx_cash_out` (`CSHO_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_customer
+-- Dumping data for table mtpdmulti.his_cashout: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_cashout` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_cashout` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_customer
 DROP TABLE IF EXISTS `his_customer`;
 CREATE TABLE IF NOT EXISTS `his_customer` (
   `HISCUST_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -620,8 +750,11 @@ CREATE TABLE IF NOT EXISTS `his_customer` (
   CONSTRAINT `FK_R5` FOREIGN KEY (`CUST_ID`) REFERENCES `master_customer` (`CUST_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_giroin
+-- Dumping data for table mtpdmulti.his_customer: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_customer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_customer` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_giroin
 DROP TABLE IF EXISTS `his_giroin`;
 CREATE TABLE IF NOT EXISTS `his_giroin` (
   `HISGRIN_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -635,10 +768,13 @@ CREATE TABLE IF NOT EXISTS `his_giroin` (
   PRIMARY KEY (`HISGRIN_ID`),
   KEY `FKHISGRIN1` (`GRIN_ID`),
   CONSTRAINT `FKHISGRIN1` FOREIGN KEY (`GRIN_ID`) REFERENCES `trx_giro_in` (`GRIN_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_giroout
+-- Dumping data for table mtpdmulti.his_giroin: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_giroin` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_giroin` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_giroout
 DROP TABLE IF EXISTS `his_giroout`;
 CREATE TABLE IF NOT EXISTS `his_giroout` (
   `HISGRO_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -652,10 +788,13 @@ CREATE TABLE IF NOT EXISTS `his_giroout` (
   PRIMARY KEY (`HISGRO_ID`),
   KEY `FKHISGRO1` (`GROUT_ID`),
   CONSTRAINT `FKHISGRO1` FOREIGN KEY (`GROUT_ID`) REFERENCES `trx_giro_out` (`GROUT_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_inv
+-- Dumping data for table mtpdmulti.his_giroout: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_giroout` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_giroout` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_inv
 DROP TABLE IF EXISTS `his_inv`;
 CREATE TABLE IF NOT EXISTS `his_inv` (
   `HISINV_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -669,10 +808,13 @@ CREATE TABLE IF NOT EXISTS `his_inv` (
   PRIMARY KEY (`HISINV_ID`),
   KEY `FKHISINV1` (`INV_ID`),
   CONSTRAINT `FKHISINV1` FOREIGN KEY (`INV_ID`) REFERENCES `trx_invoice` (`INV_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_pappr
+-- Dumping data for table mtpdmulti.his_inv: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_inv` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_inv` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_pappr
 DROP TABLE IF EXISTS `his_pappr`;
 CREATE TABLE IF NOT EXISTS `his_pappr` (
   `HISPAPPR_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -686,10 +828,13 @@ CREATE TABLE IF NOT EXISTS `his_pappr` (
   PRIMARY KEY (`HISPAPPR_ID`),
   KEY `FKHISPAPPR1` (`PAPPR_ID`),
   CONSTRAINT `FKHISPAPPR1` FOREIGN KEY (`PAPPR_ID`) REFERENCES `trx_permitappr` (`PAPPR_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_po
+-- Dumping data for table mtpdmulti.his_pappr: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_pappr` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_pappr` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_po
 DROP TABLE IF EXISTS `his_po`;
 CREATE TABLE IF NOT EXISTS `his_po` (
   `HISPO_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -703,10 +848,13 @@ CREATE TABLE IF NOT EXISTS `his_po` (
   PRIMARY KEY (`HISPO_ID`),
   KEY `FK_R89` (`PO_ID`),
   CONSTRAINT `FK_R89` FOREIGN KEY (`PO_ID`) REFERENCES `trx_po` (`PO_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_poga
+-- Dumping data for table mtpdmulti.his_po: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_po` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_po` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_poga
 DROP TABLE IF EXISTS `his_poga`;
 CREATE TABLE IF NOT EXISTS `his_poga` (
   `HISPOGA_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -720,10 +868,13 @@ CREATE TABLE IF NOT EXISTS `his_poga` (
   PRIMARY KEY (`HISPOGA_ID`),
   KEY `FKHISPOGA1` (`POGA_ID`),
   CONSTRAINT `FKHISPOGA1` FOREIGN KEY (`POGA_ID`) REFERENCES `trx_po_ga` (`POGA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_prc
+-- Dumping data for table mtpdmulti.his_poga: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_poga` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_poga` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_prc
 DROP TABLE IF EXISTS `his_prc`;
 CREATE TABLE IF NOT EXISTS `his_prc` (
   `HISPRC_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -737,10 +888,13 @@ CREATE TABLE IF NOT EXISTS `his_prc` (
   PRIMARY KEY (`HISPRC_ID`),
   KEY `FK_R90` (`PRC_ID`),
   CONSTRAINT `FK_R90` FOREIGN KEY (`PRC_ID`) REFERENCES `trx_procurement` (`PRC_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_prcga
+-- Dumping data for table mtpdmulti.his_prc: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_prc` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_prc` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_prcga
 DROP TABLE IF EXISTS `his_prcga`;
 CREATE TABLE IF NOT EXISTS `his_prcga` (
   `HISPRCGA_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -754,10 +908,13 @@ CREATE TABLE IF NOT EXISTS `his_prcga` (
   PRIMARY KEY (`HISPRCGA_ID`),
   KEY `FKHISPRCGA1` (`PRCGA_ID`),
   CONSTRAINT `FKHISPRCGA1` FOREIGN KEY (`PRCGA_ID`) REFERENCES `trx_prc_ga` (`PRCGA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_retprc
+-- Dumping data for table mtpdmulti.his_prcga: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_prcga` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_prcga` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_retprc
 DROP TABLE IF EXISTS `his_retprc`;
 CREATE TABLE IF NOT EXISTS `his_retprc` (
   `HISRTPRC_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -771,10 +928,13 @@ CREATE TABLE IF NOT EXISTS `his_retprc` (
   PRIMARY KEY (`HISRTPRC_ID`),
   KEY `FKRTPRCHIS1` (`RTPRC_ID`),
   CONSTRAINT `FKRTPRCHIS1` FOREIGN KEY (`RTPRC_ID`) REFERENCES `procurement_ret` (`RTPRC_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_retusg
+-- Dumping data for table mtpdmulti.his_retprc: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_retprc` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_retprc` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_retusg
 DROP TABLE IF EXISTS `his_retusg`;
 CREATE TABLE IF NOT EXISTS `his_retusg` (
   `HISRTUSG_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -788,10 +948,13 @@ CREATE TABLE IF NOT EXISTS `his_retusg` (
   PRIMARY KEY (`HISRTUSG_ID`),
   KEY `FKHISRTUSG1` (`RTUSG_ID`),
   CONSTRAINT `FKHISRTUSG1` FOREIGN KEY (`RTUSG_ID`) REFERENCES `usage_ret` (`RTUSG_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_rtprcga
+-- Dumping data for table mtpdmulti.his_retusg: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_retusg` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_retusg` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_rtprcga
 DROP TABLE IF EXISTS `his_rtprcga`;
 CREATE TABLE IF NOT EXISTS `his_rtprcga` (
   `HISRTPRCGA_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -805,10 +968,13 @@ CREATE TABLE IF NOT EXISTS `his_rtprcga` (
   PRIMARY KEY (`HISRTPRCGA_ID`),
   KEY `FKHISRTPRCGA1` (`RTPRCGA_ID`),
   CONSTRAINT `FKHISRTPRCGA1` FOREIGN KEY (`RTPRCGA_ID`) REFERENCES `prcga_ret` (`RTPRCGA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_rtusgga
+-- Dumping data for table mtpdmulti.his_rtprcga: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_rtprcga` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_rtprcga` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_rtusgga
 DROP TABLE IF EXISTS `his_rtusgga`;
 CREATE TABLE IF NOT EXISTS `his_rtusgga` (
   `HISRTUSGGA_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -822,10 +988,13 @@ CREATE TABLE IF NOT EXISTS `his_rtusgga` (
   PRIMARY KEY (`HISRTUSGGA_ID`),
   KEY `FKHISRTUSGGA1` (`RTUSGGA_ID`),
   CONSTRAINT `FKHISRTUSGGA1` FOREIGN KEY (`RTUSGGA_ID`) REFERENCES `usage_ga_ret` (`RTUSGGA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_usg
+-- Dumping data for table mtpdmulti.his_rtusgga: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_rtusgga` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_rtusgga` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_usg
 DROP TABLE IF EXISTS `his_usg`;
 CREATE TABLE IF NOT EXISTS `his_usg` (
   `HISUSG_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -839,10 +1008,13 @@ CREATE TABLE IF NOT EXISTS `his_usg` (
   PRIMARY KEY (`HISUSG_ID`),
   KEY `FK_R91` (`USG_ID`),
   CONSTRAINT `FK_R91` FOREIGN KEY (`USG_ID`) REFERENCES `trx_usage` (`USG_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.his_usgga
+-- Dumping data for table mtpdmulti.his_usg: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_usg` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_usg` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.his_usgga
 DROP TABLE IF EXISTS `his_usgga`;
 CREATE TABLE IF NOT EXISTS `his_usgga` (
   `HISUSGGA_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -856,10 +1028,13 @@ CREATE TABLE IF NOT EXISTS `his_usgga` (
   PRIMARY KEY (`HISUSGGA_ID`),
   KEY `FKHISUSGGA1` (`USGGA_ID`),
   CONSTRAINT `FKHISUSGGA1` FOREIGN KEY (`USGGA_ID`) REFERENCES `trx_usage_ga` (`USGGA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.invoice_type
+-- Dumping data for table mtpdmulti.his_usgga: ~0 rows (approximately)
+/*!40000 ALTER TABLE `his_usgga` DISABLE KEYS */;
+/*!40000 ALTER TABLE `his_usgga` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.invoice_type
 DROP TABLE IF EXISTS `invoice_type`;
 CREATE TABLE IF NOT EXISTS `invoice_type` (
   `INC_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -871,10 +1046,13 @@ CREATE TABLE IF NOT EXISTS `invoice_type` (
   `INC_ACCINCNAME` char(150) DEFAULT NULL,
   `INC_DTSTS` char(1) DEFAULT NULL,
   PRIMARY KEY (`INC_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.inv_details
+-- Dumping data for table mtpdmulti.invoice_type: ~0 rows (approximately)
+/*!40000 ALTER TABLE `invoice_type` DISABLE KEYS */;
+/*!40000 ALTER TABLE `invoice_type` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.inv_details
 DROP TABLE IF EXISTS `inv_details`;
 CREATE TABLE IF NOT EXISTS `inv_details` (
   `INVDET_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -897,10 +1075,13 @@ CREATE TABLE IF NOT EXISTS `inv_details` (
   KEY `FK_INVDET2` (`INV_ID`),
   CONSTRAINT `FK_INVDET1` FOREIGN KEY (`APPR_ID`) REFERENCES `trx_approvalbill` (`APPR_ID`),
   CONSTRAINT `FK_INVDET2` FOREIGN KEY (`INV_ID`) REFERENCES `trx_invoice` (`INV_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.jou_credit
+-- Dumping data for table mtpdmulti.inv_details: ~0 rows (approximately)
+/*!40000 ALTER TABLE `inv_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `inv_details` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.jou_credit
 DROP TABLE IF EXISTS `jou_credit`;
 CREATE TABLE IF NOT EXISTS `jou_credit` (
   `JOUCR_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -918,8 +1099,11 @@ CREATE TABLE IF NOT EXISTS `jou_credit` (
   CONSTRAINT `FK_R131` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.jou_debit
+-- Dumping data for table mtpdmulti.jou_credit: ~0 rows (approximately)
+/*!40000 ALTER TABLE `jou_credit` DISABLE KEYS */;
+/*!40000 ALTER TABLE `jou_credit` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.jou_debit
 DROP TABLE IF EXISTS `jou_debit`;
 CREATE TABLE IF NOT EXISTS `jou_debit` (
   `JOUDB_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -937,8 +1121,11 @@ CREATE TABLE IF NOT EXISTS `jou_debit` (
   CONSTRAINT `FK_R130` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.jou_details
+-- Dumping data for table mtpdmulti.jou_debit: ~0 rows (approximately)
+/*!40000 ALTER TABLE `jou_debit` DISABLE KEYS */;
+/*!40000 ALTER TABLE `jou_debit` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.jou_details
 DROP TABLE IF EXISTS `jou_details`;
 CREATE TABLE IF NOT EXISTS `jou_details` (
   `JOUDET_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -952,10 +1139,13 @@ CREATE TABLE IF NOT EXISTS `jou_details` (
   KEY `FKJOUDET2` (`COA_ID`),
   CONSTRAINT `FKJOUDET1` FOREIGN KEY (`JOU_ID`) REFERENCES `account_journal` (`JOU_ID`),
   CONSTRAINT `FKJOUDET2` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=316 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.master_bank
+-- Dumping data for table mtpdmulti.jou_details: ~0 rows (approximately)
+/*!40000 ALTER TABLE `jou_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `jou_details` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.master_bank
 DROP TABLE IF EXISTS `master_bank`;
 CREATE TABLE IF NOT EXISTS `master_bank` (
   `BANK_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -972,10 +1162,13 @@ CREATE TABLE IF NOT EXISTS `master_bank` (
   PRIMARY KEY (`BANK_ID`),
   KEY `FK_R103` (`COA_ID`),
   CONSTRAINT `FK_R103` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.master_bboard
+-- Dumping data for table mtpdmulti.master_bank: ~0 rows (approximately)
+/*!40000 ALTER TABLE `master_bank` DISABLE KEYS */;
+/*!40000 ALTER TABLE `master_bank` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.master_bboard
 DROP TABLE IF EXISTS `master_bboard`;
 CREATE TABLE IF NOT EXISTS `master_bboard` (
   `BB_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -984,10 +1177,13 @@ CREATE TABLE IF NOT EXISTS `master_bboard` (
   `BB_INFO` varchar(1024) DEFAULT NULL,
   `BB_DTSTS` char(1) DEFAULT NULL,
   PRIMARY KEY (`BB_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.master_branch
+-- Dumping data for table mtpdmulti.master_bboard: ~0 rows (approximately)
+/*!40000 ALTER TABLE `master_bboard` DISABLE KEYS */;
+/*!40000 ALTER TABLE `master_bboard` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.master_branch
 DROP TABLE IF EXISTS `master_branch`;
 CREATE TABLE IF NOT EXISTS `master_branch` (
   `BRANCH_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1002,10 +1198,17 @@ CREATE TABLE IF NOT EXISTS `master_branch` (
   `BRANCH_LOGO` char(30) DEFAULT NULL,
   `BRANCH_DTSTS` char(1) DEFAULT NULL,
   PRIMARY KEY (`BRANCH_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.master_currency
+-- Dumping data for table mtpdmulti.master_branch: ~2 rows (approximately)
+/*!40000 ALTER TABLE `master_branch` DISABLE KEYS */;
+INSERT INTO `master_branch` (`BRANCH_ID`, `BRANCH_CODE`, `BRANCH_NAME`, `BRANCH_STATUS`, `BRANCH_ADDRESS`, `BRANCH_CITY`, `BRANCH_INIT`, `BRANCH_PHONE`, `BRANCH_FAX`, `BRANCH_LOGO`, `BRANCH_DTSTS`) VALUES
+	(1, 'BRC-00001', 'Holding', '0', 'JL Lesti No.42', 'Surabaya', 'HO', NULL, NULL, NULL, '1'),
+	(3, 'BRC-00002', 'Match Advertising', '1', 'JL Lesti No.42', 'Surabaya', 'M', '098765', '098765', NULL, '1'),
+	(4, 'BRC-00003', 'Karya Cipta Tritunggal', '1', 'JL Raya Taman', 'Sidoarjo', 'KCT', '0987654', '09875', NULL, '1');
+/*!40000 ALTER TABLE `master_branch` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.master_currency
 DROP TABLE IF EXISTS `master_currency`;
 CREATE TABLE IF NOT EXISTS `master_currency` (
   `CURR_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1015,10 +1218,13 @@ CREATE TABLE IF NOT EXISTS `master_currency` (
   `CURR_RATE` int(11) DEFAULT NULL,
   `CURR_DTSTS` char(1) DEFAULT NULL,
   PRIMARY KEY (`CURR_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.master_customer
+-- Dumping data for table mtpdmulti.master_currency: ~0 rows (approximately)
+/*!40000 ALTER TABLE `master_currency` DISABLE KEYS */;
+/*!40000 ALTER TABLE `master_currency` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.master_customer
 DROP TABLE IF EXISTS `master_customer`;
 CREATE TABLE IF NOT EXISTS `master_customer` (
   `CUST_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1040,10 +1246,13 @@ CREATE TABLE IF NOT EXISTS `master_customer` (
   PRIMARY KEY (`CUST_ID`),
   KEY `FK_R136` (`COA_ID`),
   CONSTRAINT `FK_R136` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.master_cust_intern
+-- Dumping data for table mtpdmulti.master_customer: ~0 rows (approximately)
+/*!40000 ALTER TABLE `master_customer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `master_customer` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.master_cust_intern
 DROP TABLE IF EXISTS `master_cust_intern`;
 CREATE TABLE IF NOT EXISTS `master_cust_intern` (
   `CSTIN_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1054,10 +1263,13 @@ CREATE TABLE IF NOT EXISTS `master_cust_intern` (
   PRIMARY KEY (`CSTIN_ID`),
   KEY `FKCSTINT1` (`PERSON_ID`),
   CONSTRAINT `FKCSTINT1` FOREIGN KEY (`PERSON_ID`) REFERENCES `master_person` (`PERSON_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.master_dept
+-- Dumping data for table mtpdmulti.master_cust_intern: ~0 rows (approximately)
+/*!40000 ALTER TABLE `master_cust_intern` DISABLE KEYS */;
+/*!40000 ALTER TABLE `master_cust_intern` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.master_dept
 DROP TABLE IF EXISTS `master_dept`;
 CREATE TABLE IF NOT EXISTS `master_dept` (
   `DEPT_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1066,10 +1278,13 @@ CREATE TABLE IF NOT EXISTS `master_dept` (
   `DEPT_INFO` varchar(1024) DEFAULT NULL,
   `DEPT_DTSTS` char(1) DEFAULT NULL,
   PRIMARY KEY (`DEPT_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.master_goods
+-- Dumping data for table mtpdmulti.master_dept: ~0 rows (approximately)
+/*!40000 ALTER TABLE `master_dept` DISABLE KEYS */;
+/*!40000 ALTER TABLE `master_dept` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.master_goods
 DROP TABLE IF EXISTS `master_goods`;
 CREATE TABLE IF NOT EXISTS `master_goods` (
   `GD_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1091,10 +1306,13 @@ CREATE TABLE IF NOT EXISTS `master_goods` (
   KEY `FKGD1` (`BRANCH_ID`),
   CONSTRAINT `FKGD1` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`),
   CONSTRAINT `FK_R19` FOREIGN KEY (`SUPP_ID`) REFERENCES `master_supplier` (`SUPP_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.master_gov_type
+-- Dumping data for table mtpdmulti.master_goods: ~0 rows (approximately)
+/*!40000 ALTER TABLE `master_goods` DISABLE KEYS */;
+/*!40000 ALTER TABLE `master_goods` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.master_gov_type
 DROP TABLE IF EXISTS `master_gov_type`;
 CREATE TABLE IF NOT EXISTS `master_gov_type` (
   `GOV_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1103,10 +1321,13 @@ CREATE TABLE IF NOT EXISTS `master_gov_type` (
   `GOV_INFO` varchar(1024) DEFAULT NULL,
   `GOV_DTSTS` char(1) DEFAULT NULL,
   PRIMARY KEY (`GOV_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.master_location
+-- Dumping data for table mtpdmulti.master_gov_type: ~0 rows (approximately)
+/*!40000 ALTER TABLE `master_gov_type` DISABLE KEYS */;
+/*!40000 ALTER TABLE `master_gov_type` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.master_location
 DROP TABLE IF EXISTS `master_location`;
 CREATE TABLE IF NOT EXISTS `master_location` (
   `LOC_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1120,10 +1341,13 @@ CREATE TABLE IF NOT EXISTS `master_location` (
   PRIMARY KEY (`LOC_ID`),
   KEY `FK_R7` (`GOV_ID`),
   CONSTRAINT `FK_R7` FOREIGN KEY (`GOV_ID`) REFERENCES `master_gov_type` (`GOV_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.master_menu
+-- Dumping data for table mtpdmulti.master_location: ~0 rows (approximately)
+/*!40000 ALTER TABLE `master_location` DISABLE KEYS */;
+/*!40000 ALTER TABLE `master_location` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.master_menu
 DROP TABLE IF EXISTS `master_menu`;
 CREATE TABLE IF NOT EXISTS `master_menu` (
   `MENU_CODE` char(50) NOT NULL,
@@ -1132,8 +1356,33 @@ CREATE TABLE IF NOT EXISTS `master_menu` (
   PRIMARY KEY (`MENU_CODE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.master_menumaster
+-- Dumping data for table mtpdmulti.master_menu: ~21 rows (approximately)
+/*!40000 ALTER TABLE `master_menu` DISABLE KEYS */;
+INSERT INTO `master_menu` (`MENU_CODE`, `MENU_NAME`, `MENU_STS`) VALUES
+	('ACC', 'Accounting', 1),
+	('BNK', 'Bank', 0),
+	('BRC', 'Cabang', 0),
+	('COA', 'Chart of Account', 0),
+	('CURR', 'Currency', 0),
+	('CUST', 'Customer', 0),
+	('DEPT', 'Departemen', 0),
+	('FIN', 'Finance', 1),
+	('GA', 'General Affairs', 1),
+	('GD', 'Barang', 0),
+	('INVT', 'Jenis Invoice', 0),
+	('LOC', 'Location', 0),
+	('LOG', 'Logistik', 1),
+	('MKT', 'Marketing', 1),
+	('PAT', 'Permit', 0),
+	('PMT', 'Permit', 1),
+	('REK', 'Reklame', 0),
+	('SLS', 'Salesforce', 0),
+	('SUPP', 'Supplier', 0),
+	('TRX', 'Transaction', 1),
+	('USR', 'User', 0);
+/*!40000 ALTER TABLE `master_menu` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.master_menumaster
 DROP TABLE IF EXISTS `master_menumaster`;
 CREATE TABLE IF NOT EXISTS `master_menumaster` (
   `MST_CODE` char(20) NOT NULL,
@@ -1141,8 +1390,26 @@ CREATE TABLE IF NOT EXISTS `master_menumaster` (
   PRIMARY KEY (`MST_CODE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.master_menutrx
+-- Dumping data for table mtpdmulti.master_menumaster: ~14 rows (approximately)
+/*!40000 ALTER TABLE `master_menumaster` DISABLE KEYS */;
+INSERT INTO `master_menumaster` (`MST_CODE`, `MST_NAME`) VALUES
+	('BANK', 'Bank'),
+	('BRC', 'Cabang'),
+	('COA', 'Chart of Account'),
+	('CURR', 'Currency'),
+	('CUST', 'Customer'),
+	('DEPT', 'Departemen'),
+	('GD', 'Barang'),
+	('INV', 'Jenis Invoice'),
+	('LOC', 'Location'),
+	('PAT', 'Permit'),
+	('RKL', 'Reklame'),
+	('SLS', 'Salesforce'),
+	('SUPP', 'Supplier'),
+	('USER', 'User');
+/*!40000 ALTER TABLE `master_menumaster` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.master_menutrx
 DROP TABLE IF EXISTS `master_menutrx`;
 CREATE TABLE IF NOT EXISTS `master_menutrx` (
   `TRX_CODE` char(20) NOT NULL,
@@ -1150,8 +1417,19 @@ CREATE TABLE IF NOT EXISTS `master_menutrx` (
   PRIMARY KEY (`TRX_CODE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.master_permit
+-- Dumping data for table mtpdmulti.master_menutrx: ~7 rows (approximately)
+/*!40000 ALTER TABLE `master_menutrx` DISABLE KEYS */;
+INSERT INTO `master_menutrx` (`TRX_CODE`, `TRX_NAME`) VALUES
+	('ACC', 'Accounting'),
+	('FIN', 'Finance'),
+	('GA', 'General Affairs'),
+	('LOG', 'Logistik'),
+	('MKT', 'Marketing'),
+	('PRM', 'Permit'),
+	('TRN', 'Transaction');
+/*!40000 ALTER TABLE `master_menutrx` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.master_permit
 DROP TABLE IF EXISTS `master_permit`;
 CREATE TABLE IF NOT EXISTS `master_permit` (
   `PERMIT_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1172,8 +1450,11 @@ CREATE TABLE IF NOT EXISTS `master_permit` (
   CONSTRAINT `FK_R8` FOREIGN KEY (`LOC_ID`) REFERENCES `master_location` (`LOC_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.master_permit_type
+-- Dumping data for table mtpdmulti.master_permit: ~0 rows (approximately)
+/*!40000 ALTER TABLE `master_permit` DISABLE KEYS */;
+/*!40000 ALTER TABLE `master_permit` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.master_permit_type
 DROP TABLE IF EXISTS `master_permit_type`;
 CREATE TABLE IF NOT EXISTS `master_permit_type` (
   `PRMTTYP_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1182,10 +1463,13 @@ CREATE TABLE IF NOT EXISTS `master_permit_type` (
   `PRMTTYP_INFO` varchar(1024) DEFAULT NULL,
   `PRMTTYP_DTSTS` char(1) DEFAULT NULL,
   PRIMARY KEY (`PRMTTYP_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.master_person
+-- Dumping data for table mtpdmulti.master_permit_type: ~0 rows (approximately)
+/*!40000 ALTER TABLE `master_permit_type` DISABLE KEYS */;
+/*!40000 ALTER TABLE `master_permit_type` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.master_person
 DROP TABLE IF EXISTS `master_person`;
 CREATE TABLE IF NOT EXISTS `master_person` (
   `PERSON_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1195,10 +1479,15 @@ CREATE TABLE IF NOT EXISTS `master_person` (
   `PERSON_PHONE` char(30) DEFAULT NULL,
   `PERSON_DTSTS` char(1) DEFAULT NULL,
   PRIMARY KEY (`PERSON_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.master_placement
+-- Dumping data for table mtpdmulti.master_person: ~0 rows (approximately)
+/*!40000 ALTER TABLE `master_person` DISABLE KEYS */;
+INSERT INTO `master_person` (`PERSON_ID`, `PERSON_CODE`, `PERSON_NAME`, `PERSON_ADDRESS`, `PERSON_PHONE`, `PERSON_DTSTS`) VALUES
+	(1, 'KRY-00001', 'Kaisha', 'Semolowaru', '09876', '1');
+/*!40000 ALTER TABLE `master_person` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.master_placement
 DROP TABLE IF EXISTS `master_placement`;
 CREATE TABLE IF NOT EXISTS `master_placement` (
   `PLC_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1206,10 +1495,13 @@ CREATE TABLE IF NOT EXISTS `master_placement` (
   `PLC_NAME` char(200) DEFAULT NULL,
   `PLC_DTSTS` char(1) DEFAULT NULL,
   PRIMARY KEY (`PLC_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.master_sales
+-- Dumping data for table mtpdmulti.master_placement: ~0 rows (approximately)
+/*!40000 ALTER TABLE `master_placement` DISABLE KEYS */;
+/*!40000 ALTER TABLE `master_placement` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.master_sales
 DROP TABLE IF EXISTS `master_sales`;
 CREATE TABLE IF NOT EXISTS `master_sales` (
   `SALES_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1224,10 +1516,13 @@ CREATE TABLE IF NOT EXISTS `master_sales` (
   KEY `FK_R4` (`BRANCH_ID`),
   CONSTRAINT `FK_R2` FOREIGN KEY (`PERSON_ID`) REFERENCES `master_person` (`PERSON_ID`),
   CONSTRAINT `FK_R4` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.master_supplier
+-- Dumping data for table mtpdmulti.master_sales: ~0 rows (approximately)
+/*!40000 ALTER TABLE `master_sales` DISABLE KEYS */;
+/*!40000 ALTER TABLE `master_sales` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.master_supplier
 DROP TABLE IF EXISTS `master_supplier`;
 CREATE TABLE IF NOT EXISTS `master_supplier` (
   `SUPP_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1250,10 +1545,13 @@ CREATE TABLE IF NOT EXISTS `master_supplier` (
   PRIMARY KEY (`SUPP_ID`),
   KEY `FKMSUPP1` (`COA_ID`),
   CONSTRAINT `FKMSUPP1` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.master_user
+-- Dumping data for table mtpdmulti.master_supplier: ~0 rows (approximately)
+/*!40000 ALTER TABLE `master_supplier` DISABLE KEYS */;
+/*!40000 ALTER TABLE `master_supplier` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.master_user
 DROP TABLE IF EXISTS `master_user`;
 CREATE TABLE IF NOT EXISTS `master_user` (
   `USER_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1269,10 +1567,15 @@ CREATE TABLE IF NOT EXISTS `master_user` (
   KEY `FK_R3` (`BRANCH_ID`),
   CONSTRAINT `FK_R1` FOREIGN KEY (`PERSON_ID`) REFERENCES `master_person` (`PERSON_ID`),
   CONSTRAINT `FK_R3` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.other_settings
+-- Dumping data for table mtpdmulti.master_user: ~0 rows (approximately)
+/*!40000 ALTER TABLE `master_user` DISABLE KEYS */;
+INSERT INTO `master_user` (`USER_ID`, `BRANCH_ID`, `PERSON_ID`, `USER_CODE`, `USER_NAME`, `USER_PASSWORD`, `USER_LEVEL`, `USER_DTSTS`) VALUES
+	(1, 1, 1, 'USR-00001', 'kaisha', '827ccb0eea8a706c4c34a16891f84e7b', '1', '1');
+/*!40000 ALTER TABLE `master_user` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.other_settings
 DROP TABLE IF EXISTS `other_settings`;
 CREATE TABLE IF NOT EXISTS `other_settings` (
   `OS_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1306,10 +1609,13 @@ CREATE TABLE IF NOT EXISTS `other_settings` (
   `PRCGA_COANAMECOST` char(200) DEFAULT NULL,
   `PRCGA_COANAMEDISC` char(200) DEFAULT NULL,
   PRIMARY KEY (`OS_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.parent_chart
+-- Dumping data for table mtpdmulti.other_settings: ~0 rows (approximately)
+/*!40000 ALTER TABLE `other_settings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `other_settings` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.parent_chart
 DROP TABLE IF EXISTS `parent_chart`;
 CREATE TABLE IF NOT EXISTS `parent_chart` (
   `PAR_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1322,10 +1628,15 @@ CREATE TABLE IF NOT EXISTS `parent_chart` (
   PRIMARY KEY (`PAR_ID`),
   KEY `FKPAR1` (`PARTP_ID`),
   CONSTRAINT `FKPAR1` FOREIGN KEY (`PARTP_ID`) REFERENCES `parent_type` (`PARTP_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.parent_type
+-- Dumping data for table mtpdmulti.parent_chart: ~0 rows (approximately)
+/*!40000 ALTER TABLE `parent_chart` DISABLE KEYS */;
+INSERT INTO `parent_chart` (`PAR_ID`, `PARTP_ID`, `PAR_ACC`, `PAR_ACCNAME`, `PAR_TYPE`, `PAR_INFO`, `PAR_DTSTS`) VALUES
+	(17, 12, '100001', 'KAS HO', NULL, 'Kas HO', '1');
+/*!40000 ALTER TABLE `parent_chart` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.parent_type
 DROP TABLE IF EXISTS `parent_type`;
 CREATE TABLE IF NOT EXISTS `parent_type` (
   `PARTP_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1333,10 +1644,16 @@ CREATE TABLE IF NOT EXISTS `parent_type` (
   `PARTP_STS` char(1) DEFAULT NULL,
   `PARTP_DTSTS` char(1) DEFAULT NULL,
   PRIMARY KEY (`PARTP_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.permitdoc_det
+-- Dumping data for table mtpdmulti.parent_type: ~2 rows (approximately)
+/*!40000 ALTER TABLE `parent_type` DISABLE KEYS */;
+INSERT INTO `parent_type` (`PARTP_ID`, `PARTP_NAME`, `PARTP_STS`, `PARTP_DTSTS`) VALUES
+	(12, 'AKTIVA LANCAR', '1', '1'),
+	(13, 'BIAYA', '2', '1');
+/*!40000 ALTER TABLE `parent_type` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.permitdoc_det
 DROP TABLE IF EXISTS `permitdoc_det`;
 CREATE TABLE IF NOT EXISTS `permitdoc_det` (
   `PDOC_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1351,10 +1668,13 @@ CREATE TABLE IF NOT EXISTS `permitdoc_det` (
   PRIMARY KEY (`PDOC_ID`),
   KEY `FK_R117` (`PAPPR_ID`),
   CONSTRAINT `FK_R117` FOREIGN KEY (`PAPPR_ID`) REFERENCES `trx_permitappr` (`PAPPR_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.permitpay_det
+-- Dumping data for table mtpdmulti.permitdoc_det: ~0 rows (approximately)
+/*!40000 ALTER TABLE `permitdoc_det` DISABLE KEYS */;
+/*!40000 ALTER TABLE `permitdoc_det` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.permitpay_det
 DROP TABLE IF EXISTS `permitpay_det`;
 CREATE TABLE IF NOT EXISTS `permitpay_det` (
   `PPAY_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1369,10 +1689,13 @@ CREATE TABLE IF NOT EXISTS `permitpay_det` (
   KEY `FK_RELATIONSHIP_121` (`COA_ID`),
   CONSTRAINT `FK_R118` FOREIGN KEY (`PAPPR_ID`) REFERENCES `trx_permitappr` (`PAPPR_ID`),
   CONSTRAINT `FK_RELATIONSHIP_121` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.poga_details
+-- Dumping data for table mtpdmulti.permitpay_det: ~0 rows (approximately)
+/*!40000 ALTER TABLE `permitpay_det` DISABLE KEYS */;
+/*!40000 ALTER TABLE `permitpay_det` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.poga_details
 DROP TABLE IF EXISTS `poga_details`;
 CREATE TABLE IF NOT EXISTS `poga_details` (
   `PGDET_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1385,10 +1708,13 @@ CREATE TABLE IF NOT EXISTS `poga_details` (
   KEY `FK_R61` (`POGA_ID`),
   CONSTRAINT `FK_R60` FOREIGN KEY (`GD_ID`) REFERENCES `master_goods` (`GD_ID`),
   CONSTRAINT `FK_R61` FOREIGN KEY (`POGA_ID`) REFERENCES `trx_po_ga` (`POGA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.po_details
+-- Dumping data for table mtpdmulti.poga_details: ~0 rows (approximately)
+/*!40000 ALTER TABLE `poga_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `poga_details` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.po_details
 DROP TABLE IF EXISTS `po_details`;
 CREATE TABLE IF NOT EXISTS `po_details` (
   `PODET_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1401,10 +1727,13 @@ CREATE TABLE IF NOT EXISTS `po_details` (
   KEY `FK_R21` (`GD_ID`),
   CONSTRAINT `FK_R20` FOREIGN KEY (`PO_ID`) REFERENCES `trx_po` (`PO_ID`),
   CONSTRAINT `FK_R21` FOREIGN KEY (`GD_ID`) REFERENCES `master_goods` (`GD_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.prcga_details
+-- Dumping data for table mtpdmulti.po_details: ~0 rows (approximately)
+/*!40000 ALTER TABLE `po_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `po_details` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.prcga_details
 DROP TABLE IF EXISTS `prcga_details`;
 CREATE TABLE IF NOT EXISTS `prcga_details` (
   `PRCGADET_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1417,10 +1746,13 @@ CREATE TABLE IF NOT EXISTS `prcga_details` (
   KEY `FK_R66` (`GD_ID`),
   CONSTRAINT `FK_R65` FOREIGN KEY (`PRCGA_ID`) REFERENCES `trx_prc_ga` (`PRCGA_ID`),
   CONSTRAINT `FK_R66` FOREIGN KEY (`GD_ID`) REFERENCES `master_goods` (`GD_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.prcga_ret
+-- Dumping data for table mtpdmulti.prcga_details: ~0 rows (approximately)
+/*!40000 ALTER TABLE `prcga_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `prcga_details` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.prcga_ret
 DROP TABLE IF EXISTS `prcga_ret`;
 CREATE TABLE IF NOT EXISTS `prcga_ret` (
   `RTPRCGA_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1446,10 +1778,13 @@ CREATE TABLE IF NOT EXISTS `prcga_ret` (
   CONSTRAINT `FK_R67` FOREIGN KEY (`PRCGA_ID`) REFERENCES `trx_prc_ga` (`PRCGA_ID`),
   CONSTRAINT `FK_R68` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`),
   CONSTRAINT `FK_R69` FOREIGN KEY (`CURR_ID`) REFERENCES `master_currency` (`CURR_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.prc_details
+-- Dumping data for table mtpdmulti.prcga_ret: ~0 rows (approximately)
+/*!40000 ALTER TABLE `prcga_ret` DISABLE KEYS */;
+/*!40000 ALTER TABLE `prcga_ret` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.prc_details
 DROP TABLE IF EXISTS `prc_details`;
 CREATE TABLE IF NOT EXISTS `prc_details` (
   `PRCDET_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1462,10 +1797,13 @@ CREATE TABLE IF NOT EXISTS `prc_details` (
   KEY `FK_R28` (`GD_ID`),
   CONSTRAINT `FK_R27` FOREIGN KEY (`PRC_ID`) REFERENCES `trx_procurement` (`PRC_ID`),
   CONSTRAINT `FK_R28` FOREIGN KEY (`GD_ID`) REFERENCES `master_goods` (`GD_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.procurement_ret
+-- Dumping data for table mtpdmulti.prc_details: ~0 rows (approximately)
+/*!40000 ALTER TABLE `prc_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `prc_details` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.procurement_ret
 DROP TABLE IF EXISTS `procurement_ret`;
 CREATE TABLE IF NOT EXISTS `procurement_ret` (
   `RTPRC_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1492,10 +1830,13 @@ CREATE TABLE IF NOT EXISTS `procurement_ret` (
   CONSTRAINT `FK_R29` FOREIGN KEY (`PRC_ID`) REFERENCES `trx_procurement` (`PRC_ID`),
   CONSTRAINT `FK_R32` FOREIGN KEY (`CURR_ID`) REFERENCES `master_currency` (`CURR_ID`),
   CONSTRAINT `FK_R35` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.retprcga_details
+-- Dumping data for table mtpdmulti.procurement_ret: ~0 rows (approximately)
+/*!40000 ALTER TABLE `procurement_ret` DISABLE KEYS */;
+/*!40000 ALTER TABLE `procurement_ret` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.retprcga_details
 DROP TABLE IF EXISTS `retprcga_details`;
 CREATE TABLE IF NOT EXISTS `retprcga_details` (
   `RTPRCGADET_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1510,8 +1851,11 @@ CREATE TABLE IF NOT EXISTS `retprcga_details` (
   CONSTRAINT `FK_R71` FOREIGN KEY (`GD_ID`) REFERENCES `master_goods` (`GD_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.retprc_details
+-- Dumping data for table mtpdmulti.retprcga_details: ~0 rows (approximately)
+/*!40000 ALTER TABLE `retprcga_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `retprcga_details` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.retprc_details
 DROP TABLE IF EXISTS `retprc_details`;
 CREATE TABLE IF NOT EXISTS `retprc_details` (
   `RETPRCDET_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1524,10 +1868,13 @@ CREATE TABLE IF NOT EXISTS `retprc_details` (
   KEY `FK_R31` (`GD_ID`),
   CONSTRAINT `FK_R30` FOREIGN KEY (`RTPRC_ID`) REFERENCES `procurement_ret` (`RTPRC_ID`),
   CONSTRAINT `FK_R31` FOREIGN KEY (`GD_ID`) REFERENCES `master_goods` (`GD_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.retusgga_details
+-- Dumping data for table mtpdmulti.retprc_details: ~0 rows (approximately)
+/*!40000 ALTER TABLE `retprc_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `retprc_details` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.retusgga_details
 DROP TABLE IF EXISTS `retusgga_details`;
 CREATE TABLE IF NOT EXISTS `retusgga_details` (
   `RTUSGGADET_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1542,8 +1889,11 @@ CREATE TABLE IF NOT EXISTS `retusgga_details` (
   CONSTRAINT `FK_R78` FOREIGN KEY (`GD_ID`) REFERENCES `master_goods` (`GD_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.retusg_details
+-- Dumping data for table mtpdmulti.retusgga_details: ~0 rows (approximately)
+/*!40000 ALTER TABLE `retusgga_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `retusgga_details` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.retusg_details
 DROP TABLE IF EXISTS `retusg_details`;
 CREATE TABLE IF NOT EXISTS `retusg_details` (
   `RETUSGDET_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1556,10 +1906,13 @@ CREATE TABLE IF NOT EXISTS `retusg_details` (
   KEY `FK_R44` (`RTUSG_ID`),
   CONSTRAINT `FK_R43` FOREIGN KEY (`GD_ID`) REFERENCES `master_goods` (`GD_ID`),
   CONSTRAINT `FK_R44` FOREIGN KEY (`RTUSG_ID`) REFERENCES `usage_ret` (`RTUSG_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.tax_inv_details
+-- Dumping data for table mtpdmulti.retusg_details: ~0 rows (approximately)
+/*!40000 ALTER TABLE `retusg_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `retusg_details` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.tax_inv_details
 DROP TABLE IF EXISTS `tax_inv_details`;
 CREATE TABLE IF NOT EXISTS `tax_inv_details` (
   `TINVDET_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1578,8 +1931,11 @@ CREATE TABLE IF NOT EXISTS `tax_inv_details` (
   CONSTRAINT `FKTINVDET2` FOREIGN KEY (`INVDET_ID`) REFERENCES `inv_details` (`INVDET_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.trx_adjustment
+-- Dumping data for table mtpdmulti.tax_inv_details: ~0 rows (approximately)
+/*!40000 ALTER TABLE `tax_inv_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tax_inv_details` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.trx_adjustment
 DROP TABLE IF EXISTS `trx_adjustment`;
 CREATE TABLE IF NOT EXISTS `trx_adjustment` (
   `ADJ_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1602,10 +1958,13 @@ CREATE TABLE IF NOT EXISTS `trx_adjustment` (
   CONSTRAINT `FKADJ1` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`),
   CONSTRAINT `FK_R45` FOREIGN KEY (`GD_ID`) REFERENCES `master_goods` (`GD_ID`),
   CONSTRAINT `FK_R81` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.trx_adj_ga
+-- Dumping data for table mtpdmulti.trx_adjustment: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_adjustment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_adjustment` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.trx_adj_ga
 DROP TABLE IF EXISTS `trx_adj_ga`;
 CREATE TABLE IF NOT EXISTS `trx_adj_ga` (
   `ADJGA_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1628,10 +1987,13 @@ CREATE TABLE IF NOT EXISTS `trx_adj_ga` (
   CONSTRAINT `FKADJGA1` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`),
   CONSTRAINT `FK_R79` FOREIGN KEY (`GD_ID`) REFERENCES `master_goods` (`GD_ID`),
   CONSTRAINT `FK_R80` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.trx_approvalbill
+-- Dumping data for table mtpdmulti.trx_adj_ga: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_adj_ga` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_adj_ga` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.trx_approvalbill
 DROP TABLE IF EXISTS `trx_approvalbill`;
 CREATE TABLE IF NOT EXISTS `trx_approvalbill` (
   `APPR_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1695,10 +2057,13 @@ CREATE TABLE IF NOT EXISTS `trx_approvalbill` (
   CONSTRAINT `FK_R14` FOREIGN KEY (`CUST_ID`) REFERENCES `master_customer` (`CUST_ID`),
   CONSTRAINT `FK_R18` FOREIGN KEY (`BB_ID`) REFERENCES `master_bboard` (`BB_ID`),
   CONSTRAINT `FK_R59` FOREIGN KEY (`PLC_ID`) REFERENCES `master_placement` (`PLC_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.trx_bankin
+-- Dumping data for table mtpdmulti.trx_approvalbill: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_approvalbill` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_approvalbill` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.trx_bankin
 DROP TABLE IF EXISTS `trx_bankin`;
 CREATE TABLE IF NOT EXISTS `trx_bankin` (
   `BNK_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1729,10 +2094,13 @@ CREATE TABLE IF NOT EXISTS `trx_bankin` (
   CONSTRAINT `FK_R86` FOREIGN KEY (`CURR_ID`) REFERENCES `master_currency` (`CURR_ID`),
   CONSTRAINT `FK_R87` FOREIGN KEY (`CUST_ID`) REFERENCES `master_customer` (`CUST_ID`),
   CONSTRAINT `FK_R99` FOREIGN KEY (`BANK_ID`) REFERENCES `master_bank` (`BANK_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.trx_bankout
+-- Dumping data for table mtpdmulti.trx_bankin: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_bankin` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_bankin` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.trx_bankout
 DROP TABLE IF EXISTS `trx_bankout`;
 CREATE TABLE IF NOT EXISTS `trx_bankout` (
   `BNKO_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1766,10 +2134,13 @@ CREATE TABLE IF NOT EXISTS `trx_bankout` (
   CONSTRAINT `FK_R123` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`),
   CONSTRAINT `FK_R124` FOREIGN KEY (`CURR_ID`) REFERENCES `master_currency` (`CURR_ID`),
   CONSTRAINT `FK_R126` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.trx_bapp
+-- Dumping data for table mtpdmulti.trx_bankout: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_bankout` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_bankout` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.trx_bapp
 DROP TABLE IF EXISTS `trx_bapp`;
 CREATE TABLE IF NOT EXISTS `trx_bapp` (
   `BAPP_CODE` char(30) DEFAULT NULL,
@@ -1796,10 +2167,13 @@ CREATE TABLE IF NOT EXISTS `trx_bapp` (
   CONSTRAINT `FKBAPP1` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`),
   CONSTRAINT `FK_R46` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`),
   CONSTRAINT `FK_R47` FOREIGN KEY (`APPR_ID`) REFERENCES `trx_approvalbill` (`APPR_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.trx_bapplog
+-- Dumping data for table mtpdmulti.trx_bapp: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_bapp` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_bapp` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.trx_bapplog
 DROP TABLE IF EXISTS `trx_bapplog`;
 CREATE TABLE IF NOT EXISTS `trx_bapplog` (
   `BALG_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1829,10 +2203,13 @@ CREATE TABLE IF NOT EXISTS `trx_bapplog` (
   CONSTRAINT `FKBALG2` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`),
   CONSTRAINT `FKBALG3` FOREIGN KEY (`LOC_ID`) REFERENCES `master_location` (`LOC_ID`),
   CONSTRAINT `FKBALG4` FOREIGN KEY (`CUST_ID`) REFERENCES `master_customer` (`CUST_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.trx_brc_ppn
+-- Dumping data for table mtpdmulti.trx_bapplog: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_bapplog` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_bapplog` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.trx_brc_ppn
 DROP TABLE IF EXISTS `trx_brc_ppn`;
 CREATE TABLE IF NOT EXISTS `trx_brc_ppn` (
   `BPPN_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1848,8 +2225,11 @@ CREATE TABLE IF NOT EXISTS `trx_brc_ppn` (
   CONSTRAINT `FKBPPN1` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.trx_budget
+-- Dumping data for table mtpdmulti.trx_brc_ppn: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_brc_ppn` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_brc_ppn` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.trx_budget
 DROP TABLE IF EXISTS `trx_budget`;
 CREATE TABLE IF NOT EXISTS `trx_budget` (
   `BUD_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1874,10 +2254,13 @@ CREATE TABLE IF NOT EXISTS `trx_budget` (
   CONSTRAINT `FK_R108` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`),
   CONSTRAINT `FK_R109` FOREIGN KEY (`CURR_ID`) REFERENCES `master_currency` (`CURR_ID`),
   CONSTRAINT `FK_R110` FOREIGN KEY (`DEPT_ID`) REFERENCES `master_dept` (`DEPT_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.trx_cash_in
+-- Dumping data for table mtpdmulti.trx_budget: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_budget` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_budget` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.trx_cash_in
 DROP TABLE IF EXISTS `trx_cash_in`;
 CREATE TABLE IF NOT EXISTS `trx_cash_in` (
   `CSH_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1906,10 +2289,13 @@ CREATE TABLE IF NOT EXISTS `trx_cash_in` (
   CONSTRAINT `FK_R83` FOREIGN KEY (`CURR_ID`) REFERENCES `master_currency` (`CURR_ID`),
   CONSTRAINT `FK_R84` FOREIGN KEY (`CUST_ID`) REFERENCES `master_customer` (`CUST_ID`),
   CONSTRAINT `FK_R92` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.trx_cash_out
+-- Dumping data for table mtpdmulti.trx_cash_in: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_cash_in` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_cash_in` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.trx_cash_out
 DROP TABLE IF EXISTS `trx_cash_out`;
 CREATE TABLE IF NOT EXISTS `trx_cash_out` (
   `CSHO_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1939,10 +2325,13 @@ CREATE TABLE IF NOT EXISTS `trx_cash_out` (
   CONSTRAINT `FK_R95` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`),
   CONSTRAINT `FK_R96` FOREIGN KEY (`CURR_ID`) REFERENCES `master_currency` (`CURR_ID`),
   CONSTRAINT `FK_R97` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.trx_giro_in
+-- Dumping data for table mtpdmulti.trx_cash_out: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_cash_out` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_cash_out` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.trx_giro_in
 DROP TABLE IF EXISTS `trx_giro_in`;
 CREATE TABLE IF NOT EXISTS `trx_giro_in` (
   `GRIN_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1961,10 +2350,13 @@ CREATE TABLE IF NOT EXISTS `trx_giro_in` (
   CONSTRAINT `FKGRIN1` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`),
   CONSTRAINT `FKGRIN2` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`),
   CONSTRAINT `FK_RELATIONSHIP_131` FOREIGN KEY (`BANK_ID`) REFERENCES `master_bank` (`BANK_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.trx_giro_out
+-- Dumping data for table mtpdmulti.trx_giro_in: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_giro_in` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_giro_in` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.trx_giro_out
 DROP TABLE IF EXISTS `trx_giro_out`;
 CREATE TABLE IF NOT EXISTS `trx_giro_out` (
   `GROUT_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -1983,10 +2375,13 @@ CREATE TABLE IF NOT EXISTS `trx_giro_out` (
   CONSTRAINT `FKGROUT1` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`),
   CONSTRAINT `FKGROUT2` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`),
   CONSTRAINT `FK_R135` FOREIGN KEY (`BANK_ID`) REFERENCES `master_bank` (`BANK_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.trx_invoice
+-- Dumping data for table mtpdmulti.trx_giro_out: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_giro_out` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_giro_out` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.trx_invoice
 DROP TABLE IF EXISTS `trx_invoice`;
 CREATE TABLE IF NOT EXISTS `trx_invoice` (
   `INV_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -2013,10 +2408,13 @@ CREATE TABLE IF NOT EXISTS `trx_invoice` (
   CONSTRAINT `FK_INV3` FOREIGN KEY (`CURR_ID`) REFERENCES `master_currency` (`CURR_ID`),
   CONSTRAINT `FK_INV4` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`),
   CONSTRAINT `FK_R52` FOREIGN KEY (`INC_ID`) REFERENCES `invoice_type` (`INC_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.trx_permitappr
+-- Dumping data for table mtpdmulti.trx_invoice: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_invoice` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_invoice` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.trx_permitappr
 DROP TABLE IF EXISTS `trx_permitappr`;
 CREATE TABLE IF NOT EXISTS `trx_permitappr` (
   `PAPPR_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -2063,10 +2461,13 @@ CREATE TABLE IF NOT EXISTS `trx_permitappr` (
   CONSTRAINT `FK_R114` FOREIGN KEY (`CUST_ID`) REFERENCES `master_customer` (`CUST_ID`),
   CONSTRAINT `FK_R115` FOREIGN KEY (`BB_ID`) REFERENCES `master_bboard` (`BB_ID`),
   CONSTRAINT `FK_R116` FOREIGN KEY (`PRMTTYP_ID`) REFERENCES `master_permit_type` (`PRMTTYP_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.trx_po
+-- Dumping data for table mtpdmulti.trx_permitappr: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_permitappr` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_permitappr` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.trx_po
 DROP TABLE IF EXISTS `trx_po`;
 CREATE TABLE IF NOT EXISTS `trx_po` (
   `PO_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -2097,10 +2498,13 @@ CREATE TABLE IF NOT EXISTS `trx_po` (
   CONSTRAINT `FK_R23` FOREIGN KEY (`APPR_ID`) REFERENCES `trx_approvalbill` (`APPR_ID`),
   CONSTRAINT `FK_R24` FOREIGN KEY (`CURR_ID`) REFERENCES `master_currency` (`CURR_ID`),
   CONSTRAINT `FK_R33` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.trx_po_ga
+-- Dumping data for table mtpdmulti.trx_po: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_po` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_po` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.trx_po_ga
 DROP TABLE IF EXISTS `trx_po_ga`;
 CREATE TABLE IF NOT EXISTS `trx_po_ga` (
   `POGA_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -2125,10 +2529,13 @@ CREATE TABLE IF NOT EXISTS `trx_po_ga` (
   CONSTRAINT `FK_R56` FOREIGN KEY (`CURR_ID`) REFERENCES `master_currency` (`CURR_ID`),
   CONSTRAINT `FK_R57` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`),
   CONSTRAINT `FK_R58` FOREIGN KEY (`SUPP_ID`) REFERENCES `master_supplier` (`SUPP_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.trx_prc_ga
+-- Dumping data for table mtpdmulti.trx_po_ga: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_po_ga` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_po_ga` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.trx_prc_ga
 DROP TABLE IF EXISTS `trx_prc_ga`;
 CREATE TABLE IF NOT EXISTS `trx_prc_ga` (
   `PRCGA_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -2155,10 +2562,13 @@ CREATE TABLE IF NOT EXISTS `trx_prc_ga` (
   CONSTRAINT `FK_R62` FOREIGN KEY (`POGA_ID`) REFERENCES `trx_po_ga` (`POGA_ID`),
   CONSTRAINT `FK_R63` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`),
   CONSTRAINT `FK_R64` FOREIGN KEY (`CURR_ID`) REFERENCES `master_currency` (`CURR_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.trx_procurement
+-- Dumping data for table mtpdmulti.trx_prc_ga: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_prc_ga` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_prc_ga` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.trx_procurement
 DROP TABLE IF EXISTS `trx_procurement`;
 CREATE TABLE IF NOT EXISTS `trx_procurement` (
   `PRC_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -2185,10 +2595,13 @@ CREATE TABLE IF NOT EXISTS `trx_procurement` (
   CONSTRAINT `FK_R25` FOREIGN KEY (`PO_ID`) REFERENCES `trx_po` (`PO_ID`),
   CONSTRAINT `FK_R26` FOREIGN KEY (`CURR_ID`) REFERENCES `master_currency` (`CURR_ID`),
   CONSTRAINT `FK_R34` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.trx_tax_invoice
+-- Dumping data for table mtpdmulti.trx_procurement: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_procurement` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_procurement` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.trx_tax_invoice
 DROP TABLE IF EXISTS `trx_tax_invoice`;
 CREATE TABLE IF NOT EXISTS `trx_tax_invoice` (
   `TINV_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -2209,10 +2622,13 @@ CREATE TABLE IF NOT EXISTS `trx_tax_invoice` (
   CONSTRAINT `FKTINV1` FOREIGN KEY (`CUST_ID`) REFERENCES `master_customer` (`CUST_ID`),
   CONSTRAINT `FKTINV2` FOREIGN KEY (`INV_ID`) REFERENCES `trx_invoice` (`INV_ID`),
   CONSTRAINT `FKTINV3` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.trx_usage
+-- Dumping data for table mtpdmulti.trx_tax_invoice: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_tax_invoice` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_tax_invoice` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.trx_usage
 DROP TABLE IF EXISTS `trx_usage`;
 CREATE TABLE IF NOT EXISTS `trx_usage` (
   `USG_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -2233,10 +2649,13 @@ CREATE TABLE IF NOT EXISTS `trx_usage` (
   CONSTRAINT `FKUSG2` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`),
   CONSTRAINT `FK_R37` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`),
   CONSTRAINT `FK_R39` FOREIGN KEY (`APPR_ID`) REFERENCES `trx_approvalbill` (`APPR_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.trx_usage_ga
+-- Dumping data for table mtpdmulti.trx_usage: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_usage` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_usage` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.trx_usage_ga
 DROP TABLE IF EXISTS `trx_usage_ga`;
 CREATE TABLE IF NOT EXISTS `trx_usage_ga` (
   `USGGA_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -2251,10 +2670,13 @@ CREATE TABLE IF NOT EXISTS `trx_usage_ga` (
   KEY `FKUSGGA1` (`BRANCH_ID`),
   CONSTRAINT `FKUSGGA1` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`),
   CONSTRAINT `FK_R72` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.usage_details
+-- Dumping data for table mtpdmulti.trx_usage_ga: ~0 rows (approximately)
+/*!40000 ALTER TABLE `trx_usage_ga` DISABLE KEYS */;
+/*!40000 ALTER TABLE `trx_usage_ga` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.usage_details
 DROP TABLE IF EXISTS `usage_details`;
 CREATE TABLE IF NOT EXISTS `usage_details` (
   `USGDET_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -2267,10 +2689,13 @@ CREATE TABLE IF NOT EXISTS `usage_details` (
   KEY `FK_R40` (`GD_ID`),
   CONSTRAINT `FK_R36` FOREIGN KEY (`USG_ID`) REFERENCES `trx_usage` (`USG_ID`),
   CONSTRAINT `FK_R40` FOREIGN KEY (`GD_ID`) REFERENCES `master_goods` (`GD_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.usage_ga_ret
+-- Dumping data for table mtpdmulti.usage_details: ~0 rows (approximately)
+/*!40000 ALTER TABLE `usage_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `usage_details` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.usage_ga_ret
 DROP TABLE IF EXISTS `usage_ga_ret`;
 CREATE TABLE IF NOT EXISTS `usage_ga_ret` (
   `RTUSGGA_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -2288,10 +2713,13 @@ CREATE TABLE IF NOT EXISTS `usage_ga_ret` (
   CONSTRAINT `FKRTUSGGA1` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`),
   CONSTRAINT `FK_R75` FOREIGN KEY (`USGGA_ID`) REFERENCES `trx_usage_ga` (`USGGA_ID`),
   CONSTRAINT `FK_R76` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.usage_ret
+-- Dumping data for table mtpdmulti.usage_ga_ret: ~0 rows (approximately)
+/*!40000 ALTER TABLE `usage_ga_ret` DISABLE KEYS */;
+/*!40000 ALTER TABLE `usage_ga_ret` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.usage_ret
 DROP TABLE IF EXISTS `usage_ret`;
 CREATE TABLE IF NOT EXISTS `usage_ret` (
   `RTUSG_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -2309,10 +2737,13 @@ CREATE TABLE IF NOT EXISTS `usage_ret` (
   CONSTRAINT `FKRTUSG1` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`),
   CONSTRAINT `FK_R41` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`),
   CONSTRAINT `FK_R42` FOREIGN KEY (`USG_ID`) REFERENCES `trx_usage` (`USG_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
--- Dumping structure for table mtpd2.usg_ga_details
+-- Dumping data for table mtpdmulti.usage_ret: ~0 rows (approximately)
+/*!40000 ALTER TABLE `usage_ret` DISABLE KEYS */;
+/*!40000 ALTER TABLE `usage_ret` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.usg_ga_details
 DROP TABLE IF EXISTS `usg_ga_details`;
 CREATE TABLE IF NOT EXISTS `usg_ga_details` (
   `USGGADET_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -2325,9 +2756,12 @@ CREATE TABLE IF NOT EXISTS `usg_ga_details` (
   KEY `FK_R74` (`GD_ID`),
   CONSTRAINT `FK_R73` FOREIGN KEY (`USGGA_ID`) REFERENCES `trx_usage_ga` (`USGGA_ID`),
   CONSTRAINT `FK_R74` FOREIGN KEY (`GD_ID`) REFERENCES `master_goods` (`GD_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table mtpdmulti.usg_ga_details: ~0 rows (approximately)
+/*!40000 ALTER TABLE `usg_ga_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `usg_ga_details` ENABLE KEYS */;
+
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

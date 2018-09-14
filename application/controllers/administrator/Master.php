@@ -1522,7 +1522,7 @@
 	        }
 	        if($this->input->post('par_check') == '0')
 	        {
-	        	$this->form_validation->set_rules('par_acc', 'No Rekening', 'is_unique[parent_chart.PAR_ACC]');
+	        	$this->form_validation->set_rules('par_acc', 'No Rekening', 'is_unique[parent_chart.PAR_ACC]|trim|alpha_numeric');
 	        	if($this->form_validation->run() == FALSE)
 		        {
 		        	$data['inputerror'][] = 'par_acc';
