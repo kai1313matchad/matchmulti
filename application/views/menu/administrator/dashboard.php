@@ -127,6 +127,26 @@
                             <div class="col-xs-12">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
+                                        <strong>Cabang</strong>
+                                    </div>
+                                    <div class="panel-body">
+                                        <form id="form_branch" class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Cabang</label>
+                                                <div class="col-sm-6">
+                                                    <select class="form-control text-center" name="os_branch" id="os_branch" data-live-search="true">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
                                         <strong>Setting - Rekening/Akun Transaksi Pembelian</strong>
                                     </div>
                                     <div class="panel-body">
@@ -348,9 +368,10 @@
     <script>
         $(document).ready(function() 
         {
-            os_data();
+            // os_data();
             checkboxes();
             drop_user();
+            drop_branch('os_branch');
             drop_coa('os_prccoadeb');
             drop_coa('os_prccoacrd');
             drop_coa('os_prccoadisc');
@@ -370,11 +391,14 @@
                     pick_bank($('#os_bankinfo option:selected').val());
                 }                
             });
+            $('#os_branch').change(function(){
+                os_data($('#os_branch option:selected').val());
+            });
         });
-        function os_data()
+        function os_data(id)
         {
             $.ajax({
-                url : "<?php echo site_url('Dashboard/get_appdata')?>",
+                url : "<?php echo site_url('Dashboard/get_appdata/')?>"+id,
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)
@@ -482,12 +506,12 @@
             $.ajax({
                 url : "<?php echo site_url('Dashboard/save_notafin/')?>",
                 type: "POST",
-                data: $('#form_notafin').serialize(),
+                data: $('form').serialize(),
                 dataType: "JSON",
                 success: function(data)
                 {
                     alert('Data Berhasil Disimpan');
-                    os_data();
+                    os_data((isset($('#os_branch option:selected').val()))?$('#os_branch option:selected').val():0);
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
@@ -602,6 +626,38 @@
             error: function (jqXHR, textStatus, errorThrown)
                 {
                     alert('Error get data from ajax');
+                }
+            });
+        }
+        function drop_branch(id)
+        {
+            $.ajax({            
+            url : "<?php echo site_url('administrator/Master/getcoabrc')?>",
+            type: "GET",
+            dataType: "JSON",
+            success: function(data)
+                {
+                    $('#'+id).empty();
+                    var select = document.getElementById(id);
+                    var option;
+                    option = document.createElement('option');
+                        option.value = ''
+                        option.text = 'Pilih';
+                        select.add(option);
+                    for (var i = 0; i < data.length; i++) {
+                        option = document.createElement('option');
+                        option.value = data[i]["BRANCH_ID"]
+                        option.text = data[i]["BRANCH_NAME"];
+                        select.add(option);
+                    }
+                    $('#'+id).selectpicker({
+                        dropupAuto: false
+                    });
+                    $('#'+id).selectpicker('refresh');                    
+                },
+            error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax drop coa');
                 }
             });
         }

@@ -243,6 +243,16 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Cabang</label>
+                                <div class="col-sm-9">
+                                    <select name="coa_brc" id="coa_brc" class="form-control text-center" data-live-search="true">
+                                    </select>
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="form-group">                                
                                 <label class="col-sm-3 control-label">No. Rekening</label>
                                 <div class="col-sm-9">
@@ -362,6 +372,16 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Rek. Induk</label>
+                                <div class="col-sm-9">
+                                    <select name="coa_brcv" id="coa_brcv" class="form-control text-center" disabled>
+                                    </select>
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="form-group">                                
                                 <label class="col-sm-3 control-label">No. Rekening</label>
                                 <div class="col-sm-9">
@@ -460,6 +480,35 @@
                         option = document.createElement('option');
                         option.value = data[i]["PAR_ID"]
                         option.text = data[i]["PAR_ACC"]+'-'+data[i]["PAR_ACCNAME"];
+                        select.add(option);
+                    }
+                    $('#'+id).selectpicker({});
+                    $('#'+id).selectpicker('refresh');
+                },
+            error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function dropcoabrc(id)
+        {
+            $.ajax({
+            url : "<?php echo site_url('administrator/Master/getcoabrc')?>",
+            type: "GET",
+            dataType: "JSON",
+            success: function(data)
+                {   
+                    var select = document.getElementById(id);
+                    var option;
+                    option = document.createElement('option');
+                    option.value = ''
+                    option.text = 'Pilih';
+                    select.add(option);
+                    for (var i = 0; i < data.length; i++) {
+                        option = document.createElement('option');
+                        option.value = data[i]["BRANCH_ID"]
+                        option.text = data[i]["BRANCH_NAME"];
                         select.add(option);
                     }
                     $('#'+id).selectpicker({});
@@ -572,7 +621,9 @@
             $('[name="coa_sts"]').val("1");
             $('[name="coa_check"]').val("0");
             $('#coa_par').empty();
+            $('#coa_brc').empty();
             dropcoapr('coa_par');
+            dropcoabrc('coa_brc');
         }
         function edit_partp(id)
         {
@@ -640,7 +691,9 @@
             $('.form-group').removeClass('has-error');
             $('.help-block').empty();
             $('#coa_par').empty();
+            $('#coa_brc').empty();
             dropcoapr('coa_par');
+            dropcoabrc('coa_brc');
 
             $.ajax({
                 url : "<?php echo site_url('administrator/Master/edit_coa/')?>" + id,
@@ -654,6 +707,7 @@
                     // var sts = data.PAR_ID;
                     // document.querySelector('#coa_par [value="' + sts + '"]').selected = true;
                     $('#coa_par').selectpicker('val', data.PAR_ID);
+                    $('#coa_brc').selectpicker('val', data.BRANCH_ID);
                     $('[name="coa_check"]').val("1");
                     $('[name="coa_tb"]').val("chart_of_account");
                     $('#modal_coa').modal('show');
@@ -875,7 +929,9 @@
         function lihat_coa(id)
         {
             $('#coa_parv').empty();
-            dropcoapr('coa_parv');     
+            $('#coa_brcv').empty();
+            dropcoapr('coa_parv'); 
+            dropcoabrc('coa_brcv');     
             $.ajax({
                 url : "<?php echo site_url('administrator/Master/edit_coa/')?>" + id,
                 type: "GET",
@@ -888,8 +944,9 @@
                     // var sts = data.PAR_ID;
                     // document.querySelector('#coa_parv [value="' + sts + '"]').selected = true;
                     $('#coa_parv').selectpicker('val', data.PAR_ID);
+                    $('#coa_brcv').selectpicker('val', data.BRANCH_ID);
                     $('#modal_view2').modal('show');
-                    $('.modal-title').text('Lihat Rek. Induk');
+                    $('.modal-title').text('Lihat Rekening');
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {

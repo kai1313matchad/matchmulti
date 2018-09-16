@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Server version:               10.1.19-MariaDB - mariadb.org binary distribution
 -- Server OS:                    Win32
--- HeidiSQL Version:             9.4.0.5125
+-- HeidiSQL Version:             9.5.0.5196
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -364,10 +364,12 @@ CREATE TABLE IF NOT EXISTS `chart_of_account` (
   KEY `FK_chart_of_account_master_branch` (`BRANCH_ID`),
   CONSTRAINT `FK_R49` FOREIGN KEY (`PAR_ID`) REFERENCES `parent_chart` (`PAR_ID`),
   CONSTRAINT `FK_chart_of_account_master_branch` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.chart_of_account: ~0 rows (approximately)
+-- Dumping data for table mtpdmulti.chart_of_account: ~1 rows (approximately)
 /*!40000 ALTER TABLE `chart_of_account` DISABLE KEYS */;
+INSERT INTO `chart_of_account` (`COA_ID`, `PAR_ID`, `BRANCH_ID`, `COA_ACC`, `COA_ACCNAME`, `COA_OWNER`, `COA_DEBIT`, `COA_CREDIT`, `COA_SALDO`, `COA_DTSTS`) VALUES
+	(1, 17, 1, '1110001', 'KAS HO', NULL, 0, 0, 0, '1');
 /*!40000 ALTER TABLE `chart_of_account` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.giroin_det
@@ -534,7 +536,49 @@ INSERT INTO `group_user` (`USER_ID`, `MENU_CODE`) VALUES
 	(1, 'SLS'),
 	(1, 'SUPP'),
 	(1, 'TRX'),
-	(1, 'USR');
+	(1, 'USR'),
+	(2, 'ACC'),
+	(2, 'BNK'),
+	(2, 'BRC'),
+	(2, 'COA'),
+	(2, 'CURR'),
+	(2, 'CUST'),
+	(2, 'DEPT'),
+	(2, 'FIN'),
+	(2, 'GA'),
+	(2, 'GD'),
+	(2, 'INVT'),
+	(2, 'LOC'),
+	(2, 'LOG'),
+	(2, 'MKT'),
+	(2, 'PAT'),
+	(2, 'PMT'),
+	(2, 'REK'),
+	(2, 'SLS'),
+	(2, 'SUPP'),
+	(2, 'TRX'),
+	(2, 'USR'),
+	(3, 'ACC'),
+	(3, 'BNK'),
+	(3, 'BRC'),
+	(3, 'COA'),
+	(3, 'CURR'),
+	(3, 'CUST'),
+	(3, 'DEPT'),
+	(3, 'FIN'),
+	(3, 'GA'),
+	(3, 'GD'),
+	(3, 'INVT'),
+	(3, 'LOC'),
+	(3, 'LOG'),
+	(3, 'MKT'),
+	(3, 'PAT'),
+	(3, 'PMT'),
+	(3, 'REK'),
+	(3, 'SLS'),
+	(3, 'SUPP'),
+	(3, 'TRX'),
+	(3, 'USR');
 /*!40000 ALTER TABLE `group_user` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.his_adj
@@ -1200,7 +1244,7 @@ CREATE TABLE IF NOT EXISTS `master_branch` (
   PRIMARY KEY (`BRANCH_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.master_branch: ~2 rows (approximately)
+-- Dumping data for table mtpdmulti.master_branch: ~3 rows (approximately)
 /*!40000 ALTER TABLE `master_branch` DISABLE KEYS */;
 INSERT INTO `master_branch` (`BRANCH_ID`, `BRANCH_CODE`, `BRANCH_NAME`, `BRANCH_STATUS`, `BRANCH_ADDRESS`, `BRANCH_CITY`, `BRANCH_INIT`, `BRANCH_PHONE`, `BRANCH_FAX`, `BRANCH_LOGO`, `BRANCH_DTSTS`) VALUES
 	(1, 'BRC-00001', 'Holding', '0', 'JL Lesti No.42', 'Surabaya', 'HO', NULL, NULL, NULL, '1'),
@@ -1479,12 +1523,14 @@ CREATE TABLE IF NOT EXISTS `master_person` (
   `PERSON_PHONE` char(30) DEFAULT NULL,
   `PERSON_DTSTS` char(1) DEFAULT NULL,
   PRIMARY KEY (`PERSON_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table mtpdmulti.master_person: ~0 rows (approximately)
 /*!40000 ALTER TABLE `master_person` DISABLE KEYS */;
 INSERT INTO `master_person` (`PERSON_ID`, `PERSON_CODE`, `PERSON_NAME`, `PERSON_ADDRESS`, `PERSON_PHONE`, `PERSON_DTSTS`) VALUES
-	(1, 'KRY-00001', 'Kaisha', 'Semolowaru', '09876', '1');
+	(1, 'KRY-00001', 'Kaisha', 'Semolowaru', '09876', '1'),
+	(2, 'KRY-00002', 'Fitri', '-', '-', '1'),
+	(3, 'KRY-00003', 'Dhani', '-', '-', '1');
 /*!40000 ALTER TABLE `master_person` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.master_placement
@@ -1516,10 +1562,14 @@ CREATE TABLE IF NOT EXISTS `master_sales` (
   KEY `FK_R4` (`BRANCH_ID`),
   CONSTRAINT `FK_R2` FOREIGN KEY (`PERSON_ID`) REFERENCES `master_person` (`PERSON_ID`),
   CONSTRAINT `FK_R4` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table mtpdmulti.master_sales: ~0 rows (approximately)
 /*!40000 ALTER TABLE `master_sales` DISABLE KEYS */;
+INSERT INTO `master_sales` (`SALES_ID`, `BRANCH_ID`, `PERSON_ID`, `SALES_CODE`, `SALES_PHONE`, `SALES_EMAIL`, `SALES_DTSTS`) VALUES
+	(1, 3, 2, 'SLF-00001', '-', 'a@mail.com', '1'),
+	(2, 4, 3, 'SLF-00002', '-', 'a@mail.com', '1'),
+	(3, 1, 1, 'SLF-00003', '-', 'a@mail.com', '1');
 /*!40000 ALTER TABLE `master_sales` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.master_supplier
@@ -1567,18 +1617,21 @@ CREATE TABLE IF NOT EXISTS `master_user` (
   KEY `FK_R3` (`BRANCH_ID`),
   CONSTRAINT `FK_R1` FOREIGN KEY (`PERSON_ID`) REFERENCES `master_person` (`PERSON_ID`),
   CONSTRAINT `FK_R3` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table mtpdmulti.master_user: ~0 rows (approximately)
 /*!40000 ALTER TABLE `master_user` DISABLE KEYS */;
 INSERT INTO `master_user` (`USER_ID`, `BRANCH_ID`, `PERSON_ID`, `USER_CODE`, `USER_NAME`, `USER_PASSWORD`, `USER_LEVEL`, `USER_DTSTS`) VALUES
-	(1, 1, 1, 'USR-00001', 'kaisha', '827ccb0eea8a706c4c34a16891f84e7b', '1', '1');
+	(1, 1, 1, 'USR-00001', 'kaisha', '827ccb0eea8a706c4c34a16891f84e7b', '1', '1'),
+	(2, 1, 1, 'USR-00002', 'super', '827ccb0eea8a706c4c34a16891f84e7b', '2', '1'),
+	(3, 1, 1, 'USR-00003', 'op', '827ccb0eea8a706c4c34a16891f84e7b', '3', '1');
 /*!40000 ALTER TABLE `master_user` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.other_settings
 DROP TABLE IF EXISTS `other_settings`;
 CREATE TABLE IF NOT EXISTS `other_settings` (
   `OS_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `BRANCH_ID` int(11) NOT NULL DEFAULT '0',
   `PRINT_BANKINVOICE` varchar(1024) DEFAULT NULL,
   `PRC_COA` int(11) DEFAULT NULL,
   `PRC_COAAG` int(11) DEFAULT NULL,
@@ -1608,11 +1661,16 @@ CREATE TABLE IF NOT EXISTS `other_settings` (
   `PRCGA_COANAMEPPN` char(200) DEFAULT NULL,
   `PRCGA_COANAMECOST` char(200) DEFAULT NULL,
   `PRCGA_COANAMEDISC` char(200) DEFAULT NULL,
-  PRIMARY KEY (`OS_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`OS_ID`),
+  KEY `FK_other_settings_master_branch` (`BRANCH_ID`),
+  CONSTRAINT `FK_other_settings_master_branch` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table mtpdmulti.other_settings: ~0 rows (approximately)
 /*!40000 ALTER TABLE `other_settings` DISABLE KEYS */;
+INSERT INTO `other_settings` (`OS_ID`, `BRANCH_ID`, `PRINT_BANKINVOICE`, `PRC_COA`, `PRC_COAAG`, `PRC_COADISC`, `PRC_COAPPN`, `PRC_COACOST`, `PRC_COANAME`, `PRC_COANAMEAG`, `PRC_COANAMEDISC`, `PRC_COANAMEPPN`, `PRC_COANAMECOST`, `NOTAFIN_ACC`, `NOTAFIN_ACCNAME`, `ACCRCVGIRO_ACC`, `ACCRCVGIRO_ACCNAME`, `DEBTGIRO_ACC`, `DEBTGIRO_ACCNAME`, `INV_COAPPN`, `INV_COANAMEPPN`, `PRCGA_COASUPPLY`, `PRCGA_COADEBT`, `PRCGA_COAPPN`, `PRCGA_COACOST`, `PRCGA_COADISC`, `PRCGA_COANAMESUPPLY`, `PRCGA_COANAMEDEBT`, `PRCGA_COANAMEPPN`, `PRCGA_COANAMECOST`, `PRCGA_COANAMEDISC`) VALUES
+	(1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'KAS HO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(2, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'KAS HO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `other_settings` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.parent_chart
@@ -1633,7 +1691,7 @@ CREATE TABLE IF NOT EXISTS `parent_chart` (
 -- Dumping data for table mtpdmulti.parent_chart: ~0 rows (approximately)
 /*!40000 ALTER TABLE `parent_chart` DISABLE KEYS */;
 INSERT INTO `parent_chart` (`PAR_ID`, `PARTP_ID`, `PAR_ACC`, `PAR_ACCNAME`, `PAR_TYPE`, `PAR_INFO`, `PAR_DTSTS`) VALUES
-	(17, 12, '100001', 'KAS HO', NULL, 'Kas HO', '1');
+	(17, 12, '1110000', 'KAS', NULL, 'Kas Induk', '1');
 /*!40000 ALTER TABLE `parent_chart` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.parent_type

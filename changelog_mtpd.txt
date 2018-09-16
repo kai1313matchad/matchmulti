@@ -1,3 +1,9 @@
+15092018
+- Edit tabel other_settings
+	ALTER TABLE `other_settings`
+	ADD COLUMN `BRANCH_ID` INT(11) NOT NULL DEFAULT '0' AFTER `OS_ID`,
+	ADD CONSTRAINT `FK_other_settings_master_branch` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`);
+
 13092018
 - Edit tabel coa
 	ALTER TABLE `chart_of_account`

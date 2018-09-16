@@ -137,9 +137,9 @@
 			echo json_encode($data);
 		}
 
-		public function get_appdata()
+		public function get_appdata($id)
 		{
-			$get = $this->db->get_where('other_settings',array('os_id'=>'1'));
+			$get = $this->db->get_where('other_settings',array('branch_id'=>$id));
 			$data = $get->row();
 			echo json_encode($data);
 		}
@@ -196,14 +196,29 @@
 		public function save_notafin()
 		{
 			$nota = $this->input->post('os_nota');
+			$brc = $this->input->post('os_branch');
 			$getnota = $this->db->get_where('chart_of_account',array('coa_id'=>$nota));
 			$notaname = $getnota->row()->COA_ACCNAME;
-			$d_up = array(
-					'notafin_acc'=>$nota,
-					'notafin_accname'=>$notaname
-					);
-			$update = $this->crud->update('other_settings',$d_up,array('os_id'=>'1'));
-			$data['status'] = TRUE;
+			$getlist = $this->db->get_where('other_settings',array('branch_id'=>$brc))->num_rows();
+			if($getlist > 0)
+			{
+				$d_up = array(
+						'notafin_acc'=>$nota,
+						'notafin_accname'=>$notaname
+						);
+				$update = $this->crud->update('other_settings',$d_up,array('branch_id'=>$brc));
+				$data['status'] = TRUE;
+			}
+			else
+			{
+				$d_ins = array(
+						'branch_id'=>$brc,
+						'notafin_acc'=>$nota,
+						'notafin_accname'=>$notaname
+						);
+				$insert = $this->db->insert('other_settings',$d_ins);
+				$data['status'] = TRUE;	
+			}
 			echo json_encode($data);
 		}
 

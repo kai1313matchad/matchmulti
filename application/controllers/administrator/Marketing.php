@@ -642,7 +642,8 @@
 
 		public function ajax_srch_mkt()
 		{
-			$list = $this->srch_mkt->get_datatables();
+			$brc = $this->session->userdata('user_branch');
+			$list = $this->srch_mkt->get_datatables($brc);
 			$data = array();
 			$no = $_POST['start'];
 			foreach ($list as $dat) {
@@ -659,7 +660,7 @@
 			$output = array(
 							"draw" => $_POST['draw'],
 							"recordsTotal" => $this->srch_mkt->count_all(),
-							"recordsFiltered" => $this->srch_mkt->count_filtered(),
+							"recordsFiltered" => $this->srch_mkt->count_filtered($brc),
 							"data" => $data,
 					);			
 			echo json_encode($output);

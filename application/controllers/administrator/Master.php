@@ -1326,6 +1326,12 @@
 	        echo json_encode($data);
 		}
 
+		public function getcoabrc()
+		{
+			$data = $this->db->get_where('master_branch',array('branch_dtsts'=>'1'))->result();
+	        echo json_encode($data);
+		}
+
 		public function getcoaprtp()
 		{
 			$this->db->where('partp_dtsts','1');
@@ -1376,7 +1382,8 @@
 			$data = array (
 					'coa_acc' => $this->input->post('coa_acc'),
 					'coa_accname' => $this->input->post('coa_accname'),
-					'par_id' => $this->input->post('coa_par'),					
+					'par_id' => $this->input->post('coa_par'),
+					'branch_id' => $this->input->post('coa_brc'),
 					'coa_debit' => 0,
 					'coa_credit' => 0,
 					'coa_saldo' => 0,
@@ -1438,7 +1445,8 @@
 	    	$data = array(
 	                'coa_acc' => $this->input->post('coa_acc'),
 					'coa_accname' => $this->input->post('coa_accname'),
-					'par_id' => $this->input->post('coa_par')
+					'par_id' => $this->input->post('coa_par'),
+					'branch_id' => $this->input->post('coa_brc'),
 	            );
 	    	$update = $this->crud->update($table,$data,array('coa_id' => $this->input->post('coa_id')));
 	        echo json_encode(array("status" => TRUE));
@@ -1588,6 +1596,12 @@
 	        {
 	            $data['inputerror'][] = 'coa_par';
 	            $data['error_string'][] = 'Induk Rekening Tidak Boleh Kosong';
+	            $data['status'] = FALSE;
+	        }
+	        if($this->input->post('coa_brc') == '')
+	        {
+	            $data['inputerror'][] = 'coa_brc';
+	            $data['error_string'][] = 'Cabang Tidak Boleh Kosong';
 	            $data['status'] = FALSE;
 	        }
 			if($data['status'] === FALSE)
@@ -1794,7 +1808,8 @@
 
 		public function ajax_sls()
 		{
-			$list = $this->master_sls->get_datatables();
+			$brc = $this->session->userdata('user_branch');
+			$list = $this->master_sls->get_datatables($brc);
 			$data = array();
 			$no = $_POST['start'];
 			foreach ($list as $dat) {
@@ -1812,7 +1827,7 @@
 			$output = array(
 							"draw" => $_POST['draw'],
 							"recordsTotal" => $this->master_sls->count_all(),
-							"recordsFiltered" => $this->master_sls->count_filtered(),
+							"recordsFiltered" => $this->master_sls->count_filtered($brc),
 							"data" => $data,
 					);			
 			echo json_encode($output);

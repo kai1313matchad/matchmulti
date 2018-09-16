@@ -10,10 +10,12 @@
 		{
 			parent::__construct();		
 		}
-		private function _get_datatables_query()
+		private function _get_datatables_query($brc)
 		{		
 			$this->db->from($this->table);
 			$this->db->join('master_person', 'master_person.person_id = master_sales.person_id');
+			$this->db->join('master_branch', 'master_branch.branch_id = master_sales.branch_id');
+			$this->db->where('master_sales.branch_id',$brc);
 			$this->db->where('sales_dtsts','1');
 			$i = 0;
 			foreach ($this->column_search as $item) // loop column 
@@ -45,17 +47,17 @@
 				$this->db->order_by(key($order), $order[key($order)]);
 			}
 		}
-		public function get_datatables()
+		public function get_datatables($brc)
 		{
-			$this->_get_datatables_query();
+			$this->_get_datatables_query($brc);
 			if($_POST['length'] != -1)
 			$this->db->limit($_POST['length'], $_POST['start']);
 			$query = $this->db->get();
 			return $query->result();
 		}
-		public function count_filtered()
+		public function count_filtered($brc)
 		{
-			$this->_get_datatables_query();
+			$this->_get_datatables_query($brc);
 			$query = $this->db->get();
 			return $query->num_rows();
 		}
