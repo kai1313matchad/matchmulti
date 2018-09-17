@@ -2,6 +2,11 @@
 	defined('BASEPATH') OR exit('No direct script access allowed');
 	class M_gen extends CI_Model
 	{
+		function __construct()
+		{
+		  	parent::__construct();
+			date_default_timezone_set('Asia/Jakarta');
+		}
 		//Generate Angka to Terbilang
 		public function number_conv($value)
 		{
@@ -793,6 +798,7 @@
 					'hisappr_new' => 'None',
 					'hisappr_info' => 'Create By System',
 					'hisappr_date' => date('Y-m-d'),
+					'hisappr_time' => date('H:i:s'),
 					'hisappr_upcount' => 0
 				);
 			$this->db->insert('his_approvalbill',$data2);

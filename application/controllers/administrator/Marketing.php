@@ -1171,6 +1171,22 @@
 	        //     $data['status'] = FALSE;
 	        // }
 
+	        if($this->input->post('appr_code') == '')
+	        {
+	            $data['inputerror'][] = 'appr_code';
+	            $data['status'] = FALSE;
+	        }
+
+	        if($this->input->post('appr_code') != '')
+	        {
+	            $this->form_validation->set_rules('appr_code', 'Kode', 'is_unique[trx_approvalbill.APPR_CODE]');
+	        	if($this->form_validation->run() == FALSE)
+		        {
+		        	$data['inputerror'][] = 'appr_code';
+		            $data['status'] = FALSE;
+		        }
+	        }
+
 	        if($this->input->post('cust_id') == '')
 	        {
 	            $data['inputerror'][] = 'cust_code';

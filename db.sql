@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Server version:               10.1.19-MariaDB - mariadb.org binary distribution
 -- Server OS:                    Win32
--- HeidiSQL Version:             9.5.0.5196
+-- HeidiSQL Version:             9.4.0.5125
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -366,7 +366,7 @@ CREATE TABLE IF NOT EXISTS `chart_of_account` (
   CONSTRAINT `FK_chart_of_account_master_branch` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.chart_of_account: ~1 rows (approximately)
+-- Dumping data for table mtpdmulti.chart_of_account: ~0 rows (approximately)
 /*!40000 ALTER TABLE `chart_of_account` DISABLE KEYS */;
 INSERT INTO `chart_of_account` (`COA_ID`, `PAR_ID`, `BRANCH_ID`, `COA_ACC`, `COA_ACCNAME`, `COA_OWNER`, `COA_DEBIT`, `COA_CREDIT`, `COA_SALDO`, `COA_DTSTS`) VALUES
 	(1, 17, 1, '1110001', 'KAS HO', NULL, 0, 0, 0, '1');
@@ -513,7 +513,7 @@ CREATE TABLE IF NOT EXISTS `group_user` (
   CONSTRAINT `GUFK2` FOREIGN KEY (`MENU_CODE`) REFERENCES `master_menu` (`MENU_CODE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.group_user: ~21 rows (approximately)
+-- Dumping data for table mtpdmulti.group_user: ~63 rows (approximately)
 /*!40000 ALTER TABLE `group_user` DISABLE KEYS */;
 INSERT INTO `group_user` (`USER_ID`, `MENU_CODE`) VALUES
 	(1, 'ACC'),
@@ -631,11 +631,12 @@ CREATE TABLE IF NOT EXISTS `his_approvalbill` (
   `HISAPPR_NEW` char(30) DEFAULT NULL,
   `HISAPPR_INFO` varchar(1024) DEFAULT NULL,
   `HISAPPR_DATE` date DEFAULT NULL,
+  `HISAPPR_TIME` time DEFAULT NULL,
   `HISAPPR_UPCOUNT` int(11) DEFAULT NULL,
   PRIMARY KEY (`HISAPPR_ID`),
   KEY `FK_R9` (`APPR_ID`),
   CONSTRAINT `FK_R9` FOREIGN KEY (`APPR_ID`) REFERENCES `trx_approvalbill` (`APPR_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table mtpdmulti.his_approvalbill: ~0 rows (approximately)
 /*!40000 ALTER TABLE `his_approvalbill` DISABLE KEYS */;
@@ -1290,10 +1291,12 @@ CREATE TABLE IF NOT EXISTS `master_customer` (
   PRIMARY KEY (`CUST_ID`),
   KEY `FK_R136` (`COA_ID`),
   CONSTRAINT `FK_R136` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table mtpdmulti.master_customer: ~0 rows (approximately)
 /*!40000 ALTER TABLE `master_customer` DISABLE KEYS */;
+INSERT INTO `master_customer` (`CUST_ID`, `COA_ID`, `CUST_CODE`, `CUST_NAME`, `CUST_ADDRESS`, `CUST_CITY`, `CUST_POSTAL`, `CUST_PROV`, `CUST_PHONE`, `CUST_FAX`, `CUST_ACC`, `CUST_NPWPNAME`, `CUST_NPWPACC`, `CUST_NPWPADD`, `CUST_NPKP`, `CUST_DTSTS`) VALUES
+	(1, NULL, 'CST-00001', 'Sampoerna', '-', 'Surabaya', '-', '-', '-', '-', NULL, 'Sampoerna', '1234567890', 'Surabaya', '1234567890', '1');
 /*!40000 ALTER TABLE `master_customer` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.master_cust_intern
@@ -1365,10 +1368,12 @@ CREATE TABLE IF NOT EXISTS `master_gov_type` (
   `GOV_INFO` varchar(1024) DEFAULT NULL,
   `GOV_DTSTS` char(1) DEFAULT NULL,
   PRIMARY KEY (`GOV_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table mtpdmulti.master_gov_type: ~0 rows (approximately)
 /*!40000 ALTER TABLE `master_gov_type` DISABLE KEYS */;
+INSERT INTO `master_gov_type` (`GOV_ID`, `GOV_CODE`, `GOV_NAME`, `GOV_INFO`, `GOV_DTSTS`) VALUES
+	(1, 'GOV-00001', 'Persil', 'Persil', '1');
 /*!40000 ALTER TABLE `master_gov_type` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.master_location
@@ -1385,10 +1390,12 @@ CREATE TABLE IF NOT EXISTS `master_location` (
   PRIMARY KEY (`LOC_ID`),
   KEY `FK_R7` (`GOV_ID`),
   CONSTRAINT `FK_R7` FOREIGN KEY (`GOV_ID`) REFERENCES `master_gov_type` (`GOV_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table mtpdmulti.master_location: ~0 rows (approximately)
 /*!40000 ALTER TABLE `master_location` DISABLE KEYS */;
+INSERT INTO `master_location` (`LOC_ID`, `GOV_ID`, `LOC_CODE`, `LOC_NAME`, `LOC_ADDRESS`, `LOC_CITY`, `LOC_INFO`, `LOC_DTSTS`) VALUES
+	(1, 1, 'LOC-00001', 'Indragiri 61', 'Indragiri 61', 'Surabaya', '-', '1');
 /*!40000 ALTER TABLE `master_location` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.master_menu
@@ -1525,7 +1532,7 @@ CREATE TABLE IF NOT EXISTS `master_person` (
   PRIMARY KEY (`PERSON_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.master_person: ~0 rows (approximately)
+-- Dumping data for table mtpdmulti.master_person: ~3 rows (approximately)
 /*!40000 ALTER TABLE `master_person` DISABLE KEYS */;
 INSERT INTO `master_person` (`PERSON_ID`, `PERSON_CODE`, `PERSON_NAME`, `PERSON_ADDRESS`, `PERSON_PHONE`, `PERSON_DTSTS`) VALUES
 	(1, 'KRY-00001', 'Kaisha', 'Semolowaru', '09876', '1'),
@@ -1564,7 +1571,7 @@ CREATE TABLE IF NOT EXISTS `master_sales` (
   CONSTRAINT `FK_R4` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.master_sales: ~0 rows (approximately)
+-- Dumping data for table mtpdmulti.master_sales: ~3 rows (approximately)
 /*!40000 ALTER TABLE `master_sales` DISABLE KEYS */;
 INSERT INTO `master_sales` (`SALES_ID`, `BRANCH_ID`, `PERSON_ID`, `SALES_CODE`, `SALES_PHONE`, `SALES_EMAIL`, `SALES_DTSTS`) VALUES
 	(1, 3, 2, 'SLF-00001', '-', 'a@mail.com', '1'),
@@ -1619,7 +1626,7 @@ CREATE TABLE IF NOT EXISTS `master_user` (
   CONSTRAINT `FK_R3` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.master_user: ~0 rows (approximately)
+-- Dumping data for table mtpdmulti.master_user: ~3 rows (approximately)
 /*!40000 ALTER TABLE `master_user` DISABLE KEYS */;
 INSERT INTO `master_user` (`USER_ID`, `BRANCH_ID`, `PERSON_ID`, `USER_CODE`, `USER_NAME`, `USER_PASSWORD`, `USER_LEVEL`, `USER_DTSTS`) VALUES
 	(1, 1, 1, 'USR-00001', 'kaisha', '827ccb0eea8a706c4c34a16891f84e7b', '1', '1'),
@@ -1666,7 +1673,7 @@ CREATE TABLE IF NOT EXISTS `other_settings` (
   CONSTRAINT `FK_other_settings_master_branch` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.other_settings: ~0 rows (approximately)
+-- Dumping data for table mtpdmulti.other_settings: ~2 rows (approximately)
 /*!40000 ALTER TABLE `other_settings` DISABLE KEYS */;
 INSERT INTO `other_settings` (`OS_ID`, `BRANCH_ID`, `PRINT_BANKINVOICE`, `PRC_COA`, `PRC_COAAG`, `PRC_COADISC`, `PRC_COAPPN`, `PRC_COACOST`, `PRC_COANAME`, `PRC_COANAMEAG`, `PRC_COANAMEDISC`, `PRC_COANAMEPPN`, `PRC_COANAMECOST`, `NOTAFIN_ACC`, `NOTAFIN_ACCNAME`, `ACCRCVGIRO_ACC`, `ACCRCVGIRO_ACCNAME`, `DEBTGIRO_ACC`, `DEBTGIRO_ACCNAME`, `INV_COAPPN`, `INV_COANAMEPPN`, `PRCGA_COASUPPLY`, `PRCGA_COADEBT`, `PRCGA_COAPPN`, `PRCGA_COACOST`, `PRCGA_COADISC`, `PRCGA_COANAMESUPPLY`, `PRCGA_COANAMEDEBT`, `PRCGA_COANAMEPPN`, `PRCGA_COANAMECOST`, `PRCGA_COANAMEDISC`) VALUES
 	(1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'KAS HO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -2115,7 +2122,7 @@ CREATE TABLE IF NOT EXISTS `trx_approvalbill` (
   CONSTRAINT `FK_R14` FOREIGN KEY (`CUST_ID`) REFERENCES `master_customer` (`CUST_ID`),
   CONSTRAINT `FK_R18` FOREIGN KEY (`BB_ID`) REFERENCES `master_bboard` (`BB_ID`),
   CONSTRAINT `FK_R59` FOREIGN KEY (`PLC_ID`) REFERENCES `master_placement` (`PLC_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table mtpdmulti.trx_approvalbill: ~0 rows (approximately)
 /*!40000 ALTER TABLE `trx_approvalbill` DISABLE KEYS */;

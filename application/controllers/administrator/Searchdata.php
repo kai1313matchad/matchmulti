@@ -209,41 +209,103 @@
 		{
 			$id = $this->input->post('sts');
 			$br = $this->input->post('brch');
-			// $brc = ($this->input->post('chk') != '0')? 'd.branch_id = '.$br : 'd.branch_id = '.$br.' OR d.branch_id IS null';
 			$brc = 'a.branch_id = '.$br;
+			$chk = $this->input->post('chk');
 			$list = $this->s_apprbysts->get_datatables($id,$brc);
 			$data = array();
 			$no = $_POST['start'];
-			if($this->input->post('chk') != '0')
+			switch ($chk)
 			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-					$row[] = $dat->APPR_CODE;
-					$row[] = $dat->BRANCH_NAME;
-					$row[] = $dat->APPR_DATE;
-					$row[] = $dat->CUST_NAME;
-					$row[] = $dat->LOC_NAME;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_appropen('."'".$dat->APPR_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
+				case '0':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->APPR_CODE;
+						$row[] = $dat->BRANCH_NAME;
+						$row[] = $dat->APPR_DATE;
+						$row[] = $dat->CUST_NAME;
+						$row[] = $dat->LOC_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_appredit('."'".$dat->APPR_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '1':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->APPR_CODE;
+						$row[] = $dat->BRANCH_NAME;
+						$row[] = $dat->APPR_DATE;
+						$row[] = $dat->CUST_NAME;
+						$row[] = $dat->LOC_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_appropen('."'".$dat->APPR_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '2':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->APPR_CODE;
+						$row[] = $dat->BRANCH_NAME;
+						$row[] = $dat->APPR_DATE;
+						$row[] = $dat->CUST_NAME;
+						$row[] = $dat->LOC_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_apprchk('."'".$dat->APPR_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '3':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->APPR_CODE;
+						$row[] = $dat->BRANCH_NAME;
+						$row[] = $dat->APPR_DATE;
+						$row[] = $dat->CUST_NAME;
+						$row[] = $dat->LOC_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_apprapr('."'".$dat->APPR_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				default:
+					# code...
+					break;
 			}
-			else
-			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-					$row[] = $dat->APPR_CODE;
-					$row[] = $dat->BRANCH_NAME;
-					$row[] = $dat->APPR_DATE;
-					$row[] = $dat->CUST_NAME;
-					$row[] = $dat->LOC_NAME;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_appredit('."'".$dat->APPR_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
-			}
+			// if($this->input->post('chk') != '0')
+			// {
+			// 	foreach ($list as $dat) {
+			// 		$no++;
+			// 		$row = array();
+			// 		$row[] = $no;
+			// 		$row[] = $dat->APPR_CODE;
+			// 		$row[] = $dat->BRANCH_NAME;
+			// 		$row[] = $dat->APPR_DATE;
+			// 		$row[] = $dat->CUST_NAME;
+			// 		$row[] = $dat->LOC_NAME;
+			// 		$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_appropen('."'".$dat->APPR_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+			// 		$data[] = $row;
+			// 	}
+			// }
+			// else
+			// {
+			// 	foreach ($list as $dat) {
+			// 		$no++;
+			// 		$row = array();
+			// 		$row[] = $no;
+			// 		$row[] = $dat->APPR_CODE;
+			// 		$row[] = $dat->BRANCH_NAME;
+			// 		$row[] = $dat->APPR_DATE;
+			// 		$row[] = $dat->CUST_NAME;
+			// 		$row[] = $dat->LOC_NAME;
+			// 		$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_appredit('."'".$dat->APPR_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+			// 		$data[] = $row;
+			// 	}
+			// }
 			$output = array(
 							"draw" => $_POST['draw'],
 							"recordsTotal" => $this->s_apprbysts->count_all(),

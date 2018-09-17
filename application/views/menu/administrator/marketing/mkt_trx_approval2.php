@@ -23,15 +23,15 @@
                         </a>
                     </div>
                     <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '3')?'':'style="display:none"');?>>
+                        <a href="javascript:void(0)" onclick="apr_appr()" class="btn btn-block btn-primary">
+                            <span class="glyphicon glyphicon-ok"> Approve</span>
+                        </a>
+                    </div>
+                    <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '3')?'':'style="display:none"');?>>
                         <a href="javascript:void(0)" onclick="open_appr()" class="btn btn-block btn-primary">
                             <span class="glyphicon glyphicon-open"> Open</span>
                         </a>
                     </div>
-                    <!-- <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '1')?'style="display:none"':'');?>>
-                        <a href="javascript:void(0)" onclick="tes()" class="btn btn-block btn-primary">
-                            <span class="glyphicon glyphicon-open"> Open</span>
-                        </a>
-                    </div> -->
                 </div><br>
                 <div class="row">
                 		<ul class="nav nav-tabs">
@@ -1541,7 +1541,7 @@
                 "serverSide": true,
                 "order": [],                
                 "ajax": {
-                    "url": "<?php echo site_url('administrator/Searchdata/srch_apprbystschk')?>",
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_apprbysts')?>",
                     "type": "POST",
                     "data": function(data){
                         data.sts = '1';
@@ -1549,6 +1549,34 @@
                         data.chk = '2';
                     },
                 },                
+                "columnDefs": [
+                { 
+                    "targets": [ 0 ],
+                    "orderable": false,
+                },
+                ],
+            });
+    	}
+    	function apr_appr()
+    	{
+    		$('#modal_appr_edit').modal('show');
+            $('.modal-title').text('Cari Approval');            
+            table = $('#dtb_appr_edit').DataTable({
+                "info": false,
+                "destroy": true,
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "order": [],
+                "ajax": {
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_apprbysts')?>",
+                    "type": "POST",
+                    "data": function(data){
+                        data.sts = '2';
+                        data.brch = $('[name="user_brc"]').val();
+                        data.chk = '3';
+                    },
+                },
                 "columnDefs": [
                 { 
                     "targets": [ 0 ],
