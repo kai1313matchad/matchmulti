@@ -10,6 +10,7 @@
 			$this->load->model('datatables/search/Dt_srchbank','s_bank');
 			$this->load->model('datatables/search/Dt_srchsupp','s_supp');
 			$this->load->model('datatables/search/Dt_srchcoa','s_coa');
+			$this->load->model('datatables/search/Dt_srchlocation','s_location');
 			$this->load->model('datatables/search/Dt_srchcust','s_cust');
 			$this->load->model('datatables/search/Dt_srchcustall','s_custall');
 			$this->load->model('datatables/search/Dt_srchgovsts','s_govsts');
@@ -276,36 +277,6 @@
 					# code...
 					break;
 			}
-			// if($this->input->post('chk') != '0')
-			// {
-			// 	foreach ($list as $dat) {
-			// 		$no++;
-			// 		$row = array();
-			// 		$row[] = $no;
-			// 		$row[] = $dat->APPR_CODE;
-			// 		$row[] = $dat->BRANCH_NAME;
-			// 		$row[] = $dat->APPR_DATE;
-			// 		$row[] = $dat->CUST_NAME;
-			// 		$row[] = $dat->LOC_NAME;
-			// 		$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_appropen('."'".$dat->APPR_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-			// 		$data[] = $row;
-			// 	}
-			// }
-			// else
-			// {
-			// 	foreach ($list as $dat) {
-			// 		$no++;
-			// 		$row = array();
-			// 		$row[] = $no;
-			// 		$row[] = $dat->APPR_CODE;
-			// 		$row[] = $dat->BRANCH_NAME;
-			// 		$row[] = $dat->APPR_DATE;
-			// 		$row[] = $dat->CUST_NAME;
-			// 		$row[] = $dat->LOC_NAME;
-			// 		$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_appredit('."'".$dat->APPR_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-			// 		$data[] = $row;
-			// 	}
-			// }
 			$output = array(
 							"draw" => $_POST['draw'],
 							"recordsTotal" => $this->s_apprbysts->count_all(),
@@ -385,40 +356,77 @@
 		{
 			$id = $this->input->post('sts');
 			$br = $this->input->post('brch');
-			// $brc = ($this->input->post('chk') != '0')? 'e.branch_id = '.$br : 'e.branch_id = '.$br.' OR e.branch_id IS null';
+			$chk = $this->input->post('chk');
 			$brc = 'a.branch_id = '.$br;
 			$list = $this->s_bappbysts->get_datatables($id,$brc);
 			$data = array();
 			$no = $_POST['start'];
+			switch ($chk) {
+				case '0':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->BAPP_CODE;
+						$row[] = $dat->APPR_CODE;
+						$row[] = $dat->BAPP_DATE;
+						$row[] = $dat->CUST_NAME;
+						$row[] = $dat->LOC_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bappedit('."'".$dat->BAPP_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '1':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->BAPP_CODE;
+						$row[] = $dat->APPR_CODE;
+						$row[] = $dat->BAPP_DATE;
+						$row[] = $dat->CUST_NAME;
+						$row[] = $dat->LOC_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bappopen('."'".$dat->BAPP_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '2':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->BAPP_CODE;
+						$row[] = $dat->APPR_CODE;
+						$row[] = $dat->BAPP_DATE;
+						$row[] = $dat->CUST_NAME;
+						$row[] = $dat->LOC_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bappchk('."'".$dat->BAPP_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '3':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->BAPP_CODE;
+						$row[] = $dat->APPR_CODE;
+						$row[] = $dat->BAPP_DATE;
+						$row[] = $dat->CUST_NAME;
+						$row[] = $dat->LOC_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bappapr('."'".$dat->BAPP_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				default:
+					# code...
+					break;
+			}
 			if($this->input->post('chk') != '0')
 			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-					$row[] = $dat->BAPP_CODE;
-					$row[] = $dat->APPR_CODE;
-					$row[] = $dat->BAPP_DATE;
-					$row[] = $dat->CUST_NAME;
-					$row[] = $dat->LOC_NAME;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bappopen('."'".$dat->BAPP_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
 			}
 			else
 			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-					$row[] = $dat->BAPP_CODE;
-					$row[] = $dat->APPR_CODE;
-					$row[] = $dat->BAPP_DATE;
-					$row[] = $dat->CUST_NAME;
-					$row[] = $dat->LOC_NAME;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bappedit('."'".$dat->BAPP_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
 			}
 			$output = array(
 							"draw" => $_POST['draw'],
@@ -1255,6 +1263,39 @@
 		}
 
 		public function pick_supp($id)
+		{
+			$data = $this->crud->get_by_id('master_supplier',array('supp_id' => $id));
+			echo json_encode($data);
+		}
+
+		//Search Master Location
+		public function srch_loca()
+		{
+			$list = $this->s_location->get_datatables();
+			$data = array();
+			$no = $_POST['start'];
+			foreach ($list as $dat) {
+				$no++;
+				$row = array();
+				$row[] = $no;				
+				$row[] = $dat->LOC_CODE;
+				$row[] = $dat->LOC_NAME;				
+				$row[] = $dat->LOC_ADDRESS;
+				$row[] = $dat->LOC_CITY;
+				$row[] = $dat->LOC_INFO;
+				$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_loc('."'".$dat->LOC_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+				$data[] = $row;
+			}
+			$output = array(
+							"draw" => $_POST['draw'],
+							"recordsTotal" => $this->s_location->count_all(),
+							"recordsFiltered" => $this->s_location->count_filtered(),
+							"data" => $data,
+					);			
+			echo json_encode($output);
+		}
+
+		public function pick_loca($id)
 		{
 			$data = $this->crud->get_by_id('master_supplier',array('supp_id' => $id));
 			echo json_encode($data);

@@ -63,7 +63,7 @@
 	                                        <a id="genbtn" href="javascript:void(0)" onclick="gen_appr()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-plus"></span></a>
 	                                    </div>
 					                    <div class="col-sm-5">
-					                        <input class="form-control" type="text" name="appr_code" value="">
+					                        <input class="form-control" type="text" name="appr_code" value="" readonly>
 					                        <input type="hidden" name="appr_id" value="0">
 					                	</div>
 					                	<div class="col-sm-2">
@@ -185,7 +185,7 @@
 	                                    </div>
                             		</div> -->
                             		<div class="form-group">
-                            			<label class="col-sm-3 control-label">Jenis Reklame</label>
+                            			<label class="col-sm-3 control-label">Jenis Produk</label>
                             			<div class="col-sm-1">
 			                                <a href="javascript:void(0)" onclick="srch_bb()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-search"></span></a>
 			                            </div>
@@ -461,6 +461,12 @@
 			                        <div class="form-group">
 										<div class="col-sm-offset-3 col-sm-2 text-center">
 			                            	<a href="javascript:void(0)" onclick="saveapp()" class="btn btn-block btn-primary btn-default btnCh">Simpan</a>
+			                            </div>
+			                            <div class="col-sm-2 text-center">
+			                            	<button type="button" onclick="aprapp()" class="btn btn-block btn-primary btn-default btnApr" disabled>Approve</button>
+			                            </div>
+			                            <div class="col-sm-2 text-center">
+			                            	<button type="button" onclick="disaprapp()" class="btn btn-block btn-primary btn-default btnApr" disabled>Disapprove</button>
 			                            </div>
 									</div>
                 				</div>
@@ -1072,6 +1078,49 @@
 	            }
 	        });
     	}
+    	function aprapp()
+    	{
+	        $.ajax({
+	            url : "<?php echo site_url('administrator/Marketing/ajax_aproveapp')?>",
+	            type: "POST",
+	            data: $('#form_appr').serialize(),
+	            dataType: "JSON",
+	            success: function(data)
+	            {
+	                if(data.status)
+	                {
+	                	// alert('Sukses Approve');
+	                	var url = "<?php echo site_url('administrator/Marketing/mkt_trx_approval')?>";
+              			window.location = url;
+	                }
+	            },
+	            error: function (jqXHR, textStatus, errorThrown)
+	            {
+	                alert('Error adding / update data approve');
+	            }
+	        });
+    	}
+    	function disaprapp()
+    	{
+	        $.ajax({
+	            url : "<?php echo site_url('administrator/Marketing/ajax_disaproveapp')?>",
+	            type: "POST",
+	            data: $('#form_appr').serialize(),
+	            dataType: "JSON",
+	            success: function(data)
+	            {
+	                if(data.status)
+	                {
+	                    var url = "<?php echo site_url('administrator/Marketing/mkt_trx_approval')?>";
+              			window.location = url;
+	                }
+	            },
+	            error: function (jqXHR, textStatus, errorThrown)
+	            {
+	                alert('Error adding / update data');
+	            }
+	        });
+    	}
     	function check_()
         {
             if($('#det_radio1').is(':checked'))
@@ -1166,6 +1215,27 @@
 	            "order": [],	            
 	            "ajax": {
 	                "url": "<?php echo site_url('administrator/Marketing/ajax_costapp/')?>"+id,
+	                "type": "POST",                
+	            },	            
+	            "columnDefs": [
+	            { 
+	                "targets": [ 0 ],
+	                "orderable": false,
+	            },
+	            ],
+	        });
+    	}
+    	function costapp_(id)
+    	{
+	        table = $('#dtb_biaya').DataTable({
+	            "info": false,
+	            "destroy": true,
+	            "responsive": true,
+	            "processing": true,
+	            "serverSide": true,
+	            "order": [],	            
+	            "ajax": {
+	                "url": "<?php echo site_url('administrator/Marketing/ajax_costapp_/')?>"+id,
 	                "type": "POST",                
 	            },	            
 	            "columnDefs": [
@@ -1295,6 +1365,27 @@
 	            ],
 	        });
     	}
+    	function termapp_(id)
+    	{
+	        table = $('#dtb_termin').DataTable({
+	            "info": false,
+	            "destroy": true,
+	            "responsive": true,
+	            "processing": true,
+	            "serverSide": true,
+	            "order": [],	            
+	            "ajax": {
+	                "url": "<?php echo site_url('administrator/Marketing/ajax_termapp_/')?>"+id,
+	                "type": "POST",	                
+	            },	            
+	            "columnDefs": [
+	            { 
+	                "targets": [ 0 ],
+	                "orderable": false,
+	            },
+	            ],
+	        });
+    	}
     	function add_termapp()
     	{
 	        $.ajax({
@@ -1372,6 +1463,27 @@
 	            "order": [],	            
 	            "ajax": {
 	                "url": "<?php echo site_url('administrator/Marketing/ajax_ijinapp/')?>"+id,
+	                "type": "POST",                
+	            },	            
+	            "columnDefs": [
+	            { 
+	                "targets": [ 0 ],
+	                "orderable": false,
+	            },
+	            ],
+	        });
+    	}
+    	function ijinapp_(id)
+    	{
+	        table = $('#dtb_ijinapp').DataTable({
+	            "info": false,
+	            "destroy": true,
+	            "responsive": true,
+	            "processing": true,
+	            "serverSide": true,
+	            "order": [],	            
+	            "ajax": {
+	                "url": "<?php echo site_url('administrator/Marketing/ajax_ijinapp_/')?>"+id,
 	                "type": "POST",                
 	            },	            
 	            "columnDefs": [
@@ -1560,7 +1672,7 @@
     	function apr_appr()
     	{
     		$('#modal_appr_edit').modal('show');
-            $('.modal-title').text('Cari Approval');            
+            $('.modal-title').text('Cari Approval');
             table = $('#dtb_appr_edit').DataTable({
                 "info": false,
                 "destroy": true,
@@ -1657,16 +1769,16 @@
     	function srch_loc()
     	{
     		$('#modal_loc').modal('show');
-    		$('.modal-title').text('Cari Lokasi');    		
+    		$('.modal-title').text('Cari Lokasi');
 	        table = $('#dtb_loc').DataTable({
 	            "info": false,
 	            "destroy": true,
 	            "responsive": true,
 	            "processing": true,
 	            "serverSide": true,
-	            "order": [],	            
+	            "order": [],
 	            "ajax": {
-	                "url": "<?php echo site_url('administrator/Marketing/ajax_srch_loc')?>",
+	                "url": "<?php echo site_url('administrator/Searchdata/srch_loca')?>",
 	                "type": "POST",                
 	            },	            
 	            "columnDefs": [
@@ -2076,12 +2188,65 @@
 	                pick_loc(data.LOC_ID);
 	                pick_plc(data.PLC_ID);
 	                pick_curr(data.CURR_ID);
-	                costapp(id);
-	                termapp(id);
-	                ijinapp(id);
+	                costapp_(id);
+	                termapp_(id);
+	                ijinapp_(id);
+	                pick_init(data.BRANCH_ID);
 	                pick_apprbrcedit(data.APPR_BRANCHID);
 	                $('.btnCh').css({'display':'none'});	                
 	                $('#modal_appr_edit').modal('hide');
+	            },
+	            error: function (jqXHR, textStatus, errorThrown)
+	            {
+	                alert('Error get data from ajax');
+	            }
+	        });
+    	}
+    	function pick_apprapr(id)
+    	{
+	        $.ajax({
+	            url : "<?php echo site_url('administrator/Searchdata/pick_apprgb/')?>" + id,
+	            type: "GET",
+	            dataType: "JSON",
+	            success: function(data)
+	            {
+	            	$('[name="appr_id"]').val(data.APPR_ID);
+	            	$('[name="appr_code"]').val(data.APPR_CODE);
+	            	$('[name="appr_id"]').val(data.APPR_ID);
+	                $('[name="appr_brcid"]').val(data.APPR_BRANCHID);
+	                $('[name="appr_brc"]').val(data.APPR_BRANCH);
+	                $('[name="appr_po"]').val(data.APPR_PO);
+	                $('[name="tgl_awal"]').val(data.APPR_CONTRACT_START);
+	                $('[name="tgl_akhir"]').val(data.APPR_CONTRACT_END);
+	                $('[name="appr_rec"]').val(data.APPR_RECOV);
+	                $('[name="appr_vis"]').val(data.APPR_VISUAL);
+	                $('[name="appr_length"]').val(data.APPR_LENGTH);
+	                $('[name="appr_width"]').val(data.APPR_WIDTH);
+	                $('[name="appr_height"]').val(data.APPR_HEIGHT);
+	                $('[name="appr_sumsize"]').val(data.APPR_SUMSIZE);
+	                $('[name="appr_side"]').val(data.APPR_SIDE);
+	                $('[name="appr_plcsum"]').val(data.APPR_PLCSUM);
+	                $('[name="appr_info"]').val(data.APPR_INFO);
+	                $('[name="dpp"]').val(data.APPR_DPP_INCOME);
+	                $('[name="discp1"]').val(data.APPR_DISC_PERC1);
+	                $('[name="discp2"]').val(data.APPR_DISC_PERC2);
+	                $('[name="appr_bbtax"]').val(data.APPR_BBTAX);
+	                $('[name="ppnp"]').val(data.APPR_PPN_PERC);
+	                $('[name="pphp"]').val(data.APPR_PPH_PERC);
+	                pick_cust(data.CUST_ID);
+	                pick_mkt(data.SALES_ID);
+	                pick_bb(data.BB_ID);
+	                pick_loc(data.LOC_ID);
+	                pick_plc(data.PLC_ID);
+	                pick_curr(data.CURR_ID);
+	                costapp_(id);
+	                termapp_(id);
+	                ijinapp_(id);
+	                pick_init(data.BRANCH_ID);
+	                pick_apprbrcedit(data.APPR_BRANCHID);
+	                $('#modal_appr_edit').modal('hide');
+	                $('.btnCh').css({'display':'none'});
+	                $('.btnApr').prop('disabled',false);
 	            },
 	            error: function (jqXHR, textStatus, errorThrown)
 	            {

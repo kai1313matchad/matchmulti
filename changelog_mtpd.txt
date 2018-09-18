@@ -1,3 +1,8 @@
+18092018
+- Edit tabel his_bapp
+	ALTER TABLE `his_bapp`
+	ADD COLUMN `HISBAPP_TIME` TIME NULL DEFAULT NULL AFTER `HISBAPP_DATE`;
+
 17092018
 - Edit tabel his_approvalbill
 	ALTER TABLE `his_approvalbill`

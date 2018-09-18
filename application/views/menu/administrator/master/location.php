@@ -597,6 +597,7 @@
                 $('[name="lalamat"]').val(data.LOC_ADDRESS);
                 $('[name="lkota"]').val(data.LOC_CITY);
                 $('[name="lket"]').val(data.LOC_INFO);
+                $('[name="lsts"]').val(data.LOC_DTSTS);
                 $('[name="lcheck"]').val("1");
                 $('[name="ltb"]').val("master_location");
                 $('#modal_form').modal('show');

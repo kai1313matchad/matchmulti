@@ -833,6 +833,7 @@
 					'hisbapp_new' => 'None',
 					'hisbapp_info' => 'Create By System',
 					'hisbapp_date' => date('Y-m-d'),
+					'hisbapp_time' => date('H:i:s'),
 					'hisbapp_upcount' => 0
 				);
 			$this->db->insert('his_bapp',$data2);

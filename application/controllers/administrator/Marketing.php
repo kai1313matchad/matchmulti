@@ -18,6 +18,7 @@
 			$this->load->model('CRUD/M_crud','crud');
 			$this->load->model('CRUD/M_gen','gen');
 			$this->load->model('CRUD/M_marketing','marketing');
+			date_default_timezone_set('Asia/Jakarta');
 		}
 
 		public function index()
@@ -200,6 +201,7 @@
 						'hisappr_new' => 'Open By User '.$user,
 						'hisappr_info' => 'Open Record by appr form',
 						'hisappr_date' => date('Y-m-d'),
+						'hisappr_time' => date('H:i:s'),
 						'hisappr_upcount' => $his->HISAPPR_UPCOUNT+1
 					);
 				$this->db->insert('his_approvalbill',$dthis);
@@ -221,6 +223,7 @@
 					'hisbapp_new' => 'Open By User '.$user,
 					'hisbapp_info' => 'Open Record by BAPP form',
 					'hisbapp_date' => date('Y-m-d'),
+					'hisbapp_time' => date('H:i:s'),
 					'hisbapp_upcount' => $his->HISBAPP_UPCOUNT+1
 				);
 			$this->db->insert('his_bapp',$dthis);
@@ -653,7 +656,7 @@
 				$row[] = $dat->SALES_CODE;
 				$row[] = $dat->PERSON_NAME;
 				$row[] = $dat->SALES_PHONE;				
-				$row[] = $dat->SALES_EMAIL;				
+				$row[] = $dat->SALES_EMAIL;
 				$row[] = '<a href="javascript:void(0)" title="Lihat Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_mkt('."'".$dat->SALES_ID."'".')">Pilih</a>';
 				$data[] = $row;
 			}
@@ -820,6 +823,29 @@
 			echo json_encode($output);
 		}
 
+		public function ajax_ijinapp_($id)
+		{
+			$list = $this->ijinapp->get_datatables($id);
+			$data = array();
+			$no = $_POST['start'];
+			foreach ($list as $dat) {
+				$no++;
+				$row = array();
+				$row[] = $no;
+				$row[] = $dat->PRMTTYP_CODE;
+				$row[] = $dat->PRMTTYP_NAME;				
+				$row[] = '<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" disabled><span class="glyphicon glyphicon-remove"></span></a>';
+				$data[] = $row;
+			}
+			$output = array(
+							"draw" => $_POST['draw'],
+							"recordsTotal" => $this->ijinapp->count_all(),
+							"recordsFiltered" => $this->ijinapp->count_filtered($id),
+							"data" => $data,
+					);			
+			echo json_encode($output);
+		}
+
 		public function ajax_ijinappbrc($id)
 		{
 			$list = $this->ijinapp->get_datatables($id);
@@ -875,7 +901,34 @@
 				$row[] = $dat->TERMSDET_DPP;
 				$row[] = $dat->TERMSDET_PPN_PERC.'%';
 				$row[] = $dat->TERMSDET_PPH_PERC.'%';
-				$row[] = '<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="del_termapp('."'".$dat->TERMSDET_ID."'".')"><span class="glyphicon glyphicon-remove"></span></a>';
+				$row[] = '<a href="javascript:void(0)" title="Hapus Data" class="btn btnCh btn-sm btn-danger btn-responsive" onclick="del_termapp('."'".$dat->TERMSDET_ID."'".')"><span class="glyphicon glyphicon-remove"></span></a>';
+				$data[] = $row;
+			}
+			$output = array(
+							"draw" => $_POST['draw'],
+							"recordsTotal" => $this->termapp->count_all(),
+							"recordsFiltered" => $this->termapp->count_filtered($id),
+							"data" => $data,
+					);			
+			echo json_encode($output);
+		}
+
+		public function ajax_termapp_($id)
+		{
+			$list = $this->termapp->get_datatables($id);
+			$data = array();
+			$no = $_POST['start'];
+			foreach ($list as $dat) {
+				$no++;
+				$row = array();
+				$row[] = $no;
+				$row[] = $dat->TERMSDET_CODE;
+				$row[] = $dat->TERMSDET_PERC.'%';
+				$row[] = $dat->TERMSDET_SUM;
+				$row[] = $dat->TERMSDET_DPP;
+				$row[] = $dat->TERMSDET_PPN_PERC.'%';
+				$row[] = $dat->TERMSDET_PPH_PERC.'%';
+				$row[] = '<a href="javascript:void(0)" title="Hapus Data" class="btn btnCh btn-sm btn-danger btn-responsive" disabled><span class="glyphicon glyphicon-remove"></span></a>';
 				$data[] = $row;
 			}
 			$output = array(
@@ -953,7 +1006,30 @@
 				$row[] = $no;
 				$row[] = $dat->CSTDT_CODE;
 				$row[] = $dat->CSTDT_AMOUNT;				
-				$row[] = '<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="del_costapp('."'".$dat->CSTDT_ID."'".')"><span class="glyphicon glyphicon-remove"></span></a>';
+				$row[] = '<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive btnCh" onclick="del_costapp('."'".$dat->CSTDT_ID."'".')"><span class="glyphicon glyphicon-remove"></span></a>';
+				$data[] = $row;
+			}
+			$output = array(
+							"draw" => $_POST['draw'],
+							"recordsTotal" => $this->costapp->count_all(),
+							"recordsFiltered" => $this->costapp->count_filtered($id),
+							"data" => $data,
+					);			
+			echo json_encode($output);
+		}
+
+		public function ajax_costapp_($id)
+		{
+			$list = $this->costapp->get_datatables($id);
+			$data = array();
+			$no = $_POST['start'];
+			foreach ($list as $dat) {
+				$no++;
+				$row = array();
+				$row[] = $no;
+				$row[] = $dat->CSTDT_CODE;
+				$row[] = $dat->CSTDT_AMOUNT;				
+				$row[] = '<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" disabled><span class="glyphicon glyphicon-remove"></span></a>';
 				$data[] = $row;
 			}
 			$output = array(
@@ -1037,7 +1113,7 @@
 	    {
 	    	$this->_validate_appr();
 	    	$get = $this->crud->get_by_id('master_user',array('user_id' => $this->input->post('user_id')));
-	    	$get2 = $this->crud->get_by_id('master_branch',array('branch_id' => $get->BRANCH_ID));	    	
+	    	$get2 = $this->crud->get_by_id('master_branch',array('branch_id' => $get->BRANCH_ID));
 	    	$data = array(
 	    			// Kumpulan Key
 	                'user_id' => $this->input->post('user_id'),
@@ -1049,7 +1125,7 @@
 	                'plc_id' => ($this->input->post('plc_id') != '')?$this->input->post('plc_id'):NULL,
 	                // Data Tabel
 	                'appr_code' => $this->input->post('appr_code'),
-	                'appr_sts' => '1', //Ubah status jadi posted
+	                'appr_sts' => '2', //Ubah status jadi menunggu approve
 	                'appr_branchid' => $this->input->post('appr_brcid'),
 	                'appr_own' => $get2->BRANCH_STATUS,
 	                'appr_branch' => $this->input->post('appr_brc'),
@@ -1080,13 +1156,32 @@
 	                'appr_sub_ppn' => $this->input->post('subtotal2'),	                
 	                'appr_pph_perc' => $this->input->post('pphp'),	                
 	                'appr_pph_sum' => $this->input->post('pphn'),
-	                'appr_tot_income' => $this->input->post('gtotal'),
-	                // 'appr_payment_type' => $this->input->post('appr_pay'),	                
-	                // 'appr_jobdesc' => $this->input->post('jobdesc')
+	                'appr_tot_income' => $this->input->post('gtotal')
 	            );
 	        $update = $this->crud->update('trx_approvalbill',$data,array('appr_id' => $this->input->post('appr_id')));
-	        // $this->uphis_appr($this->input->post('appr_id'),$get->USER_NAME);
-	        $this->logupd_appr_save($this->input->post('appr_id'),$this->input->post('user_name'));
+	        $this->logupd_appr_save($this->input->post('appr_id'),$this->input->post('user_name'),'Posted');
+	        echo json_encode(array("status" => TRUE));
+	    }
+
+	    public function ajax_aproveapp()
+	    {
+	    	$this->_validate_appr();
+	    	$data = array(
+	                'appr_sts' => '1' //Ubah status jadi posted
+	            );
+	        $update = $this->crud->update('trx_approvalbill',$data,array('appr_id' => $this->input->post('appr_id')));
+	        $this->logupd_appr_save($this->input->post('appr_id'),$this->input->post('user_name'),'Approved');
+	        echo json_encode(array("status" => TRUE));
+	    }
+
+	    public function ajax_disaproveapp()
+	    {
+	    	$this->_validate_appr();
+	    	$data = array(
+	                'appr_sts' => '0' //Ubah status jadi posted
+	            );
+	        $update = $this->crud->update('trx_approvalbill',$data,array('appr_id' => $this->input->post('appr_id')));
+	        $this->logupd_appr_save($this->input->post('appr_id'),$this->input->post('user_name'),'Disapproved');
 	        echo json_encode(array("status" => TRUE));
 	    }
 
@@ -1104,18 +1199,19 @@
 	    	echo json_encode($data);
 	    }
 
-	    public function logupd_appr_save($id,$user)
+	    public function logupd_appr_save($id,$user,$sts)
 	    {
 	    	$his = $this->marketing->getlog_appr($id);
 	    	if ($his->HISAPPR_UPCOUNT == '0') 
 	    	{
 	    		$data = array(
 						'appr_id' => $id,
-						'hisappr_sts' => 'Posted by User '.$user,
+						'hisappr_sts' => $sts.' by User '.$user,
 						'hisappr_old' => $his->HISAPPR_STS,
-						'hisappr_new' => 'Posted By User '.$user,
-						'hisappr_info' => 'Original Save by appr form',
+						'hisappr_new' => $sts.' By User '.$user,
+						'hisappr_info' => 'Original Save by approval form',
 						'hisappr_date' => date('Y-m-d'),
+						'hisappr_time' => date('H:i:s'),
 						'hisappr_upcount' => $his->HISAPPR_UPCOUNT+1
 					);
 				$this->db->insert('his_approvalbill',$data);
@@ -1124,11 +1220,12 @@
 	    	{
 	    		$data = array(
 						'appr_id' => $id,
-						'hisappr_sts' => 'Posted by User '.$user,
+						'hisappr_sts' => $sts.' by User '.$user,
 						'hisappr_old' => $his->HISAPPR_STS,
-						'hisappr_new' => 'Posted By User '.$user,
-						'hisappr_info' => 'Update by '.$user.' from appr form',
+						'hisappr_new' => $sts.' By User '.$user,
+						'hisappr_info' => 'Update by '.$user.' from approval form',
 						'hisappr_date' => date('Y-m-d'),
+						'hisappr_time' => date('H:i:s'),
 						'hisappr_upcount' => $his->HISAPPR_UPCOUNT
 					);
 				$this->db->insert('his_approvalbill',$data);
@@ -1177,15 +1274,15 @@
 	            $data['status'] = FALSE;
 	        }
 
-	        if($this->input->post('appr_code') != '')
-	        {
-	            $this->form_validation->set_rules('appr_code', 'Kode', 'is_unique[trx_approvalbill.APPR_CODE]');
-	        	if($this->form_validation->run() == FALSE)
-		        {
-		        	$data['inputerror'][] = 'appr_code';
-		            $data['status'] = FALSE;
-		        }
-	        }
+	        // if($this->input->post('appr_code') != '')
+	        // {
+	        //     $this->form_validation->set_rules('appr_code', 'Kode', 'is_unique[trx_approvalbill.APPR_CODE]');
+	        // 	if($this->form_validation->run() == FALSE)
+		       //  {
+		       //  	$data['inputerror'][] = 'appr_code';
+		       //      $data['status'] = FALSE;
+		       //  }
+	        // }
 
 	        if($this->input->post('cust_id') == '')
 	        {
@@ -1280,7 +1377,7 @@
 	    		'bapp_date' => $this->input->post('bapp_date'),
 	    		'bapp_datestart' => $this->input->post('bapp_startdate'),
 	    		'bapp_dateend' => $this->input->post('bapp_enddate'),
-	    		'bapp_sts' => '1',
+	    		'bapp_sts' => '2',
 	    		'bapp_doc' => $this->input->post('bapp_doc'),
 	    		'bapp_oldtxt' => $this->input->post('bapp_oldtxt'),
 	    		'bapp_newtxt' => $this->input->post('bapp_newtxt'),
@@ -1291,22 +1388,43 @@
 	    		'bapp_info' => $this->input->post('bapp_info')
 	    	);
 	    	$update = $this->crud->update('trx_bapp',$data,array('bapp_id' => $this->input->post('bapp_id')));
-	    	$this->logupd_bapp_save($this->input->post('bapp_id'),$this->input->post('user_name'));
+	    	$this->logupd_bapp_save($this->input->post('bapp_id'),$this->input->post('user_name'),'Posted');
 	        echo json_encode(array("status" => TRUE));
 	    }
 
-	    public function logupd_bapp_save($id,$user)
+	    public function approve_bapp()
+	    {
+	    	$data = array (
+	    		'bapp_sts' => '1'
+	    	);
+	    	$update = $this->crud->update('trx_bapp',$data,array('bapp_id' => $this->input->post('bapp_id')));
+	    	$this->logupd_bapp_save($this->input->post('bapp_id'),$this->input->post('user_name'),'Approved');
+	        echo json_encode(array("status" => TRUE));
+	    }
+
+	    public function disapprove_bapp()
+	    {
+	    	$data = array (
+	    		'bapp_sts' => '0'
+	    	);
+	    	$update = $this->crud->update('trx_bapp',$data,array('bapp_id' => $this->input->post('bapp_id')));
+	    	$this->logupd_bapp_save($this->input->post('bapp_id'),$this->input->post('user_name'),'Disapproved');
+	        echo json_encode(array("status" => TRUE));
+	    }
+
+	    public function logupd_bapp_save($id,$user,$sts)
 	    {
 	    	$his = $this->marketing->getlog_bapp($id);
 	    	if ($his->HISBAPP_UPCOUNT == '0') 
 	    	{
 	    		$data = array(
 						'bapp_id' => $id,
-						'hisbapp_sts' => 'Posted by User '.$user,
+						'hisbapp_sts' => $sts.' by User '.$user,
 						'hisbapp_old' => $his->HISBAPP_STS,
-						'hisbapp_new' => 'Posted By User '.$user,
+						'hisbapp_new' => $sts.' By User '.$user,
 						'hisbapp_info' => 'Original Save by BAPP form',
 						'hisbapp_date' => date('Y-m-d'),
+						'hisbapp_time' => date('H:i:s'),
 						'hisbapp_upcount' => $his->HISBAPP_UPCOUNT+1
 					);
 				$this->db->insert('his_bapp',$data);
@@ -1315,11 +1433,12 @@
 	    	{
 	    		$data = array(
 						'bapp_id' => $id,
-						'hisbapp_sts' => 'Posted by User '.$user,
+						'hisbapp_sts' => $sts.' by User '.$user,
 						'hisbapp_old' => $his->HISBAPP_STS,
-						'hisbapp_new' => 'Posted By User '.$user,
+						'hisbapp_new' => $sts.' By User '.$user,
 						'hisbapp_info' => 'Update by '.$user.' from BAPP form',
 						'hisbapp_date' => date('Y-m-d'),
+						'hisbapp_time' => date('H:i:s'),
 						'hisbapp_upcount' => $his->HISBAPP_UPCOUNT
 					);
 				$this->db->insert('his_bapp',$data);

@@ -28,6 +28,11 @@
                         </a>
                     </div>
                     <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '3')?'':'style="display:none"');?>>
+                        <a href="javascript:void(0)" onclick="apr_bapp()" class="btn btn-block btn-primary">
+                            <span class="glyphicon glyphicon-ok"> Approve</span>
+                        </a>
+                    </div>
+                    <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '3')?'':'style="display:none"');?>>
                         <a href="javascript:void(0)" onclick="open_bapp()" class="btn btn-block btn-primary">
                             <span class="glyphicon glyphicon-open"> Open</span>
                         </a>
@@ -59,7 +64,7 @@
                                             </a>
                                         </div>
 	                                    <div class="col-sm-7">
-                                            <input class="form-control" type="text" name="bapp_code" value="" >
+                                            <input class="form-control" type="text" name="bapp_code" value="" readonly>
 	                                        <input type="hidden" name="bapp_id" value="0">
 	                                        <input type="hidden" name="user_id" value="<?= $this->session->userdata('user_id')?>">
                                             <input type="hidden" name="user_name" value="<?= $this->session->userdata('user_name')?>">
@@ -182,6 +187,12 @@
                                     <div class="form-group">
                                         <div class="col-sm-offset-3 col-sm-2 text-center">
                                             <a href="javascript:void(0)" onclick="savebapp()" class="btn btn-block btn-primary btn-default btnCh">Simpan</a>
+                                        </div>
+                                        <div class="col-sm-2 text-center">
+                                            <button type="button" onclick="aprbapp()" class="btn btn-block btn-primary btn-default btnApr" disabled>Approve</a>
+                                        </div>
+                                        <div class="col-sm-2 text-center">
+                                            <button type="button" onclick="disaprbapp()" class="btn btn-block btn-primary btn-default btnApr" disabled>Disapprove</a>
                                         </div>
                                     </div>
                             	</div>
@@ -414,8 +425,8 @@
                     $('[name="appr_id"]').val(data.APPR_ID);
                     $('[name="appr_code"]').val(data.APPR_CODE);
                     pick_cust(data.CUST_ID);
-                    var jenis = data.APPR_INFO + ' ( ' + data.APPR_CONTRACT_START + ' - ' + data.APPR_CONTRACT_END + ' )';
-                    $('[name="appr_jenis"]').val(jenis);
+                    // var jenis = data.APPR_INFO + ' ( ' + data.APPR_CONTRACT_START + ' - ' + data.APPR_CONTRACT_END + ' )';
+                    // $('[name="appr_jenis"]').val(jenis);
                     var size = 'Lebar: ' + data.APPR_WIDTH + 'm, Panjang: ' + data.APPR_LENGTH + 'm, Sisi: ' + data.APPR_SIDE + ', ' + data.APPR_PLCSUM + 'mk';
                     $('[name="appr_size"]').val(size);
                     $('[name="bapp_startper"]').val(data.APPR_CONTRACT_START);
@@ -539,6 +550,48 @@
             {
                 alert('Ada Input yang Salah');
             }
+        }
+        function aprbapp()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Marketing/approve_bapp')?>",
+                type: "POST",
+                data: $('#form_bapp').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Marketing/mkt_trx_bapp')?>";
+                        window.location = url;
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
+        function disaprbapp()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Marketing/disapprove_bapp')?>",
+                type: "POST",
+                data: $('#form_bapp').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Marketing/mkt_trx_bapp')?>";
+                        window.location = url;
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
         }
         function del_img(id)
         {
@@ -709,12 +762,40 @@
                 "serverSide": true,
                 "order": [],                
                 "ajax": {
-                    "url": "<?php echo site_url('administrator/Searchdata/srch_bappbystschk')?>",
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_bappbysts')?>",
                     "type": "POST",
                     "data": function(data){
                         data.sts = '1';
                         data.brch = $('[name="user_brc"]').val();
-                        data.chk = '1';
+                        data.chk = '2';
+                    },
+                },                
+                "columnDefs": [
+                { 
+                    "targets": [ 0 ],
+                    "orderable": false,
+                },
+                ],
+            });
+        }
+        function apr_bapp()
+        {
+            $('#modal_bapp_edit').modal('show');
+            $('.modal-title').text('Cari BAPP');            
+            table = $('#dtb_bapp_edit').DataTable({
+                "info": false,
+                "destroy": true,
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "order": [],                
+                "ajax": {
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_bappbysts')?>",
+                    "type": "POST",
+                    "data": function(data){
+                        data.sts = '2';
+                        data.brch = $('[name="user_brc"]').val();
+                        data.chk = '3';
                     },
                 },                
                 "columnDefs": [
@@ -772,6 +853,7 @@
                     $('[name="bapp_newtxt"]').val(data.BAPP_NEWTXT);
                     $('[name="bapp_finishdate"]').val(data.BAPP_FINDATE);
                     $('[name="bapp_info"]').val(data.BAPP_INFO);
+                    $('[name="appr_jenis"]').val(data.BAPP_TYPE);
                     reload();                    
                     $('#modal_bapp_edit').modal('hide');
                 },
@@ -803,6 +885,7 @@
                     $('[name="bapp_newtxt"]').val(data.BAPP_NEWTXT);
                     $('[name="bapp_finishdate"]').val(data.BAPP_FINDATE);
                     $('[name="bapp_info"]').val(data.BAPP_INFO);
+                    $('[name="appr_jenis"]').val(data.BAPP_TYPE);
                     reload();
                     $('.btnCh').css({'display':'none'});
                     $('#modal_bapp_edit').modal('hide');
@@ -813,67 +896,41 @@
                 }
             });
         }
-    </script>
-    <<!-- script>
-        Dropzone.autoDiscover = false;
-        //Dapatkan HTML template dan menghapusnya dari dokumen
-        var previewNode = document.querySelector('#template');
-        previewNode.id = '';
-        var previewTemplate = previewNode.parentNode.innerHTML;
-        previewNode.parentNode.removeChild(previewNode);
-        Dropzone.options.previewNode =
+        function pick_bappapr(id)
         {
-            url: '<?php echo base_url('administrator/Marketing/upload_bapp');?>',
-            thumbnailWidth: 80,
-            thumbnailHeight: 80,
-            parallelUploads: 1,
-            maxFilesize: 10,
-            maxFiles: 0,
-            // uploadMultiple: true,
-            acceptedFiles: 'image/jpg, image/jpeg',
-            previewTemplate: previewTemplate,
-            autoQueue: false,
-            previewsContainer: '#previews',
-            clickable: '.fileinput-button',
-            dictFileTooBig: 'Ukuran File Terlalu Besar ({{filesize}}Mb). Max ukuran file {{maxFilesize}}Mb',
-            init: function()
-            {
-                myDropzone = this;
-                this.on('addedfile', function(file){
-                    //menghubungkan tombol start
-                    file.previewElement.querySelector('.start').onclick = function() { this.enqueueFile(file);};
-                });
-                //update total progress bar pada saat proses upload
-                this.on('addedfile', function(progress){
-                    document.querySelector('#total-progress .progress-bar').style.width = progress + '%';
-                });
-                this.on('sending', function(file){
-                    //menampilkan total progressbar
-                    document.querySelector('#total-progress').style.opacity = '1';
-                    //pada saat upload berlangsung, tombol start akan mati
-                    file.previewElement.querySelector('.start').setAttribute('disabled', 'disabled');
-                });
-                this.on('sending', function(file,xhr,formData){  
-                    var other_data = $('#form_bapp').serializeArray();
-                    $.each(other_data,function(key,input){
-                        formData.append(input.name,input.value);
-                    });         
-                });
-                //progress bar akan disembunyikan ketika proses upload selesai
-                this.on('queuecomplete', function(progress){
-                    document.querySelector('#total-progress').style.opacity = '0';
-                })
-                //membuat fungsi upload semua gambar pada tombol start
-                document.querySelector('#actions .start').onclick = function() {
-                    this.enqueueFiles(this.getFilesWithStatus(Dropzone.ADDED));
-                };
-                //membuat fungsi pembatalan semua gambar pada saat upload
-                document.querySelector('#actions .cancel').onclick = function() {
-                    this.removeAllFiles(true);
-                };
-            }
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_bappgb/')?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {   
+                    $('[name="bapp_id"]').val(data.BAPP_ID);
+                    $('[name="bapp_code"]').val(data.BAPP_CODE);
+                    $('[name="bapp_date"]').val(data.BAPP_DATE);
+                    if (data.APPR_ID != null)
+                    {
+                        pick_apprgb(data.APPR_ID);
+                    }
+                    $('[name="bapp_startdate"]').val(data.BAPP_DATESTART);
+                    $('[name="bapp_enddate"]').val(data.BAPP_DATEEND);
+                    $('[name="bapp_doc"]').val(data.BAPP_DOC);
+                    $('[name="bapp_oldtxt"]').val(data.BAPP_OLDTXT);
+                    $('[name="bapp_newtxt"]').val(data.BAPP_NEWTXT);
+                    $('[name="bapp_finishdate"]').val(data.BAPP_FINDATE);
+                    $('[name="bapp_info"]').val(data.BAPP_INFO);
+                    $('[name="appr_jenis"]').val(data.BAPP_TYPE);
+                    reload();
+                    $('.btnCh').css({'display':'none'});
+                    $('.btnApr').prop('disabled',false);
+                    $('#modal_bapp_edit').modal('hide');
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
         }
-    </script> -->
+    </script>
     <script>
     	var Dropzone;
     	Dropzone.autoDiscover = false;
