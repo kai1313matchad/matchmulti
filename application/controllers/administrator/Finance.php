@@ -295,7 +295,7 @@
 		}
 
 		public function gen_rptaccpay()
-		{  
+		{
 			if ($this->input->post('branch'))
 			{
 				$this->db->where('b.branch_id', $this->input->post('branch') );

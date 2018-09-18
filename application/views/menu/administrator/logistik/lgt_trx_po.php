@@ -23,6 +23,11 @@
                         </a>
                     </div>
                     <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '3')?'':'style="display:none"');?>>
+                        <a href="javascript:void(0)" onclick="apr_lgtpo()" class="btn btn-block btn-primary">
+                            <span class="glyphicon glyphicon-open"> Approve</span>
+                        </a>
+                    </div>
+                    <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '3')?'':'style="display:none"');?>>
                         <a href="javascript:void(0)" onclick="open_lgtpo()" class="btn btn-block btn-primary">
                             <span class="glyphicon glyphicon-open"> Open</span>
                         </a>
@@ -250,6 +255,12 @@
                                     <div class="form-group">
                                         <div class="col-sm-offset-3 col-sm-2 text-center">
                                             <a href="javascript:void(0)" onclick="savepo()" class="btn btn-block btn-primary btn-default btnCh">Simpan</a>
+                                        </div>
+                                        <div class="col-sm-2 text-center">
+                                            <button type="button" onclick="aprpo()" class="btn btn-block btn-primary btn-default btnApr" disabled>Approve</button>
+                                        </div>
+                                        <div class="col-sm-2 text-center">
+                                            <button type="button" onclick="disaprpo()" class="btn btn-block btn-primary btn-default btnApr" disabled>Disapprove</button>
                                         </div>
                                     </div>
                                 </div>
@@ -514,6 +525,48 @@
                 }
             });
         }
+        function aprpo()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Logistik/ajax_approvepo')?>",
+                type: "POST",
+                data: $('#form_po').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Logistik/lgt_trx_po')?>";
+                        window.location = url;
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
+        function disaprpo()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Logistik/ajax_disapprovepo')?>",
+                type: "POST",
+                data: $('#form_po').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Logistik/lgt_trx_po')?>";
+                        window.location = url;
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
         function hitung()
         {
             prc = $('[name="gd_price"]').val();
@@ -548,6 +601,27 @@
                 "order": [],                
                 "ajax": {
                     "url": "<?php echo site_url('administrator/Logistik/ajax_barang/')?>"+id,
+                    "type": "POST",                
+                },
+                "columnDefs": [
+                { 
+                    "targets": [ 0 ],
+                    "orderable": false,
+                },
+                ],
+            });
+        }
+        function barang_(id)
+        {
+            table = $('#dtb_barang').DataTable({
+                "info": false,
+                "destroy": true,
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "order": [],                
+                "ajax": {
+                    "url": "<?php echo site_url('administrator/Logistik/ajax_barang_/')?>"+id,
                     "type": "POST",                
                 },
                 "columnDefs": [
@@ -794,12 +868,40 @@
                 "serverSide": true,
                 "order": [],                
                 "ajax": {
-                    "url": "<?php echo site_url('administrator/Searchdata/srch_pobystschk')?>",
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_pobysts')?>",
                     "type": "POST",
                     "data": function(data){
                         data.sts = '1';
                         data.brch = $('[name="user_branch"]').val();
-                        data.chk = '1';
+                        data.chk = '2';
+                    },
+                },                
+                "columnDefs": [
+                { 
+                    "targets": [ 0 ],
+                    "orderable": false,
+                },
+                ],
+            });
+        }
+        function apr_lgtpo()
+        {
+            $('#modal_po_edit').modal('show');
+            $('.modal-title').text('Cari PO');            
+            table = $('#dtb_po_edit').DataTable({
+                "info": false,
+                "destroy": true,
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "order": [],                
+                "ajax": {
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_pobysts')?>",
+                    "type": "POST",
+                    "data": function(data){
+                        data.sts = '2';
+                        data.brch = $('[name="user_branch"]').val();
+                        data.chk = '3';
                     },
                 },                
                 "columnDefs": [
@@ -980,12 +1082,42 @@
                     $('[name="po_tgl"]').val(data.PO_DATE);
                     pick_apprgb(data.APPR_ID);
                     pick_supp(data.SUPP_ID);
-                    barang(data.PO_ID);
+                    barang_(data.PO_ID);
                     $('[name="po_term"]').val(data.PO_TERM);
                     $('[name="po_info"]').val(data.PO_INFO);
                     pick_curr(data.CURR_ID);
                     sub_total(data.PO_ID);
                     $('.btnCh').css({'display':'none'});
+                    $('#modal_po_edit').modal('hide');
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function pick_polgtapr(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_polgtgb/')?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {   
+                    $('[name="po_id"]').val(data.PO_ID);
+                    $('[name="po_code"]').val(data.PO_CODE);
+                    $('[name="po_so"]').val(data.PO_ORDNUM);
+                    $('[name="po_code"]').val(data.PO_CODE);
+                    $('[name="po_tgl"]').val(data.PO_DATE);
+                    pick_apprgb(data.APPR_ID);
+                    pick_supp(data.SUPP_ID);
+                    barang_(data.PO_ID);
+                    $('[name="po_term"]').val(data.PO_TERM);
+                    $('[name="po_info"]').val(data.PO_INFO);
+                    pick_curr(data.CURR_ID);
+                    sub_total(data.PO_ID);
+                    $('.btnCh').css({'display':'none'});
+                    $('.btnApr').prop('disabled',false);
                     $('#modal_po_edit').modal('hide');
                 },
                 error: function (jqXHR, textStatus, errorThrown)

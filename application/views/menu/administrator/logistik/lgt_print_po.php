@@ -218,7 +218,7 @@
         }
 
         function srch_po()
-        {            
+        {
             $('#modal_po').modal('show');
             $('.modal-title').text('Cari PO'); // Set title to Bootstrap modal title      
             //datatables        

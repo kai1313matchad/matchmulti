@@ -2,6 +2,8 @@
 	defined('BASEPATH') OR exit('No direct script access allowed');
 	class M_logistik extends CI_Model
 	{
+		//Journal Check
+
 		//Fungsi untuk cek pemakaian PO di tabel lain
 		public function check_po($tb,$id,$sts)
 		{

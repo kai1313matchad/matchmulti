@@ -371,6 +371,7 @@
 						'hispo_new' => 'Open By User '.$user,
 						'hispo_info' => 'Open Record by PO Logistik form',
 						'hispo_date' => date('Y-m-d'),
+						'hispo_time' => date('H:i:s'),
 						'hispo_upcount' => $his->HISPO_UPCOUNT+1
 					);
 				$this->db->insert('his_po',$dthis);
@@ -417,6 +418,7 @@
 						'hisprc_new' => 'Open By User '.$user,
 						'hisprc_info' => 'Open Record by Pembelian Logistik form',
 						'hisprc_date' => date('Y-m-d'),
+						'hisprc_time' => date('H:i:s'),
 						'hisprc_upcount' => $his->HISPRC_UPCOUNT+1
 					);
 				$this->db->insert('his_prc',$dthis);
@@ -783,7 +785,8 @@
 		//Ajax Search
 		public function ajax_srch_po()
 		{
-			$list = $this->srch_po->get_datatables();
+			$brc = 'd.branch_id = '.$this->session->userdata('user_branch');
+			$list = $this->srch_po->get_datatables($brc);
 			$data = array();
 			$no = $_POST['start'];
 			foreach ($list as $dat) {
@@ -801,7 +804,7 @@
 			$output = array(
 							"draw" => $_POST['draw'],
 							"recordsTotal" => $this->srch_po->count_all(),
-							"recordsFiltered" => $this->srch_po->count_filtered(),
+							"recordsFiltered" => $this->srch_po->count_filtered($brc),
 							"data" => $data,
 					);			
 			echo json_encode($output);
@@ -1095,6 +1098,31 @@
 			echo json_encode($output);
 		}
 
+		public function ajax_barang_($id)
+		{
+			$list = $this->gdpo->get_datatables($id);
+			$data = array();
+			$no = $_POST['start'];
+			foreach ($list as $dat) {
+				$no++;
+				$row = array();
+				$row[] = $no;
+				$row[] = $dat->GD_NAME;
+				$row[] = $dat->GD_PRICE.' / '.$dat->GD_UNIT.' '.$dat->GD_MEASURE;
+				$row[] = $dat->PODET_QTYUNIT;
+				$row[] = $dat->PODET_SUB;
+				$row[] = '<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" disabled><span class="glyphicon glyphicon-remove"></span></a>';
+				$data[] = $row;
+			}
+			$output = array(
+							"draw" => $_POST['draw'],
+							"recordsTotal" => $this->gdpo->count_all(),
+							"recordsFiltered" => $this->gdpo->count_filtered($id),
+							"data" => $data,
+					);			
+			echo json_encode($output);
+		}
+
 		public function ajax_brg_prc($id)
 		{
 			$list = $this->gdprc->get_datatables($id);
@@ -1260,7 +1288,7 @@
 	                'appr_id' => $appr,
 	                'supp_id' => $this->input->post('supp_id'),
 	                'loc_id' => $this->input->post('loc_id'),
-	                'po_sts' => '1',
+	                'po_sts' => '2',
 	                'po_code' => $this->input->post('po_code'),
 	                'po_date' => $this->input->post('po_tgl'),
 	                'po_ordnum' => $this->input->post('po_so'),
@@ -1270,22 +1298,43 @@
 	                'po_gtotal' => $this->input->post('po_subs')	                
 	            );
 	        $update = $this->crud->update('trx_po',$data,array('po_id' => $this->input->post('po_id')));
-	        $this->logupd_polgt_save($this->input->post('po_id'),$this->input->post('user_name'));
+	        $this->logupd_polgt_save($this->input->post('po_id'),$this->input->post('user_name'),'Posted');
 	        echo json_encode(array("status" => TRUE));
 		}
 
-		public function logupd_polgt_save($id,$user)
+		public function ajax_approvepo()
+		{
+			$data = array(
+	                'po_sts' => '1'
+	            );
+	        $update = $this->crud->update('trx_po',$data,array('po_id' => $this->input->post('po_id')));
+	        $this->logupd_polgt_save($this->input->post('po_id'),$this->input->post('user_name'),'Approved');
+	        echo json_encode(array("status" => TRUE));
+		}
+
+		public function ajax_disapprovepo()
+		{
+			$data = array(
+	                'po_sts' => '0'
+	            );
+	        $update = $this->crud->update('trx_po',$data,array('po_id' => $this->input->post('po_id')));
+	        $this->logupd_polgt_save($this->input->post('po_id'),$this->input->post('user_name'),'Disapproved');
+	        echo json_encode(array("status" => TRUE));
+		}
+
+		public function logupd_polgt_save($id,$user,$sts)
 	    {
 	    	$his = $this->logistik->getlog_polgt($id);
 	    	if ($his->HISPO_UPCOUNT == '0') 
 	    	{
 	    		$data = array(
 						'po_id' => $id,
-						'hispo_sts' => 'Posted by User '.$user,
+						'hispo_sts' => $sts.' by User '.$user,
 						'hispo_old' => $his->HISPO_STS,
-						'hispo_new' => 'Posted By User '.$user,
+						'hispo_new' => $sts.' By User '.$user,
 						'hispo_info' => 'Original Save by PO Logistik form',
 						'hispo_date' => date('Y-m-d'),
+						'hispo_time' => date('H:i:s'),
 						'hispo_upcount' => $his->HISPO_UPCOUNT+1
 					);
 				$this->db->insert('his_po',$data);
@@ -1294,11 +1343,12 @@
 	    	{
 	    		$data = array(
 						'po_id' => $id,
-						'hispo_sts' => 'Posted by User '.$user,
+						'hispo_sts' => $sts.' by User '.$user,
 						'hispo_old' => $his->HISPO_STS,
-						'hispo_new' => 'Posted By User '.$user,
+						'hispo_new' => $sts.' By User '.$user,
 						'hispo_info' => 'Update by '.$user.' from PO Logistik form',
 						'hispo_date' => date('Y-m-d'),
+						'hispo_time' => date('H:i:s'),
 						'hispo_upcount' => $his->HISPO_UPCOUNT
 					);
 				$this->db->insert('his_po',$data);
@@ -1317,28 +1367,6 @@
 	        $insert = $this->crud->save($table,$data);
 	        echo json_encode(array("status" => TRUE));
 	    }
-
-	    // public function save_po()
-	    // {
-	    // 	$get = $this->crud->get_by_id('master_user',array('user_id' => $this->input->post('user_id')));
-	    // 	$get2 = $this->crud->get_by_id('master_branch',array('branch_id' => $get->BRANCH_ID));
-	    // 	$own = $get2->BRANCH_STATUS;
-	    // 	$data = array(
-	    //             'appr_id' => $this->input->post('appr_id'),
-	    //             'curr_id' => $this->input->post('curr_id'),
-	    //             'supp_id' => $this->input->post('supp_id'),
-	    //             'user_id' => $this->input->post('user_id'),
-	    //             'bb_id' => $this->input->post('bb_id'),
-	    //             'loc_id' => $this->input->post('loc_id'),
-	    //             'cust_id' => $this->input->post('cust_id'),
-	    //             'sales_id' => $this->input->post('sales_id'),
-	    //             'curr_id' => $this->input->post('curr_id'),
-	    //             'appr_code' => $this->input->post('appr_code'),
-	    //             'appr_sts' => '1',
-	    //         );
-	    //     $update = $this->crud->update('trx_approvalbill',$data,array('appr_id' => $this->input->post('appr_id')));
-	    //     echo json_encode(array("status" => TRUE));
-	    // }
 
 	    public function ajax_add_brgprc()
 	    {
@@ -1389,20 +1417,30 @@
 			$data = array(
 	                'user_id' => $this->input->post('user_id'),
 	                'curr_id' => $this->input->post('curr_id'),
-	                'po_id' => $this->input->post('po_id'),	                
-	                'prc_sts' => '1',
+	                'po_id' => $this->input->post('po_id'),
+	                'prc_sts' => '2',
 	                'prc_code' => $this->input->post('prc_code'),
 	                'prc_date' => $this->input->post('prc_tgl'),
-	                'prc_invoice' => $this->input->post('prc_inv'),	                
+	                'prc_invoice' => $this->input->post('prc_inv'),
 	                'prc_info' => $this->input->post('po_info'),
 	                'prc_sub' => $this->input->post('po_subs'),
 	                'prc_disc' => $this->input->post('prc_disc'),
 	                'prc_ppn' => $this->input->post('prc_ppn'),
 	                'prc_cost' => $this->input->post('prc_cost'),
-	                'prc_gtotal' => $this->input->post('prc_gtotal')	                
+	                'prc_gtotal' => $this->input->post('prc_gtotal')
 	            );
 	        $update = $this->crud->update('trx_procurement',$data,array('prc_id' => $this->input->post('prc_id')));
-	        $this->logupd_prclgt_save($this->input->post('prc_id'),$this->input->post('user_name'));
+	        $this->logupd_prclgt_save($this->input->post('prc_id'),$this->input->post('user_name'),'Posted');
+	        echo json_encode(array("status" => TRUE));
+		}
+
+		public function ajax_approveprc()
+		{
+			$data = array(
+	                'prc_sts' => '1'
+	            );
+	        $update = $this->crud->update('trx_procurement',$data,array('prc_id' => $this->input->post('prc_id')));
+	        $this->logupd_prclgt_save($this->input->post('prc_id'),$this->input->post('user_name'),'Approved');
 	        //cek jurnal
 	    	$this->db->from('account_journal');
 	    	$this->db->where('jou_reff',$this->input->post('prc_code'));
@@ -1538,18 +1576,29 @@
 	        echo json_encode(array("status" => TRUE));
 		}
 
-		public function logupd_prclgt_save($id,$user)
+		public function ajax_disapproveprc()
+		{
+			$data = array(
+	                'prc_sts' => '0'
+	            );
+	        $update = $this->crud->update('trx_procurement',$data,array('prc_id' => $this->input->post('prc_id')));
+	        $this->logupd_prclgt_save($this->input->post('prc_id'),$this->input->post('user_name'),'Disapproved');
+	        echo json_encode(array("status" => TRUE));
+		}
+
+		public function logupd_prclgt_save($id,$user,$sts)
 	    {
 	    	$his = $this->logistik->getlog_prclgt($id);
 	    	if ($his->HISPRC_UPCOUNT == '0') 
 	    	{
 	    		$data = array(
 						'prc_id' => $id,
-						'hisprc_sts' => 'Posted by User '.$user,
+						'hisprc_sts' => $sts.' by User '.$user,
 						'hisprc_old' => $his->HISPRC_STS,
-						'hisprc_new' => 'Posted By User '.$user,
+						'hisprc_new' => $sts.' By User '.$user,
 						'hisprc_info' => 'Original Save by Pembelian Logistik form',
 						'hisprc_date' => date('Y-m-d'),
+						'hisprc_time' => date('H:i:s'),
 						'hisprc_upcount' => $his->HISPRC_UPCOUNT+1
 					);
 				$this->db->insert('his_prc',$data);
@@ -1558,11 +1607,12 @@
 	    	{
 	    		$data = array(
 						'prc_id' => $id,
-						'hisprc_sts' => 'Posted by User '.$user,
+						'hisprc_sts' => $sts.' by User '.$user,
 						'hisprc_old' => $his->HISPRC_STS,
-						'hisprc_new' => 'Posted By User '.$user,
+						'hisprc_new' => $sts.' By User '.$user,
 						'hisprc_info' => 'Update by '.$user.' from Pembelian Logistik form',
 						'hisprc_date' => date('Y-m-d'),
+						'hisprc_time' => date('H:i:s'),
 						'hisprc_upcount' => $his->HISPRC_UPCOUNT
 					);
 				$this->db->insert('his_prc',$data);

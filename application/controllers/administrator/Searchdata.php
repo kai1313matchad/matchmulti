@@ -422,12 +422,6 @@
 					# code...
 					break;
 			}
-			if($this->input->post('chk') != '0')
-			{
-			}
-			else
-			{
-			}
 			$output = array(
 							"draw" => $_POST['draw'],
 							"recordsTotal" => $this->s_bappbysts->count_all(),
@@ -477,40 +471,71 @@
 		{
 			$id = $this->input->post('sts');
 			$br = $this->input->post('brch');
-			// $brc = ($this->input->post('chk') != '0')? 'e.branch_id = '.$br : 'e.branch_id = '.$br.' OR e.branch_id IS null';
+			$chk = $this->input->post('chk');
 			$brc = 'a.branch_id = '.$br;
 			$list = $this->s_pobysts->get_datatables($id,$brc);
 			$data = array();
 			$no = $_POST['start'];
-			if($this->input->post('chk') != '0')
-			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-					$row[] = $dat->PO_CODE;
-					$row[] = $dat->APPR_CODE;
-					$row[] = $dat->PO_DATE;
-					$row[] = $dat->LOC_NAME;
-					$row[] = $dat->SUPP_NAME;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_polgtopen('."'".$dat->PO_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
-			}
-			else
-			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-					$row[] = $dat->PO_CODE;
-					$row[] = $dat->APPR_CODE;
-					$row[] = $dat->PO_DATE;
-					$row[] = $dat->LOC_NAME;
-					$row[] = $dat->SUPP_NAME;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_polgtedit('."'".$dat->PO_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
+			switch ($chk) {
+				case '0':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->PO_CODE;
+						$row[] = $dat->APPR_CODE;
+						$row[] = $dat->PO_DATE;
+						$row[] = $dat->LOC_NAME;
+						$row[] = $dat->SUPP_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_polgtedit('."'".$dat->PO_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '1':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->PO_CODE;
+						$row[] = $dat->APPR_CODE;
+						$row[] = $dat->PO_DATE;
+						$row[] = $dat->LOC_NAME;
+						$row[] = $dat->SUPP_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_polgtopen('."'".$dat->PO_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '2':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->PO_CODE;
+						$row[] = $dat->APPR_CODE;
+						$row[] = $dat->PO_DATE;
+						$row[] = $dat->LOC_NAME;
+						$row[] = $dat->SUPP_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_polgtchk('."'".$dat->PO_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '3':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->PO_CODE;
+						$row[] = $dat->APPR_CODE;
+						$row[] = $dat->PO_DATE;
+						$row[] = $dat->LOC_NAME;
+						$row[] = $dat->SUPP_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_polgtapr('."'".$dat->PO_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				default:
+					# code...
+					break;
 			}
 			$output = array(
 							"draw" => $_POST['draw'],
@@ -561,40 +586,71 @@
 		{
 			$id = $this->input->post('sts');
 			$br = $this->input->post('brch');
-			// $brc = ($this->input->post('chk') != '0')? 'e.branch_id = '.$br : 'e.branch_id = '.$br.' OR e.branch_id IS null';
 			$brc = 'a.branch_id = '.$br;
+			$chk = $this->input->post('chk');
 			$list = $this->s_prcbysts->get_datatables($id,$brc);
 			$data = array();
 			$no = $_POST['start'];
-			if($this->input->post('chk') != '0')
-			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-					$row[] = $dat->PRC_CODE;
-					$row[] = $dat->PO_CODE;
-					$row[] = $dat->APPR_CODE;
-					$row[] = $dat->PRC_DATE;
-					$row[] = $dat->LOC_NAME;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_prclgtopen('."'".$dat->PRC_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
-			}
-			else
-			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-					$row[] = $dat->PRC_CODE;
-					$row[] = $dat->PO_CODE;
-					$row[] = $dat->APPR_CODE;
-					$row[] = $dat->PRC_DATE;
-					$row[] = $dat->LOC_NAME;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_prclgtedit('."'".$dat->PRC_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
+			switch ($chk) {
+				case '0':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->PRC_CODE;
+						$row[] = $dat->PO_CODE;
+						$row[] = $dat->APPR_CODE;
+						$row[] = $dat->PRC_DATE;
+						$row[] = $dat->LOC_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_prclgtedit('."'".$dat->PRC_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '1':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->PRC_CODE;
+						$row[] = $dat->PO_CODE;
+						$row[] = $dat->APPR_CODE;
+						$row[] = $dat->PRC_DATE;
+						$row[] = $dat->LOC_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_prclgtopen('."'".$dat->PRC_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '2':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->PRC_CODE;
+						$row[] = $dat->PO_CODE;
+						$row[] = $dat->APPR_CODE;
+						$row[] = $dat->PRC_DATE;
+						$row[] = $dat->LOC_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_prclgtchk('."'".$dat->PRC_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '3':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->PRC_CODE;
+						$row[] = $dat->PO_CODE;
+						$row[] = $dat->APPR_CODE;
+						$row[] = $dat->PRC_DATE;
+						$row[] = $dat->LOC_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_prclgtapr('."'".$dat->PRC_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				default:
+					# code...
+					break;
 			}
 			$output = array(
 							"draw" => $_POST['draw'],

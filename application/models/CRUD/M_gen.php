@@ -537,6 +537,7 @@
 					'hispo_new' => 'None',
 					'hispo_info' => 'Create By System',
 					'hispo_date' => date('Y-m-d'),
+					'hispo_time' => date('H:i:s'),
 					'hispo_upcount' => 0
 				);
 			$this->db->insert('his_po',$data2);
@@ -570,6 +571,7 @@
 					'hisprc_new' => 'None',
 					'hisprc_info' => 'Create By System',
 					'hisprc_date' => date('Y-m-d'),
+					'hisprc_time' => date('H:i:s'),
 					'hisprc_upcount' => 0
 				);
 			$this->db->insert('his_prc',$data2);
