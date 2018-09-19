@@ -320,6 +320,12 @@
                                         <div class="col-sm-offset-3 col-sm-2 text-center">
                                             <a href="javascript:void(0)" onclick="saveprc()" class="btn btn-block btn-primary btn-default btnCh">Simpan</a>
                                         </div>
+                                        <div class="col-sm-2 text-center">
+                                            <button type="button" onclick="aprprc()" class="btn btn-block btn-primary btn-default btnApr" disabled>Approve</button>
+                                        </div>
+                                        <div class="col-sm-2 text-center">
+                                            <button type="button" onclick="disaprprc()" class="btn btn-block btn-primary btn-default btnApr" disabled>Disapprove</button>
+                                        </div>
                                     </div>
                                     <br><br>
                                 </div>
@@ -564,6 +570,48 @@
                 }
             });
         }
+        function aprprc()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Logistik/ajax_approveprc')?>",
+                type: "POST",
+                data: $('#form_po').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Logistik/lgt_trx_prc')?>";
+                        window.location = url;
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
+        function disaprprc()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Logistik/ajax_disapproveprc')?>",
+                type: "POST",
+                data: $('#form_po').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Logistik/lgt_trx_prc')?>";
+                        window.location = url;
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
         function hitung()
         {
             prc = $('[name="gd_price"]').val();
@@ -647,6 +695,27 @@
                 "order": [],                
                 "ajax": {
                     "url": "<?php echo site_url('administrator/Logistik/ajax_brg_prc/')?>"+id,
+                    "type": "POST",                
+                },                
+                "columnDefs": [
+                { 
+                    "targets": [ 0 ],
+                    "orderable": false,
+                },
+                ],
+            });
+        }
+        function barang_(id)
+        {
+            table = $('#dtb_barang').DataTable({
+                "info": false,
+                "destroy": true,
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "order": [],                
+                "ajax": {
+                    "url": "<?php echo site_url('administrator/Logistik/ajax_brg_prc_/')?>"+id,
                     "type": "POST",                
                 },                
                 "columnDefs": [
@@ -1125,7 +1194,7 @@
                     $('[name="prc_tgl"]').val(data.PRC_DATE);
                     $('[name="prc_inv"]').val(data.PRC_INVOICE);
                     pick_po(data.PO_ID);                    
-                    barang(data.PRC_ID);
+                    barang_(data.PRC_ID);
                     pick_curr(data.CURR_ID);
                     sub_total(data.PRC_ID);
                     $('[name="prc_disc"]').val(data.PRC_DISC);
@@ -1135,6 +1204,38 @@
                     $('[name="prc_cost"]').val(data.PRC_COST);
                     $('[name="prc_gtotal"]').val(data.PRC_GTOTAL);
                     $('.btnCh').css({'display':'none'});
+                    $('#modal_prc_edit').modal('hide');
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function pick_prclgtapr(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_prclgtgb/')?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {   
+                    $('[name="prc_id"]').val(data.PRC_ID);
+                    $('[name="prc_code"]').val(data.PRC_CODE);
+                    $('[name="prc_tgl"]').val(data.PRC_DATE);
+                    $('[name="prc_inv"]').val(data.PRC_INVOICE);
+                    pick_po(data.PO_ID);                    
+                    barang_(data.PRC_ID);
+                    pick_curr(data.CURR_ID);
+                    sub_total(data.PRC_ID);
+                    $('[name="prc_disc"]').val(data.PRC_DISC);
+                    $('[name="disc_perc"]').val(Math.abs(data.PRC_DISC/data.PRC_SUB*100));
+                    $('[name="prc_ppn"]').val(data.PRC_PPN);
+                    $('[name="ppn_perc"]').val(Math.abs(data.PRC_PPN/(data.PRC_SUB-data.PRC_DISC)*100));
+                    $('[name="prc_cost"]').val(data.PRC_COST);
+                    $('[name="prc_gtotal"]').val(data.PRC_GTOTAL);
+                    $('.btnCh').css({'display':'none'});
+                    $('.btnApr').prop('disabled',false);
                     $('#modal_prc_edit').modal('hide');
                 },
                 error: function (jqXHR, textStatus, errorThrown)

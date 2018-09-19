@@ -146,6 +146,7 @@
 
 		public function save_prccoa()
 		{
+			$brc = $this->input->post('os_branch');
 			$deb = $this->input->post('os_prccoadeb');
 			$crd = $this->input->post('os_prccoacrd');
 			$disc = $this->input->post('os_prccoadisc');
@@ -161,20 +162,42 @@
 			$ppnname = $getppn->row()->COA_ACCNAME;
 			$getcost = $this->db->get_where('chart_of_account',array('coa_id'=>$cost));
 			$costname = $getcost->row()->COA_ACCNAME;
-			$d_up = array(
-					'prc_coa'=>$deb,
-					'prc_coaname'=>$debname,
-					'prc_coaag'=>$crd,
-					'prc_coanameag'=>$crdname,
-					'prc_coadisc'=>$disc,
-					'prc_coanamedisc'=>$discname,
-					'prc_coappn'=>$ppn,
-					'prc_coanameppn'=>$ppnname,
-					'prc_coacost'=>$cost,
-					'prc_coanamecost'=>$costname
-					);
-			$update = $this->crud->update('other_settings',$d_up,array('os_id'=>'1'));
-			$data['status'] = TRUE;
+			$getlist = $this->db->get_where('other_settings',array('branch_id'=>$brc))->num_rows();
+			if($getlist > 0)
+			{
+				$d_up = array(
+						'prc_coa'=>$deb,
+						'prc_coaname'=>$debname,
+						'prc_coaag'=>$crd,
+						'prc_coanameag'=>$crdname,
+						'prc_coadisc'=>$disc,
+						'prc_coanamedisc'=>$discname,
+						'prc_coappn'=>$ppn,
+						'prc_coanameppn'=>$ppnname,
+						'prc_coacost'=>$cost,
+						'prc_coanamecost'=>$costname
+						);
+				$update = $this->crud->update('other_settings',$d_up,array('branch_id'=>$brc));
+				$data['status'] = TRUE;
+			}
+			else
+			{
+				$d_ins = array(
+						'branch_id'=>$brc,
+						'prc_coa'=>$deb,
+						'prc_coaname'=>$debname,
+						'prc_coaag'=>$crd,
+						'prc_coanameag'=>$crdname,
+						'prc_coadisc'=>$disc,
+						'prc_coanamedisc'=>$discname,
+						'prc_coappn'=>$ppn,
+						'prc_coanameppn'=>$ppnname,
+						'prc_coacost'=>$cost,
+						'prc_coanamecost'=>$costname
+						);
+				$update = $this->db->insert('other_settings',$d_ins);
+				$data['status'] = TRUE;
+			}
 			echo json_encode($data);
 		}
 

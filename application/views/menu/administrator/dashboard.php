@@ -470,7 +470,7 @@
             $.ajax({
                 url : "<?php echo site_url('Dashboard/save_prccoa/')?>",
                 type: "POST",
-                data: $('#form_prccoa').serialize(),
+                data: $('form').serialize(),
                 dataType: "JSON",
                 success: function(data)
                 {

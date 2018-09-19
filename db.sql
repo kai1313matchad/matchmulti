@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Server version:               10.1.19-MariaDB - mariadb.org binary distribution
 -- Server OS:                    Win32
--- HeidiSQL Version:             9.5.0.5196
+-- HeidiSQL Version:             9.4.0.5125
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -29,10 +29,12 @@ CREATE TABLE IF NOT EXISTS `account_journal` (
   KEY `FK_R53` (`BRANCH_ID`),
   CONSTRAINT `FK_R50` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`),
   CONSTRAINT `FK_R53` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.account_journal: ~0 rows (approximately)
+-- Dumping data for table mtpdmulti.account_journal: ~1 rows (approximately)
 /*!40000 ALTER TABLE `account_journal` DISABLE KEYS */;
+INSERT INTO `account_journal` (`JOU_ID`, `BRANCH_ID`, `USER_ID`, `JOU_CODE`, `JOU_STS`, `JOU_REFF`, `JOU_DATE`, `JOU_INFO`, `JOU_DEBIT`, `JOU_CREDIT`) VALUES
+	(1, 1, 2, 'JOU/1809/000001', '1', 'BL/1809/000001', '2018-09-19', 'Jurnal Pembelian BL/1809/000001 dari Supplier A', NULL, NULL);
 /*!40000 ALTER TABLE `account_journal` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.appr_cost_det
@@ -368,9 +370,9 @@ CREATE TABLE IF NOT EXISTS `chart_of_account` (
   KEY `FK_chart_of_account_master_branch` (`BRANCH_ID`),
   CONSTRAINT `FK_R49` FOREIGN KEY (`PAR_ID`) REFERENCES `parent_chart` (`PAR_ID`),
   CONSTRAINT `FK_chart_of_account_master_branch` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=322 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.chart_of_account: ~80 rows (approximately)
+-- Dumping data for table mtpdmulti.chart_of_account: ~320 rows (approximately)
 /*!40000 ALTER TABLE `chart_of_account` DISABLE KEYS */;
 INSERT INTO `chart_of_account` (`COA_ID`, `PAR_ID`, `BRANCH_ID`, `COA_ACC`, `COA_ACCNAME`, `COA_OWNER`, `COA_DEBIT`, `COA_CREDIT`, `COA_SALDO`, `COA_DTSTS`) VALUES
 	(1, 17, 1, '1110001', 'KAS HO', NULL, 0, 0, 0, '1'),
@@ -452,7 +454,247 @@ INSERT INTO `chart_of_account` (`COA_ID`, `PAR_ID`, `BRANCH_ID`, `COA_ACC`, `COA
 	(77, 35, 5, '6110067', 'BIAYA ENTERTAINT PERJALANAN DINAS WIKLAN', '', 0, 0, 0, '1'),
 	(78, 35, 5, '6110068', 'BIAYA PERJALANAN DINAS LAIN-LAIN WIKLAN', '', 0, 0, 0, '1'),
 	(79, 35, 5, '6110069', 'BIAYA LEMBUR KARYAWAN KANTOR WIKLAN', '', 0, 0, 0, '1'),
-	(80, 35, 5, '6110070', 'BIAYA KANTOR LAIN-LAIN WIKLAN', '', 0, 0, 0, '1');
+	(80, 35, 5, '6110070', 'BIAYA KANTOR LAIN-LAIN WIKLAN', '', 0, 0, 0, '1'),
+	(81, 36, 5, '6120021', 'BIAYA GAJI WIKLAN', '', 0, 0, 0, '1'),
+	(82, 36, 5, '6120022', 'BIAYA THR WIKLAN', '', 0, 0, 0, '1'),
+	(83, 36, 5, '6120023', 'BIAYA TUNJANGAN WIKLAN', '', 0, 0, 0, '1'),
+	(84, 36, 5, '6120024', 'BIAYA BPJS KESEHATAN WIKLAN', '', 0, 0, 0, '1'),
+	(85, 36, 5, '6120025', 'BIAYA BPJS KETENAGAKERJAAN WIKLAN', '', 0, 0, 0, '1'),
+	(86, 37, 5, '6130063', 'TRANSPORTASI (BIS/BBM MOTOR)  - WIKLAN', '', 0, 0, 0, '1'),
+	(87, 36, 5, '6130065', 'PARKIR - WIKLAN', '', 0, 0, 0, '1'),
+	(88, 36, 5, '6130066', 'PERON - WIKLAN', '', 0, 0, 0, '1'),
+	(89, 36, 5, '6130067', 'PENGINAPAN - WIKLAN', '', 0, 0, 0, '1'),
+	(90, 36, 5, '6130070', 'BIAYA PEMAKAIAN BARANG - WIKLAN', '', 0, 0, 0, '1'),
+	(91, 36, 5, '6130071', 'BIAYA KEAMANAN - WIKLAN', '', 0, 0, 0, '1'),
+	(92, 36, 5, '6130072', 'BIAYA PROYEK LAIN - WIKLAN', '', 0, 0, 0, '1'),
+	(93, 36, 5, '6130073', 'INSENTIF DRIVER - WIKLAN', '', 0, 0, 0, '1'),
+	(94, 36, 5, '6130074', 'UANG MAKAN DRIVER - WIKLAN', '', 0, 0, 0, '1'),
+	(95, 36, 5, '6130075', 'BIAYA AMORTISASI SEWA KANTOR - WIKLAN', '', 0, 0, 0, '1'),
+	(96, 36, 5, '6130076', 'BIAYA AMORTISASI KENDARAAN - WIKLAN', '', 0, 0, 0, '1'),
+	(97, 38, 5, '6170005', 'BIAYA LISTRIK PROYEK WIKLAN', '', 0, 0, 0, '1'),
+	(98, 39, 5, '6180005', 'BIAYA LISTRIK WIKLAN', '', 0, 0, 0, '1'),
+	(99, 40, 5, '6190005', 'BIAYA TELEPON WIKLAN', '', 0, 0, 0, '1'),
+	(100, 41, 5, '6200005', 'BIAYA PDAM WIKLAN', '', 0, 0, 0, '1'),
+	(101, 42, 5, '6210005', 'BIAYA BBM /SOLAR WIKLAN', '', 0, 0, 0, '1'),
+	(102, 43, 5, '6220005', 'BIAYA TOL WIKLAN', '', 0, 0, 0, '1'),
+	(103, 44, 5, '6230017', 'BIAYA ADM BANK WIKLAN', '', 0, 0, 0, '1'),
+	(104, 44, 5, '6230018', 'BIAYA PROVISI BANK WIKLAN', '', 0, 0, 0, '1'),
+	(105, 44, 5, '6230019', 'BIAYA BUNGA PINJAMAN BANK WIKLAN', '', 0, 0, 0, '1'),
+	(106, 44, 5, '6230020', 'BIAYA MATERAI  BANK WIKLAN', '', 0, 0, 0, '1'),
+	(107, 45, 5, '6240021', 'PPH 21 WIKLAN', '', 0, 0, 0, '1'),
+	(108, 45, 5, '6240023', 'PPH 25 WIKLAN', '', 0, 0, 0, '1'),
+	(109, 45, 5, '6240024', 'PPN WIKLAN', '', 0, 0, 0, '1'),
+	(110, 45, 5, '6240025', 'PPh Pasal 4 Ayat 2 WIKLAN', '', 0, 0, 0, '1'),
+	(111, 46, 5, '6250017', 'BIAYA PBB WIKLAN', '', 0, 0, 0, '1'),
+	(112, 46, 5, '6250018', 'IURAN & LANGGANAN WIKLAN', '', 0, 0, 0, '1'),
+	(113, 46, 5, '6250019', 'BIAYA SUMBANGAN WIKLAN', '', 0, 0, 0, '1'),
+	(114, 46, 5, '6250020', 'BIAYA PENGURUSAN SURAT-SURAT WIKLAN', '', 0, 0, 0, '1'),
+	(115, 47, 5, '6260017', 'BIAYA ASURANSI KENDARAAN WIKLAN', '', 0, 0, 0, '1'),
+	(116, 47, 5, '6260018', 'BIAYA ASURANSI BANGUNAN WIKLAN', '', 0, 0, 0, '1'),
+	(117, 47, 5, '6260019', 'BIAYA ASURANSI BILLBOARD WIKLAN', '', 0, 0, 0, '1'),
+	(118, 47, 5, '6260020', 'BIAYA ASURANSI KESEHATAN WIKLAN', '', 0, 0, 0, '1'),
+	(119, 48, 5, '6270013', 'BIAYA PEMELIHARAAN GEDUNG WIKLAN', '', 0, 0, 0, '1'),
+	(120, 48, 5, '6270014', 'BIAYA PEMELIHARAAN INVENTARIS WIKLAN', '', 0, 0, 0, '1'),
+	(121, 48, 5, '6270015', 'BIAYA PEMELIHARAAN KENDARAAN WIKLAN', '', 0, 0, 0, '1'),
+	(122, 49, 5, '6280017', 'BIAYA PENYUSUTAN GEDUNG WIKLAN', '', 0, 0, 0, '1'),
+	(123, 49, 5, '6280018', 'BIAYA PENYUSUTAN KENDARAAN WIKLAN', '', 0, 0, 0, '1'),
+	(124, 49, 5, '6280019', 'BIAYA PENYUSUTAN INVENTARIS WIKLAN', '', 0, 0, 0, '1'),
+	(125, 49, 5, '6280020', 'BIAYA PENYUSUTAN BILLBOARD WIKLAN', '', 0, 0, 0, '1'),
+	(126, 50, 5, '7110013', 'PENDAPATAN JASA GIRO WIKLAN', '', 0, 0, 0, '1'),
+	(127, 50, 5, '7110014', 'PENDAPATAN LAIN-LAIN WIKLAN', '', 0, 0, 0, '1'),
+	(128, 50, 5, '7110015', 'PENDAPATAN KOMISI / FEE WIKLAN', '', 0, 0, 0, '1'),
+	(129, 51, 5, '8110009', 'Pajak Penghasilan Badan WIKLAN', '', 0, 0, 0, '1'),
+	(130, 51, 5, '8110010', 'BIAYA LAIN-LAIN WIKLAN', '', 0, 0, 0, '1'),
+	(131, 52, 5, '9110009', 'PEMBULATAN WIKLAN', '', 0, 0, 0, '1'),
+	(132, 52, 5, '9110010', 'SELISIH KAS WIKLAN', '', 0, 0, 0, '1'),
+	(134, 17, 1, '1110007', 'NOTA GANTUNG HO', NULL, 0, 0, 0, '1'),
+	(135, 17, 1, '1110013', 'AYAT SILANG HO', NULL, 0, 0, 0, '1'),
+	(136, 53, 1, '1120001', 'BANK PANIN A/C 415.5085.789 A/N PT MULTI ARTISTIKACITHRA', NULL, 0, 0, 0, '1'),
+	(137, 53, 1, '1120002', 'BANK PANIN A/C 416.5080.369 A/N RUDY WIJAYA', NULL, 0, 0, 0, '1'),
+	(138, 53, 1, '1120003', 'BANK NEGARA INDONESIA KMK A/C 038.9398.202 A/N PT. MULTI ARTISTIKACITHRA', NULL, 0, 0, 0, '1'),
+	(139, 53, 1, '1120006', 'BANK NEGARA INDONESIA PROMESE', NULL, 0, 0, 0, '1'),
+	(140, 53, 1, '1120007', 'BANK BCA CRV A/C 258.2100.773 A/N RUDY WIJAYA', NULL, 0, 0, 0, '1'),
+	(141, 53, 1, '1120010', 'BANK MANDIRI A/C 142.000.7484248 A/N PT. MULTI ARTISTIKACITHRA', NULL, 0, 0, 0, '1'),
+	(142, 53, 1, '1120012', 'BANK OCBC NISP A/C 0278.0000.9006', NULL, 0, 0, 0, '1'),
+	(143, 19, 1, '1140001', 'PIUTANG DIREKSI', NULL, 0, 0, 0, '1'),
+	(144, 19, 1, '1140002', 'PIUTANG GIRO', NULL, 0, 0, 0, '1'),
+	(145, 19, 1, '1140003', 'PIUTANG PIHAK III', NULL, 0, 0, 0, '1'),
+	(146, 19, 1, '1140004', 'PIUTANG MATCH', NULL, 0, 0, 0, '1'),
+	(147, 19, 1, '1140005', 'PIUTANG KCT', NULL, 0, 0, 0, '1'),
+	(148, 19, 1, '1140006', 'PIUTANG WPI', NULL, 0, 0, 0, '1'),
+	(149, 19, 1, '1140007', 'PIUTANG WIKLAN', NULL, 0, 0, 0, '1'),
+	(150, 19, 1, '1140008', 'PIUTANG RCP', NULL, 0, 0, 0, '1'),
+	(151, 19, 1, '1140009', 'PIUTANG OFFICE SURABAYA', NULL, 0, 0, 0, '1'),
+	(152, 19, 1, '1140010', 'TITIPAN OFFICE SURABAYA', NULL, 0, 0, 0, '1'),
+	(153, 19, 1, '1140011', 'TITIPAN OFFICE JAKARTA', NULL, 0, 0, 0, '1'),
+	(154, 19, 1, '1140012', 'PIUTANG KARYAWAN - HO', NULL, 0, 0, 0, '1'),
+	(155, 19, 1, '1140018', 'PIUTANG LAIN-LAIN - HO', NULL, 0, 0, 0, '1'),
+	(156, 20, 1, '1150001', 'PERSEDIAAN BAHAN BAKU - HO', NULL, 0, 0, 0, '1'),
+	(157, 20, 1, '1150007', 'PERSEDIAAN BARANG DALAM PROSES - HO', NULL, 0, 0, 0, '1'),
+	(158, 20, 1, '1150013', 'PERSEDIAAN BARANG JADI - HO', NULL, 0, 0, 0, '1'),
+	(159, 20, 1, '1150019', 'TMP PERSEDIAAN - HO', NULL, 0, 0, 0, '1'),
+	(160, 20, 1, '1150025', 'PERSEDIAAN INVENTARIS - HO', NULL, 0, 0, 0, '1'),
+	(161, 20, 1, '1150031', 'PERSEDIAAN BARANG BAGUS - HO', NULL, 0, 0, 0, '1'),
+	(162, 20, 1, '1150037', 'PERSEDIAAN BARANG BAD STOCK - HO', NULL, 0, 0, 0, '1'),
+	(163, 21, 1, '1160001', 'SEWA DIBAYAR DIMUKA - HO', NULL, 0, 0, 0, '1'),
+	(164, 21, 1, '1160007', 'ASURANSI DIBAYAR DIMUKA - HO', NULL, 0, 0, 0, '1'),
+	(165, 21, 1, '1160013', 'IJIN DIBAYAR DIMUKA - HO', NULL, 0, 0, 0, '1'),
+	(166, 21, 1, '1160019', 'SEWA LOKASI DIBAYAR DIMUKA - HO', NULL, 0, 0, 0, '1'),
+	(167, 21, 1, '1160020', 'SEWA LOKASI DIBAYAR DIMUKA - MATCH', NULL, 0, 0, 0, '1'),
+	(168, 21, 1, '1160025', 'SEWA GEDUNG DIBAYAR DIMUKA - HO', NULL, 0, 0, 0, '1'),
+	(169, 21, 1, '1160031', 'SEWA KENDARAAN DIBAYAR DIMUKA - HO', NULL, 0, 0, 0, '1'),
+	(170, 21, 1, '1160037', 'SEWA GUNA USAHA - HO', NULL, 0, 0, 0, '1'),
+	(171, 21, 1, '1160043', 'LAIN-LAIN DIBAYAR DIMUKA - HO', NULL, 0, 0, 0, '1'),
+	(172, 21, 1, '1160049', 'DANA NON BUDGETER', NULL, 0, 0, 0, '1'),
+	(173, 21, 1, '1160050', 'DANA NON BUDGETER DLM PROSES', NULL, 0, 0, 0, '1'),
+	(174, 22, 1, '1170001', 'PPN MASUKAN - HO', NULL, 0, 0, 0, '1'),
+	(175, 22, 1, '1170007', 'PAJAK 21 DIBAYAR DIMUKA - HO', NULL, 0, 0, 0, '1'),
+	(176, 22, 1, '1170013', 'PAJAK 22 DIBAYAR DIMUKA - HO', NULL, 0, 0, 0, '1'),
+	(177, 22, 1, '1170019', 'PAJAK 23 DIBAYAR DIMUKA - HO', NULL, 0, 0, 0, '1'),
+	(178, 22, 1, '1170025', 'PAJAK 25 DIBAYAR DIMUKA - HO', NULL, 0, 0, 0, '1'),
+	(179, 22, 1, '1170031', 'PAJAK 4(2) DIBAYAR DIMUKA - HO', NULL, 0, 0, 0, '1'),
+	(180, 23, 1, '1180001', 'UM PEMBELIAN MOBIL - HO', NULL, 0, 0, 0, '1'),
+	(181, 24, 1, '1200001', 'TANAH - HO', NULL, 0, 0, 0, '1'),
+	(182, 24, 1, '1200007', 'GEDUNG - HO', NULL, 0, 0, 0, '1'),
+	(183, 24, 1, '1200013', 'KENDARAAN - HO', NULL, 0, 0, 0, '1'),
+	(184, 24, 1, '1200019', 'INVENTARIS - HO', NULL, 0, 0, 0, '1'),
+	(185, 24, 1, '1200025', 'AKTIVA - BILLBOARD - HO', NULL, 0, 0, 0, '1'),
+	(186, 25, 1, '1210001', 'AK. PENY. GEDUNG - HO', NULL, 0, 0, 0, '1'),
+	(187, 25, 1, '1210007', 'AK. PENY. KENDARAAN - HO', NULL, 0, 0, 0, '1'),
+	(188, 25, 1, '1210013', 'AK. PENY. INVENTARIS - HO', NULL, 0, 0, 0, '1'),
+	(189, 25, 1, '1210019', 'AK. PENY. SEWA GUNA USAHA - HO', NULL, 0, 0, 0, '1'),
+	(190, 25, 1, '1210025', 'AK. PENY. BILLBOARD - HO', NULL, 0, 0, 0, '1'),
+	(191, 54, 1, '2110001', 'HUTANG BANK PANIN CENDANA (ANGSURAN)', NULL, 0, 0, 0, '1'),
+	(192, 54, 1, '2110002', 'HUTANG BANK HAGAKITA A/N RUDY', NULL, 0, 0, 0, '1'),
+	(193, 54, 1, '2110003', 'HUTANG KKB BCA', NULL, 0, 0, 0, '1'),
+	(194, 54, 1, '2110004', 'HUTANG BANK BRI PT. MULTI', NULL, 0, 0, 0, '1'),
+	(195, 54, 1, '2110005', 'HUTANG BANK MANDIRI PT. MULTI', NULL, 0, 0, 0, '1'),
+	(196, 54, 1, '2110006', 'HUTANG BANK PANIN CENDANA', NULL, 0, 0, 0, '1'),
+	(197, 54, 1, '2110007', 'HUTANG BANK MANDIRI REK TRANSAKSIONAL', NULL, 0, 0, 0, '1'),
+	(198, 54, 1, '2110008', 'HUTANG BANK MANDIRI REK KMK', NULL, 0, 0, 0, '1'),
+	(199, 54, 1, '2110009', 'HUTANG BANK BCA KUPANG INDAH', NULL, 0, 0, 0, '1'),
+	(200, 54, 1, '2110010', 'HUTANG BANK NISP PT. MULTI ARTISTIKACITH', NULL, 0, 0, 0, '1'),
+	(201, 54, 1, '2110011', 'HUTANG BANK PERMATA PASAR ATOM', NULL, 0, 0, 0, '1'),
+	(202, 54, 1, '2110012', 'HUTANG BANK NEGARA INDONESIA  ANGSURAN', NULL, 0, 0, 0, '1'),
+	(203, 54, 1, '2110013', 'HUTANG BANK NEGARA INDONESIA KMK', NULL, 0, 0, 0, '1'),
+	(204, 54, 1, '2110014', 'HUTANG BANK NEGARA INDONESIA PROMESE', NULL, 0, 0, 0, '1'),
+	(205, 54, 1, '2110015', 'HUTANG BANK PANIN CENDANA TOPUP', NULL, 0, 0, 0, '1'),
+	(206, 55, 1, '2120001', 'HUTANG USAHA', NULL, 0, 0, 0, '1'),
+	(207, 55, 1, '2120002', 'HUTANG WS KE MATCH', NULL, 0, 0, 0, '1'),
+	(208, 55, 1, '2120003', 'HUTANG GIRO', NULL, 0, 0, 0, '1'),
+	(209, 55, 1, '2120004', 'HUTANG PERSIL', NULL, 0, 0, 0, '1'),
+	(210, 55, 1, '2120005', 'HUTANG SUB KONTRAK', NULL, 0, 0, 0, '1'),
+	(211, 56, 1, '2130001', 'HUTANG PAJAK PPh PASAL 21', NULL, 0, 0, 0, '1'),
+	(212, 56, 1, '2130002', 'HUTANG PAJAK PPh PASAL 22', NULL, 0, 0, 0, '1'),
+	(213, 56, 1, '2130003', 'HUTANG PAJAK PPh PASAL 23', NULL, 0, 0, 0, '1'),
+	(214, 56, 1, '2130004', 'HUTANG PAJAK PPh PASAL 29', NULL, 0, 0, 0, '1'),
+	(215, 56, 1, '2130005', 'HUTANG PAJAK PASAL 4 AYAT 2', NULL, 0, 0, 0, '1'),
+	(216, 56, 1, '2130006', 'HUTANG PAJAK PPN KELUARAN', NULL, 0, 0, 0, '1'),
+	(217, 56, 1, '2130007', 'HUTANG PAJAK LAIN-LAIN', NULL, 0, 0, 0, '1'),
+	(218, 26, 1, '2140001', 'HUTANG DIREKSI', NULL, 0, 0, 0, '1'),
+	(219, 26, 1, '2140002', 'HUTANG PIHAK KE III', NULL, 0, 0, 0, '1'),
+	(220, 26, 1, '2140008', 'HUTANG OFFICE SURABAYA', NULL, 0, 0, 0, '1'),
+	(221, 26, 1, '2140009', 'REKENING OFFICE SURABAYA', NULL, 0, 0, 0, '1'),
+	(222, 26, 1, '2140010', 'REKENING OFFICE JAKARTA', NULL, 0, 0, 0, '1'),
+	(223, 26, 1, '2140011', 'HUTANG LAIN-LAIN HO', NULL, 0, 0, 0, '1'),
+	(224, 27, 1, '3110001', 'MODAL SAHAM HO', NULL, 0, 0, 0, '1'),
+	(225, 28, 1, '3120001', 'LABA DITAHAN HO', NULL, 0, 0, 0, '1'),
+	(226, 28, 1, '3120002', 'SALDO LABA/RUGI BERJALAN HO', NULL, 0, 0, 0, '1'),
+	(227, 29, 1, '4110001', 'PENDAPATAN OUTDOR - HO', NULL, 0, 0, 0, '1'),
+	(228, 29, 1, '4110007', 'PENDAPATAN PAJAK REKLAME - HO', NULL, 0, 0, 0, '1'),
+	(229, 29, 1, '4110013', 'PENDAPATAN MEDIA - HO', NULL, 0, 0, 0, '1'),
+	(230, 29, 1, '4110019', 'PENDAPATAN/PENJUALAN - HO', NULL, 0, 0, 0, '1'),
+	(231, 30, 1, '4120001', 'POTONGAN/DISCOUNT PENJUALAN OUTDOOR - HO', NULL, 0, 0, 0, '1'),
+	(232, 30, 1, '4120007', 'POTONGAN/DISCOUNT PENJUALAN PAJAK REKLAME - HO', NULL, 0, 0, 0, '1'),
+	(233, 30, 1, '4120010', 'POTONGAN/DISCOUNT PENJUALAN MEDIA - HO', NULL, 0, 0, 0, '1'),
+	(234, 30, 1, '4120013', 'POTONGAN/DISCOUNT PENJUALAN - HO', NULL, 0, 0, 0, '1'),
+	(235, 31, 1, '4130001', 'RETURN PENJUALAN OUTDOOR - HO', NULL, 0, 0, 0, '1'),
+	(236, 31, 1, '4130007', 'RETURN PENJUALAN PAJAK REKLAME - HO', NULL, 0, 0, 0, '1'),
+	(237, 31, 1, '4130010', 'RETURN PENJUALAN MEDIA - HO', NULL, 0, 0, 0, '1'),
+	(238, 32, 1, '4140001', 'POTONGAN/DISCOUNT RETURN JUAL OUTDOOR - HO', NULL, 0, 0, 0, '1'),
+	(239, 32, 1, '4140011', 'POTONGAN/DISCOUNT RETURN PENJUALAN - HO', NULL, 0, 0, 0, '1'),
+	(240, 33, 1, '4150001', 'PENDAPATAN USAHA LAINNYA HO', NULL, 0, 0, 0, '1'),
+	(241, 34, 1, '5110001', 'HPP/PEMBELIAN - HO', NULL, 0, 0, 0, '1'),
+	(242, 34, 1, '5110007', 'POTONGAN PEMBELIAN - HO', NULL, 0, 0, 0, '1'),
+	(243, 34, 1, '5110013', 'RETURN PEMBELIAN - HO', NULL, 0, 0, 0, '1'),
+	(244, 34, 1, '5110019', 'POTONGAN/DISCOUNT RETURN PEMBELIAN - HO', NULL, 0, 0, 0, '1'),
+	(245, 34, 1, '5110025', 'PPN RETURN BELI - HO', NULL, 0, 0, 0, '1'),
+	(246, 34, 1, '5110031', 'ONGKOS KIRIM PEMBELIAN - HO', NULL, 0, 0, 0, '1'),
+	(247, 34, 1, '5110037', 'POTONG+TEKUK ALKONEL', NULL, 0, 0, 0, '1'),
+	(248, 34, 1, '5110038', 'HPP PERSEDIAAN - HO', NULL, 0, 0, 0, '1'),
+	(249, 35, 1, '6110001', 'BY ATK,FOTOCOPY,PERCETAKAN HO', NULL, 0, 0, 0, '1'),
+	(250, 35, 1, '6110002', 'BIAYA RUMAH TANGGA HO', NULL, 0, 0, 0, '1'),
+	(251, 35, 1, '6110003', 'BIAYA SEMINAR/PELATIHAN HO', NULL, 0, 0, 0, '1'),
+	(252, 35, 1, '6110004', 'UANG MAKAN KARYAWAN HO', NULL, 0, 0, 0, '1'),
+	(253, 35, 1, '6110005', 'BIAYA BENDA POS HO', NULL, 0, 0, 0, '1'),
+	(254, 35, 1, '6110006', 'BIAYA KIRIM PAKET HO', NULL, 0, 0, 0, '1'),
+	(255, 35, 1, '6110007', 'BIAYA INSENTIF (PERJALANAN DINAS) HO', NULL, 0, 0, 0, '1'),
+	(256, 35, 1, '6110008', 'BIAYA UANG MAKAN (PERJALANAN DINAS) HO', NULL, 0, 0, 0, '1'),
+	(257, 35, 1, '6110009', 'BIAYA PRJ DNS KANTOR (TRANSPORT/BIS/ANGK HO', NULL, 0, 0, 0, '1'),
+	(258, 35, 1, '6110010', 'PERJALANAN DINAS KNT (PENGINAPAN/KOST) HO', NULL, 0, 0, 0, '1'),
+	(259, 35, 1, '6110011', 'BIAYA ENTERTAINT PERJALANAN DINAS HO', NULL, 0, 0, 0, '1'),
+	(260, 35, 1, '6110012', 'BIAYA PERJALANAN DINAS LAIN-LAIN HO', NULL, 0, 0, 0, '1'),
+	(261, 35, 1, '6110013', 'BIAYA LEMBUR KARYAWAN KANTOR HO', NULL, 0, 0, 0, '1'),
+	(262, 35, 1, '6110014', 'BIAYA KANTOR LAIN-LAIN HO', NULL, 0, 0, 0, '1'),
+	(263, 36, 1, '6120001', 'BIAYA GAJI HO', NULL, 0, 0, 0, '1'),
+	(264, 36, 1, '6120002', 'BIAYA THR HO', NULL, 0, 0, 0, '1'),
+	(265, 36, 1, '6120003', 'BIAYA TUNJANGAN HO', NULL, 0, 0, 0, '1'),
+	(266, 36, 1, '6120004', 'BIAYA BPJS KESEHATAN HO', NULL, 0, 0, 0, '1'),
+	(267, 36, 1, '6120005', 'BIAYA BPJS KETENAGAKERJAAN HO', NULL, 0, 0, 0, '1'),
+	(268, 37, 1, '6130001', 'UANG MAKAN LUAR KOTA - HO', NULL, 0, 0, 0, '1'),
+	(269, 37, 1, '6130002', 'UANG MAKAN PERJALANAN - HO', NULL, 0, 0, 0, '1'),
+	(270, 37, 1, '6130003', 'UANG MAKAN LEMBUR - HO', NULL, 0, 0, 0, '1'),
+	(271, 37, 1, '6130004', 'TRANSPORTASI (BIS/BBM MOTOR)  - HO', NULL, 0, 0, 0, '1'),
+	(272, 37, 1, '6130005', 'TOL TRUK ELF - HO', NULL, 0, 0, 0, '1'),
+	(273, 37, 1, '6130006', 'PARKIR - HO', NULL, 0, 0, 0, '1'),
+	(274, 37, 1, '6130007', 'PERON - HO', NULL, 0, 0, 0, '1'),
+	(275, 37, 1, '6130008', 'PENGINAPAN - HO', NULL, 0, 0, 0, '1'),
+	(276, 37, 1, '6130009', 'BIAYA MEL - HO', NULL, 0, 0, 0, '1'),
+	(277, 37, 1, '6130010', 'BIAYA BBM TRUCK ELF - HO', NULL, 0, 0, 0, '1'),
+	(278, 37, 1, '6130011', 'BIAYA PEMAKAIAN BARANG - HO', NULL, 0, 0, 0, '1'),
+	(279, 37, 1, '6130012', 'BIAYA KEAMANAN - HO', NULL, 0, 0, 0, '1'),
+	(280, 37, 1, '6130013', 'BIAYA PROYEK LAIN - HO', NULL, 0, 0, 0, '1'),
+	(281, 37, 1, '6130014', 'INSENTIF DRIVER - HO', NULL, 0, 0, 0, '1'),
+	(282, 37, 1, '6130015', 'UANG MAKAN DRIVER - HO', NULL, 0, 0, 0, '1'),
+	(283, 37, 1, '6130016', 'BIAYA AMORTISASI SEWA KANTOR - HO', NULL, 0, 0, 0, '1'),
+	(284, 37, 1, '6130017', 'BIAYA AMORTISASI KENDARAAN - HO', NULL, 0, 0, 0, '1'),
+	(285, 38, 1, '6170001', 'BIAYA LISTRIK PROYEK HO', NULL, 0, 0, 0, '1'),
+	(286, 39, 1, '6180001', 'BIAYA LISTRIK HO', NULL, 0, 0, 0, '1'),
+	(287, 40, 1, '6190001', 'BIAYA TELEPON HO', NULL, 0, 0, 0, '1'),
+	(288, 41, 1, '6200001', 'BIAYA PDAM HO', NULL, 0, 0, 0, '1'),
+	(289, 42, 1, '6210001', 'BIAYA BBM /SOLAR HO', NULL, 0, 0, 0, '1'),
+	(290, 43, 1, '6220001', 'BIAYA TOL HO', NULL, 0, 0, 0, '1'),
+	(291, 44, 1, '6230001', 'BIAYA ADM BANK HO', NULL, 0, 0, 0, '1'),
+	(292, 44, 1, '6230002', 'BIAYA PROVISI BANK HO', NULL, 0, 0, 0, '1'),
+	(293, 44, 1, '6230003', 'BIAYA BUNGA PINJAMAN BANK HO', NULL, 0, 0, 0, '1'),
+	(294, 44, 1, '6230004', 'BIAYA MATERAI  BANK HO', NULL, 0, 0, 0, '1'),
+	(295, 45, 1, '6240001', 'PPH 21 HO', NULL, 0, 0, 0, '1'),
+	(296, 45, 1, '6240002', 'PPH 23 HO', NULL, 0, 0, 0, '1'),
+	(297, 45, 1, '6240003', 'PPH 25 HO', NULL, 0, 0, 0, '1'),
+	(298, 45, 1, '6240004', 'PPN HO', NULL, 0, 0, 0, '1'),
+	(299, 45, 1, '6240005', 'PPh Pasal 4 Ayat 2 HO', NULL, 0, 0, 0, '1'),
+	(300, 46, 1, '6250001', 'BIAYA PBB HO', NULL, 0, 0, 0, '1'),
+	(301, 46, 1, '6250002', 'IURAN & LANGGANAN HO', NULL, 0, 0, 0, '1'),
+	(302, 46, 1, '6250003', 'BIAYA SUMBANGAN HO', NULL, 0, 0, 0, '1'),
+	(303, 46, 1, '6250004', 'BIAYA PENGURUSAN SURAT-SURAT HO', NULL, 0, 0, 0, '1'),
+	(304, 47, 1, '6260001', 'BIAYA ASURANSI KENDARAAN HO', NULL, 0, 0, 0, '1'),
+	(305, 47, 1, '6260002', 'BIAYA ASURANSI BANGUNAN HO', NULL, 0, 0, 0, '1'),
+	(306, 47, 1, '6260003', 'BIAYA ASURANSI BILLBOARD HO', NULL, 0, 0, 0, '1'),
+	(307, 47, 1, '6260004', 'BIAYA ASURANSI KESEHATAN HO', NULL, 0, 0, 0, '1'),
+	(308, 48, 1, '6270001', 'BIAYA PEMELIHARAAN GEDUNG HO', NULL, 0, 0, 0, '1'),
+	(309, 48, 1, '6270002', 'BIAYA PEMELIHARAAN INVENTARIS HO', NULL, 0, 0, 0, '1'),
+	(310, 48, 1, '6270003', 'BIAYA PEMELIHARAAN KENDARAAN HO', NULL, 0, 0, 0, '1'),
+	(311, 49, 1, '6280001', 'BIAYA PENYUSUTAN GEDUNG HO', NULL, 0, 0, 0, '1'),
+	(312, 49, 1, '6280002', 'BIAYA PENYUSUTAN KENDARAAN HO', NULL, 0, 0, 0, '1'),
+	(313, 49, 1, '6280003', 'BIAYA PENYUSUTAN INVENTARIS HO', NULL, 0, 0, 0, '1'),
+	(314, 49, 1, '6280004', 'BIAYA PENYUSUTAN BILLBOARD HO', NULL, 0, 0, 0, '1'),
+	(315, 50, 1, '7110001', 'PENDAPATAN JASA GIRO HO', NULL, 0, 0, 0, '1'),
+	(316, 50, 1, '7110002', 'PENDAPATAN LAIN-LAIN HO', NULL, 0, 0, 0, '1'),
+	(317, 50, 1, '7110003', 'PENDAPATAN KOMISI / FEE HO', NULL, 0, 0, 0, '1'),
+	(318, 51, 1, '8110001', 'Pajak Penghasilan Badan HO', NULL, 0, 0, 0, '1'),
+	(319, 51, 1, '8110002', 'BIAYA LAIN-LAIN HO', NULL, 0, 0, 0, '1'),
+	(320, 52, 1, '9110001', 'PEMBULATAN HO', NULL, 0, 0, 0, '1'),
+	(321, 52, 1, '9110002', 'SELISIH KAS HO', NULL, 0, 0, 0, '1');
 /*!40000 ALTER TABLE `chart_of_account` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.giroin_det
@@ -951,6 +1193,7 @@ CREATE TABLE IF NOT EXISTS `his_inv` (
   `HISINV_NEW` char(50) DEFAULT NULL,
   `HISINV_INFO` varchar(1024) DEFAULT NULL,
   `HISINV_DATE` date DEFAULT NULL,
+  `HISINV_TIME` time DEFAULT NULL,
   `HISINV_UPCOUNT` char(5) DEFAULT NULL,
   PRIMARY KEY (`HISINV_ID`),
   KEY `FKHISINV1` (`INV_ID`),
@@ -1046,10 +1289,21 @@ CREATE TABLE IF NOT EXISTS `his_prc` (
   PRIMARY KEY (`HISPRC_ID`),
   KEY `FK_R90` (`PRC_ID`),
   CONSTRAINT `FK_R90` FOREIGN KEY (`PRC_ID`) REFERENCES `trx_procurement` (`PRC_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.his_prc: ~0 rows (approximately)
+-- Dumping data for table mtpdmulti.his_prc: ~10 rows (approximately)
 /*!40000 ALTER TABLE `his_prc` DISABLE KEYS */;
+INSERT INTO `his_prc` (`HISPRC_ID`, `PRC_ID`, `HISPRC_STS`, `HISPRC_OLD`, `HISPRC_NEW`, `HISPRC_INFO`, `HISPRC_DATE`, `HISPRC_TIME`, `HISPRC_UPCOUNT`) VALUES
+	(1, 1, 'Void By System', 'None', 'None', 'Create By System', '2018-09-19', '16:16:06', '0'),
+	(2, 1, 'Posted by User op', 'Void By System', 'Posted By User op', 'Original Save by Pembelian Logistik form', '2018-09-19', '16:16:40', '1'),
+	(3, 1, 'Disapproved by User super', 'Posted by User op', 'Disapproved By User super', 'Update by super from Pembelian Logistik form', '2018-09-19', '16:43:16', '1'),
+	(4, 1, 'Posted by User super', 'Posted by User op', 'Posted By User super', 'Update by super from Pembelian Logistik form', '2018-09-19', '16:43:33', '1'),
+	(5, 1, 'Approved by User super', 'Posted by User op', 'Approved By User super', 'Update by super from Pembelian Logistik form', '2018-09-19', '16:43:53', '1'),
+	(6, 1, 'Open by User super', 'Posted by User op', 'Open By User super', 'Open Record by Pembelian Logistik form', '2018-09-19', '16:44:47', '2'),
+	(7, 1, 'Open by User super', 'Open by User super', 'Open By User super', 'Open Record by Pembelian Logistik form', '2018-09-19', '16:44:53', '3'),
+	(8, 1, 'Open by User super', 'Open by User super', 'Open By User super', 'Open Record by Pembelian Logistik form', '2018-09-19', '16:46:02', '4'),
+	(9, 1, 'Posted by User super', 'Open by User super', 'Posted By User super', 'Update by super from Pembelian Logistik form', '2018-09-19', '16:46:15', '4'),
+	(10, 1, 'Approved by User super', 'Open by User super', 'Approved By User super', 'Update by super from Pembelian Logistik form', '2018-09-19', '16:46:21', '4');
 /*!40000 ALTER TABLE `his_prc` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.his_prcga
@@ -1297,10 +1551,14 @@ CREATE TABLE IF NOT EXISTS `jou_details` (
   KEY `FKJOUDET2` (`COA_ID`),
   CONSTRAINT `FKJOUDET1` FOREIGN KEY (`JOU_ID`) REFERENCES `account_journal` (`JOU_ID`),
   CONSTRAINT `FKJOUDET2` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.jou_details: ~0 rows (approximately)
+-- Dumping data for table mtpdmulti.jou_details: ~3 rows (approximately)
 /*!40000 ALTER TABLE `jou_details` DISABLE KEYS */;
+INSERT INTO `jou_details` (`JOUDET_ID`, `JOU_ID`, `COA_ID`, `JOUDET_DEBIT`, `JOUDET_CREDIT`, `JOUDET_STS`) VALUES
+	(4, 1, 206, 0.00, 30000.00, '0'),
+	(5, 1, 241, 20000.00, 0.00, '0'),
+	(6, 1, 246, 10000.00, 0.00, '0');
 /*!40000 ALTER TABLE `jou_details` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.master_bank
@@ -1473,7 +1731,7 @@ CREATE TABLE IF NOT EXISTS `master_goods` (
   CONSTRAINT `FK_R19` FOREIGN KEY (`SUPP_ID`) REFERENCES `master_supplier` (`SUPP_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.master_goods: ~1 rows (approximately)
+-- Dumping data for table mtpdmulti.master_goods: ~0 rows (approximately)
 /*!40000 ALTER TABLE `master_goods` DISABLE KEYS */;
 INSERT INTO `master_goods` (`GD_ID`, `SUPP_ID`, `BRANCH_ID`, `GD_CODE`, `GD_NAME`, `GD_UNIT`, `GD_MEASURE`, `GD_PRICE`, `GD_INFO`, `GD_STS`, `GD_TYPE`, `GD_TYPESTOCK`, `GD_STOCK`, `GD_DTSTS`) VALUES
 	(1, 1, 1, 'BRG-00001', 'Barang A', '1', 'Pcs', 10000.00, '-', 'Baru', 'Jasa', '1', 0, '1');
@@ -1726,7 +1984,7 @@ CREATE TABLE IF NOT EXISTS `master_supplier` (
   CONSTRAINT `FKMSUPP1` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.master_supplier: ~1 rows (approximately)
+-- Dumping data for table mtpdmulti.master_supplier: ~0 rows (approximately)
 /*!40000 ALTER TABLE `master_supplier` DISABLE KEYS */;
 INSERT INTO `master_supplier` (`SUPP_ID`, `COA_ID`, `SUPP_CODE`, `SUPP_NAME`, `SUPP_ADDRESS`, `SUPP_CITY`, `SUPP_POSTAL`, `SUPP_PHONE`, `SUPP_FAX`, `SUPP_OTHERCTC`, `SUPP_DUE`, `SUPP_NPWPNAME`, `SUPP_NPWPADD`, `SUPP_NPWPCODE`, `SUPP_NPPKPCODE`, `SUPP_ACC`, `SUPP_DTSTS`) VALUES
 	(1, NULL, 'SUP-00001', 'Supplier A', 'JL Lesti No.42', 'Surabaya', '-', '-', '-', '-', '7 Hari', 'Supplier A', 'Surabaya', '1234567890', '1234567890', NULL, '1');
@@ -1800,7 +2058,7 @@ CREATE TABLE IF NOT EXISTS `other_settings` (
 -- Dumping data for table mtpdmulti.other_settings: ~2 rows (approximately)
 /*!40000 ALTER TABLE `other_settings` DISABLE KEYS */;
 INSERT INTO `other_settings` (`OS_ID`, `BRANCH_ID`, `PRINT_BANKINVOICE`, `PRC_COA`, `PRC_COAAG`, `PRC_COADISC`, `PRC_COAPPN`, `PRC_COACOST`, `PRC_COANAME`, `PRC_COANAMEAG`, `PRC_COANAMEDISC`, `PRC_COANAMEPPN`, `PRC_COANAMECOST`, `NOTAFIN_ACC`, `NOTAFIN_ACCNAME`, `ACCRCVGIRO_ACC`, `ACCRCVGIRO_ACCNAME`, `DEBTGIRO_ACC`, `DEBTGIRO_ACCNAME`, `INV_COAPPN`, `INV_COANAMEPPN`, `PRCGA_COASUPPLY`, `PRCGA_COADEBT`, `PRCGA_COAPPN`, `PRCGA_COACOST`, `PRCGA_COADISC`, `PRCGA_COANAMESUPPLY`, `PRCGA_COANAMEDEBT`, `PRCGA_COANAMEPPN`, `PRCGA_COANAMECOST`, `PRCGA_COANAMEDISC`) VALUES
-	(1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'KAS HO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(1, 1, NULL, 241, 206, 242, 174, 246, 'HPP/PEMBELIAN - HO', 'HUTANG USAHA', 'POTONGAN PEMBELIAN - HO', 'PPN MASUKAN - HO', 'ONGKOS KIRIM PEMBELIAN - HO', 1, 'KAS HO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 	(2, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'KAS HO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `other_settings` ENABLE KEYS */;
 
@@ -1817,9 +2075,9 @@ CREATE TABLE IF NOT EXISTS `parent_chart` (
   PRIMARY KEY (`PAR_ID`),
   KEY `FKPAR1` (`PARTP_ID`),
   CONSTRAINT `FKPAR1` FOREIGN KEY (`PARTP_ID`) REFERENCES `parent_type` (`PARTP_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.parent_chart: ~36 rows (approximately)
+-- Dumping data for table mtpdmulti.parent_chart: ~40 rows (approximately)
 /*!40000 ALTER TABLE `parent_chart` DISABLE KEYS */;
 INSERT INTO `parent_chart` (`PAR_ID`, `PARTP_ID`, `PAR_ACC`, `PAR_ACCNAME`, `PAR_TYPE`, `PAR_INFO`, `PAR_DTSTS`) VALUES
 	(17, 12, '1110000', 'KAS', NULL, 'Kas Induk', '1'),
@@ -1857,7 +2115,11 @@ INSERT INTO `parent_chart` (`PAR_ID`, `PARTP_ID`, `PAR_ACC`, `PAR_ACCNAME`, `PAR
 	(49, 13, '6280000', 'BIAYA PENYUSUTAN', '', '', '1'),
 	(50, 13, '7110000', 'PENDAPATAN DILUAR USAHA', '', '', '1'),
 	(51, 13, '8110000', 'BIAYA DILUAR USAHA', '', '', '1'),
-	(52, 13, '9110000', 'PEMBULATAN', '', '', '1');
+	(52, 13, '9110000', 'PEMBULATAN', '', '', '1'),
+	(53, 12, '1120000', 'BANK', NULL, '-', '1'),
+	(54, 14, '2110000', 'HUTANG BANK', NULL, '-', '1'),
+	(55, 14, '2120000', 'HUTANG USAHA', NULL, '-', '1'),
+	(56, 14, '2130000', 'HUTANG PAJAK', NULL, '-', '1');
 /*!40000 ALTER TABLE `parent_chart` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.parent_type
@@ -1956,7 +2218,7 @@ CREATE TABLE IF NOT EXISTS `po_details` (
   CONSTRAINT `FK_R21` FOREIGN KEY (`GD_ID`) REFERENCES `master_goods` (`GD_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.po_details: ~1 rows (approximately)
+-- Dumping data for table mtpdmulti.po_details: ~0 rows (approximately)
 /*!40000 ALTER TABLE `po_details` DISABLE KEYS */;
 INSERT INTO `po_details` (`PODET_ID`, `PO_ID`, `GD_ID`, `PODET_QTYUNIT`, `PODET_SUB`) VALUES
 	(2, 1, 1, 2.00, 20000.00);
@@ -2026,10 +2288,12 @@ CREATE TABLE IF NOT EXISTS `prc_details` (
   KEY `FK_R28` (`GD_ID`),
   CONSTRAINT `FK_R27` FOREIGN KEY (`PRC_ID`) REFERENCES `trx_procurement` (`PRC_ID`),
   CONSTRAINT `FK_R28` FOREIGN KEY (`GD_ID`) REFERENCES `master_goods` (`GD_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.prc_details: ~0 rows (approximately)
+-- Dumping data for table mtpdmulti.prc_details: ~1 rows (approximately)
 /*!40000 ALTER TABLE `prc_details` DISABLE KEYS */;
+INSERT INTO `prc_details` (`PRCDET_ID`, `PRC_ID`, `GD_ID`, `PRCDET_QTY`, `PRCDET_SUB`) VALUES
+	(1, 1, 1, 2.00, 20000.00);
 /*!40000 ALTER TABLE `prc_details` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.procurement_ret
@@ -2733,7 +2997,7 @@ CREATE TABLE IF NOT EXISTS `trx_po` (
   CONSTRAINT `FK_R33` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.trx_po: ~1 rows (approximately)
+-- Dumping data for table mtpdmulti.trx_po: ~0 rows (approximately)
 /*!40000 ALTER TABLE `trx_po` DISABLE KEYS */;
 INSERT INTO `trx_po` (`PO_ID`, `USER_ID`, `BRANCH_ID`, `CURR_ID`, `APPR_ID`, `SUPP_ID`, `LOC_ID`, `PO_CODE`, `PO_STS`, `PO_DATE`, `PO_ORDNUM`, `PO_TERM`, `PO_INFO`, `PO_SUB`, `PO_GTOTAL`) VALUES
 	(1, 2, 1, 1, 1, 1, 1, 'PO/1809/000001', '1', '2018-09-18', '', '7', 'Kolom info PO', 20000, 20000);
@@ -2830,10 +3094,12 @@ CREATE TABLE IF NOT EXISTS `trx_procurement` (
   CONSTRAINT `FK_R25` FOREIGN KEY (`PO_ID`) REFERENCES `trx_po` (`PO_ID`),
   CONSTRAINT `FK_R26` FOREIGN KEY (`CURR_ID`) REFERENCES `master_currency` (`CURR_ID`),
   CONSTRAINT `FK_R34` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.trx_procurement: ~0 rows (approximately)
+-- Dumping data for table mtpdmulti.trx_procurement: ~1 rows (approximately)
 /*!40000 ALTER TABLE `trx_procurement` DISABLE KEYS */;
+INSERT INTO `trx_procurement` (`PRC_ID`, `PO_ID`, `USER_ID`, `BRANCH_ID`, `CURR_ID`, `PRC_CODE`, `PRC_DATE`, `PRC_INVOICE`, `PRC_INFO`, `PRC_STS`, `PRC_SUB`, `PRC_DISC`, `PRC_PPN`, `PRC_COST`, `PRC_GTOTAL`) VALUES
+	(1, 1, 2, 1, 1, 'BL/1809/000001', '2018-09-19', '', 'Kolom info PO', '1', 20000.00, 0, 0, 10000, 30000.00);
 /*!40000 ALTER TABLE `trx_procurement` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.trx_tax_invoice
