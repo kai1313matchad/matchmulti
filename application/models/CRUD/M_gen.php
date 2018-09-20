@@ -870,6 +870,7 @@
 					'hisinv_new' => 'None',
 					'hisinv_info' => 'Create By System',
 					'hisinv_date' => date('Y-m-d'),
+					'hisinv_time' => date('H:i:s'),
 					'hisinv_upcount' => 0
 				);
 			$this->db->insert('his_inv',$data2);

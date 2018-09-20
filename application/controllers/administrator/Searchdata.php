@@ -10,6 +10,7 @@
 			$this->load->model('datatables/search/Dt_srchbank','s_bank');
 			$this->load->model('datatables/search/Dt_srchsupp','s_supp');
 			$this->load->model('datatables/search/Dt_srchcoa','s_coa');
+			$this->load->model('datatables/search/Dt_srchcoacash','s_coacash');
 			$this->load->model('datatables/search/Dt_srchlocation','s_location');
 			$this->load->model('datatables/search/Dt_srchcust','s_cust');
 			$this->load->model('datatables/search/Dt_srchcustall','s_custall');
@@ -1181,36 +1182,66 @@
 			$id = $this->input->post('sts');
 			$br = $this->input->post('brch');
 			$brc = 'a.branch_id = '.$br;
+			$chk = $this->input->post('chk');
 			$list = $this->s_invbysts->get_datatables($id,$brc);
 			$data = array();
 			$no = $_POST['start'];
-			if($this->input->post('chk') != '0')
-			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-					$row[] = $dat->INV_CODE;
-					$row[] = $dat->INC_CODE.' - '.$dat->INC_NAME;
-					$row[] = $dat->INV_DATE;
-					$row[] = $dat->CUST_NAME;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_invopen('."'".$dat->INV_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
-			}
-			else
-			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-					$row[] = $dat->INV_CODE;
-					$row[] = $dat->INC_CODE.' - '.$dat->INC_NAME;
-					$row[] = $dat->INV_DATE;
-					$row[] = $dat->CUST_NAME;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_invedit('."'".$dat->INV_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
+			switch ($chk) {
+				case '0':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->INV_CODE;
+						$row[] = $dat->INC_CODE.' - '.$dat->INC_NAME;
+						$row[] = $dat->INV_DATE;
+						$row[] = $dat->CUST_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_invedit('."'".$dat->INV_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '1':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->INV_CODE;
+						$row[] = $dat->INC_CODE.' - '.$dat->INC_NAME;
+						$row[] = $dat->INV_DATE;
+						$row[] = $dat->CUST_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_invopen('."'".$dat->INV_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '2':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->INV_CODE;
+						$row[] = $dat->INC_CODE.' - '.$dat->INC_NAME;
+						$row[] = $dat->INV_DATE;
+						$row[] = $dat->CUST_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_invchk('."'".$dat->INV_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '3':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->INV_CODE;
+						$row[] = $dat->INC_CODE.' - '.$dat->INC_NAME;
+						$row[] = $dat->INV_DATE;
+						$row[] = $dat->CUST_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_invapr('."'".$dat->INV_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				default:
+					# code...
+					break;
 			}
 			$output = array(
 							"draw" => $_POST['draw'],
@@ -1496,6 +1527,29 @@
 			echo json_encode($data);
 		}
 
+		public function srch_coa_cash()
+		{
+			$list = $this->s_coacash->get_datatables();
+			$data = array();
+			$no = $_POST['start'];
+			foreach ($list as $dat) {
+				$no++;
+				$row = array();
+				$row[] = $no;				
+				$row[] = $dat->COA_ACC;
+				$row[] = $dat->COA_ACCNAME;
+				$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_coagb('."'".$dat->COA_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+				$data[] = $row;
+			}
+			$output = array(
+							"draw" => $_POST['draw'],
+							"recordsTotal" => $this->s_coacash->count_all(),
+							"recordsFiltered" => $this->s_coacash->count_filtered(),
+							"data" => $data,
+					);			
+			echo json_encode($output);
+		}
+
 		//Search Transaksi Invoice
 		public function srch_inv()
 		{
@@ -1562,7 +1616,8 @@
 		//Search Jenis Invoice
 		public function srch_invtype()
 		{
-			$list = $this->s_invtype->get_datatables();
+			$brc = $this->session->userdata('user_branch');
+			$list = $this->s_invtype->get_datatables($brc);
 			$data = array();
 			$no = $_POST['start'];
 			foreach ($list as $dat) {
@@ -1579,7 +1634,7 @@
 			$output = array(
 							"draw" => $_POST['draw'],
 							"recordsTotal" => $this->s_invtype->count_all(),
-							"recordsFiltered" => $this->s_invtype->count_filtered(),
+							"recordsFiltered" => $this->s_invtype->count_filtered($brc),
 							"data" => $data,
 					);			
 			echo json_encode($output);
@@ -1899,36 +1954,66 @@
 			$id = $this->input->post('sts');
 			$br = $this->input->post('brch');
 			$brc = 'a.branch_id = '.$br;
+			$chk = $this->input->post('chk');
 			$list = $this->s_cashinbysts->get_datatables($id,$brc);
 			$data = array();
 			$no = $_POST['start'];
-			if($this->input->post('chk') != '0')
-			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-				    $row[] = $dat->CSH_CODE;
-				    $row[] = $dat->COA_ACCNAME;
-				    $row[] = $dat->CSH_DATE;				
-				    $row[] = $dat->CSH_INFO;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_cashinopen('."'".$dat->CSH_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
-			}
-			else
-			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-				    $row[] = $dat->CSH_CODE;
-				    $row[] = $dat->COA_ACCNAME;
-				    $row[] = $dat->CSH_DATE;				
-				    $row[] = $dat->CSH_INFO;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_cashinedit('."'".$dat->CSH_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
+			switch ($chk) {
+				case '0':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+					    $row[] = $dat->CSH_CODE;
+					    $row[] = $dat->COA_ACCNAME;
+					    $row[] = $dat->CSH_DATE;
+					    $row[] = $dat->CSH_INFO;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_cashinedit('."'".$dat->CSH_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '1':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+					    $row[] = $dat->CSH_CODE;
+					    $row[] = $dat->COA_ACCNAME;
+					    $row[] = $dat->CSH_DATE;
+					    $row[] = $dat->CSH_INFO;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_cashinopen('."'".$dat->CSH_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '2':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->CSH_CODE;
+						$row[] = $dat->COA_ACCNAME;
+						$row[] = $dat->CSH_DATE;
+						$row[] = $dat->CSH_INFO;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_cashinchk('."'".$dat->CSH_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '3':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->CSH_CODE;
+						$row[] = $dat->COA_ACCNAME;
+						$row[] = $dat->CSH_DATE;
+						$row[] = $dat->CSH_INFO;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_cashinapr('."'".$dat->CSH_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				default:
+					# code...
+					break;
 			}
 			$output = array(
 							"draw" => $_POST['draw'],

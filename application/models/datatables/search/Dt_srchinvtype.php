@@ -2,8 +2,7 @@
 	defined('BASEPATH') OR exit('No direct script access allowed');
 	class Dt_srchinvtype extends CI_Model 
 	{
-
-		var $table = 'invoice_type';
+		var $table = 'invoice_type a';
 		var $column_order = array(null,'inc_code','inc_name','inc_accrcvname','inc_accincname');
 		var $column_search = array('inc_code','inc_name','inc_accrcv','inc_accinc');
 		var $order = array('inc_id' => 'desc');
@@ -11,10 +10,12 @@
 		{
 			parent::__construct();		
 		}
-		private function _get_datatables_query()
+		private function _get_datatables_query($brc)
 		{
 			$this->db->from($this->table);
-			$this->db->where('inc_dtsts','1');			
+			$this->db->join('master_branch b','b.branch_id = a.branch_id');
+			$this->db->where('a.inc_dtsts','1');
+			$this->db->where('a.branch_id',$brc);
 			$i = 0;
 			foreach ($this->column_search as $item)
 			{
@@ -45,17 +46,17 @@
 				$this->db->order_by(key($order), $order[key($order)]);
 			}
 		}
-		public function get_datatables()
+		public function get_datatables($brc)
 		{
-			$this->_get_datatables_query();
+			$this->_get_datatables_query($brc);
 			if($_POST['length'] != -1)
 			$this->db->limit($_POST['length'], $_POST['start']);
 			$query = $this->db->get();
 			return $query->result();
 		}
-		public function count_filtered()
+		public function count_filtered($brc)
 		{
-			$this->_get_datatables_query();
+			$this->_get_datatables_query($brc);
 			$query = $this->db->get();
 			return $query->num_rows();
 		}

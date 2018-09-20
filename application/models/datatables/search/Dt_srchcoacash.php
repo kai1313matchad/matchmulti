@@ -1,21 +1,22 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
-	class Dt_invtype extends CI_Model 
+	class Dt_srchcoacash extends CI_Model 
 	{
-		var $table = 'invoice_type a';
-		var $column_order = array(null,'inc_code','inc_name','branch_name','inc_accrcvname','inc_accincname');
-		var $column_search = array('inc_code','inc_name','branch_name','inc_accrcvname','inc_accincname');
-		var $order = array('inc_id' => 'desc');
+		var $table = 'chart_of_account a';
+		var $column_order = array(null,'coa_acc','coa_accname');
+		var $column_search = array('coa_acc','coa_accname');
+		var $order = array('coa_acc' => 'asc');
 		public function __construct()
 		{
 			parent::__construct();		
 		}
-		private function _get_datatables_query($brc)
-		{		
+		private function _get_datatables_query()
+		{
 			$this->db->from($this->table);
 			$this->db->join('master_branch b','b.branch_id = a.branch_id');
-			$this->db->where('a.inc_dtsts','1');
 			$this->db->where('a.branch_id',$brc);
+			// $this->db->where('a.par');
+			$this->db->where('coa_dtsts','1');
 			$i = 0;
 			foreach ($this->column_search as $item)
 			{
@@ -30,6 +31,7 @@
 					{
 						$this->db->or_like($item, $_POST['search']['value']);
 					}
+
 					if(count($this->column_search) - 1 == $i)
 						$this->db->group_end();
 				}
@@ -45,17 +47,17 @@
 				$this->db->order_by(key($order), $order[key($order)]);
 			}
 		}
-		public function get_datatables($brc)
+		public function get_datatables()
 		{
-			$this->_get_datatables_query($brc);
+			$this->_get_datatables_query();
 			if($_POST['length'] != -1)
 			$this->db->limit($_POST['length'], $_POST['start']);
 			$query = $this->db->get();
 			return $query->result();
 		}
-		public function count_filtered($brc)
+		public function count_filtered()
 		{
-			$this->_get_datatables_query($brc);
+			$this->_get_datatables_query();
 			$query = $this->db->get();
 			return $query->num_rows();
 		}

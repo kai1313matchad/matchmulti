@@ -3347,7 +3347,6 @@
 			$this->db->join('trx_invoice b','b.inv_id = a.inv_id');
 			$this->db->where('b.inv_id',$id);
 			$que = $this->db->get();
-			// $res = $que->row();
 			$data = $que->row();
 			echo json_encode($data);
 		}
@@ -3425,7 +3424,6 @@
 	    	$data = array(
 	    			'inc_id'=>$this->input->post('inv_typeid'),
 	    			'user_id'=>$this->input->post('user_id'),
-	    			// 'branch_id'=>$this->input->post('inv_branchid'),
 	    			'cust_id'=>$this->input->post('inv_custid'),
 	    			'curr_id'=>$this->input->post('inv_currid'),
 	    			'inc_id'=>$this->input->post('inv_typeid'),
@@ -3434,31 +3432,77 @@
 	    			'inv_term'=>$this->input->post('inv_terms'),
 	    			'inv_date'=>$this->input->post('inv_date'),
 	    			'inv_type'=>$this->input->post('inv_typechk'),
+	    			'inv_sts'=>'2'
+	    			);
+	    	$update = $this->crud->update('trx_invoice',$data,array('inv_id'=>$this->input->post('inv_id')));
+	    	$this->logupd_inv_save($this->input->post('inv_id'),$this->input->post('user_name'),'Posted');
+	    	//Simpan Faktur Pajak
+	    	// if($this->input->post('inv_taxhead') || $this->input->post('inv_taxcode'))
+	    	// {
+	    	// 	$que2 = $this->db->get_where('trx_tax_invoice',array('inv_id'=>$this->input->post('inv_id')));
+	    	// 	if($que2->num_rows() > 0)
+	    	// 	{
+	    	// 		$invid = $que2->row()->TINV_ID;
+	    	// 		$datasv = array(
+	    	// 				'user_id'=>$this->input->post('user_id'),
+	    	// 				'cust_id'=>$this->input->post('inv_custid'),
+	    	// 				'inv_id'=>$this->input->post('inv_id'),
+	    	// 				'tinv_date'=>$this->input->post('inv_date'),
+	    	// 				'tinv_taxheadcode'=>$this->input->post('inv_taxhead'),
+	    	// 				'tinv_taxcode'=>$this->input->post('inv_taxcode'),
+	    	// 				'tinv_sts'=>'1',
+	    	// 				'tinv_info'=>$this->input->post('inv_info'),
+	    	// 				);
+	    	// 		$update = $this->crud->update('trx_tax_invoice',$datasv,array('tinv_id'=>$invid));
+	    	// 	}
+	    	// 	else
+	    	// 	{
+	    	// 		$datasv = array(
+	    	// 				'user_id'=>$this->input->post('user_id'),
+	    	// 				'cust_id'=>$this->input->post('inv_custid'),
+	    	// 				'inv_id'=>$this->input->post('inv_id'),
+	    	// 				'tinv_date'=>$this->input->post('inv_date'),
+	    	// 				'tinv_taxheadcode'=>$this->input->post('inv_taxhead'),
+	    	// 				'tinv_taxcode'=>$this->input->post('inv_taxcode'),
+	    	// 				'tinv_sts'=>'1',
+	    	// 				'tinv_info'=>$this->input->post('inv_info'),
+	    	// 				);
+	    	// 		$savetaxinv = $this->crud->save('trx_tax_invoice',$datasv);
+	    	// 	}
+	    	// }
+	    	echo json_encode(array('status'=>TRUE));
+	    }
+
+	    public function approve_inv()
+	    {
+	    	$this->_validate_inv();
+	    	$data = array(
 	    			'inv_sts'=>'1'
 	    			);
 	    	$update = $this->crud->update('trx_invoice',$data,array('inv_id'=>$this->input->post('inv_id')));
-	    	$this->logupd_inv_save($this->input->post('inv_id'),$this->input->post('user_name'));
+	    	$this->logupd_inv_save($this->input->post('inv_id'),$this->input->post('user_name'),'Approved');
 	    	//cek jurnal
-	    	$this->db->from('account_journal');
-	    	$this->db->where('jou_reff',$this->input->post('inv_code'));
-	    	$this->db->where('branch_id',$this->input->post('user_branch'));
-	    	$que = $this->db->get();
+	    	$inv_code = $this->input->post('inv_code');
+	    	$brc = $this->input->post('user_branch');
+	    	$que = $this->db->get_where('account_journal',array('jou_reff'=>$inv_code,'branch_id'=>$brc));
 	    	$get = $que->row();
-	    	$cou = count($get);
-	    	$ppn = $this->db->get_where('other_settings',array('os_id'=>'1'))->row()->INV_COAPPN;
-	    	$infos = 'Invoice : '.$this->input->post('inv_cust').' '.$this->input->post('inv_code');
-	    	if($cou > 0)
+	    	$ppn = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->INV_COAPPN;
+	    	$infos = 'Invoice : '.$this->input->post('inv_code').' - '.$this->input->post('inv_cust');
+	    	if($que->num_rows() > 0)
 	    	{
+	    		//Update Jurnal
 	    		$jou = array(
-		    			'branch_id'=>$this->input->post('user_branch'),
+		    			'branch_id'=>$brc,
 						'user_id'=>$this->input->post('user_id'),
-						'jou_reff'=>$this->input->post('inv_code'),
+						'jou_reff'=>$inv_code,
 						'jou_date'=>$this->input->post('inv_date'),
 						'jou_info'=>$infos,
 						'jou_sts'=>'1'
 		    	);
 		    	$update = $this->crud->update('account_journal',$jou,array('jou_id'=>$get->JOU_ID));
-		    	$this->crud->delete_by_id('jou_details',array('jou_id' => $get->JOU_ID));
+		    	//Hapus Deatil Jurnal
+		    	$this->crud->delete_by_id('jou_details',array('jou_id'=>$get->JOU_ID));
+		    	//Input Detail Debet
 		    	$joudet1 = array(
 						'jou_id'=>$get->JOU_ID,
 						'coa_id'=>$this->input->post('inv_accrcvid'),
@@ -3466,6 +3510,7 @@
 						'joudet_credit'=>0,
 						);
 				$insjoudet1 = $this->crud->save('jou_details',$joudet1);
+				//Input Detail Kredit
 				$joudet2 = array(
 						'jou_id'=>$get->JOU_ID,
 						'coa_id'=>$this->input->post('inv_accincid'),
@@ -3486,20 +3531,21 @@
 	    	}
 	    	else
 	    	{
-	    		//simpan jurnal
+	    		//Simpan Jurnal Baru
 		    	$gen = $this->gen->gen_numjou();
 				$jouid = $gen['insertId'];
 				$joucode = $gen['jou_code'];
 		    	$jou = array(
-		    			'branch_id'=>$this->input->post('user_branch'),
+		    			'branch_id'=>$brc,
 						'user_id'=>$this->input->post('user_id'),
 						'jou_code'=>$joucode,
-						'jou_reff'=>$this->input->post('inv_code'),
+						'jou_reff'=>$inv_code,
 						'jou_date'=>$this->input->post('inv_date'),
 						'jou_info'=>$infos,
 						'jou_sts'=>'1'
 		    	);
 		    	$update = $this->crud->update('account_journal',$jou,array('jou_id'=>$jouid));
+		    	//Input Detail Debet
 		    	$joudet1 = array(
 						'jou_id'=>$jouid,
 						'coa_id'=>$this->input->post('inv_accrcvid'),
@@ -3507,6 +3553,7 @@
 						'joudet_credit'=>0,
 						);
 				$insjoudet1 = $this->crud->save('jou_details',$joudet1);
+				//Input Detail Kredit
 				$joudet2 = array(
 						'jou_id'=>$jouid,
 						'coa_id'=>$this->input->post('inv_accincid'),
@@ -3525,40 +3572,17 @@
 					$insjoudet3 = $this->crud->save('jou_details',$joudet3);
 				}
 	    	}
-	    	//Simpan Faktur Pajak
-	    	if($this->input->post('inv_taxhead') || $this->input->post('inv_taxcode'))
-	    	{
-	    		$que2 = $this->db->get_where('trx_tax_invoice',array('inv_id'=>$this->input->post('inv_id')));
-	    		if($que2->num_rows() > 0)
-	    		{
-	    			$invid = $que2->row()->TINV_ID;
-	    			$datasv = array(
-	    					'user_id'=>$this->input->post('user_id'),
-	    					'cust_id'=>$this->input->post('inv_custid'),
-	    					'inv_id'=>$this->input->post('inv_id'),
-	    					'tinv_date'=>$this->input->post('inv_date'),
-	    					'tinv_taxheadcode'=>$this->input->post('inv_taxhead'),
-	    					'tinv_taxcode'=>$this->input->post('inv_taxcode'),
-	    					'tinv_sts'=>'1',
-	    					'tinv_info'=>$this->input->post('inv_info'),
-	    					);
-	    			$update = $this->crud->update('trx_tax_invoice',$datasv,array('tinv_id'=>$invid));
-	    		}
-	    		else
-	    		{
-	    			$datasv = array(
-	    					'user_id'=>$this->input->post('user_id'),
-	    					'cust_id'=>$this->input->post('inv_custid'),
-	    					'inv_id'=>$this->input->post('inv_id'),
-	    					'tinv_date'=>$this->input->post('inv_date'),
-	    					'tinv_taxheadcode'=>$this->input->post('inv_taxhead'),
-	    					'tinv_taxcode'=>$this->input->post('inv_taxcode'),
-	    					'tinv_sts'=>'1',
-	    					'tinv_info'=>$this->input->post('inv_info'),
-	    					);
-	    			$savetaxinv = $this->crud->save('trx_tax_invoice',$datasv);
-	    		}
-	    	}
+	    	echo json_encode(array('status'=>TRUE));
+	    }
+
+	    public function disapprove_inv()
+	    {
+	    	$this->_validate_inv();
+	    	$data = array(
+	    			'inv_sts'=>'0'
+	    			);
+	    	$update = $this->crud->update('trx_invoice',$data,array('inv_id'=>$this->input->post('inv_id')));
+	    	$this->logupd_inv_save($this->input->post('inv_id'),$this->input->post('user_name'),'Disapproved');
 	    	echo json_encode(array('status'=>TRUE));
 	    }
 
@@ -3673,6 +3697,12 @@
 			}
 			else
 			{
+				$get_inv = $this->db->get_where('trx_invoice',array('inv_id'=>$id))->row();
+				$get_jou = $this->db->get_where('account_journal',array('jou_reff'=>$get_inv->INV_CODE,'branch_id'=>$this->session->userdata('user_branch')));
+				if($get_jou->num_rows() > 0)
+				{
+					$this->crud->delete_by_id('jou_details',array('jou_id'=>$get_jou->row()->JOU_ID));
+				}
 				$dt = array('inv_sts'=>'0');
 				$update = $this->crud->update('trx_invoice',$dt,array('inv_id' => $id));
 				$his = $this->finance->getlog_inv($id);
@@ -3683,6 +3713,7 @@
 						'hisinv_new' => 'Open By User '.$user,
 						'hisinv_info' => 'Open Record by Invoice form',
 						'hisinv_date' => date('Y-m-d'),
+						'hisinv_time' => date('H:i:s'),
 						'hisinv_upcount' => $his->HISINV_UPCOUNT+1
 					);
 				$this->db->insert('his_inv',$dthis);
@@ -3691,18 +3722,19 @@
 			echo json_encode($data);
 		}
 
-		public function logupd_inv_save($id,$user)
+		public function logupd_inv_save($id,$user,$sts)
 	    {
 	    	$his = $this->finance->getlog_inv($id);
 	    	if ($his->HISINV_UPCOUNT == '0') 
 	    	{
 	    		$data = array(
 						'inv_id' => $id,
-						'hisinv_sts' => 'Posted by User '.$user,
+						'hisinv_sts' => $sts.' by User '.$user,
 						'hisinv_old' => $his->HISINV_STS,
-						'hisinv_new' => 'Posted By User '.$user,
+						'hisinv_new' => $sts.' By User '.$user,
 						'hisinv_info' => 'Original Save by Invoice form',
 						'hisinv_date' => date('Y-m-d'),
+						'hisinv_time' => date('H:i:s'),
 						'hisinv_upcount' => $his->HISINV_UPCOUNT+1
 					);
 				$this->db->insert('his_inv',$data);
@@ -3711,11 +3743,12 @@
 	    	{
 	    		$data = array(
 						'inv_id' => $id,
-						'hisinv_sts' => 'Posted by User '.$user,
+						'hisinv_sts' => $sts.' by User '.$user,
 						'hisinv_old' => $his->HISINV_STS,
-						'hisinv_new' => 'Posted By User '.$user,
+						'hisinv_new' => $sts.' By User '.$user,
 						'hisinv_info' => 'Update by '.$user.' from Invoice form',
 						'hisinv_date' => date('Y-m-d'),
+						'hisinv_time' => date('H:i:s'),
 						'hisinv_upcount' => $his->HISINV_UPCOUNT
 					);
 				$this->db->insert('his_inv',$data);

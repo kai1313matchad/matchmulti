@@ -99,16 +99,6 @@
                                             <input class="form-control" type="text" name="inv_rcvacc" readonly>
                                         </div>
                                     </div>
-                                    <!-- <div class="form-group">
-                                        <label class="col-sm-3 control-label">Cabang</label>
-                                        <div class="col-sm-1">
-                                            <a href="javascript:void(0)" onclick="srch_brc()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-search"></span></a>
-                                        </div>
-                                        <div class="col-sm-7">
-                                            <input class="form-control" type="text" name="inv_branch" readonly>
-                                            <input type="hidden" name="inv_branchid">
-                                        </div>
-                                    </div> -->
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Client</label>
                                         <div class="col-sm-1">
@@ -365,6 +355,16 @@
                                                 <span class="glyphicon glyphicon-print"></span>
                                                 Cetak
                                             </a>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button type="button" onclick="approve_inv()" class="btn btn-block btn-primary btnApr" disabled>
+                                                Approve
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button type="button" onclick="disapr_inv()" class="btn btn-block btn-primary btnApr" disabled>
+                                                Disapprove
+                                            </button>
                                         </div>
                                     </div>
                                     <!-- <div class="form-group">
@@ -658,6 +658,64 @@
                 alert('Jenis Form Belum Dipilih');
             }
         }
+        function approve_inv()
+        {
+            var n = checkradio();
+            if(n != null)
+            {
+                $.ajax({
+                    url : "<?php echo site_url('administrator/Finance/approve_inv')?>",
+                    type: "POST",
+                    data: $('#form_inv').serialize(),
+                    dataType: "JSON",
+                    success: function(data)
+                    {
+                        if(data.status)
+                        {
+                            var url = "<?php echo site_url('administrator/Finance/fin_invoice')?>";
+                            window.location = url;
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        alert('Error adding / update data');
+                    }
+                });
+            }
+            else
+            {
+                alert('Jenis Form Belum Dipilih');
+            }
+        }
+        function disapr_inv()
+        {
+            var n = checkradio();
+            if(n != null)
+            {
+                $.ajax({
+                    url : "<?php echo site_url('administrator/Finance/disapprove_inv')?>",
+                    type: "POST",
+                    data: $('#form_inv').serialize(),
+                    dataType: "JSON",
+                    success: function(data)
+                    {
+                        if(data.status)
+                        {
+                            var url = "<?php echo site_url('administrator/Finance/fin_invoice')?>";
+                            window.location = url;
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        alert('Error adding / update data');
+                    }
+                });
+            }
+            else
+            {
+                alert('Jenis Form Belum Dipilih');
+            }
+        }
         function print_inv()
         {
             var n = checkradio();
@@ -866,12 +924,40 @@
                 "serverSide": true,
                 "order": [],                
                 "ajax": {
-                    "url": "<?php echo site_url('administrator/Searchdata/srch_invbystschk')?>",
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_invbysts')?>",
                     "type": "POST",
                     "data": function(data){
                         data.sts = '1';
                         data.brch = $('[name="user_branch"]').val();
                         data.chk = '2';
+                    },
+                },                
+                "columnDefs": [
+                { 
+                    "targets": [ 0 ],
+                    "orderable": false,
+                },
+                ],
+            });
+        }
+        function apr_inv()
+        {
+            $('#modal_inv_edit').modal('show');
+            $('.modal-title').text('Cari Invoice');            
+            table = $('#dtb_inv_edit').DataTable({
+                "info": false,
+                "destroy": true,
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "order": [],                
+                "ajax": {
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_invbysts')?>",
+                    "type": "POST",
+                    "data": function(data){
+                        data.sts = '2';
+                        data.brch = $('[name="user_branch"]').val();
+                        data.chk = '3';
                     },
                 },                
                 "columnDefs": [
@@ -1105,9 +1191,39 @@
                     $('[name="inv_info"]').val(data.INV_INFO);
                     pick_curr(data.CURR_ID);
                     pick_taxinv(data.INV_ID);
-                    invdet(data.INV_ID);
+                    invdet_(data.INV_ID);
                     get_sub();
                     $('.btnCh').css({'display':'none'});
+                    $('#modal_inv_edit').modal('hide');                    
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function pick_invapr(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_invgb/')?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('[name="inv_id"]').val(data.INV_ID);
+                    $('[name="inv_code"]').val(data.INV_CODE);
+                    $('[name="inv_typechk"][value="'+data.INV_TYPE+'"]').prop('checked',true);
+                    pick_invtype(data.INC_ID);
+                    pick_branch(data.BRANCH_ID);
+                    pick_cust(data.CUST_ID);
+                    $('[name="inv_terms"]').val(data.INV_TERM);
+                    $('[name="inv_info"]').val(data.INV_INFO);
+                    pick_curr(data.CURR_ID);
+                    pick_taxinv(data.INV_ID);
+                    invdet_(data.INV_ID);
+                    get_sub();
+                    $('.btnCh').css({'display':'none'});
+                    $('.btnApr').prop('disabled',false);
                     $('#modal_inv_edit').modal('hide');                    
                 },
                 error: function (jqXHR, textStatus, errorThrown)
@@ -1224,6 +1340,27 @@
                 ],
             });
         }
+        function invdet_(id)
+        {
+            table = $('#dtb_invdet').DataTable({
+                "info": false,
+                "destroy": true,
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "order": [],                
+                "ajax": {
+                    "url": "<?php echo site_url('administrator/Showdata/showdetail_invoice_/')?>"+id,
+                    "type": "POST",                
+                },              
+                "columnDefs": [
+                { 
+                    "targets": [ 0 ],
+                    "orderable": false,
+                },
+                ],
+            });
+        }
         function add_invdet()
         {
             $.ajax({
@@ -1314,7 +1451,7 @@
                         dataType: "JSON",
                         success: function(data)
                         {
-                            var nom1 = ($('[name="inv_currrate"]').val()*(Math.abs(data.TERMSDET_DPP)+Math.abs(data.TERMSDET_PPH_SUM)+Math.abs(data.TERMSDET_PPN_SUM)));
+                            var nom1 = ($('[name="inv_currrate"]').val()*(Math.abs(data.TERMSDET_DPP)+Math.abs(data.TERMSDET_PPN_SUM)));
                             $('[name="invdet_sub"]').val(nom1);
                             $('[name="inv_termcode"]').val(data.TERMSDET_CODE);
                             $('[name="inv_termsub"]').val(data.TERMSDET_DPP);

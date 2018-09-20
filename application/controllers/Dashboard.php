@@ -203,16 +203,31 @@
 
 		public function save_bankinfo()
 		{
+			$brc = $this->input->post('os_branch');
 			$ppn = $this->input->post('os_bankinvppn');			
 			$getppn = $this->db->get_where('chart_of_account',array('coa_id'=>$ppn));
 			$ppnname = $getppn->row()->COA_ACCNAME;
-			$d_up = array(
-					'print_bankinvoice'=>$this->input->post('stg_infoinvc'),
-					'inv_coappn'=>$ppn,
-					'inv_coanameppn'=>$ppnname
-					);
-			$update = $this->crud->update('other_settings',$d_up,array('os_id'=>'1'));
-			$data['status'] = TRUE;
+			$getlist = $this->db->get_where('other_settings',array('branch_id'=>$brc))->num_rows();
+			if($getlist > 0)
+			{
+				$d_up = array(
+						'print_bankinvoice'=>$this->input->post('stg_infoinvc'),
+						'inv_coappn'=>$ppn,
+						'inv_coanameppn'=>$ppnname
+						);
+				$update = $this->crud->update('other_settings',$d_up,array('branch_id'=>$brc));
+				$data['status'] = TRUE;
+			}
+			else
+			{
+				$d_ins = array(
+						'print_bankinvoice'=>$this->input->post('stg_infoinvc'),
+						'inv_coappn'=>$ppn,
+						'inv_coanameppn'=>$ppnname
+						);
+				$update = $this->db->insert('other_settings',$d_ins);
+				$data['status'] = TRUE;
+			}
 			echo json_encode($data);
 		}
 

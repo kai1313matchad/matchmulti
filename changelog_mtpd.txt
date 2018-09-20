@@ -1,3 +1,12 @@
+20092018
+- Edit tabel invoice type
+	ALTER TABLE `invoice_type`
+	ADD COLUMN `BRANCH_ID` INT(11) NOT NULL DEFAULT '0' AFTER `INC_ID`,
+	ADD CONSTRAINT `FK_invoice_type_master_branch` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`);
+- Edit tabel his_cashin
+	ALTER TABLE `his_cashin`
+	ADD COLUMN `HISCHIN_TIME` TIME NULL DEFAULT NULL AFTER `HISCHIN_DATE`;
+
 19092018
 - Edit tabel his_inv
 	ALTER TABLE `his_inv`

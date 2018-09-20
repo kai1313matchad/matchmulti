@@ -561,6 +561,32 @@
 			echo json_encode($output);
 		}
 
+		public function showdetail_invoice_($id)
+		{
+			$list = $this->invoice_det->get_datatables($id);
+			$data = array();
+			$no = $_POST['start'];
+			foreach ($list as $dat) {
+				$no++;
+				$row = array();
+				$row[] = $no;
+				$row[] = $dat->APPR_CODE;
+				$row[] = $dat->LOC_NAME;
+				$row[] = $dat->APPR_PO;
+				$row[] = $dat->INVDET_TERM;
+				$row[] = number_format($dat->INVDET_AMOUNT);
+				$row[] = '<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" disabled><span class="glyphicon glyphicon-trash"></span> </a>';
+				$data[] = $row;
+			}
+			$output = array(
+							"draw" => $_POST['draw'],
+							"recordsTotal" => $this->invoice_det->count_all(),
+							"recordsFiltered" => $this->invoice_det->count_filtered($id),
+							"data" => $data,
+					);			
+			echo json_encode($output);
+		}
+
 		//Tampil Detail Journal
 		public function showdetail_journal($id)
 		{

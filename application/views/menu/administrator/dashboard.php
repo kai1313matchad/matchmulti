@@ -488,7 +488,7 @@
             $.ajax({
                 url : "<?php echo site_url('Dashboard/save_bankinfo/')?>",
                 type: "POST",
-                data: $('#form_bankinv').serialize(),
+                data: $('form').serialize(),
                 dataType: "JSON",
                 success: function(data)
                 {

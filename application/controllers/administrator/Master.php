@@ -1647,7 +1647,8 @@
 
 		public function ajax_invtype()
 		{
-			$list = $this->master_invtype->get_datatables();
+			$brc = $this->session->userdata('user_branch');
+			$list = $this->master_invtype->get_datatables($brc);
 			$data = array();
 			$no = $_POST['start'];
 			foreach ($list as $dat) {
@@ -1656,6 +1657,7 @@
 				$row[] = $no;
 				$row[] = $dat->INC_CODE;
 				$row[] = $dat->INC_NAME;
+				$row[] = $dat->BRANCH_NAME;
 				$row[] = $dat->INC_ACCRCVNAME;			
 				$row[] = $dat->INC_ACCINCNAME;				
 				$row[] = '<a href="javascript:void(0)" title="Lihat Data" class="btn btn-sm btn-info btn-responsive" onclick="lihat_invtype('."'".$dat->INC_ID."'".')"><span class="glyphicon glyphicon-eye-open"></span> </a>  <a href="javascript:void(0)" title="Edit Data" class="btn btn-sm btn-primary btn-responsive" onclick="edit_invtype('."'".$dat->INC_ID."'".')"><span class="glyphicon glyphicon-pencil"></span> </a>  <a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive" onclick="delete_invtype('."'".$dat->INC_ID."'".')"><span class="glyphicon glyphicon-trash"></span> </a>';
@@ -1664,7 +1666,7 @@
 			$output = array(
 							"draw" => $_POST['draw'],
 							"recordsTotal" => $this->master_invtype->count_all(),
-							"recordsFiltered" => $this->master_invtype->count_filtered(),
+							"recordsFiltered" => $this->master_invtype->count_filtered($brc),
 							"data" => $data,
 					);			
 			echo json_encode($output);
@@ -1681,6 +1683,7 @@
 	        $this->_validate_invtype();
 	        $table = $this->input->post('tb');
 	        $data = array(
+	        		'branch_id' => $this->input->post('brc'),
 	                'inc_code' => $this->input->post('code'),
 	                'inc_name' => $this->input->post('nama'),
 	                'inc_accrcv' => $this->input->post('accrcv'),
@@ -1698,6 +1701,7 @@
 	    	$this->_validate_invtype();
 	    	$table = $this->input->post('tb');
 	    	$data = array(
+	    			'branch_id' => $this->input->post('brc'),
 	                'inc_code' => $this->input->post('code'),
 	                'inc_name' => $this->input->post('nama'),
 	                'inc_accrcv' => $this->input->post('accrcv'),
@@ -1729,6 +1733,12 @@
 	        {
 	            $data['inputerror'][] = 'code';
 	            $data['error_string'][] = 'Kode Jenis Invoice Tidak Boleh Kosong';
+	            $data['status'] = FALSE;
+	        }
+	        if($this->input->post('brc') == '')
+	        {
+	            $data['inputerror'][] = 'brc';
+	            $data['error_string'][] = 'Cabang Tidak Boleh Kosong';
 	            $data['status'] = FALSE;
 	        }
 	        if($this->input->post('check') == '0')

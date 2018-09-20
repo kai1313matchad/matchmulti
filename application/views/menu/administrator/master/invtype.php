@@ -28,6 +28,9 @@
                                     Nama
                                 </th>
                                 <th class="text-center">
+                                    Cabang
+                                </th>
+                                <th class="text-center">
                                     Piutang
                                 </th>
                                 <th class="text-center">
@@ -73,6 +76,16 @@
                                 <label class="col-sm-2 control-label">Nama</label>
                                 <div class="col-sm-10">
                                     <input class="form-control" type="text" name="nama">
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Cabang</label>
+                                <div class="col-sm-10">
+                                    <select name="brc" id="brc" class="form-control text-center" data-live-search="true">
+                                    </select>
                                     <span class="help-block"></span>
                                 </div>
                             </div>
@@ -145,6 +158,15 @@
                         </div>
                         <div class="row">
                             <div class="form-group">
+                                <label class="col-sm-2 control-label">Cabang</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="vbrc" id="vbrc" class="form-control" readonly>
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label">Akun Piutang</label>
                                 <div class="col-sm-10">
                                     <input class="form-control" type="text" name="vaccrcv" readonly>
@@ -172,23 +194,10 @@
     <!-- /Modal View -->
     <!-- /#wrapper -->
     <!-- jQuery -->
-    <script src="<?php echo base_url('assets/jquery/jquery-2.2.3.min.js')?>"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="<?php echo base_url('assets/bootstrap/js/bootstrap.min.js')?>"></script>
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="<?php echo base_url('assets/sbadmin/metisMenu/metisMenu.min.js')?>"></script>
-    <!-- Custom Theme JavaScript -->
-    <script src="<?php echo base_url('assets/sbadmin/js/sb-admin-2.js')?>"></script>
-    <!-- Datatables -->
-    <script src="<?php echo base_url('assets/datatables/js/jquery.dataTables.min.js')?>"></script>
-    <script src="<?php echo base_url('assets/datatables/js/dataTables.bootstrap.min.js')?>"></script>
-    <script src="<?php echo base_url('assets/datatables/js/dataTables.responsive.js')?>"></script>
-    <!-- Select Bst -->
-    <script src="<?php echo base_url('assets/addons/bootstrap-select/js/bootstrap-select.min.js')?>"></script>
-    <!-- Addon -->
-    <script src="<?php echo base_url('assets/addons/extra.js')?>"></script>
+    <?php include 'application/views/layout/administrator/jspack.php' ?>
     <script>    
-    $(document).ready(function() {
+    $(document).ready(function()
+    {
         dt_invtype();
         drop_coa1();
         drop_coa2();
@@ -247,8 +256,37 @@
             }
         });
     }
+    function drop_brc(id)
+    {
+        $.ajax({
+        url : "<?php echo site_url('administrator/Master/getcoabrc')?>",
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {   
+            var select = document.getElementById(id);
+            var option;
+            option = document.createElement('option');
+            option.value = ''
+            option.text = 'Pilih';
+            select.add(option);
+            for (var i = 0; i < data.length; i++) {
+                option = document.createElement('option');
+                option.value = data[i]["BRANCH_ID"]
+                option.text = data[i]["BRANCH_NAME"];
+                select.add(option);
+            }
+            $('#'+id).selectpicker({});
+            $('#'+id).selectpicker('refresh');
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax');
+        }
+        });
+    }
     function dt_invtype()
-    {        
+    {
         table = $('#dtb_invtype').DataTable({ 
             "info": false,
             "responsive": true,
@@ -272,7 +310,7 @@
         table.ajax.reload(null,false);
     }
     function add_invtype()
-    {        
+    {
         save_method = 'add';
         $('#form')[0].reset();
         $('.form-group').removeClass('has-error');
@@ -288,6 +326,8 @@
         $('#accrcv').selectpicker('refresh');
         $('#accinc').val('default');
         $('#accinc').selectpicker('refresh');
+        $('#brc').empty();
+        drop_brc('brc');
     }
     function edit_invtype(id)
     {
@@ -297,6 +337,8 @@
         $('.help-block').empty();
         $('[name="code"]').prop('readonly',true);
         $('[name="gen"]').prop('disabled',true);
+        $('#brc').empty();
+        drop_brc('brc');
         $.ajax({
             url : "<?php echo site_url('administrator/Master/edit_invtype/')?>" + id,
             type: "GET",
@@ -306,12 +348,15 @@
                 $('[name="id"]').val(data.INC_ID);
                 $('[name="code"]').val(data.INC_CODE);
                 $('[name="nama"]').val(data.INC_NAME);
-                var sts = data.INC_ACCRCV;                
+                var brc = data.BRANCH_ID;
+                $('select#brc').val(brc);
+                $('#brc').selectpicker('refresh');
+                var sts = data.INC_ACCRCV;
                 $('select#accrcv').val(sts);
-                $('#accrcv').selectpicker('refresh');                
+                $('#accrcv').selectpicker('refresh');
                 var sts = data.INC_ACCINC;
                 $('select#accinc').val(sts);
-                $('#accinc').selectpicker('refresh');                
+                $('#accinc').selectpicker('refresh');
                 $('[name="sts"]').val(data.BRANCH_DTSTS);
                 $('[name="check"]').val("1");
                 $('[name="tb"]').val("invoice_type");
@@ -325,7 +370,7 @@
         });
     }
     function lihat_invtype(id)
-    {        
+    {
         $.ajax({
             url : "<?php echo site_url('administrator/Master/edit_invtype/')?>" + id,
             type: "GET",
@@ -335,6 +380,7 @@
                 $('[name="id"]').val(data.INC_ID);
                 $('[name="vcode"]').val(data.INC_CODE);
                 $('[name="vnama"]').val(data.INC_NAME);
+                $('[name="vbrc"]').val(data.BRANCH_NAME);
                 $('[name="vaccrcv"]').val(data.INC_ACCRCVNAME);
                 $('[name="vaccinc"]').val(data.INC_ACCINCNAME);
                 var sts = data.INC_ACCRCV;
