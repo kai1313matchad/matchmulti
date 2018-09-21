@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `appr_cost_det` (
   CONSTRAINT `FK_R55` FOREIGN KEY (`APPR_ID`) REFERENCES `trx_approvalbill` (`APPR_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.appr_cost_det: ~1 rows (approximately)
+-- Dumping data for table mtpdmulti.appr_cost_det: ~0 rows (approximately)
 /*!40000 ALTER TABLE `appr_cost_det` DISABLE KEYS */;
 INSERT INTO `appr_cost_det` (`CSTDT_ID`, `APPR_ID`, `CSTDT_CODE`, `CSTDT_AMOUNT`) VALUES
 	(1, 1, 'Media Placement', 100000000),
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `appr_terms_det` (
   CONSTRAINT `FK_R15` FOREIGN KEY (`APPR_ID`) REFERENCES `trx_approvalbill` (`APPR_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.appr_terms_det: ~1 rows (approximately)
+-- Dumping data for table mtpdmulti.appr_terms_det: ~0 rows (approximately)
 /*!40000 ALTER TABLE `appr_terms_det` DISABLE KEYS */;
 INSERT INTO `appr_terms_det` (`TERMSDET_ID`, `APPR_ID`, `TERMSDET_CODE`, `TERMSDET_DATE`, `TERMSDET_INFO`, `TERMSDET_PERC`, `TERMSDET_DPP`, `TERMSDET_BBTAX`, `TERMSDET_PPN_PERC`, `TERMSDET_PPH_PERC`, `TERMSDET_PPN_SUM`, `TERMSDET_PPH_SUM`, `TERMSDET_SUB`, `TERMSDET_SUM`) VALUES
 	(1, 1, '1', '2018-10-05', 'Kolom keterangan termin', 100.00, 90000000, 10000000, 10.00, 2.00, 9000000, 1800000, 100000000, 107200000),
@@ -1817,7 +1817,7 @@ CREATE TABLE IF NOT EXISTS `master_goods` (
   CONSTRAINT `FK_R19` FOREIGN KEY (`SUPP_ID`) REFERENCES `master_supplier` (`SUPP_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.master_goods: ~1 rows (approximately)
+-- Dumping data for table mtpdmulti.master_goods: ~0 rows (approximately)
 /*!40000 ALTER TABLE `master_goods` DISABLE KEYS */;
 INSERT INTO `master_goods` (`GD_ID`, `SUPP_ID`, `BRANCH_ID`, `GD_CODE`, `GD_NAME`, `GD_UNIT`, `GD_MEASURE`, `GD_PRICE`, `GD_INFO`, `GD_STS`, `GD_TYPE`, `GD_TYPESTOCK`, `GD_STOCK`, `GD_DTSTS`) VALUES
 	(1, 1, 1, 'BRG-00001', 'Barang A', '1', 'Pcs', 10000.00, '-', 'Baru', 'Jasa', '1', 0, '1'),
@@ -2038,7 +2038,7 @@ CREATE TABLE IF NOT EXISTS `master_sales` (
   CONSTRAINT `FK_R4` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.master_sales: ~4 rows (approximately)
+-- Dumping data for table mtpdmulti.master_sales: ~3 rows (approximately)
 /*!40000 ALTER TABLE `master_sales` DISABLE KEYS */;
 INSERT INTO `master_sales` (`SALES_ID`, `BRANCH_ID`, `PERSON_ID`, `SALES_CODE`, `SALES_PHONE`, `SALES_EMAIL`, `SALES_DTSTS`) VALUES
 	(1, 3, 2, 'SLF-00001', '-', 'a@mail.com', '1'),
@@ -2143,9 +2143,9 @@ CREATE TABLE IF NOT EXISTS `other_settings` (
   PRIMARY KEY (`OS_ID`),
   KEY `FK_other_settings_master_branch` (`BRANCH_ID`),
   CONSTRAINT `FK_other_settings_master_branch` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.other_settings: ~3 rows (approximately)
+-- Dumping data for table mtpdmulti.other_settings: ~2 rows (approximately)
 /*!40000 ALTER TABLE `other_settings` DISABLE KEYS */;
 INSERT INTO `other_settings` (`OS_ID`, `BRANCH_ID`, `PRINT_BANKINVOICE`, `PRC_COA`, `PRC_COAAG`, `PRC_COADISC`, `PRC_COAPPN`, `PRC_COACOST`, `PRC_COANAME`, `PRC_COANAMEAG`, `PRC_COANAMEDISC`, `PRC_COANAMEPPN`, `PRC_COANAMECOST`, `NOTAFIN_ACC`, `NOTAFIN_ACCNAME`, `ACCRCVGIRO_ACC`, `ACCRCVGIRO_ACCNAME`, `DEBTGIRO_ACC`, `DEBTGIRO_ACCNAME`, `INV_COAPPN`, `INV_COANAMEPPN`, `PRCGA_COASUPPLY`, `PRCGA_COADEBT`, `PRCGA_COAPPN`, `PRCGA_COACOST`, `PRCGA_COADISC`, `PRCGA_COANAMESUPPLY`, `PRCGA_COANAMEDEBT`, `PRCGA_COANAMEPPN`, `PRCGA_COANAMECOST`, `PRCGA_COANAMEDISC`) VALUES
 	(1, 1, '', 241, 206, 242, 174, 246, 'HPP/PEMBELIAN - HO', 'HUTANG USAHA', 'POTONGAN PEMBELIAN - HO', 'PPN MASUKAN - HO', 'ONGKOS KIRIM PEMBELIAN - HO', 1, 'KAS HO', NULL, NULL, NULL, NULL, 216, 'HUTANG PAJAK PPN KELUARAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -2174,10 +2174,10 @@ INSERT INTO `parent_chart` (`PAR_ID`, `PARTP_ID`, `PAR_ACC`, `PAR_ACCNAME`, `PAR
 	(17, 12, '1110000', 'KAS', NULL, 'Kas Induk', '1'),
 	(18, 12, '1130000', 'PIUTANG', NULL, '-', '1'),
 	(19, 12, '1140000', 'PIUTANG LAIN-LAIN', NULL, '-', '1'),
-	(20, 12, '11500000', 'PERSEDIAAN', NULL, '-', '1'),
-	(21, 12, '11600000', 'PEMBAYARAN DIMUKA', NULL, '-', '1'),
-	(22, 12, '11700000', 'BIAYA DIBAYAR DIMUKA', NULL, '-', '1'),
-	(23, 12, '11800000', 'UANG MUKA PEMBELIAN', NULL, '-', '1'),
+	(20, 12, '1150000', 'PERSEDIAAN', NULL, '-', '1'),
+	(21, 12, '1160000', 'PEMBAYARAN DIMUKA', NULL, '-', '1'),
+	(22, 12, '1170000', 'BIAYA DIBAYAR DIMUKA', NULL, '-', '1'),
+	(23, 12, '1180000', 'UANG MUKA PEMBELIAN', NULL, '-', '1'),
 	(24, 12, '1200000', 'AKTIVA TETAP (NETTO)', NULL, '-', '1'),
 	(25, 12, '1210000', 'AKUMULASI PENYUSUTAN', NULL, '-', '1'),
 	(26, 14, '2140000', 'HUTANG USAHA LAIN-LAIN', '', '', '1'),
@@ -2309,7 +2309,7 @@ CREATE TABLE IF NOT EXISTS `po_details` (
   CONSTRAINT `FK_R21` FOREIGN KEY (`GD_ID`) REFERENCES `master_goods` (`GD_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.po_details: ~1 rows (approximately)
+-- Dumping data for table mtpdmulti.po_details: ~0 rows (approximately)
 /*!40000 ALTER TABLE `po_details` DISABLE KEYS */;
 INSERT INTO `po_details` (`PODET_ID`, `PO_ID`, `GD_ID`, `PODET_QTYUNIT`, `PODET_SUB`) VALUES
 	(2, 1, 1, 2.00, 20000.00),
@@ -2382,7 +2382,7 @@ CREATE TABLE IF NOT EXISTS `prc_details` (
   CONSTRAINT `FK_R28` FOREIGN KEY (`GD_ID`) REFERENCES `master_goods` (`GD_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.prc_details: ~1 rows (approximately)
+-- Dumping data for table mtpdmulti.prc_details: ~0 rows (approximately)
 /*!40000 ALTER TABLE `prc_details` DISABLE KEYS */;
 INSERT INTO `prc_details` (`PRCDET_ID`, `PRC_ID`, `GD_ID`, `PRCDET_QTY`, `PRCDET_SUB`) VALUES
 	(1, 1, 1, 2.00, 20000.00),
