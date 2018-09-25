@@ -1464,34 +1464,45 @@
                 'cstin_id' => $csti,
 	            'coa_id' => $this->input->post('acc_id'),
 				'curr_id' => $this->input->post('curr_id'),
-				'csh_sts' => '1',
+				'csh_sts' => '2',
 				'csh_date' => $this->input->post('kas_tgl'),
 				'csh_info' => $this->input->post('kas_info'),
 				'csh_acc' => $this->input->post('kas_acc')
 	            );
 	        $update = $this->crud->update('trx_cash_in',$data,array('csh_id'=>$this->input->post('kas_id')));
+	        $this->logupd_cashin_save($this->input->post('kas_id'),$this->input->post('user_name'),'Posted');
+	        echo json_encode(array("status" => TRUE));
+		}
+
+		public function ajax_approve_cash_in()
+		{
+			$data = array(
+				'csh_sts' => '1'
+	            );
+	        $update = $this->crud->update('trx_cash_in',$data,array('csh_id'=>$this->input->post('kas_id')));
+	        $this->logupd_cashin_save($this->input->post('kas_id'),$this->input->post('user_name'),'Approved');
 	        //cek jurnal
-	    	$this->db->from('account_journal');
-	    	$this->db->where('jou_reff',$this->input->post('kas_nomor'));
-	    	$this->db->where('branch_id',$this->input->post('user_branch'));
-	    	$que = $this->db->get();
+	        $cashin_code = $this->input->post('kas_nomor');
+	    	$brc = $this->input->post('user_branch');
+	    	$que = $this->db->get_where('account_journal',array('jou_reff'=>$cashin_code,'branch_id'=>$brc));
 	    	$get = $que->row();
-	    	$cou = count($get);
-	    	$infos = 'Kas Masuk '.$this->input->post('kas_info');
+	    	$infos = 'Kas Masuk '.$cashin_code.', '.$this->input->post('kas_info');
 	    	$getsum = $this->finance->get_sumcashindet($this->input->post('kas_id'));
-	    	if($cou > 0)
+	    	if($que->num_rows() > 0)
 	    	{
+	    		//Update Data Jurnal
 	    		$jou = array(
-		    			'branch_id'=>$this->input->post('user_branch'),
+		    			'branch_id'=>$brc,
 						'user_id'=>$this->input->post('user_id'),
-						'jou_reff'=>$this->input->post('kas_nomor'),
+						'jou_reff'=>$cashin_code,
 						'jou_date'=>$this->input->post('kas_tgl'),
 						'jou_info'=>$infos,
 						'jou_sts'=>'1'
 		    	);
 		    	$update = $this->crud->update('account_journal',$jou,array('jou_id'=>$get->JOU_ID));
-		    	$this->crud->delete_by_id('jou_details',array('jou_id' => $get->JOU_ID));
-		    	//Input Detail Jurnal Debet
+		    	//Hapus Detail Jurnal
+		    	$this->crud->delete_by_id('jou_details',array('jou_id'=>$get->JOU_ID));
+		    	//Input Detail Debet
 		    	$joudet1 = array(
 						'jou_id'=>$get->JOU_ID,
 						'coa_id'=>$this->input->post('acc_id'),
@@ -1499,7 +1510,7 @@
 						'joudet_credit'=>0,
 						);
 				$insjoudet1 = $this->crud->save('jou_details',$joudet1);
-				//Input Detail Jurnal Kredit
+				//Input Detail Kredit
 	    	    $que2 = $this->db->get_where('cashin_det',array('csh_id'=>$this->input->post('kas_id')));
 	    	    $get2 = $que2->result();
 	    	    foreach($get2 as $dat) 
@@ -1515,20 +1526,21 @@
 	    	}
 	    	else
 	    	{
+	    		//Simpan Jurnal Baru
 		    	$gen = $this->gen->gen_numjou();
 				$jouid = $gen['insertId'];
 				$joucode = $gen['jou_code'];
 		    	$jou = array(
-		    			'branch_id'=>$this->input->post('user_branch'),
+		    			'branch_id'=>$brc,
 						'user_id'=>$this->input->post('user_id'),
 						'jou_code'=>$joucode,
-						'jou_reff'=>$this->input->post('kas_nomor'),
+						'jou_reff'=>$cashin_code,
 						'jou_date'=>$this->input->post('kas_tgl'),
 						'jou_info'=>$infos,
 						'jou_sts'=>'1'
 		    	);
 		    	$update = $this->crud->update('account_journal',$jou,array('jou_id'=>$jouid));
-		    	//Input Detail Jurnal Debet
+		    	//Input Detail Debet
 		    	$joudet1 = array(
 						'jou_id'=>$jouid,
 						'coa_id'=>$this->input->post('acc_id'),
@@ -1536,7 +1548,7 @@
 						'joudet_credit'=>0,
 						);
 				$insjoudet1 = $this->crud->save('jou_details',$joudet1);
-				//Input Detail Jurnal Kredit
+				//Input Detail Kredit
 				$que2 = $this->db->get_where('cashin_det',array('csh_id'=>$this->input->post('kas_id')));
 	    	    $get2 = $que2->result();
 	    	    foreach($get2 as $dat) 
@@ -1553,6 +1565,16 @@
 	        echo json_encode(array("status" => TRUE));
 		}
 
+		public function ajax_disapprove_cash_in()
+		{
+			$data = array(
+				'csh_sts' => '0'
+	            );
+	        $update = $this->crud->update('trx_cash_in',$data,array('csh_id'=>$this->input->post('kas_id')));
+	        $this->logupd_cashin_save($this->input->post('kas_id'),$this->input->post('user_name'),'Disapproved');
+	        echo json_encode(array("status" => TRUE));
+		}
+
 		public function ajax_simpan_cash_in_detail()
 		{
             $data = array(
@@ -1562,28 +1584,14 @@
                     'cshindet_reff' => $this->input->post('no_jual'),
                     'cshindet_info' => $this->input->post('ket_detail'),
                     'cshdetin_amount' => $this->input->post('nominal')
-                );
-            $buku = array(
-            	    'user_id' => $this->input->post('user_id'),
-            	    'branch_id'=>$this->input->post('user_branch'),
-            	    'csh_id' => $this->input->post('kas_id'),
-            	    'csh_code' => $this->input->post('kas_nomor'),
-            	    'csh_date' => $this->input->post('kas_tgl'),
-            	    'coa_id' => $this->input->post('acc_id_detail'),
-            	    'acc' => $this->input->post('acc_detail'),
-            	    'csh_info' => $this->input->post('ket_detail'),
-            	    'csh_amount' => $this->input->post('nominal')
-            );
+            	);
             $update = $this->crud->save('cashin_det',$data);
-            $bk = $this->crud->save('buku_kas',$buku);
 	        echo json_encode(array("status" => TRUE)); 
 		}
 
 		public function ajax_hapus_cash_in_detail($id)
 		{
             $hapus = $this->crud->delete_by_id('cashin_det',array('cshindet_id'=>$id));
-            $idbukukas = $this->finance->get_idbukukas($this->input->post('user_branch'),$this->input->post('kas_nomor'),$this->input->post('acc_id_detail'));
-            $hapusbukukas = $this->crud->delete_by_id('buku_kas',array('cshbook_id'=>$idbukukas));
 	        echo json_encode(array("status" => TRUE)); 
 		}
 
@@ -1604,33 +1612,44 @@
 	                'curr_id' => $this->input->post('curr_id'),
 	                'csho_taxheadcode' => $this->input->post('head_taxnumber'),
 	                'csho_taxcode' => $this->input->post('taxnumber'),
-	                'csho_sts' => '1',
+	                'csho_sts' => '2',
 	                'csho_info' => $this->input->post('kas_keterangan'),
 	                'csho_budget' => $bdg
 	            );
 	        $update = $this->crud->update('trx_cash_out',$data,array('csho_id'=>$this->input->post('kas_id')));
+	        $this->logupd_cashout_save($this->input->post('kas_id'),$this->input->post('user_name'),'Posted');
+	        echo json_encode(array("status" => TRUE));
+		}
+
+		public function ajax_approve_cash_out()
+		{
+			$data = array(
+	                'csho_sts' => '1'
+	            );
+	        $update = $this->crud->update('trx_cash_out',$data,array('csho_id'=>$this->input->post('kas_id')));
+	        $this->logupd_cashout_save($this->input->post('kas_id'),$this->input->post('user_name'),'Approved');
 	        //cek jurnal
-	    	$this->db->from('account_journal');
-	    	$this->db->where('jou_reff',$this->input->post('kas_nomor'));
-	    	$this->db->where('branch_id',$this->input->post('user_branch'));	    	
-	    	$que = $this->db->get();
+	        $cashout_code = $this->input->post('kas_nomor');
+	    	$brc = $this->input->post('user_branch');
+	    	$que = $this->db->get_where('account_journal',array('jou_reff'=>$cashout_code,'branch_id'=>$brc));
 	    	$get = $que->row();
-	    	$cou = count($get);
-	    	$infos = 'Kas Keluar '.$this->input->post('kas_keterangan');
+	    	$infos = 'Kas Keluar '.$cashout_code.', '.$this->input->post('kas_keterangan');
 	    	$getsum = $this->finance->get_sumcashoutdet($this->input->post('kas_id'));
-	    	if($cou > 0)
+	    	if($que->num_rows() > 0)
 	    	{
+	    		//Update Data Jurnal
 	    		$jou = array(
-		    			'branch_id'=>$this->input->post('user_branch'),
+		    			'branch_id'=>$brc,
 						'user_id'=>$this->input->post('user_id'),
-						'jou_reff'=>$this->input->post('kas_nomor'),
+						'jou_reff'=>$cashout_code,
 						'jou_date'=>$this->input->post('kas_tgl'),
 						'jou_info'=>$infos,
 						'jou_sts'=>'1'
 		    	);
 		    	$update = $this->crud->update('account_journal',$jou,array('jou_id'=>$get->JOU_ID));
-		    	$this->crud->delete_by_id('jou_details',array('jou_id' => $get->JOU_ID));
-		    	//Input Detail Jurnal Debet
+		    	//Hapus Detail Jurnal
+		    	$this->crud->delete_by_id('jou_details',array('jou_id'=>$get->JOU_ID));
+		    	//Input Detail Kredit
 		    	$joudet1 = array(
 						'jou_id'=>$get->JOU_ID,
 						'coa_id'=>$this->input->post('acc_id'),
@@ -1638,7 +1657,7 @@
 						'joudet_credit'=>$getsum
 						);
 				$insjoudet1 = $this->crud->save('jou_details',$joudet1);
-				//Input Detail Jurnal Kredit
+				//Input Detail Debet
 	    	    $que2 = $this->db->get_where('cashout_det',array('csho_id'=>$this->input->post('kas_id')));
 	    	    $get2 = $que2->result();
 	    	    foreach($get2 as $dat)
@@ -1654,20 +1673,21 @@
 	    	}
 	    	else
 	    	{
+	    		//Simpan Jurnal Baru
 		    	$gen = $this->gen->gen_numjou();
 				$jouid = $gen['insertId'];
 				$joucode = $gen['jou_code'];
 		    	$jou = array(
-		    			'branch_id'=>$this->input->post('user_branch'),
+		    			'branch_id'=>$brc,
 						'user_id'=>$this->input->post('user_id'),
 						'jou_code'=>$joucode,
-						'jou_reff'=>$this->input->post('kas_nomor'),
+						'jou_reff'=>$cashout_code,
 						'jou_date'=>$this->input->post('kas_tgl'),
 						'jou_info'=>$infos,
 						'jou_sts'=>'1'
 		    	);
 		    	$update = $this->crud->update('account_journal',$jou,array('jou_id'=>$jouid));
-		    	//Input Detail Jurnal Debet
+		    	//Input Detail Kredit
 		    	$joudet1 = array(
 						'jou_id'=>$jouid,
 						'coa_id'=>$this->input->post('acc_id'),
@@ -1675,7 +1695,7 @@
 						'joudet_credit'=>$getsum
 						);
 				$insjoudet1 = $this->crud->save('jou_details',$joudet1);
-				//Input Detail Jurnal Kredit
+				//Input Detail Debet
 				$que2 = $this->db->get_where('cashout_det',array('csho_id'=>$this->input->post('kas_id')));
 	    	    $get2 = $que2->result();
 	    	    foreach($get2 as $dat)
@@ -1692,6 +1712,16 @@
 	        echo json_encode(array("status" => TRUE));
 		}
 
+		public function ajax_disapprove_cash_out()
+		{
+			$data = array(
+	                'csho_sts' => '0'
+	            );
+	        $update = $this->crud->update('trx_cash_out',$data,array('csho_id'=>$this->input->post('kas_id')));
+	        $this->logupd_cashout_save($this->input->post('kas_id'),$this->input->post('user_name'),'Disapproved');
+	        echo json_encode(array("status" => TRUE));
+		}
+
 		public function ajax_simpan_cash_out_detail()
 		{
             $data = array(
@@ -1702,27 +1732,13 @@
                     'cshodet_info' => $this->input->post('ket_detail'),
                     'cshodet_amount' => $this->input->post('nominal')
                 );
-            $buku = array(
-            	    'user_id' => $this->input->post('user_id'),
-            	    'branch_id'=>$this->input->post('user_branch'),
-            	    'csh_id' => $this->input->post('kas_id'),
-            	    'csh_code' => $this->input->post('kas_nomor'),
-            	    'csh_date' => $this->input->post('kas_tgl'),
-            	    'coa_id' => $this->input->post('acc_id_detail'),
-            	    'acc' => $this->input->post('acc_detail'),
-            	    'csh_info' => $this->input->post('ket_detail'),
-            	    'csh_amount' => $this->input->post('nominal')
-            );
             $update = $this->crud->save('cashout_det',$data);
-            $bk = $this->crud->save('buku_kas',$buku);
 	        echo json_encode(array("status" => TRUE)); 
 		}
 
 		public function ajax_hapus_cash_out_detail($id)
 		{
             $hapus = $this->crud->delete_by_id('cashout_det',array('cshodet_id'=>$id));
-            $idbukukas = $this->finance->get_idbukukas($this->input->post('user_branch'),$this->input->post('kas_nomor'),$this->input->post('acc_id_detail'));
-            $hapusbukukas = $this->crud->delete_by_id('buku_kas',array('cshbook_id'=>$idbukukas));
 	        echo json_encode(array("status" => TRUE));
 		}
 
@@ -3758,6 +3774,12 @@
 	    public function open_cashin($id)
 		{
 			$user = $this->input->post('user_name');
+			$get_cashin = $this->db->get_where('trx_cash_in',array('csh_id'=>$id))->row();
+			$get_jou = $this->db->get_where('account_journal',array('jou_reff'=>$get_cashin->CSH_CODE,'branch_id'=>$this->session->userdata('user_branch')));
+			if($get_jou->num_rows() > 0)
+			{
+				$this->crud->delete_by_id('jou_details',array('jou_id'=>$get_jou->row()->JOU_ID));
+			}
 			$dt = array('csh_sts'=>'0');
 			$update = $this->crud->update('trx_cash_in',$dt,array('csh_id' => $id));
 			$his = $this->finance->getlog_cashin($id);
@@ -3766,8 +3788,9 @@
 					'hischin_sts' => 'Open by User '.$user,
 					'hischin_old' => $his->HISCHIN_STS,
 					'hischin_new' => 'Open By User '.$user,
-					'hischin_info' => 'Open Record by Kas Masuk form',
+					'hischin_info' => 'Open Record by Cash In form',
 					'hischin_date' => date('Y-m-d'),
+					'hischin_time' => date('H:i:s'),
 					'hischin_upcount' => $his->HISCHIN_UPCOUNT+1
 				);
 			$this->db->insert('his_cashin',$dthis);
@@ -3775,9 +3798,48 @@
 			echo json_encode($data);
 		}
 
+		public function logupd_cashin_save($id,$user,$sts)
+	    {
+	    	$his = $this->finance->getlog_cashin($id);
+	    	if ($his->HISCHIN_UPCOUNT == '0') 
+	    	{
+	    		$data = array(
+						'csh_id' => $id,
+						'hischin_sts' => $sts.' by User '.$user,
+						'hischin_old' => $his->HISCHIN_STS,
+						'hischin_new' => $sts.' By User '.$user,
+						'hischin_info' => 'Original Save by Cash In form',
+						'hischin_date' => date('Y-m-d'),
+						'hischin_time' => date('H:i:s'),
+						'hischin_upcount' => $his->HISCHIN_UPCOUNT+1
+					);
+				$this->db->insert('his_cashin',$data);
+	    	}
+	    	else
+	    	{
+	    		$data = array(
+						'csh_id' => $id,
+						'hischin_sts' => $sts.' by User '.$user,
+						'hischin_old' => $his->HISCHIN_STS,
+						'hischin_new' => $sts.' By User '.$user,
+						'hischin_info' => 'Update by '.$user.' from Cash In form',
+						'hischin_date' => date('Y-m-d'),
+						'hischin_time' => date('H:i:s'),
+						'hischin_upcount' => $his->HISCHIN_UPCOUNT
+					);
+				$this->db->insert('his_cashin',$data);
+	    	}
+	    }
+
 		public function open_cashout($id)
 		{
 			$user = $this->input->post('user_name');
+			$get_cashout = $this->db->get_where('trx_cash_out',array('csho_id'=>$id))->row();
+			$get_jou = $this->db->get_where('account_journal',array('jou_reff'=>$get_cashout->CSHO_CODE,'branch_id'=>$this->session->userdata('user_branch')));
+			if($get_jou->num_rows() > 0)
+			{
+				$this->crud->delete_by_id('jou_details',array('jou_id'=>$get_jou->row()->JOU_ID));
+			}
 			$dt = array('csho_sts'=>'0');
 			$update = $this->crud->update('trx_cash_out',$dt,array('csho_id' => $id));
 			$his = $this->finance->getlog_cashout($id);
@@ -3786,14 +3848,48 @@
 					'hiscsho_sts' => 'Open by User '.$user,
 					'hiscsho_old' => $his->HISCSHO_STS,
 					'hiscsho_new' => 'Open By User '.$user,
-					'hiscsho_info' => 'Open Record by Kas Keluar form',
+					'hiscsho_info' => 'Open Record by Cash Out form',
 					'hiscsho_date' => date('Y-m-d'),
+					'hiscsho_time' => date('H:i:s'),
 					'hiscsho_upcount' => $his->HISCSHO_UPCOUNT+1
 				);
 			$this->db->insert('his_cashout',$dthis);
 			$data['status'] = TRUE;
 			echo json_encode($data);
 		}
+
+		public function logupd_cashout_save($id,$user,$sts)
+	    {
+	    	$his = $this->finance->getlog_cashout($id);
+	    	if ($his->HISCSHO_UPCOUNT == '0') 
+	    	{
+	    		$data = array(
+						'csho_id' => $id,
+						'hiscsho_sts' => $sts.' by User '.$user,
+						'hiscsho_old' => $his->HISCSHO_STS,
+						'hiscsho_new' => $sts.' By User '.$user,
+						'hiscsho_info' => 'Original Save by Cash Out form',
+						'hiscsho_date' => date('Y-m-d'),
+						'hiscsho_time' => date('H:i:s'),
+						'hiscsho_upcount' => $his->HISCSHO_UPCOUNT+1
+					);
+				$this->db->insert('his_cashout',$data);
+	    	}
+	    	else
+	    	{
+	    		$data = array(
+						'csho_id' => $id,
+						'hiscsho_sts' => $sts.' by User '.$user,
+						'hiscsho_old' => $his->HISCSHO_STS,
+						'hiscsho_new' => $sts.' By User '.$user,
+						'hiscsho_info' => 'Update by '.$user.' from Cash Out form',
+						'hiscsho_date' => date('Y-m-d'),
+						'hiscsho_time' => date('H:i:s'),
+						'hiscsho_upcount' => $his->HISCSHO_UPCOUNT
+					);
+				$this->db->insert('his_cashout',$data);
+	    	}
+	    }
 
 		public function open_bankin($id)
 		{

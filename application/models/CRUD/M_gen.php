@@ -133,6 +133,7 @@
 					'hischin_new' => 'None',
 					'hischin_info' => 'Create By System',
 					'hischin_date' => date('Y-m-d'),
+					'hischin_time' => date('H:i:s'),
 					'hischin_upcount' => 0
 				);
 			$this->db->insert('his_cashin',$data2);
@@ -167,6 +168,7 @@
 					'hiscsho_new' => 'None',
 					'hiscsho_info' => 'Create By System',
 					'hiscsho_date' => date('Y-m-d'),
+					'hiscsho_time' => date('H:i:s'),
 					'hiscsho_upcount' => 0
 				);
 			$this->db->insert('his_cashout',$data2);

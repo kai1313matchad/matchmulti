@@ -1,3 +1,15 @@
+25092018
+- edit tabel his_cashout
+	ALTER TABLE `his_cashout`
+	ADD COLUMN `HISCSHO_TIME` TIME NULL DEFAULT NULL AFTER `HISCSHO_DATE`;
+- edit tabel his_bankin
+	ALTER TABLE `his_bankin`
+	ADD COLUMN `HISBNK_TIME` TIME NULL DEFAULT NULL AFTER `HISBNK_DATE`;
+- edit tabel his_bankout
+	ALTER TABLE `his_bankout`
+	ADD COLUMN `HISBNKO_TIME` TIME NULL DEFAULT NULL AFTER `HISBNKO_DATE`;
+
+
 20092018
 - Edit tabel invoice type
 	ALTER TABLE `invoice_type`
@@ -6,7 +18,6 @@
 - Edit tabel his_cashin
 	ALTER TABLE `his_cashin`
 	ADD COLUMN `HISCHIN_TIME` TIME NULL DEFAULT NULL AFTER `HISCHIN_DATE`;
-
 19092018
 - Edit tabel his_inv
 	ALTER TABLE `his_inv`

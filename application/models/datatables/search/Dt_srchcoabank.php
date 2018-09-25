@@ -1,6 +1,6 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
-	class Dt_srchcoacash extends CI_Model 
+	class Dt_srchcoabank extends CI_Model 
 	{
 		var $table = 'chart_of_account a';
 		var $column_order = array(null,'coa_acc','coa_accname');
@@ -16,7 +16,7 @@
 			$this->db->join('master_branch b','b.branch_id = a.branch_id');
 			$this->db->join('parent_chart c','c.par_id = a.par_id');
 			$this->db->where('a.branch_id',$brc);
-			$this->db->where('c.par_acc','1110000');
+			$this->db->where('c.par_acc','1120000');
 			$this->db->where('coa_dtsts','1');
 			$i = 0;
 			foreach ($this->column_search as $item)

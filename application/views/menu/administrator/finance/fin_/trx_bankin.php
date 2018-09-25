@@ -1,34 +1,3 @@
-<!-- Page Content -->
-        <!-- <style>
-              #myDIV1 {
-                    width: 100%;
-                    padding: 50px 0;
-                    text-align: center;
-                    background-color: lightblue;
-                    margin-top: 20px;
-              }
-              #myDIV2 {
-                    width: 100%;
-                    padding: 50px 0;
-                    text-align: center;
-                    background-color: lightblue;
-                    margin-top: 20px;
-              }
-              #myBank {
-                    width: 100%;
-                    /*padding: 50px 0;*/
-                    text-align: center;
-                    /*background-color: lightblue;*/
-                    /*margin-top: 5px;*/
-              }
-              #mySave {
-                    width: 100%;
-                    /*padding: 50px 0;*/
-                    text-align: center;
-                    /*background-color: lightblue;*/
-                    /*margin-top: 5px;*/
-              }
-        </style> -->
         <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row">
@@ -48,6 +17,11 @@
                         </a>
                     </div>
                     <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '3')?'':'style="display:none"');?>>
+                        <a href="javascript:void(0)" onclick="apr_bank_in()" class="btn btn-block btn-primary">
+                            <span class="glyphicon glyphicon-ok"> Approve</span>
+                        </a>
+                    </div>
+                    <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '3')?'':'style="display:none"');?>>
                         <a href="javascript:void(0)" onclick="open_bank_in()" class="btn btn-block btn-primary">
                             <span class="glyphicon glyphicon-open"> Open</span>
                         </a>
@@ -59,9 +33,6 @@
                             <li class="active">
                                 <a href="#myKas" data-toggle="tab">Bank Masuk</a>
                             </li>
-                            <!-- <li>
-                                <a href="#2" data-toggle="tab">Detail Bank Masuk</a>
-                            </li> -->
                         </ul>
                         <form action="#" method="post" class="form-horizontal" id="form_bank">
                             <div class="tab-content">
@@ -81,7 +52,7 @@
                                             <a id="genbtn" href="javascript:void(0)" onclick="gen_bankin()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-plus"></span></a>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control" name="bank_nomor">
+                                            <input type="text" class="form-control" name="bank_nomor" readonly>
                                             <input type="hidden" value='0' class="form-control" name="bank_id">
                                         </div>
                                     </div>
@@ -92,7 +63,7 @@
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
-                                                <input type='text' class="form-control input-group-addon" name="bank_tgl" value="<?= date('Y-m-d')?>" />
+                                                <input type='text' class="form-control input-group-addon" name="bank_tgl" value="<?= date('Y-m-d')?>" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -109,7 +80,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Akun Debet</label>
                                         <div class="col-sm-1">
-                                            <button type="button" class="btn btn-info btn-block" onclick="srch_acc('1')"><span class="glyphicon glyphicon-search"></span></button>
+                                            <button type="button" class="btn btn-info btn-block" onclick="srch_acc()"><span class="glyphicon glyphicon-search"></span></button>
                                             <input class="form-control" type="hidden" name="acc_id">
                                         </div>
                                         <div class="col-sm-3">
@@ -222,7 +193,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Akun</label>
                                             <div class="col-sm-2">
-                                                <button type="button" class="btn btn-info btn-block" onclick="srch_acc2('2')"><span class="glyphicon glyphicon-search"></span></button>
+                                                <button type="button" class="btn btn-info btn-block" onclick="srch_acc2()"><span class="glyphicon glyphicon-search"></span></button>
                                             </div>
                                             <div class="col-sm-5">
                                                 <input class="form-control" type="text" name="acc_detail" readonly>
@@ -302,6 +273,16 @@
                                                 <span class="glyphicon glyphicon-print"></span>
                                                 Cetak
                                             </a>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button type="button" onclick="approve_bank_in()" class="btn btn-block btn-primary btnApr" disabled>
+                                                Approve
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button type="button" onclick="disapprove_bank_in()" class="btn btn-block btn-primary btnApr" disabled>
+                                                Disapprove
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -529,9 +510,6 @@
             $('[name="nominal1"]').on('input',function(){
                 $('[name="nominal2"]').val($('[name="nominal1"]').val());
             });
-            // $('[name="nominal2"]').on('input',function(){
-            //     $('[name="nominal1"]').val($('[name="nominal2"]').val());
-            // });
             var id = $('[name="bank_id"]').val();
             bank_masuk_detail1(id);
             bank_masuk_detail2(id);
@@ -679,10 +657,8 @@
                 }
             }
         }
-        function srch_acc(t)
+        function srch_acc()
         {
-            sts=t;
-            // acc='002000';
             $('#modal_account').modal('show');
             $('.modal-title').text('Cari Account');
             table = $('#dtb_acc').DataTable({
@@ -693,8 +669,7 @@
                 "serverSide": true,
                 "order": [],
                 "ajax": {
-                    // "url": "<?php echo site_url('administrator/Finance/ajax_srch_acc/')?>" + acc,
-                    "url": "<?php echo site_url('administrator/Finance/ajax_srch_acc2/')?>",
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_coa_bank')?>",
                     "type": "POST",
                 },                
                 "columnDefs": [
@@ -705,9 +680,27 @@
                 ],
             });
         }
-        function srch_acc2(t)
+        function pick_coabank(id)
         {
-            sts=t;
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_coagb/')?>"+id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('[name="bank_acc"]').val(data.COA_ACC);
+                    $('[name="bank_acc_info"]').val(data.COA_ACCNAME);
+                    $('[name="acc_id"]').val(data.COA_ID);
+                    $('#modal_account').modal('hide');
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function srch_acc2()
+        {
             $('#modal_account').modal('show');
             $('.modal-title').text('Cari Account');
             table = $('#dtb_acc').DataTable({
@@ -718,7 +711,7 @@
                 "serverSide": true,
                 "order": [],
                 "ajax": {
-                    "url": "<?php echo site_url('administrator/Finance/ajax_srch_acc2/')?>",
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_coabybrc')?>",
                     "type": "POST",
                 },
                 "columnDefs": [
@@ -727,6 +720,24 @@
                     "orderable": false,
                 },
                 ],
+            });
+        }
+        function pick_coagb(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_coagb/')?>"+id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('[name="acc_detail"]').val(data.COA_ACC +" - "+data.COA_ACCNAME);
+                    $('[name="acc_id_detail"]').val(data.COA_ID);
+                    $('#modal_account').modal('hide');
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
             });
         }
         function pick_acc(id)

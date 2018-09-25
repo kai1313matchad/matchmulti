@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Server version:               10.1.19-MariaDB - mariadb.org binary distribution
 -- Server OS:                    Win32
--- HeidiSQL Version:             9.4.0.5125
+-- HeidiSQL Version:             9.5.0.5196
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `account_journal` (
   CONSTRAINT `FK_R53` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.account_journal: ~4 rows (approximately)
+-- Dumping data for table mtpdmulti.account_journal: ~3 rows (approximately)
 /*!40000 ALTER TABLE `account_journal` DISABLE KEYS */;
 INSERT INTO `account_journal` (`JOU_ID`, `BRANCH_ID`, `USER_ID`, `JOU_CODE`, `JOU_STS`, `JOU_REFF`, `JOU_DATE`, `JOU_INFO`, `JOU_DEBIT`, `JOU_CREDIT`) VALUES
 	(1, 1, 2, 'JOU/1809/000001', '1', 'BL/1809/000001', '2018-09-19', 'Jurnal Pembelian BL/1809/000001 dari Supplier A', NULL, NULL),
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `appr_cost_det` (
   CONSTRAINT `FK_R55` FOREIGN KEY (`APPR_ID`) REFERENCES `trx_approvalbill` (`APPR_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.appr_cost_det: ~0 rows (approximately)
+-- Dumping data for table mtpdmulti.appr_cost_det: ~2 rows (approximately)
 /*!40000 ALTER TABLE `appr_cost_det` DISABLE KEYS */;
 INSERT INTO `appr_cost_det` (`CSTDT_ID`, `APPR_ID`, `CSTDT_CODE`, `CSTDT_AMOUNT`) VALUES
 	(1, 1, 'Media Placement', 100000000),
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `appr_terms_det` (
   CONSTRAINT `FK_R15` FOREIGN KEY (`APPR_ID`) REFERENCES `trx_approvalbill` (`APPR_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.appr_terms_det: ~0 rows (approximately)
+-- Dumping data for table mtpdmulti.appr_terms_det: ~2 rows (approximately)
 /*!40000 ALTER TABLE `appr_terms_det` DISABLE KEYS */;
 INSERT INTO `appr_terms_det` (`TERMSDET_ID`, `APPR_ID`, `TERMSDET_CODE`, `TERMSDET_DATE`, `TERMSDET_INFO`, `TERMSDET_PERC`, `TERMSDET_DPP`, `TERMSDET_BBTAX`, `TERMSDET_PPN_PERC`, `TERMSDET_PPH_PERC`, `TERMSDET_PPN_SUM`, `TERMSDET_PPH_SUM`, `TERMSDET_SUB`, `TERMSDET_SUM`) VALUES
 	(1, 1, '1', '2018-10-05', 'Kolom keterangan termin', 100.00, 90000000, 10000000, 10.00, 2.00, 9000000, 1800000, 100000000, 107200000),
@@ -1036,6 +1036,7 @@ CREATE TABLE IF NOT EXISTS `his_bankin` (
   `HISBNK_NEW` char(50) DEFAULT NULL,
   `HISBNK_INFO` char(200) DEFAULT NULL,
   `HISBNK_DATE` date DEFAULT NULL,
+  `HISBNK_TIME` time DEFAULT NULL,
   `HISBNK_UPCOUNT` char(50) DEFAULT NULL,
   PRIMARY KEY (`HISBNK_ID`),
   KEY `FKHISBNK1` (`BNK_ID`),
@@ -1056,6 +1057,7 @@ CREATE TABLE IF NOT EXISTS `his_bankout` (
   `HISBNKO_NEW` char(50) DEFAULT NULL,
   `HISBNKO_INFO` char(200) DEFAULT NULL,
   `HISBNKO_DATE` date DEFAULT NULL,
+  `HISBNKO_TIME` time DEFAULT NULL,
   `HISBNKO_UPCOUNT` char(50) DEFAULT NULL,
   PRIMARY KEY (`HISBNKO_ID`),
   KEY `FKHISBNKO1` (`BNKO_ID`),
@@ -1167,6 +1169,7 @@ CREATE TABLE IF NOT EXISTS `his_cashout` (
   `HISCSHO_NEW` char(50) DEFAULT NULL,
   `HISCSHO_INFO` char(200) DEFAULT NULL,
   `HISCSHO_DATE` date DEFAULT NULL,
+  `HISCSHO_TIME` time DEFAULT NULL,
   `HISCSHO_UPCOUNT` char(50) DEFAULT NULL,
   PRIMARY KEY (`HISCSHO_ID`),
   KEY `FKHISCSHO1` (`CSHO_ID`),
@@ -1772,10 +1775,12 @@ CREATE TABLE IF NOT EXISTS `master_cust_intern` (
   PRIMARY KEY (`CSTIN_ID`),
   KEY `FKCSTINT1` (`PERSON_ID`),
   CONSTRAINT `FKCSTINT1` FOREIGN KEY (`PERSON_ID`) REFERENCES `master_person` (`PERSON_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.master_cust_intern: ~0 rows (approximately)
+-- Dumping data for table mtpdmulti.master_cust_intern: ~1 rows (approximately)
 /*!40000 ALTER TABLE `master_cust_intern` DISABLE KEYS */;
+INSERT INTO `master_cust_intern` (`CSTIN_ID`, `PERSON_ID`, `CSTIN_CODE`, `CSTIN_INFO`, `CSTIN_DTSTS`) VALUES
+	(1, 3, 'CSTI-00001', 'Tes cust internal', '1');
 /*!40000 ALTER TABLE `master_cust_intern` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.master_dept
@@ -1817,7 +1822,7 @@ CREATE TABLE IF NOT EXISTS `master_goods` (
   CONSTRAINT `FK_R19` FOREIGN KEY (`SUPP_ID`) REFERENCES `master_supplier` (`SUPP_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.master_goods: ~0 rows (approximately)
+-- Dumping data for table mtpdmulti.master_goods: ~2 rows (approximately)
 /*!40000 ALTER TABLE `master_goods` DISABLE KEYS */;
 INSERT INTO `master_goods` (`GD_ID`, `SUPP_ID`, `BRANCH_ID`, `GD_CODE`, `GD_NAME`, `GD_UNIT`, `GD_MEASURE`, `GD_PRICE`, `GD_INFO`, `GD_STS`, `GD_TYPE`, `GD_TYPESTOCK`, `GD_STOCK`, `GD_DTSTS`) VALUES
 	(1, 1, 1, 'BRG-00001', 'Barang A', '1', 'Pcs', 10000.00, '-', 'Baru', 'Jasa', '1', 0, '1'),
@@ -2038,7 +2043,7 @@ CREATE TABLE IF NOT EXISTS `master_sales` (
   CONSTRAINT `FK_R4` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.master_sales: ~3 rows (approximately)
+-- Dumping data for table mtpdmulti.master_sales: ~4 rows (approximately)
 /*!40000 ALTER TABLE `master_sales` DISABLE KEYS */;
 INSERT INTO `master_sales` (`SALES_ID`, `BRANCH_ID`, `PERSON_ID`, `SALES_CODE`, `SALES_PHONE`, `SALES_EMAIL`, `SALES_DTSTS`) VALUES
 	(1, 3, 2, 'SLF-00001', '-', 'a@mail.com', '1'),
@@ -2145,7 +2150,7 @@ CREATE TABLE IF NOT EXISTS `other_settings` (
   CONSTRAINT `FK_other_settings_master_branch` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.other_settings: ~2 rows (approximately)
+-- Dumping data for table mtpdmulti.other_settings: ~3 rows (approximately)
 /*!40000 ALTER TABLE `other_settings` DISABLE KEYS */;
 INSERT INTO `other_settings` (`OS_ID`, `BRANCH_ID`, `PRINT_BANKINVOICE`, `PRC_COA`, `PRC_COAAG`, `PRC_COADISC`, `PRC_COAPPN`, `PRC_COACOST`, `PRC_COANAME`, `PRC_COANAMEAG`, `PRC_COANAMEDISC`, `PRC_COANAMEPPN`, `PRC_COANAMECOST`, `NOTAFIN_ACC`, `NOTAFIN_ACCNAME`, `ACCRCVGIRO_ACC`, `ACCRCVGIRO_ACCNAME`, `DEBTGIRO_ACC`, `DEBTGIRO_ACCNAME`, `INV_COAPPN`, `INV_COANAMEPPN`, `PRCGA_COASUPPLY`, `PRCGA_COADEBT`, `PRCGA_COAPPN`, `PRCGA_COACOST`, `PRCGA_COADISC`, `PRCGA_COANAMESUPPLY`, `PRCGA_COANAMEDEBT`, `PRCGA_COANAMEPPN`, `PRCGA_COANAMECOST`, `PRCGA_COANAMEDISC`) VALUES
 	(1, 1, '', 241, 206, 242, 174, 246, 'HPP/PEMBELIAN - HO', 'HUTANG USAHA', 'POTONGAN PEMBELIAN - HO', 'PPN MASUKAN - HO', 'ONGKOS KIRIM PEMBELIAN - HO', 1, 'KAS HO', NULL, NULL, NULL, NULL, 216, 'HUTANG PAJAK PPN KELUARAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -2168,7 +2173,7 @@ CREATE TABLE IF NOT EXISTS `parent_chart` (
   CONSTRAINT `FKPAR1` FOREIGN KEY (`PARTP_ID`) REFERENCES `parent_type` (`PARTP_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.parent_chart: ~36 rows (approximately)
+-- Dumping data for table mtpdmulti.parent_chart: ~40 rows (approximately)
 /*!40000 ALTER TABLE `parent_chart` DISABLE KEYS */;
 INSERT INTO `parent_chart` (`PAR_ID`, `PARTP_ID`, `PAR_ACC`, `PAR_ACCNAME`, `PAR_TYPE`, `PAR_INFO`, `PAR_DTSTS`) VALUES
 	(17, 12, '1110000', 'KAS', NULL, 'Kas Induk', '1'),
@@ -2309,7 +2314,7 @@ CREATE TABLE IF NOT EXISTS `po_details` (
   CONSTRAINT `FK_R21` FOREIGN KEY (`GD_ID`) REFERENCES `master_goods` (`GD_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.po_details: ~0 rows (approximately)
+-- Dumping data for table mtpdmulti.po_details: ~2 rows (approximately)
 /*!40000 ALTER TABLE `po_details` DISABLE KEYS */;
 INSERT INTO `po_details` (`PODET_ID`, `PO_ID`, `GD_ID`, `PODET_QTYUNIT`, `PODET_SUB`) VALUES
 	(2, 1, 1, 2.00, 20000.00),
@@ -2382,7 +2387,7 @@ CREATE TABLE IF NOT EXISTS `prc_details` (
   CONSTRAINT `FK_R28` FOREIGN KEY (`GD_ID`) REFERENCES `master_goods` (`GD_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.prc_details: ~0 rows (approximately)
+-- Dumping data for table mtpdmulti.prc_details: ~2 rows (approximately)
 /*!40000 ALTER TABLE `prc_details` DISABLE KEYS */;
 INSERT INTO `prc_details` (`PRCDET_ID`, `PRC_ID`, `GD_ID`, `PRCDET_QTY`, `PRCDET_SUB`) VALUES
 	(1, 1, 1, 2.00, 20000.00),
