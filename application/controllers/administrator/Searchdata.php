@@ -2213,36 +2213,66 @@
 			$id = $this->input->post('sts');
 			$br = $this->input->post('brch');
 			$brc = 'a.branch_id = '.$br;
+			$chk = $this->input->post('chk');
 			$list = $this->s_bankinbysts->get_datatables($id,$brc);
 			$data = array();
 			$no = $_POST['start'];
-			if($this->input->post('chk') != '0')
-			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-				    $row[] = $dat->BNK_CODE;
-				    $row[] = $dat->COA_ACCNAME;
-				    $row[] = $dat->BNK_DATE;				
-				    $row[] = $dat->BNK_INFO;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bankinopen('."'".$dat->BNK_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
-			}
-			else
-			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-				    $row[] = $dat->BNK_CODE;
-				    $row[] = $dat->COA_ACCNAME;
-				    $row[] = $dat->BNK_DATE;				
-				    $row[] = $dat->BNK_INFO;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bankinedit('."'".$dat->BNK_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
+			switch ($chk) {
+				case '0':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+					    $row[] = $dat->BNK_CODE;
+					    $row[] = $dat->COA_ACCNAME;
+					    $row[] = $dat->BNK_DATE;
+					    $row[] = $dat->BNK_INFO;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bankinedit('."'".$dat->BNK_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '1':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+					    $row[] = $dat->BNK_CODE;
+					    $row[] = $dat->COA_ACCNAME;
+					    $row[] = $dat->BNK_DATE;
+					    $row[] = $dat->BNK_INFO;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bankinopen('."'".$dat->BNK_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '2':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->BNK_CODE;
+						$row[] = $dat->COA_ACCNAME;
+						$row[] = $dat->BNK_DATE;
+						$row[] = $dat->BNK_INFO;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bankinchk('."'".$dat->BNK_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '3':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->BNK_CODE;
+						$row[] = $dat->COA_ACCNAME;
+						$row[] = $dat->BNK_DATE;
+						$row[] = $dat->BNK_INFO;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bankinapr('."'".$dat->BNK_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				default:
+					# code...
+					break;
 			}
 			$output = array(
 							"draw" => $_POST['draw'],
@@ -2287,36 +2317,66 @@
 			$id = $this->input->post('sts');
 			$br = $this->input->post('brch');
 			$brc = 'a.branch_id = '.$br;
+			$chk = $this->input->post('chk');
 			$list = $this->s_bankoutbysts->get_datatables($id,$brc);
 			$data = array();
 			$no = $_POST['start'];
-			if($this->input->post('chk') != '0')
-			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-				    $row[] = $dat->BNKO_CODE;
-				    $row[] = $dat->COA_ACCNAME;
-				    $row[] = $dat->BNKO_DATE;				
-				    $row[] = $dat->BNKO_INFO;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bankoutopen('."'".$dat->BNKO_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
-			}
-			else
-			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-				    $row[] = $dat->BNKO_CODE;
-				    $row[] = $dat->COA_ACCNAME;
-				    $row[] = $dat->BNKO_DATE;				
-				    $row[] = $dat->BNKO_INFO;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bankoutedit('."'".$dat->BNKO_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
+			switch ($chk) {
+				case '0':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+					    $row[] = $dat->BNKO_CODE;
+					    $row[] = $dat->COA_ACCNAME;
+					    $row[] = $dat->BNKO_DATE;
+					    $row[] = $dat->BNKO_INFO;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bankoutedit('."'".$dat->BNKO_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '1':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+					    $row[] = $dat->BNKO_CODE;
+					    $row[] = $dat->COA_ACCNAME;
+					    $row[] = $dat->BNKO_DATE;
+					    $row[] = $dat->BNKO_INFO;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bankoutopen('."'".$dat->BNKO_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '2':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->BNKO_CODE;
+						$row[] = $dat->COA_ACCNAME;
+						$row[] = $dat->BNKO_DATE;
+						$row[] = $dat->BNKO_INFO;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bankoutchk('."'".$dat->BNKO_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '3':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->BNKO_CODE;
+						$row[] = $dat->COA_ACCNAME;
+						$row[] = $dat->BNKO_DATE;
+						$row[] = $dat->BNKO_INFO;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bankoutapr('."'".$dat->BNKO_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				default:
+					# code...
+					break;
 			}
 			$output = array(
 							"draw" => $_POST['draw'],
