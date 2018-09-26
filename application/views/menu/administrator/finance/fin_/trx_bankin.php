@@ -815,7 +815,6 @@
             $.ajax({
                 url : "<?php echo site_url('administrator/Searchdata/srch_custall')?>",
                 type: "GET",
-                // data: $('#form_inv').serialize(),
                 dataType: "JSON",
                 success: function(data)
                 {
