@@ -42,6 +42,17 @@
 			echo json_encode($data);
 		}
 
+		public function mkt_trx_test()
+		{
+			$this->authsys->trx_check_($_SESSION['user_id'],'MKT');
+			$data['pattyp'] = $this->crud->get_pattyp();			
+			$data['title']='Match Terpadu - Dashboard Marketing';
+			$data['menu']='marketing';
+			$data['menulist']='approval';
+			$data['isi']='menu/administrator/marketing/mkt_trx_approvalt1';
+			$this->load->view('layout/administrator/wrapper',$data);
+		}
+
 		public function mkt_trx_approval()
 		{
 			$this->authsys->trx_check_($_SESSION['user_id'],'MKT');
