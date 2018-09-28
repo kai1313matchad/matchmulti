@@ -1052,6 +1052,31 @@
 			echo json_encode($output);
 		}
 
+		public function ajax_costappt1($id)
+		{
+			$list = $this->costapp->get_datatables($id);
+			$data = array();
+			$no = $_POST['start'];
+			foreach ($list as $dat) {
+				$no++;
+				$row = array();
+				$row[] = $no;
+				$row[] = $dat->CSTDT_CODE;
+				$row[] = $dat->CSTDT_PPNAMOUNT;
+				$row[] = $dat->CSTDT_PPHAMOUNT;
+				$row[] = $dat->CSTDT_AMOUNT;
+				$row[] = '<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive btnCh" onclick="del_costapp('."'".$dat->CSTDT_ID."'".')"><span class="glyphicon glyphicon-remove"></span></a>';
+				$data[] = $row;
+			}
+			$output = array(
+							"draw" => $_POST['draw'],
+							"recordsTotal" => $this->costapp->count_all(),
+							"recordsFiltered" => $this->costapp->count_filtered($id),
+							"data" => $data,
+					);			
+			echo json_encode($output);
+		}
+
 		public function ajax_costappbrc($id)
 		{
 			$list = $this->costapp->get_datatables($id);
@@ -1082,7 +1107,22 @@
 	        $data = array(
 	                'appr_id' => $this->input->post('appr_id'),
 	                'cstdt_code' => $this->input->post('cost_code'),
-	                'cstdt_amount' => $this->input->post('cost_amount')	                
+	                'cstdt_amount' => $this->input->post('cost_amount')
+	            );
+	        $insert = $this->crud->save($table,$data);
+	        echo json_encode(array("status" => TRUE));
+	    }
+
+	    public function ajax_add_costappt1()
+	    {
+	    	$this->_validate_costapp();
+	        $table = 'appr_cost_det';
+	        $data = array(
+	                'appr_id' => $this->input->post('appr_id'),
+	                'cstdt_code' => $this->input->post('cost_code'),
+	                'cstdt_ppnamount' => $this->input->post('ppncost'),
+	                'cstdt_pphamount' => $this->input->post('pphcost'),
+	                'cstdt_amount' => $this->input->post('cost_amount')
 	            );
 	        $insert = $this->crud->save($table,$data);
 	        echo json_encode(array("status" => TRUE));
@@ -1577,6 +1617,16 @@
 		public function get_subcost($id)
 		{
 			$this->db->select_sum('a.cstdt_amount', 'subtotal');
+			$this->db->join('trx_approvalbill b','b.appr_id = a.appr_id');
+			$this->db->where('a.appr_id',$id);
+			$query = $this->db->get('appr_cost_det a');
+	        $data = $query->row();
+	        echo json_encode($data);
+		}
+
+		public function get_subcost_t1($id)
+		{
+			$this->db->select('sum(a.cstdt_ppnamount) as subppn, sum(a.cstdt_pphamount) as subpph, sum(a.cstdt_amount) as subtotal');
 			$this->db->join('trx_approvalbill b','b.appr_id = a.appr_id');
 			$this->db->where('a.appr_id',$id);
 			$query = $this->db->get('appr_cost_det a');

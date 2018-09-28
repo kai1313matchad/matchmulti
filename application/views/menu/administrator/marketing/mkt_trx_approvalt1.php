@@ -63,8 +63,8 @@
 	                                        <a id="genbtn" href="javascript:void(0)" onclick="gen_appr()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-plus"></span></a>
 	                                    </div>
 					                    <div class="col-sm-5">
-					                        <input class="form-control" type="text" name="appr_code" value="" readonly>
-					                        <input type="hidden" name="appr_id" value="0">
+					                        <input class="form-control" type="text" name="appr_code" value="AB/1809/000003" readonly>
+					                        <input type="hidden" name="appr_id" value="5">
 					                	</div>
 					                	<div class="col-sm-2">
 					                		<input type="text" class="form-control" name="appr_init" readonly>
@@ -314,9 +314,11 @@
 	                            			<label class="col-sm-3 control-label"></label>
 	                            			<div class="col-sm-2">
 	                            				<input type="checkbox" name="checkppn"> PPN
+	                            				<input type="hidden" name="ppncost">
 	                            			</div>
 	                            			<div class="col-sm-2">
 	                            				<input type="checkbox" name="checkpph"> PPH
+	                            				<input type="hidden" name="pphcost">
 	                            			</div>
 	                            		</div>
 	                            		<div class="form-group">
@@ -337,6 +339,12 @@
 							                                </th>
 							                                <th class="text-center">
 							                                    Deskripsi
+							                                </th>
+							                                <th class="text-center">
+							                                    PPN
+							                                </th>
+							                                <th class="text-center">
+							                                    PPH
 							                                </th>
 							                                <th class="text-center">
 							                                    Jumlah
@@ -409,12 +417,12 @@
 			                        </div>
 			                        <div class="form-group">
 			                            <label class="col-sm-3 control-label">PPN</label>
-			                            <div class="col-sm-4">
+			                            <!-- <div class="col-sm-4">
 			                            	<div class="input-group">
 			                            		<span class="input-group-addon">%</span>
-			                                	<input class="form-control chgcount curr-num-perc" type="text" name="ppnp">             	
+			                                	<input class="form-control chgcount curr-num-perc" type="text" name="ppnp">
 			                                </div>
-			                            </div>
+			                            </div> -->
 			                            <div class="col-sm-4">
 			                            	<div class="input-group">
 			                            		<span class="input-group-addon curr">Rp</span>
@@ -422,7 +430,7 @@
 			                            	</div>			                                
 			                            </div>
 			                        </div>
-			                        <div class="form-group">
+			                        <!-- <div class="form-group">
 			                            <label class="col-sm-3 control-label">Pajak Reklame</label>
 			                            <div class="col-sm-8">
 			                            	<div class="input-group">
@@ -430,7 +438,7 @@
 			                            		<input class="form-control chgcount curr-num" type="text" name="appr_bbtax">
 			                            	</div>
 			                            </div>
-			                        </div>
+			                        </div> -->
 			                        <div class="form-group">
 			                            <label class="col-sm-3 control-label">Sub Total</label>
 			                            <div class="col-sm-8">
@@ -439,12 +447,12 @@
 			                        </div>
 			                        <div class="form-group">
 			                            <label class="col-sm-3 control-label">PPH</label>
-			                            <div class="col-sm-4">
+			                            <!-- <div class="col-sm-4">
 			                            	<div class="input-group">
 			                            		<span class="input-group-addon">%</span>
 			                                	<input class="form-control chgcount curr-num-perc" type="text" name="pphp" placeholder="PPH">
 			                                </div>
-			                            </div>
+			                            </div> -->
 			                            <div class="col-sm-4">
 			                            	<div class="input-group">
 			                            		<span class="input-group-addon curr">Rp</span>
@@ -1022,7 +1030,39 @@
     		{
     			pphbiaya = biaya*2/100;
     		}
-    		alert(biaya+', '+ppnbiaya+', '+pphbiaya);
+    		$('[name="ppncost"]').val(ppnbiaya);
+    		$('[name="pphcost"]').val(pphbiaya);
+    		alert(biaya+', '+$('[name="ppncost"]').val()+', '+$('[name="pphcost"]').val());
+    		$.ajax({
+	            url : "<?php echo site_url('administrator/Marketing/ajax_add_costappt1')?>",
+	            type: "POST",
+	            data: $('#form_appr').serialize(),
+	            dataType: "JSON",
+	            success: function(data)
+	            {
+	                if(data.status)
+	                {
+	                	$('[name="cost_code"]').val('');
+	                	$('[name="cost_amount"]').val('');
+	                    alert('Data Berhasil Ditambahkan');
+	                    id = $('[name="appr_id"]').val();
+	                    costapp(id);
+	                    get_subcost(id);
+	                }
+	                else
+	                {
+	                	for (var i = 0; i < data.inputerror.length; i++) 
+	                    {
+	                        $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error');
+	                        $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]);
+	                    }
+	                }	                
+	            },
+	            error: function (jqXHR, textStatus, errorThrown)
+	            {
+	                alert('Error adding / update data');
+	            }
+	        });
     	}
     	function print_appr()
         {
@@ -1232,7 +1272,7 @@
 	            "serverSide": true,
 	            "order": [],	            
 	            "ajax": {
-	                "url": "<?php echo site_url('administrator/Marketing/ajax_costapp/')?>"+id,
+	                "url": "<?php echo site_url('administrator/Marketing/ajax_costappt1/')?>"+id,
 	                "type": "POST",                
 	            },	            
 	            "columnDefs": [
@@ -1281,6 +1321,8 @@
 	                    id = $('[name="appr_id"]').val();
 	                    costapp(id);
 	                    get_subcost(id);
+	                    get_subppn(id);
+	                    get_subpph(id);
 	                }
 	                else
 	                {
@@ -1311,6 +1353,8 @@
 	                    id = $('[name="appr_id"]').val();
 	                    costapp(id);
 	                    get_subcost(id);
+	                    get_subppn(id);
+	                    get_subpph(id);
 	                },
 	                error: function (jqXHR, textStatus, errorThrown)
 	                {
@@ -1322,20 +1366,39 @@
     	function get_subcost(id)
     	{
     		$.ajax({
-    			url : "<?php echo site_url('administrator/Marketing/get_subcost/')?>"+id,
+    			url : "<?php echo site_url('administrator/Marketing/get_subcost_t1/')?>"+id,
     			type : "POST",
     			dataType : "JSON",
     			success : function(data)
     			{
-    				if(data.subtotal != null)
-    				{
-    					$('[name="dpp"]').val(data.subtotal);
-    				}
-    				else
-    				{
-    					$('[name="dpp"]').val('0');
-    				}
-    				hitung_();
+    				$('[name="dpp"]').val((data.subtotal != null)?data.subtotal:0);
+    				// hitung_();
+    			}
+    		});
+    	}
+    	function get_subppn(id)
+    	{
+    		$.ajax({
+    			url : "<?php echo site_url('administrator/Marketing/get_subcost_t1/')?>"+id,
+    			type : "POST",
+    			dataType : "JSON",
+    			success : function(data)
+    			{
+    				$('[name="ppnn"]').val((data.subppn != null)?data.subppn:0);
+    				// hitung_();
+    			}
+    		});
+    	}
+    	function get_subpph(id)
+    	{
+    		$.ajax({
+    			url : "<?php echo site_url('administrator/Marketing/get_subcost_t1/')?>"+id,
+    			type : "POST",
+    			dataType : "JSON",
+    			success : function(data)
+    			{
+    				$('[name="pphn"]').val((data.subpph != null)?data.subpph:0);
+    				// hitung_();
     			}
     		});
     	}
