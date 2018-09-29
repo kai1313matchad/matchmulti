@@ -1214,6 +1214,60 @@
 	        echo json_encode(array("status" => TRUE));
 	    }
 
+	    public function ajax_simpanappt1()
+	    {
+	    	$this->_validate_appr();
+	    	$get = $this->crud->get_by_id('master_user',array('user_id' => $this->input->post('user_id')));
+	    	$get2 = $this->crud->get_by_id('master_branch',array('branch_id' => $get->BRANCH_ID));
+	    	$data = array(
+	    			// Kumpulan Key
+	                'user_id' => $this->input->post('user_id'),
+	                'bb_id' => ($this->input->post('bb_id') != '')?$this->input->post('bb_id'):NULL,
+	                'loc_id' => ($this->input->post('loc_id') != '')?$this->input->post('loc_id'):NULL,
+	                'cust_id' => $this->input->post('cust_id'),
+	                'sales_id' => $this->input->post('sales_id'),
+	                'curr_id' => $this->input->post('curr_id'),
+	                'plc_id' => ($this->input->post('plc_id') != '')?$this->input->post('plc_id'):NULL,
+	                // Data Tabel
+	                'appr_code' => $this->input->post('appr_code'),
+	                'appr_sts' => '2', //Ubah status jadi menunggu approve
+	                'appr_branchid' => $this->input->post('appr_brcid'),
+	                'appr_own' => $get2->BRANCH_STATUS,
+	                'appr_branch' => $this->input->post('appr_brc'),
+	                'appr_brcname' => $get2->BRANCH_NAME,
+	                'appr_branch_income' => $this->input->post('brc_nom'),	                
+	                'appr_po' => $this->input->post('appr_po'),
+	                'appr_date' => $this->input->post('tgl'),
+	                'appr_contract_start' => $this->input->post('tgl_awal'),
+	                'appr_contract_end' => $this->input->post('tgl_akhir'),
+	                'appr_recov' => $this->input->post('appr_rec'),
+	                'appr_info' => $this->input->post('appr_info'),
+	                'appr_height' => $this->input->post('appr_height'),
+	                'appr_width' => $this->input->post('appr_width'),
+	                'appr_length' => $this->input->post('appr_length'),
+	                'appr_sumsize' => $this->input->post('appr_sumsize'),
+	                'appr_side' => $this->input->post('appr_side'),
+	                'appr_plcsum' => $this->input->post('appr_plcsum'),	                
+	                'appr_visual' => $this->input->post('appr_vis'),	                
+	                'appr_dpp_income' => $this->input->post('dpp'),
+	                'appr_disc_perc1' => $this->input->post('discp1'),
+	                'appr_disc_perc2' => $this->input->post('discp2'),
+	                'appr_disc_sum1' => $this->input->post('discn1'),
+	                'appr_disc_sum2' => $this->input->post('discn2'),
+	                'appr_sub_dsc' => $this->input->post('subtotal1'),
+	                // 'appr_ppn_perc' => $this->input->post('ppnp'),
+	                'appr_ppn_sum' => $this->input->post('ppnn'),
+	                // 'appr_bbtax' => $this->input->post('appr_bbtax'),
+	                'appr_sub_ppn' => $this->input->post('subtotal2'),	                
+	                // 'appr_pph_perc' => $this->input->post('pphp'),
+	                'appr_pph_sum' => $this->input->post('pphn'),
+	                'appr_tot_income' => $this->input->post('gtotal')
+	            );
+	        $update = $this->crud->update('trx_approvalbill',$data,array('appr_id' => $this->input->post('appr_id')));
+	        $this->logupd_appr_save($this->input->post('appr_id'),$this->input->post('user_name'),'Posted');
+	        echo json_encode(array("status" => TRUE));
+	    }
+
 	    public function ajax_aproveapp()
 	    {
 	    	$this->_validate_appr();

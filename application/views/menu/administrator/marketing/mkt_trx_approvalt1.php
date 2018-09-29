@@ -524,6 +524,13 @@
 	                            		</div>
 	                            	</div>
 	                            	<div class="form-group">
+			                        	<label class="col-sm-3 control-label">Detail Biaya</label>
+	                                    <div class="col-sm-8">
+	                                        <label class="radio-inline"><input type="radio" onclick="checkterm_()" id="term_radio0" name="term_" value="0">Persentase</label>
+	                                        <label class="radio-inline"><input type="radio" onclick="checkterm_()" id="term_radio1" name="term_" value="1">Nominal</label> 
+	                                    </div>
+			                        </div>
+	                            	<div class="form-group">
                             			<label class="col-sm-3 control-label">Termin</label>
 	                                    <div class="col-sm-8">
 	                                        <input class="form-control" type="text" name="termcode">
@@ -556,12 +563,22 @@
 	                                    </div>
                             		</div>
                             		<div class="form-group">
-                            			<label class="col-sm-3 control-label">Pajak Reklame Approval</label>
+                            			<label class="col-sm-3 control-label">PPN</label>
 	                                    <div class="col-sm-8">
 	                                    	<div class="input-group">
 	                                    		<span class="input-group-addon">Rp</span>
-	                                    		<input class="form-control termchgcount curr-num" type="text" name="bbtax_appr" readonly>
-	                                    		<input type="hidden" name="termbbtax">
+	                                    		<input class="form-control termchgcount curr-num" type="text" name="ppn_appr" readonly>
+	                                    		<input type="hidden" name="termppn">
+	                                    	</div>
+	                                    </div>
+                            		</div>
+                            		<div class="form-group">
+                            			<label class="col-sm-3 control-label">PPH</label>
+	                                    <div class="col-sm-8">
+	                                    	<div class="input-group">
+	                                    		<span class="input-group-addon">Rp</span>
+	                                    		<input class="form-control termchgcount curr-num" type="text" name="pph_appr" readonly>
+	                                    		<input type="hidden" name="termpph">
 	                                    	</div>
 	                                    </div>
                             		</div>
@@ -583,7 +600,7 @@
 	                                    	</div>	                                        
 	                                    </div>
                             		</div>
-                            		<div class="form-group">
+                            		<!-- <div class="form-group">
                             			<label class="col-sm-3 control-label">Sub Total</label>
 	                                    <div class="col-sm-8">
 	                                    	<div class="input-group">
@@ -591,15 +608,15 @@
 	                                    		<input class="form-control termchgcount curr-num" type="text" name="termsub" readonly>
 	                                    	</div>
 	                                    </div>
-                            		</div>
+                            		</div> -->
                             		<div class="form-group">
 			                            <label class="col-sm-3 control-label">PPN</label>
-			                            <div class="col-sm-4">
+			                            <!-- <div class="col-sm-4">
 			                            	<div class="input-group">
 			                            		<span class="input-group-addon">%</span>
 			                            		<input class="form-control termchgcount curr-num-perc" type="text" name="termppnp">
 			                            	</div>			                                
-			                            </div>
+			                            </div> -->
 			                            <div class="col-sm-4">
 			                            	<div class="input-group">
 			                            		<span class="input-group-addon">Rp</span>
@@ -609,12 +626,12 @@
 			                        </div>			                        
 			                        <div class="form-group">
 			                            <label class="col-sm-3 control-label">PPH</label>
-			                            <div class="col-sm-4">
+			                            <!-- <div class="col-sm-4">
 			                            	<div class="input-group">
 			                            		<span class="input-group-addon">%</span>
 			                        			<input class="form-control termchgcount curr-num-perc" type="text" name="termpphp">
 			                            	</div>
-			                            </div>
+			                            </div> -->
 			                            <div class="col-sm-4">
 			                            	<div class="input-group">
 			                            		<span class="input-group-addon">Rp</span>
@@ -1008,7 +1025,9 @@
     	{
             $('#pattyp').selectpicker({});
             $('#det_radio1').prop('checked',true);
+            $('#term_radio0').prop('checked',true);
             check_()
+            checkterm_();
             inputchg();
             inputtermchg();
             luaschg();
@@ -1032,7 +1051,6 @@
     		}
     		$('[name="ppncost"]').val(ppnbiaya);
     		$('[name="pphcost"]').val(pphbiaya);
-    		alert(biaya+', '+$('[name="ppncost"]').val()+', '+$('[name="pphcost"]').val());
     		$.ajax({
 	            url : "<?php echo site_url('administrator/Marketing/ajax_add_costappt1')?>",
 	            type: "POST",
@@ -1072,7 +1090,7 @@
     	function inputchg()
     	{
     		$('.chgcount').on('input', function() {
-                hitung_();                
+                hitungt1_();                
             });
     	}
     	function luaschg()
@@ -1111,7 +1129,7 @@
     	function saveapp()
     	{
 	        $.ajax({
-	            url : "<?php echo site_url('administrator/Marketing/ajax_simpanapp')?>",
+	            url : "<?php echo site_url('administrator/Marketing/ajax_simpanappt1')?>",
 	            type: "POST",
 	            data: $('#form_appr').serialize(),
 	            dataType: "JSON",
@@ -1194,6 +1212,17 @@
             	$('.hid-form').css({'display':'none'});
             }
         }
+        function checkterm_()
+        {
+            if($('#term_radio1').is(':checked'))
+            {
+                // $('#det_biaya').css({'display':'none'});
+            }
+            if($('#term_radio0').is(':checked'))
+            {
+                // $('#det_biaya').css({'display':'block'});
+            }
+        }
         function reload_table()
         {
             $('#dtb_biaya').DataTable().ajax.reload(null,false);
@@ -1203,6 +1232,28 @@
     </script>
     <!-- Fungsi Hitung -->
     <script>
+    	function hitungt1_()
+    	{
+    		var currrate = $('[name="curr_rate"]').val();
+    		var dpp = $('[name="dpp"]').val();
+    		var discp1 = $('[name="discp1"]').val();
+    		var discp2 = $('[name="discp2"]').val();
+    		var ppnn = $('[name="ppnn"]').val();
+			var pphn = $('[name="pphn"]').val();
+    		var discn1 = dpp*discp1/100;
+    		$('[name="discn1"]').val(discn1);
+    		var discn2 = (dpp-discn1)*1*discp2/100;
+    		$('[name="discn2"]').val(discn2);
+    		var sub1 = (dpp-discn1-discn2)*1;//PPH dan PPN didapat dari ini
+			$('[name="subtotal1"]').val(sub1);
+			var sub2 = sub1+ppnn*1;
+			$('[name="subtotal2"]').val(sub2);
+			var grandtotal = sub2-pphn*1;
+			$('[name="gtotal"]').val(grandtotal);
+			$('[name="dpp_appr"]').val(sub1);
+			$('[name="ppn_appr"]').val(ppnn);
+			$('[name="pph_appr"]').val(pphn);
+    	}
     	function hitung_()
     	{
     		var currrate = $('[name="curr_rate"]').val();
@@ -1321,8 +1372,9 @@
 	                    id = $('[name="appr_id"]').val();
 	                    costapp(id);
 	                    get_subcost(id);
-	                    get_subppn(id);
-	                    get_subpph(id);
+	                    hitungt1_();
+	                    // get_subppn(id);
+	                    // get_subpph(id);
 	                }
 	                else
 	                {
@@ -1353,8 +1405,9 @@
 	                    id = $('[name="appr_id"]').val();
 	                    costapp(id);
 	                    get_subcost(id);
-	                    get_subppn(id);
-	                    get_subpph(id);
+	                    hitungt1_();
+	                    // get_subppn(id);
+	                    // get_subpph(id);
 	                },
 	                error: function (jqXHR, textStatus, errorThrown)
 	                {
@@ -1372,6 +1425,8 @@
     			success : function(data)
     			{
     				$('[name="dpp"]').val((data.subtotal != null)?data.subtotal:0);
+    				$('[name="ppnn"]').val((data.subppn != null)?data.subppn:0);
+    				$('[name="pphn"]').val((data.subppn != null)?data.subpph:0);
     				// hitung_();
     			}
     		});
@@ -1385,20 +1440,6 @@
     			success : function(data)
     			{
     				$('[name="ppnn"]').val((data.subppn != null)?data.subppn:0);
-    				// hitung_();
-    			}
-    		});
-    	}
-    	function get_subpph(id)
-    	{
-    		$.ajax({
-    			url : "<?php echo site_url('administrator/Marketing/get_subcost_t1/')?>"+id,
-    			type : "POST",
-    			dataType : "JSON",
-    			success : function(data)
-    			{
-    				$('[name="pphn"]').val((data.subpph != null)?data.subpph:0);
-    				// hitung_();
     			}
     		});
     	}
