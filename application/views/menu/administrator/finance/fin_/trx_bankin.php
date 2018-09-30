@@ -1394,6 +1394,38 @@
                 }
             });
         }
+        function pick_bankinapr(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_bankingb/')?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('#form_bank')[0].reset();
+                    $('[name="bank_id"]').val(data.BNK_ID);
+                    $('[name="bank_nomor"]').val(data.BNK_CODE);
+                    $('[name="bank_tgl"]').val(data.BNK_DATE);
+                    pick_bank(data.BANK_ID);
+                    sts=1;
+                    pick_acc(data.COA_ID);
+                    $('[name="bank_info"]').val(data.BNK_INFO);
+                    cust = (data.CUST_ID != null)?data.CUST_ID:data.CSTIN_ID;
+                    md = (data.CUST_ID != null)?'0':'1';
+                    pick_custedit(md,cust);
+                    pick_curr(data.CURR_ID)
+                    bank_masuk_detail1(data.BNK_ID);
+                    bank_masuk_detail2(data.BNK_ID);
+                    $('.btnCh').css({'display':'none'});
+                    $('.btnApr').prop('disabled',false);
+                    $('#modal_bank_in_edit').modal('hide');                    
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
         function pick_custedit(md,id)
         {
             if(md != '0')

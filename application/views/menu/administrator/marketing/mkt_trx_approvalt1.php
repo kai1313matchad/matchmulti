@@ -63,8 +63,8 @@
 	                                        <a id="genbtn" href="javascript:void(0)" onclick="gen_appr()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-plus"></span></a>
 	                                    </div>
 					                    <div class="col-sm-5">
-					                        <input class="form-control" type="text" name="appr_code" value="AB/1809/000003" readonly>
-					                        <input type="hidden" name="appr_id" value="5">
+					                        <input class="form-control" type="text" name="appr_code" value="" readonly>
+					                        <input type="hidden" name="appr_id" value="0">
 					                	</div>
 					                	<div class="col-sm-2">
 					                		<input type="text" class="form-control" name="appr_init" readonly>
@@ -532,8 +532,16 @@
 			                        </div>
 	                            	<div class="form-group">
                             			<label class="col-sm-3 control-label">Termin</label>
-	                                    <div class="col-sm-8">
-	                                        <input class="form-control" type="text" name="termcode">
+	                                    <div class="col-sm-2">
+	                                        <input class="form-control curr-num" type="text" name="termcode">
+	                                    </div>
+	                                    <div class="col-sm-6">
+	                                    	<div class='input-group date dtp' id='dtp1'>     
+				                                <span class="input-group-addon">
+				                                    <span class="glyphicon glyphicon-calendar"></span>
+				                                </span>
+				                                <input id="tgl" type='text' class="form-control" name="tgl_term" placeholder="Tanggal" />
+				                            </div>
 	                                    </div>
                             		</div>
                             		<div class="form-group">
@@ -542,7 +550,7 @@
 	                                        <textarea name="terminfo" class="form-control" rows="2" style="resize: vertical;"></textarea>
 	                                    </div>
 	                                </div>
-	                                <div class="form-group">
+	                                <!-- <div class="form-group">
 	                            		<label class="col-sm-3 control-label">Tanggal Bayar</label>
 	                                    <div class="col-sm-8">
 	                                    	<div class='input-group date dtp' id='dtp1'>     
@@ -552,7 +560,7 @@
 				                                <input id="tgl" type='text' class="form-control" name="tgl_term" placeholder="Tanggal" />
 				                            </div>
 	                                    </div>
-	                            	</div>
+	                            	</div> -->
 	                                <div class="form-group">
                             			<label class="col-sm-3 control-label">DPP Approval</label>
 	                                    <div class="col-sm-8">
@@ -569,16 +577,6 @@
 	                                    		<span class="input-group-addon">Rp</span>
 	                                    		<input class="form-control termchgcount curr-num" type="text" name="ppn_appr" readonly>
 	                                    		<input type="hidden" name="termppn">
-	                                    	</div>
-	                                    </div>
-                            		</div>
-                            		<div class="form-group">
-                            			<label class="col-sm-3 control-label">PPH</label>
-	                                    <div class="col-sm-8">
-	                                    	<div class="input-group">
-	                                    		<span class="input-group-addon">Rp</span>
-	                                    		<input class="form-control termchgcount curr-num" type="text" name="pph_appr" readonly>
-	                                    		<input type="hidden" name="termpph">
 	                                    	</div>
 	                                    </div>
                             		</div>
@@ -620,25 +618,25 @@
 			                            <div class="col-sm-4">
 			                            	<div class="input-group">
 			                            		<span class="input-group-addon">Rp</span>
-			                            		<input class="form-control curr-num" type="text" name="termppnn" readonly>
+			                            		<input class="form-control termchgcount curr-num" type="text" name="termppnn" readonly>
 			                            	</div>			                                
 			                            </div>
 			                        </div>			                        
-			                        <div class="form-group">
+			                        <!-- <div class="form-group">
 			                            <label class="col-sm-3 control-label">PPH</label>
-			                            <!-- <div class="col-sm-4">
+			                            <div class="col-sm-4">
 			                            	<div class="input-group">
 			                            		<span class="input-group-addon">%</span>
 			                        			<input class="form-control termchgcount curr-num-perc" type="text" name="termpphp">
 			                            	</div>
-			                            </div> -->
+			                            </div>
 			                            <div class="col-sm-4">
 			                            	<div class="input-group">
 			                            		<span class="input-group-addon">Rp</span>
 			                            		<input class="form-control curr-num" type="text" name="termpphn" readonly>
-			                            	</div>			                                
+			                            	</div>
 			                            </div>
-			                        </div>
+			                        </div> -->
 			                        <div class="form-group">
                             			<label class="col-sm-3 control-label">Total Termin</label>
 	                                    <div class="col-sm-8">
@@ -1102,7 +1100,7 @@
     	function inputtermchg()
     	{
     		$('.termchgcount').on('input', function() {
-    			hitungterm_();
+    			hitungtermt1_();
     		});
     	}
     	function gen_appr()
@@ -1216,11 +1214,16 @@
         {
             if($('#term_radio1').is(':checked'))
             {
-                // $('#det_biaya').css({'display':'none'});
+                $('[name="termperc"]').prop('readonly',true);
+                $('[name="termperc"]').val('');
+                $('[name="termdpp"]').prop('readonly',false);
+                $('[name="termppnn"]').prop('readonly',false);
             }
             if($('#term_radio0').is(':checked'))
             {
-                // $('#det_biaya').css({'display':'block'});
+                $('[name="termperc"]').prop('readonly',false);
+                $('[name="termdpp"]').prop('readonly',true);
+                $('[name="termppnn"]').prop('readonly',true);
             }
         }
         function reload_table()
@@ -1252,7 +1255,6 @@
 			$('[name="gtotal"]').val(grandtotal);
 			$('[name="dpp_appr"]').val(sub1);
 			$('[name="ppn_appr"]').val(ppnn);
-			$('[name="pph_appr"]').val(pphn);
     	}
     	function hitung_()
     	{
@@ -1281,6 +1283,28 @@
 			// $('[name="dpp_appr"]').val(((sub1*1)+(bbtax*1)));
 			$('[name="dpp_appr"]').val(sub1);
 			$('[name="bbtax_appr"]').val(bbtax);
+    	}
+    	function hitungtermt1_()
+    	{
+    		var dppappr = $('[name="dpp_appr"]').val();
+    		var ppnappr = $('[name="ppn_appr"]').val();
+    		if($('#term_radio1').is(':checked'))
+            {
+                var dppterm = $('[name="termdpp"]').val();
+                var ppnterm = $('[name="termppnn"]').val();
+                var gt = dppterm*1+ppnterm*1;
+                $('[name="termsum"]').val(gt);
+            }
+            if($('#term_radio0').is(':checked'))
+            {
+                var perc = $('[name="termperc"]').val();
+                var dppterm = dppappr*perc/100;
+                var ppnterm = ppnappr*perc/100;
+                $('[name="termdpp"]').val(dppterm);
+                $('[name="termppnn"]').val(ppnterm);
+                var gt = dppterm+ppnterm*1;
+                $('[name="termsum"]').val(gt);
+            }
     	}
     	function hitungterm_()
     	{
@@ -1344,7 +1368,7 @@
 	            "serverSide": true,
 	            "order": [],	            
 	            "ajax": {
-	                "url": "<?php echo site_url('administrator/Marketing/ajax_costapp_/')?>"+id,
+	                "url": "<?php echo site_url('administrator/Marketing/ajax_costappt1_/')?>"+id,
 	                "type": "POST",                
 	            },	            
 	            "columnDefs": [
@@ -1357,8 +1381,21 @@
     	}
     	function add_costapp()
     	{
-	        $.ajax({
-	            url : "<?php echo site_url('administrator/Marketing/ajax_add_costapp')?>",
+	        var biaya = $('[name="cost_amount"]').val();
+    		var ppnbiaya = 0;
+    		var pphbiaya = 0;
+    		if($('[name="checkppn"]').is(':checked'))
+    		{
+    			ppnbiaya = biaya*10/100;
+    		}
+    		if($('[name="checkpph"]').is(':checked'))
+    		{
+    			pphbiaya = biaya*2/100;
+    		}
+    		$('[name="ppncost"]').val(ppnbiaya);
+    		$('[name="pphcost"]').val(pphbiaya);
+    		$.ajax({
+	            url : "<?php echo site_url('administrator/Marketing/ajax_add_costappt1')?>",
 	            type: "POST",
 	            data: $('#form_appr').serialize(),
 	            dataType: "JSON",
@@ -1372,9 +1409,6 @@
 	                    id = $('[name="appr_id"]').val();
 	                    costapp(id);
 	                    get_subcost(id);
-	                    hitungt1_();
-	                    // get_subppn(id);
-	                    // get_subpph(id);
 	                }
 	                else
 	                {
@@ -1406,8 +1440,6 @@
 	                    costapp(id);
 	                    get_subcost(id);
 	                    hitungt1_();
-	                    // get_subppn(id);
-	                    // get_subpph(id);
 	                },
 	                error: function (jqXHR, textStatus, errorThrown)
 	                {
@@ -1427,7 +1459,21 @@
     				$('[name="dpp"]').val((data.subtotal != null)?data.subtotal:0);
     				$('[name="ppnn"]').val((data.subppn != null)?data.subppn:0);
     				$('[name="pphn"]').val((data.subppn != null)?data.subpph:0);
-    				// hitung_();
+    			}
+    		});
+    	}
+    	function get_subcost2(id)
+    	{
+    		$.ajax({
+    			url : "<?php echo site_url('administrator/Marketing/get_subcost_t1/')?>"+id,
+    			type : "POST",
+    			dataType : "JSON",
+    			success : function(data)
+    			{
+    				$('[name="dpp"]').val((data.subtotal != null)?data.subtotal:0);
+    				$('[name="ppnn"]').val((data.subppn != null)?data.subppn:0);
+    				$('[name="pphn"]').val((data.subppn != null)?data.subpph:0);
+    				hitungt1_();
     			}
     		});
     	}
@@ -1511,7 +1557,7 @@
     	function add_termapp()
     	{
 	        $.ajax({
-	            url : "<?php echo site_url('administrator/Marketing/ajax_add_termapp')?>",
+	            url : "<?php echo site_url('administrator/Marketing/ajax_add_termappt1')?>",
 	            type: "POST",
 	            data: $('#form_appr').serialize(),
 	            dataType: "JSON",
@@ -2236,7 +2282,6 @@
 	                $('[name="appr_brcid"]').val(data.APPR_BRANCHID);
 	                $('[name="appr_brc"]').val(data.APPR_BRANCH);
 	                $('[name="appr_po"]').val(data.APPR_PO);
-	                $('[name="tgl"]').val(data.APPR_DATE);
 	                $('[name="tgl_awal"]').val(data.APPR_CONTRACT_START);
 	                $('[name="tgl_akhir"]').val(data.APPR_CONTRACT_END);
 	                $('[name="appr_rec"]').val(data.APPR_RECOV);
@@ -2248,23 +2293,21 @@
 	                $('[name="appr_side"]').val(data.APPR_SIDE);
 	                $('[name="appr_plcsum"]').val(data.APPR_PLCSUM);
 	                $('[name="appr_info"]').val(data.APPR_INFO);
-	                $('[name="dpp"]').val(data.APPR_DPP_INCOME);
-	                get_subcost(data.APPR_ID);
 	                $('[name="discp1"]').val(data.APPR_DISC_PERC1);
 	                $('[name="discp2"]').val(data.APPR_DISC_PERC2);
-	                $('[name="appr_bbtax"]').val(data.APPR_BBTAX);
-	                $('[name="ppnp"]').val(data.APPR_PPN_PERC);
-	                $('[name="pphp"]').val(data.APPR_PPH_PERC);
 	                pick_cust(data.CUST_ID);
 	                pick_mkt(data.SALES_ID);
 	                pick_bb(data.BB_ID);
 	                pick_loc(data.LOC_ID);
 	                pick_plc(data.PLC_ID);
 	                pick_curr(data.CURR_ID);
-	                costapp(id);
-	                termapp(id);
-	                ijinapp(id);
-	                pick_apprbrcedit(data.APPR_BRANCHID);
+	                costapp_(id);
+	                termapp_(id);
+	                ijinapp_(id);
+	                pick_init(data.BRANCH_ID);
+	                get_subcost2(data.APPR_ID);
+	                $('[name="subtotal2"]').val(data.APPR_SUB_PPN);
+	                $('[name="gtotal"]').val(data.APPR_TOT_INCOME);
 	                $('#modal_appr_edit').modal('hide');
 	            },
 	            error: function (jqXHR, textStatus, errorThrown)
@@ -2298,12 +2341,8 @@
 	                $('[name="appr_side"]').val(data.APPR_SIDE);
 	                $('[name="appr_plcsum"]').val(data.APPR_PLCSUM);
 	                $('[name="appr_info"]').val(data.APPR_INFO);
-	                $('[name="dpp"]').val(data.APPR_DPP_INCOME);
 	                $('[name="discp1"]').val(data.APPR_DISC_PERC1);
 	                $('[name="discp2"]').val(data.APPR_DISC_PERC2);
-	                $('[name="appr_bbtax"]').val(data.APPR_BBTAX);
-	                $('[name="ppnp"]').val(data.APPR_PPN_PERC);
-	                $('[name="pphp"]').val(data.APPR_PPH_PERC);
 	                pick_cust(data.CUST_ID);
 	                pick_mkt(data.SALES_ID);
 	                pick_bb(data.BB_ID);
@@ -2314,9 +2353,11 @@
 	                termapp_(id);
 	                ijinapp_(id);
 	                pick_init(data.BRANCH_ID);
-	                pick_apprbrcedit(data.APPR_BRANCHID);
-	                $('.btnCh').css({'display':'none'});	                
+	                get_subcost2(data.APPR_ID);
+	                $('[name="subtotal2"]').val(data.APPR_SUB_PPN);
+	                $('[name="gtotal"]').val(data.APPR_TOT_INCOME);
 	                $('#modal_appr_edit').modal('hide');
+	                $('.btnCh').css({'display':'none'});
 	            },
 	            error: function (jqXHR, textStatus, errorThrown)
 	            {
@@ -2349,12 +2390,8 @@
 	                $('[name="appr_side"]').val(data.APPR_SIDE);
 	                $('[name="appr_plcsum"]').val(data.APPR_PLCSUM);
 	                $('[name="appr_info"]').val(data.APPR_INFO);
-	                $('[name="dpp"]').val(data.APPR_DPP_INCOME);
 	                $('[name="discp1"]').val(data.APPR_DISC_PERC1);
 	                $('[name="discp2"]').val(data.APPR_DISC_PERC2);
-	                $('[name="appr_bbtax"]').val(data.APPR_BBTAX);
-	                $('[name="ppnp"]').val(data.APPR_PPN_PERC);
-	                $('[name="pphp"]').val(data.APPR_PPH_PERC);
 	                pick_cust(data.CUST_ID);
 	                pick_mkt(data.SALES_ID);
 	                pick_bb(data.BB_ID);
@@ -2365,7 +2402,9 @@
 	                termapp_(id);
 	                ijinapp_(id);
 	                pick_init(data.BRANCH_ID);
-	                pick_apprbrcedit(data.APPR_BRANCHID);
+	                get_subcost2(data.APPR_ID);
+	                $('[name="subtotal2"]').val(data.APPR_SUB_PPN);
+	                $('[name="gtotal"]').val(data.APPR_TOT_INCOME);
 	                $('#modal_appr_edit').modal('hide');
 	                $('.btnCh').css({'display':'none'});
 	                $('.btnApr').prop('disabled',false);

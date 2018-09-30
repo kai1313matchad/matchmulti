@@ -55,13 +55,28 @@
 
 		public function mkt_trx_approval()
 		{
-			$this->authsys->trx_check_($_SESSION['user_id'],'MKT');
-			$data['pattyp'] = $this->crud->get_pattyp();			
-			$data['title']='Match Terpadu - Dashboard Marketing';
-			$data['menu']='marketing';
-			$data['menulist']='approval';
-			$data['isi']='menu/administrator/marketing/mkt_trx_approval2';
-			$this->load->view('layout/administrator/wrapper',$data);
+			$brc = $this->session->userdata('user_branch');
+			switch ($brc)
+			{
+				case '3':
+					$this->authsys->trx_check_($_SESSION['user_id'],'MKT');
+					$data['pattyp'] = $this->crud->get_pattyp();
+					$data['title']='Match Terpadu - Dashboard Marketing';
+					$data['menu']='marketing';
+					$data['menulist']='approval';
+					$data['isi']='menu/administrator/marketing/mkt_trx_approvalt1';
+					$this->load->view('layout/administrator/wrapper',$data);
+					break;
+				default:
+					$this->authsys->trx_check_($_SESSION['user_id'],'MKT');
+					$data['pattyp'] = $this->crud->get_pattyp();
+					$data['title']='Match Terpadu - Dashboard Marketing';
+					$data['menu']='marketing';
+					$data['menulist']='approval';
+					$data['isi']='menu/administrator/marketing/mkt_trx_approval2';
+					$this->load->view('layout/administrator/wrapper',$data);
+					break;
+			}
 		}
 
 		public function gen_bapp()
@@ -127,12 +142,26 @@
 
 		public function pageprint_approval($id)
 		{
-			$this->authsys->trx_check_($_SESSION['user_id'],'MKT');
-			$data['id']=$id;
-			$data['title']='Match Terpadu - Dashboard Marketing';
-			$data['menu']='marketing';
-			$data['menulist']='report_marketing';
-			$this->load->view('menu/administrator/marketing/print_approval',$data);
+			$brc = $this->session->userdata('user_branch');
+			switch ($brc)
+			{
+				case '3':
+					$this->authsys->trx_check_($_SESSION['user_id'],'MKT');
+					$data['id']=$id;
+					$data['title']='Match Terpadu - Dashboard Marketing';
+					$data['menu']='marketing';
+					$data['menulist']='report_marketing';
+					$this->load->view('menu/administrator/marketing/print_approvalt1',$data);
+					break;
+				default:
+					$this->authsys->trx_check_($_SESSION['user_id'],'MKT');
+					$data['id']=$id;
+					$data['title']='Match Terpadu - Dashboard Marketing';
+					$data['menu']='marketing';
+					$data['menulist']='report_marketing';
+					$this->load->view('menu/administrator/marketing/print_approval',$data);
+					break;
+			}
 		}
 
 		public function print_bapp()
@@ -910,8 +939,8 @@
 				$row[] = $dat->TERMSDET_PERC.'%';
 				$row[] = $dat->TERMSDET_SUM;
 				$row[] = $dat->TERMSDET_DPP;
-				$row[] = $dat->TERMSDET_PPN_PERC.'%';
-				$row[] = $dat->TERMSDET_PPH_PERC.'%';
+				$row[] = $dat->TERMSDET_PPN_SUM;
+				$row[] = $dat->TERMSDET_PPH_SUM;
 				$row[] = '<a href="javascript:void(0)" title="Hapus Data" class="btn btnCh btn-sm btn-danger btn-responsive" onclick="del_termapp('."'".$dat->TERMSDET_ID."'".')"><span class="glyphicon glyphicon-remove"></span></a>';
 				$data[] = $row;
 			}
@@ -937,8 +966,8 @@
 				$row[] = $dat->TERMSDET_PERC.'%';
 				$row[] = $dat->TERMSDET_SUM;
 				$row[] = $dat->TERMSDET_DPP;
-				$row[] = $dat->TERMSDET_PPN_PERC.'%';
-				$row[] = $dat->TERMSDET_PPH_PERC.'%';
+				$row[] = $dat->TERMSDET_PPN_SUM;
+				$row[] = $dat->TERMSDET_PPH_SUM;
 				$row[] = '<a href="javascript:void(0)" title="Hapus Data" class="btn btnCh btn-sm btn-danger btn-responsive" disabled><span class="glyphicon glyphicon-remove"></span></a>';
 				$data[] = $row;
 			}
@@ -995,6 +1024,23 @@
 	                'termsdet_pph_perc' => $this->input->post('termpphp'),
 	                'termsdet_ppn_sum' => $this->input->post('termppnn'),
 	                'termsdet_pph_sum' => $this->input->post('termpphn')
+	            );
+	        $insert = $this->crud->save($table,$data);
+	        echo json_encode(array("status" => TRUE));
+	    }
+
+	    public function ajax_add_termappt1()
+	    {
+	        $table = 'appr_terms_det';
+	        $data = array(
+	                'appr_id' => $this->input->post('appr_id'),
+	                'termsdet_code' => $this->input->post('termcode'),
+	                'termsdet_info' => $this->input->post('terminfo'),
+	                'termsdet_date' => $this->input->post('tgl_term'),
+	                'termsdet_perc' => $this->input->post('termperc'),
+	                'termsdet_dpp' => $this->input->post('termdpp'),
+	                'termsdet_sum' => $this->input->post('termsum'),
+	                'termsdet_ppn_sum' => $this->input->post('termppnn')
 	            );
 	        $insert = $this->crud->save($table,$data);
 	        echo json_encode(array("status" => TRUE));
@@ -1066,6 +1112,31 @@
 				$row[] = $dat->CSTDT_PPHAMOUNT;
 				$row[] = $dat->CSTDT_AMOUNT;
 				$row[] = '<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive btnCh" onclick="del_costapp('."'".$dat->CSTDT_ID."'".')"><span class="glyphicon glyphicon-remove"></span></a>';
+				$data[] = $row;
+			}
+			$output = array(
+							"draw" => $_POST['draw'],
+							"recordsTotal" => $this->costapp->count_all(),
+							"recordsFiltered" => $this->costapp->count_filtered($id),
+							"data" => $data,
+					);			
+			echo json_encode($output);
+		}
+
+		public function ajax_costappt1_($id)
+		{
+			$list = $this->costapp->get_datatables($id);
+			$data = array();
+			$no = $_POST['start'];
+			foreach ($list as $dat) {
+				$no++;
+				$row = array();
+				$row[] = $no;
+				$row[] = $dat->CSTDT_CODE;
+				$row[] = $dat->CSTDT_PPNAMOUNT;
+				$row[] = $dat->CSTDT_PPHAMOUNT;
+				$row[] = $dat->CSTDT_AMOUNT;
+				$row[] = '<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive btnCh" disabled)"><span class="glyphicon glyphicon-remove"></span></a>';
 				$data[] = $row;
 			}
 			$output = array(

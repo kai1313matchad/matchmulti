@@ -203,6 +203,7 @@
 					'hisbnk_new' => 'None',
 					'hisbnk_info' => 'Create By System',
 					'hisbnk_date' => date('Y-m-d'),
+					'hisbnk_time' => date('H:i:s'),
 					'hisbnk_upcount' => 0
 				);
 			$this->db->insert('his_bankin',$data2);
