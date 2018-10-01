@@ -1402,6 +1402,48 @@
                 }
             });
         }
+        function approve_bank_out()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/ajax_approve_bank_out')?>",
+                type: "POST",
+                data: $('#form_bank').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Finance/bank_out')?>";
+                        window.location = url;
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
+        function disapprove_bank_out()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/ajax_disapprove_bank_out')?>",
+                type: "POST",
+                data: $('#form_bank').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Finance/bank_out')?>";
+                        window.location = url;
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
         function save_bank_out_detail1()
         {
             $.ajax({

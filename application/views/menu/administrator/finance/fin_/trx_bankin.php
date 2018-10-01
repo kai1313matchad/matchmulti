@@ -1066,6 +1066,48 @@
                 }
             });
         }
+        function approve_bank_in()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/ajax_approve_bank_in')?>",
+                type: "POST",
+                data: $('#form_bank').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Finance/bank_in')?>";
+                        window.location = url;
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
+        function disapprove_bank_in()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/ajax_disapprove_bank_in')?>",
+                type: "POST",
+                data: $('#form_bank').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Finance/bank_in')?>";
+                        window.location = url;
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
         function save_bank_in_detail1()
         {
             $.ajax({
