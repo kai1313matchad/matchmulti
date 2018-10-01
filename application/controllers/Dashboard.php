@@ -221,6 +221,7 @@
 			else
 			{
 				$d_ins = array(
+						'branch_id'=>$brc,
 						'print_bankinvoice'=>$this->input->post('stg_infoinvc'),
 						'inv_coappn'=>$ppn,
 						'inv_coanameppn'=>$ppnname
