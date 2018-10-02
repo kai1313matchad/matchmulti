@@ -34,552 +34,481 @@
                     </div>
                 </div><br>
                 <div class="row">
-                		<ul class="nav nav-tabs">
-                			<li class="active">
-                				<a href="#1" data-toggle="tab">Data Approval</a>
-                			</li>
-                			<li>
-                				<a href="#2" data-toggle="tab">Detail Termin</a>
-                			</li>
-                			<li>
-                				<a href="#3" data-toggle="tab">Detail Perijinan</a>
-                			</li>
-                		</ul>
-                		<form class="form-horizontal" id="form_appr" enctype="multipart/form-data">
-                			<input type="hidden" name="user_id" value="<?= $this->session->userdata('user_id')?>">
-                			<input type="hidden" name="user_name" value="<?= $this->session->userdata('user_name')?>">
-	                        <input type="hidden" name="user_brc" value="<?= $this->session->userdata('user_branch')?>">
-	                        <input type="hidden" name="user_brcsts" value="<?= $this->session->userdata('branch_sts')?>">
-                			<div class="tab-content">
-                				<div class="tab-pane fade in active" id="1">
-                					<div class="form-group">
-		                            	<div class="col-xs-4 col-xs-offset-3 text-center">
-		                                	<h2>Data Approval</h2>
-		                                </div>
-	                            	</div>
-	                            	<div class="form-group">
-					                    <label class="col-sm-3 control-label">Nomor Approval</label>
-					                    <div class="col-sm-1">
-	                                        <a id="genbtn" href="javascript:void(0)" onclick="gen_appr()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-plus"></span></a>
-	                                    </div>
-					                    <div class="col-sm-5">
-					                        <input class="form-control" type="text" name="appr_code" value="" readonly>
-					                        <input type="hidden" name="appr_id" value="0">
-					                	</div>
-					                	<div class="col-sm-2">
-					                		<input type="text" class="form-control" name="appr_init" readonly>
-					                	</div>
-									</div>									
-									<div class="form-group hid-form">
-		                            	<label class="col-sm-3 control-label">Nomor Approval Cabang</label>
-		                                <div class="col-sm-1">
-		                                	<a href="javascript:void(0)" onclick="srch_appr()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-search"></span></a>
-		                                </div>
-		                                <div class="col-sm-7">
-		                                	<input class="form-control" type="text" name="appr_brc" readonly>
-		                                    <input type="hidden" name="appr_brcid" value="0">
-		                                </div>
-									</div>									
-	                            	<div class="form-group">
-	                            		<label class="col-sm-3 control-label">Nomor PO</label>
-	                                    <div class="col-sm-8">
-	                                        <input class="form-control apprbrc" type="text" name="appr_po" placeholder="Nomor PO">
-	                                    </div>
-	                            	</div>
-	                            	<div class="form-group">
-	                            		<label class="col-sm-3 control-label">Tanggal Pembuatan</label>
-	                                    <div class="col-sm-8">
-	                                    	<div class='input-group date dtp' id='dtp1'>     
-				                                <span class="input-group-addon">
-				                                    <span class="glyphicon glyphicon-calendar"></span>
-				                                </span>
-				                                <input id="tgl" type='text' class="form-control input-group-addon" name="tgl" value="<?= date('Y-m-d')?>" />
-				                            </div>
-	                                    </div>
-	                            	</div>
-	                            	<div class="form-group">
-	                            		<label class="col-sm-3 control-label">Awal-Akhir Kontrak</label>
-	                                    <div class="col-sm-4">
-	                                    	<div class='input-group date dtp' id='dtp2'>     
-				                                <span class="input-group-addon">
-				                                    <span class="glyphicon glyphicon-calendar"></span>
-				                                </span>
-				                                <input id="tgl" type='text' class="form-control input-group-addon apprbrc" name="tgl_awal" placeholder="Awal Kontrak" />
-				                            </div>
-	                                    </div>
-	                                    <div class="col-sm-4">
-	                                    	<div class='input-group date dtp' id='dtp3'>     
-				                                <span class="input-group-addon">
-				                                    <span class="glyphicon glyphicon-calendar"></span>
-				                                </span>
-				                                <input id="tgl" type='text' class="form-control input-group-addon apprbrc" name="tgl_akhir" placeholder="Akhir Kontrak" />
-				                            </div>
-	                                    </div>
-	                            	</div>
-	                            	<div class="form-group">
-	                            		<label class="col-sm-3 control-label">Free Recovering</label>
-	                                    <div class="col-sm-8">
-	                                        <textarea name="appr_rec" class="form-control apprbrc" rows="2" style="resize: vertical;" placeholder="Keterangan Untuk Free Recovering (Cetak/Pasang)"></textarea>
-	                                    </div>
-	                            	</div>
-	                            	<div class="form-group">
-	                            		<label class="col-sm-3 control-label">Nama Klien</label>
-	                                    <div class="col-sm-1">
-	                                        <a href="javascript:void(0)" onclick="srch_cust()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-search"></span></a>
-	                                    </div>
-	                                    <div class="col-sm-3">
-	                                        <input class="form-control" type="text" name="cust_code" readonly>
-	                                        <input type="hidden" name="cust_id" value="">
-	                                    </div>
-	                                    <div class="col-sm-4">
-	                                        <input class="form-control" type="text" name="cust_name" readonly>
-	                                    </div>
-	                            	</div>
-	                            	<div class="form-group">
-	                            		<label class="col-sm-3 control-label">Alamat</label>
-	                                    <div class="col-sm-8">
-	                                        <textarea name="cust_address" class="form-control" rows="2" style="resize: vertical;" readonly></textarea>
-	                                    </div>
-	                            	</div>
-	                            	<div class="form-group">
-	                            		<label class="col-sm-3 control-label">No.Tlp || Fax</label>
-	                                    <div class="col-sm-4">
-	                                        <input class="form-control" type="text" name="cust_phone" readonly>
-	                                    </div>
-	                                    <div class="col-sm-4">
-	                                        <input class="form-control" type="text" name="cust_fax" readonly>
-	                                    </div>
-	                            	</div>
-	                            	<div class="form-group">
-	                            		<label class="col-sm-3 control-label">Marketing</label>
-	                            		<div class="col-sm-1">
-			                            	<a href="javascript:void(0)" onclick="srch_mkt()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-search"></span></a>
-			                            </div>
-			                            <div class="col-sm-3">
-			                                <input class="form-control" type="text" name="sales_code" readonly>
-			                            	<input type="hidden" name="sales_id" value="">
-			                            </div>
-			                            <div class="col-sm-4">
-			                                <input class="form-control" type="text" name="sales_name" readonly>
-			                            </div>										
-	                            	</div>
-	                            	<div class="form-group">
-	                            		<label class="col-sm-3 control-label">No.Tlp || Email</label>
-			                            <div class="col-sm-4">
-			                                <input class="form-control" type="text" name="sales_phone" readonly>
-			                            </div>
-			                            <div class="col-sm-4">
-			                                <input class="form-control" type="mail" name="sales_email" readonly>
-			                            </div>
-	                            	</div>
-	                            	<div class="form-group">
-	                                    <label class="col-sm-3 control-label">Keterangan Tambahan</label>
-	                                    <div class="col-sm-8">
-	                                        <textarea name="appr_info" class="form-control apprbrc" rows="2" style="resize: vertical;" placeholder="Keterangan Tambahan"></textarea>
-	                                    </div>
+                	<ul class="nav nav-tabs">
+                		<li class="active">
+                			<a href="#1" data-toggle="tab">Data Approval</a>
+                		</li>
+                		<li>
+                			<a href="#2" data-toggle="tab">Detail Termin</a>
+                		</li>
+                		<li>
+                			<a href="#3" data-toggle="tab">Detail Perijinan</a>
+                		</li>
+                	</ul>
+                	<form class="form-horizontal" id="form_appr" enctype="multipart/form-data">
+                		<input type="hidden" name="user_id" value="<?= $this->session->userdata('user_id')?>">
+                		<input type="hidden" name="user_name" value="<?= $this->session->userdata('user_name')?>">
+	                    <input type="hidden" name="user_brc" value="<?= $this->session->userdata('user_branch')?>">
+	                    <input type="hidden" name="user_brcsts" value="<?= $this->session->userdata('branch_sts')?>">
+                		<div class="tab-content">
+                			<div class="tab-pane fade in active" id="1">
+                				<div class="form-group">
+		                        	<div class="col-xs-4 col-xs-offset-3 text-center">
+		                                <h2>Data Approval</h2>
+		                            </div>
+								</div>
+	                            <div class="form-group">
+					            	<label class="col-sm-3 control-label">Nomor Approval</label>
+					                <div class="col-sm-1">
+	                                	<a id="genbtn" href="javascript:void(0)" onclick="gen_appr()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-plus"></span></a>
 	                                </div>
-                            		<div class="form-group">
-                            			<label class="col-sm-3 control-label">Jenis Produk</label>
-                            			<div class="col-sm-1">
-			                                <a href="javascript:void(0)" onclick="srch_bb()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-search"></span></a>
-			                            </div>
-			                            <div class="col-sm-7">
-			                                <input class="form-control" type="text" name="jnsbb" readonly>
-			                                <input type="hidden" name="bb_id" value="">
-			                            </div>			                            
-                            		</div>
-                            		<div class="form-group">
-                            			<label class="col-sm-3 control-label">Lokasi</label>
-                            			<div class="col-sm-1">
-			                                <a href="javascript:void(0)" onclick="srch_loc()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-search"></span></a>
-			                            </div>
-			                            <div class="col-sm-7">
-			                                <input class="form-control" type="text" name="loc_name" readonly>
-			                                <input type="hidden" name="loc_id" value="">
-			                            </div>			                            
-                            		</div>
-                            		<div class="form-group">
-			                            <label class="col-sm-3 control-label">Alamat</label>
-			                            <div class="col-sm-8">
-			                                <textarea name="loc_address" class="form-control" rows="2" style="resize: vertical;" readonly></textarea>
-			                            </div>
+					                <div class="col-sm-5">
+					                	<input class="form-control" type="text" name="appr_code" value="" readonly>
+					                    <input type="hidden" name="appr_id" value="0">
+					                </div>
+					                <div class="col-sm-2">
+					                	<input type="text" class="form-control" name="appr_init" readonly>
+					                </div>
+								</div>									
+								<div class="form-group hid-form">
+		                        	<label class="col-sm-3 control-label">Nomor Approval Cabang</label>
+		                            <div class="col-sm-1">
+		                            	<a href="javascript:void(0)" onclick="srch_appr()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-search"></span></a>
+		                            </div>
+		                            <div class="col-sm-7">
+		                            	<input class="form-control" type="text" name="appr_brc" readonly>
+		                                <input type="hidden" name="appr_brcid" value="0">
+		                            </div>
+								</div>									
+	                            <div class="form-group">
+	                            	<label class="col-sm-3 control-label">Nomor PO</label>
+	                            	<div class="col-sm-8">
+	                                	<input class="form-control apprbrc" type="text" name="appr_po" placeholder="Nomor PO">
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+	                            	<label class="col-sm-3 control-label">Tanggal Pembuatan</label>
+	                                <div class="col-sm-8">
+	                                	<div class='input-group date dtp' id='dtp1'>     
+				                        	<span class="input-group-addon">
+				                            	<span class="glyphicon glyphicon-calendar"></span>
+				                            </span>
+				                            <input id="tgl" type='text' class="form-control input-group-addon" name="tgl" value="<?= date('Y-m-d')?>" readonly/>
+				                        </div>
+	                                </div>
+	                           	</div>
+	                            <div class="form-group">
+	                            	<label class="col-sm-3 control-label">Awal-Akhir Kontrak</label>
+	                                <div class="col-sm-4">
+	                                	<div class='input-group date dtp' id='dtp2'>     
+				                        	<span class="input-group-addon">
+				                            	<span class="glyphicon glyphicon-calendar"></span>
+				                            </span>
+				                            <input id="tgl" type='text' class="form-control input-group-addon apprbrc" name="tgl_awal" placeholder="Awal Kontrak" />
+				                        </div>
+	                                </div>
+	                                <div class="col-sm-4">
+	                                	<div class='input-group date dtp' id='dtp3'>     
+				                        	<span class="input-group-addon">
+				                            	<span class="glyphicon glyphicon-calendar"></span>
+				                            </span>
+				                            <input id="tgl" type='text' class="form-control input-group-addon apprbrc" name="tgl_akhir" placeholder="Akhir Kontrak" />
+				                        </div>
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+	                            	<label class="col-sm-3 control-label">Free Recovering</label>
+	                                <div class="col-sm-8">
+	                                	<textarea name="appr_rec" class="form-control apprbrc" rows="2" style="resize: vertical;" placeholder="Keterangan Untuk Free Recovering (Cetak/Pasang)"></textarea>
+	                                </div>
+	                           	</div>
+	                            <div class="form-group">
+	                            	<label class="col-sm-3 control-label">Nama Klien</label>
+	                                <div class="col-sm-1">
+	                                	<a href="javascript:void(0)" onclick="srch_cust()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-search"></span></a>
+	                                </div>
+	                                <div class="col-sm-3">
+	                                	<input class="form-control" type="text" name="cust_code" readonly>
+	                                    <input type="hidden" name="cust_id" value="">
+	                                </div>
+	                                <div class="col-sm-4">
+	                                	<input class="form-control" type="text" name="cust_name" readonly>
+	                                </div>
+	                           	</div>
+	                            <div class="form-group">
+	                            	<label class="col-sm-3 control-label">Alamat</label>
+	                                <div class="col-sm-8">
+	                                	<textarea name="cust_address" class="form-control" rows="2" style="resize: vertical;" readonly></textarea>
+	                                </div>
+	                           	</div>
+	                            <div class="form-group">
+	                            	<label class="col-sm-3 control-label">No.Tlp || Fax</label>
+	                                <div class="col-sm-4">
+	                                	<input class="form-control" type="text" name="cust_phone" readonly>
+	                                </div>
+	                                <div class="col-sm-4">
+	                                	<input class="form-control" type="text" name="cust_fax" readonly>
+	                                </div>
+	                           	</div>
+	                            <div class="form-group">
+	                            	<label class="col-sm-3 control-label">Marketing</label>
+	                            	<div class="col-sm-1">
+			                        	<a href="javascript:void(0)" onclick="srch_mkt()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-search"></span></a>
 			                        </div>
-			                        <div class="form-group">
-			                            <label class="col-sm-3 control-label">Penempatan Reklame</label>
-			                            <div class="col-sm-1">
-			                                <a href="javascript:void(0)" onclick="srch_plc()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-search"></span></a>
-			                            </div>
-			                            <div class="col-sm-7">
-			                                <input type="hidden" name="plc_id">
-			                                <input class="form-control" type="text" name="plc_name" readonly>
-			                            </div>
+			                        <div class="col-sm-3">
+			                        	<input class="form-control" type="text" name="sales_code" readonly>
+			                            <input type="hidden" name="sales_id" value="">
 			                        </div>
-			                        <div class="form-group">
-			                            <label class="col-sm-3 control-label">Materi Visual</label>
-			                            <div class="col-sm-8">
-			                                <input class="form-control apprbrc" type="text" name="appr_vis" placeholder="Materi Visual">
-			                            </div>
+			                        <div class="col-sm-4">
+			                        	<input class="form-control" type="text" name="sales_name" readonly>
+			                        </div>										
+	                            </div>
+	                            <div class="form-group">
+	                            	<label class="col-sm-3 control-label">No.Tlp || Email</label>
+			                        <div class="col-sm-4">
+			                        	<input class="form-control" type="text" name="sales_phone" readonly>
 			                        </div>
-                            		<div class="form-group">
-			                            <label class="col-sm-3 control-label">Ukuran P-L-T</label>
-			                            <div class="col-sm-2">
-			                                <input class="form-control hit-luas apprbrc" type="text" name="appr_length" placeholder="panjang">
-			                            </div>
-			                            <div class="col-sm-2">
-			                                <input class="form-control hit-luas apprbrc" type="text" name="appr_width" placeholder="lebar">
-			                            </div>
-			                            <label class="col-sm-1 control-label">Meter</label>
+			                        <div class="col-sm-4">
+			                        	<input class="form-control" type="mail" name="sales_email" readonly>
 			                        </div>
-			                        <div class="form-group">
-			                            <label class="col-sm-3 control-label">Luas</label>
-			                            <div class="col-sm-2">
-			                                <input class="form-control apprbrc" type="text" name="appr_sumsize" placeholder="luas">
-			                            </div>
+	                           	</div>
+	                            <div class="form-group">
+	                            	<label class="col-sm-3 control-label">Keterangan Tambahan</label>
+	                                <div class="col-sm-8">
+	                                	<textarea name="appr_info" class="form-control apprbrc" rows="2" style="resize: vertical;" placeholder="Keterangan Tambahan"></textarea>
+	                                </div>
+	                            </div>
+                            	<div class="form-group">
+                            		<label class="col-sm-3 control-label">Jenis Produk</label>
+                            		<div class="col-sm-1">
+			                        	<a href="javascript:void(0)" onclick="srch_bb()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-search"></span></a>
 			                        </div>
-			                        <div class="form-group">
-			                            <label class="col-sm-3 control-label">Sisi Muka || Jumlah</label>
-			                            <div class="col-sm-6">
-			                                <input class="form-control apprbrc" type="text" name="appr_side" placeholder="depan/belakang/samping">
-			                            </div>
-			                            <div class="col-sm-2">
-			                                <input class="form-control apprbrc" type="text" name="appr_plcsum" placeholder="jumlah">
-			                            </div>
+			                        <div class="col-sm-7">
+			                        	<input class="form-control" type="text" name="jnsbb" readonly>
+			                            <input type="hidden" name="bb_id" value="">
+			                        </div>			                            
+                            	</div>
+                            	<div class="form-group">
+                            		<label class="col-sm-3 control-label">Lokasi</label>
+                            		<div class="col-sm-1">
+			                        	<a href="javascript:void(0)" onclick="srch_loc()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-search"></span></a>
 			                        </div>
-			                        <div class="form-group">
-			                            <label class="col-sm-3 control-label">Mata Uang || Rate</label>
-			                            <div class="col-sm-1">
-			                            	<a href="javascript:void(0)" onclick="srch_curr()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-search"></span></a>
-			                            </div>
-			                            <div class="col-sm-3">
-			                            	<input class="form-control" type="text" name="curr_name" readonly>
-			                               	<input type="hidden" name="curr_id" value="">
-			                            </div>
-			                            <div class="col-sm-4">
-			                            	<input class="form-control curr-num" type="text" name="curr_rate" readonly>
-										</div>
+			                        <div class="col-sm-7">
+			                        	<input class="form-control" type="text" name="loc_name" readonly>
+			                            <input type="hidden" name="loc_id" value="">
+			                        </div>			                            
+                            	</div>
+                            	<div class="form-group">
+			                    	<label class="col-sm-3 control-label">Alamat</label>
+			                        <div class="col-sm-8">
+			                        	<textarea name="loc_address" class="form-control" rows="2" style="resize: vertical;" readonly></textarea>
 			                        </div>
-			                        <div class="form-group">
-			                        	<label class="col-sm-3 control-label">Detail Biaya</label>
-	                                    <div class="col-sm-8">
-	                                        <label class="radio-inline"><input type="radio" onclick="check_()" id="det_radio0" name="detail_biaya" value="0">Tampilkan</label>
-	                                        <label class="radio-inline"><input type="radio" onclick="check_()" id="det_radio1" name="detail_biaya" value="1">Sembunyikan</label> 
-	                                    </div>
+			                    </div>
+			                    <div class="form-group">
+			                    	<label class="col-sm-3 control-label">Penempatan Reklame</label>
+			                        <div class="col-sm-1">
+			                        	<a href="javascript:void(0)" onclick="srch_plc()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-search"></span></a>
 			                        </div>
-			                        <div id="det_biaya" class="col-sm-offset-3">
-			                        	<div id="det_biayabranch" class="hid-form">
-			                        		<div class="form-group">
-			                        			<div class="col-xs-4 col-xs-offset-3 text-center">
-				                                	<h4>Detail Biaya Cabang</h4>
-				                                </div>
-			                        		</div>
-			                        		<div class="row">
-		                            			<div class="col-sm-11 col-xs-11 table-responsive">
-		                            				<table id="dtb_biayabranch" class="table table-striped table-bordered" cellspacing="0" width="100%">
-		                            					<thead>
-		                            						<tr>
-		                            							<th class="text-center">
-								                                    No
-								                                </th>
-								                                <th class="text-center">
-								                                    Deskripsi
-								                                </th>
-								                                <th class="text-center">
-								                                    Jumlah
-								                                </th>
-								                                <th class="text-center">
-								                                    Actions
-								                                </th>
-		                            						</tr>
-		                            					</thead>
-		                            				</table>
-		                            			</div>
-		                            		</div>
-			                        	</div>			                        	
+			                        <div class="col-sm-7">
+			                        	<input type="hidden" name="plc_id">
+			                            <input class="form-control" type="text" name="plc_name" readonly>
+			                        </div>
+			                    </div>
+			                    <div class="form-group">
+			                    	<label class="col-sm-3 control-label">Materi Visual</label>
+			                        <div class="col-sm-8">
+			                        	<input class="form-control apprbrc" type="text" name="appr_vis" placeholder="Materi Visual">
+			                        </div>
+			                    </div>
+                            	<div class="form-group">
+			                    	<label class="col-sm-3 control-label">Ukuran P-L-T</label>
+			                        <div class="col-sm-2">
+			                        	<input class="form-control hit-luas apprbrc" type="text" name="appr_length" placeholder="panjang">
+			                        </div>
+			                        <div class="col-sm-2">
+			                        	<input class="form-control hit-luas apprbrc" type="text" name="appr_width" placeholder="lebar">
+			                        </div>
+			                        <label class="col-sm-1 control-label">Meter</label>
+			                    </div>
+			                    <div class="form-group">
+			                    	<label class="col-sm-3 control-label">Luas</label>
+			                        <div class="col-sm-2">
+			                        	<input class="form-control apprbrc" type="text" name="appr_sumsize" placeholder="luas">
+			                        </div>
+			                   	</div>
+			                    <div class="form-group">
+			                    	<label class="col-sm-3 control-label">Sisi Muka || Jumlah</label>
+			                        <div class="col-sm-6">
+			                        	<input class="form-control apprbrc" type="text" name="appr_side" placeholder="depan/belakang/samping">
+			                        </div>
+			                        <div class="col-sm-2">
+			                        	<input class="form-control apprbrc" type="text" name="appr_plcsum" placeholder="jumlah">
+			                        </div>
+			                    </div>
+			                    <div class="form-group">
+			                    	<label class="col-sm-3 control-label">Mata Uang || Rate</label>
+			                        <div class="col-sm-1">
+			                        	<a href="javascript:void(0)" onclick="srch_curr()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-search"></span></a>
+			                        </div>
+			                        <div class="col-sm-3">
+			                        	<input class="form-control" type="text" name="curr_name" readonly>
+			                            <input type="hidden" name="curr_id" value="">
+			                        </div>
+			                        <div class="col-sm-4">
+			                        	<input class="form-control curr-num" type="text" name="curr_rate" readonly>
+									</div>
+			                    </div>
+			                    <div class="form-group">
+			                    	<label class="col-sm-3 control-label">Detail Biaya</label>
+	                                <div class="col-sm-8">
+	                                	<label class="radio-inline"><input type="radio" onclick="check_()" id="det_radio0" name="detail_biaya" value="0">Tampilkan</label>
+	                                    <label class="radio-inline"><input type="radio" onclick="check_()" id="det_radio1" name="detail_biaya" value="1">Sembunyikan</label> 
+	                                </div>
+			                    </div>
+			                    <div id="det_biaya" class="col-sm-offset-3">
+			                    	<div id="det_biayabranch" class="hid-form">
 			                        	<div class="form-group">
-	                            			<label class="col-sm-3 control-label">Ket Biaya</label>
-	                            			<div class="col-sm-7">
-	                            				<input class="form-control apprbrc" type="text" name="cost_code" placeholder="Keterangan Detail Biaya">
+			                        		<div class="col-xs-4 col-xs-offset-3 text-center">
+				                            	<h4>Detail Biaya Cabang</h4>
+				                            </div>
+			                        	</div>
+			                        	<div class="row">
+		                            		<div class="col-sm-11 col-xs-11 table-responsive">
+		                            			<table id="dtb_biayabranch" class="table table-striped table-bordered" cellspacing="0" width="100%">
+		                            				<thead>
+		                            					<tr>
+		                            						<th class="text-center">No</th>
+								                            <th class="text-center">Deskripsi</th>
+								                            <th class="text-center">Jumlah</th>
+								                            <th class="text-center">Actions</th>
+		                            					</tr>
+		                            				</thead>
+		                            			</table>
+		                            		</div>
+		                            	</div>
+			                        </div>			                        	
+			                        <div class="form-group">
+	                            		<label class="col-sm-3 control-label">Ket Biaya</label>
+	                            		<div class="col-sm-7">
+	                            			<input class="form-control apprbrc" type="text" name="cost_code" placeholder="Keterangan Detail Biaya">
+	                            		</div>
+	                            	</div>
+	                            	<div class="form-group">
+	                            		<label class="col-sm-3 control-label">Jumlah Biaya</label>
+	                            		<div class="col-sm-7">
+	                            			<div class="input-group">
+	                            				<span class="input-group-addon curr">Rp</span>
+		                            			<input class="form-control curr-num" type="text" name="cost_amount" placeholder="Jumlah Biaya">
 	                            			</div>
 	                            		</div>
-	                            		<div class="form-group">
-	                            			<label class="col-sm-3 control-label">Jumlah Biaya</label>
-	                            			<div class="col-sm-7">
-	                            				<div class="input-group">
-	                            					<span class="input-group-addon curr">Rp</span>
-		                            				<input class="form-control curr-num" type="text" name="cost_amount" placeholder="Jumlah Biaya">
-	                            				</div>
-	                            			</div>
+	                            	</div>
+	                            	<div class="form-group">
+	                            		<label class="col-sm-3 control-label"></label>
+	                            		<div class="col-sm-2">
+	                            			<input type="checkbox" name="checkppn"> PPN
+	                            			<input type="hidden" name="ppncost">
 	                            		</div>
-	                            		<div class="form-group">
-	                            			<label class="col-sm-3 control-label"></label>
-	                            			<div class="col-sm-2">
-	                            				<input type="checkbox" name="checkppn"> PPN
-	                            				<input type="hidden" name="ppncost">
-	                            			</div>
-	                            			<div class="col-sm-2">
-	                            				<input type="checkbox" name="checkpph"> PPH
-	                            				<input type="hidden" name="pphcost">
-	                            			</div>
+	                            		<div class="col-sm-2">
+	                            			<input type="checkbox" name="checkpph"> PPH
+	                            			<input type="hidden" name="pphcost">
 	                            		</div>
-	                            		<div class="form-group">
-	                            			<div class="col-sm-offset-3 col-sm-4">
-	                            				<a href="javascript:void(0)" onclick="add_costapp()" class="btn btn-sm btn-primary btnCh"><span class="glyphicon glyphicon-plus"></span> Tambah</a>
-	                            			</div>
-	                            			<div class="col-sm-4">
-	                            				<button type="button" onclick="test()" class="btn btn-primary">Test</button>
-	                            			</div>
+									</div>
+	                            	<div class="form-group">
+	                            		<div class="col-sm-offset-3 col-sm-4">
+	                            			<a href="javascript:void(0)" onclick="add_costapp()" class="btn btn-sm btn-primary btnCh"><span class="glyphicon glyphicon-plus"></span> Tambah</a>
+										</div>
+	                            	</div>
+	                            	<div class="row">
+	                            		<div class="col-sm-11 col-xs-11 table-responsive">
+	                            			<table id="dtb_biaya" class="table table-striped table-bordered" cellspacing="0" width="100%">
+	                            				<thead>
+	                            					<tr>
+	                            						<th class="text-center">No</th>
+							                            <th class="text-center">Deskripsi</th>
+							                            <th class="text-center">PPN</th>
+							                            <th class="text-center">PPH</th>
+														<th class="text-center">Jumlah</th>
+														<th class="text-center">Actions</th>
+	                            					</tr>
+	                            				</thead>
+	                            			</table>
 	                            		</div>
-	                            		<div class="row">
-	                            			<div class="col-sm-11 col-xs-11 table-responsive">
-	                            				<table id="dtb_biaya" class="table table-striped table-bordered" cellspacing="0" width="100%">
-	                            					<thead>
-	                            						<tr>
-	                            							<th class="text-center">
-							                                    No
-							                                </th>
-							                                <th class="text-center">
-							                                    Deskripsi
-							                                </th>
-							                                <th class="text-center">
-							                                    PPN
-							                                </th>
-							                                <th class="text-center">
-							                                    PPH
-							                                </th>
-							                                <th class="text-center">
-							                                    Jumlah
-							                                </th>
-							                                <th class="text-center">
-							                                    Actions
-							                                </th>
-	                            						</tr>
-	                            					</thead>
-	                            				</table>
-	                            			</div>
-	                            		</div>
+	                            	</div>
+			                    </div>
+			                    <div class="form-group hid-form">
+			                    	<label class="col-sm-3 control-label">Nominal Cabang</label>
+			                        <div class="col-sm-8">
+			                        	<div class="input-group">
+			                            	<span class="input-group-addon">Rp</span>
+			                            	<input class="form-control curr-num" type="text" name="brc_nom" readonly>
+			                           	</div>
 			                        </div>
-			                        <div class="form-group hid-form">
-			                            <label class="col-sm-3 control-label">Nominal Cabang</label>
-			                            <div class="col-sm-8">
-			                            	<div class="input-group">
-			                            		<span class="input-group-addon">Rp</span>
-			                            		<input class="form-control curr-num" type="text" name="brc_nom" readonly>
-			                            	</div>
+			                    </div>
+                            	<div class="form-group">
+                            		<label class="col-sm-3 control-label">DPP</label>
+			                        <div class="col-sm-8">
+			                        	<div class="input-group">
+			                            	<span class="input-group-addon curr">Rp</span>
+			                            	<input class="form-control chgcount curr-num" type="text" name="dpp" readonly>
+			                           	</div>			                                
+			                        </div>
+                            	</div>
+                            	<div class="form-group">
+			                    	<label class="col-sm-3 control-label">Disc. 1</label>
+			                        <div class="col-sm-4">
+			                        	<div class="input-group">
+			                            	<span class="input-group-addon">%</span>
+			                                <input class="form-control chgcount curr-num-perc" type="text" name="discp1" placeholder="Diskon 1">
 			                            </div>
 			                        </div>
-                            		<div class="form-group">
-                            			<label class="col-sm-3 control-label">DPP</label>
-			                            <div class="col-sm-8">
-			                            	<div class="input-group">
-			                            		<span class="input-group-addon curr">Rp</span>
-			                            		<input class="form-control chgcount curr-num" type="text" name="dpp" readonly>
-			                            	</div>			                                
-			                            </div>
-                            		</div>
-                            		<div class="form-group">
-			                            <label class="col-sm-3 control-label">Disc. 1</label>
-			                            <div class="col-sm-4">
-			                            	<div class="input-group">
-			                            		<span class="input-group-addon">%</span>
-			                                	<input class="form-control chgcount curr-num-perc" type="text" name="discp1" placeholder="Diskon 1">
-			                                </div>
-			                            </div>
-			                            <div class="col-sm-4">
-			                            	<div class="input-group">
-			                            		<span class="input-group-addon curr">Rp</span>
-			                            		<input class="form-control curr-num" type="text" name="discn1" readonly>
-			                            	</div>			                                
-			                            </div>
+			                        <div class="col-sm-4">
+			                        	<div class="input-group">
+			                            	<span class="input-group-addon curr">Rp</span>
+			                            	<input class="form-control curr-num" type="text" name="discn1" readonly>
+			                           	</div>			                                
 			                        </div>
-			                        <div class="form-group">
-			                            <label class="col-sm-3 control-label">Disc. 2</label>
-			                            <div class="col-sm-4">
-			                            	<div class="input-group">
-			                            		<span class="input-group-addon">%</span>
-			                                	<input class="form-control chgcount curr-num-perc" type="text" name="discp2" placeholder="Diskon 2">
-			                                </div>
-			                            </div>
-			                            <div class="col-sm-4">
-			                            	<div class="input-group">
-			                            		<span class="input-group-addon curr">Rp</span>
-			                            		<input class="form-control curr-num" type="text" name="discn2" readonly>
-			                            	</div>
-			                            </div>
-			                        </div>			                        
-			                        <div class="form-group">
-			                            <label class="col-sm-3 control-label">Sub Total</label>
-			                            <div class="col-sm-8">
-			                            	<div class="input-group">
-			                            		<span class="input-group-addon curr">Rp</span>
-			                            		<input class="form-control curr-num" type="text" name="subtotal1" readonly>
-			                            	</div>
-			                            </div>
-			                        </div>
-			                        <div class="form-group">
-			                            <label class="col-sm-3 control-label">PPN</label>
-			                            <!-- <div class="col-sm-4">
-			                            	<div class="input-group">
-			                            		<span class="input-group-addon">%</span>
-			                                	<input class="form-control chgcount curr-num-perc" type="text" name="ppnp">
-			                                </div>
-			                            </div> -->
-			                            <div class="col-sm-4">
-			                            	<div class="input-group">
-			                            		<span class="input-group-addon curr">Rp</span>
-			                            		<input class="form-control curr-num" type="text" name="ppnn" readonly>
-			                            	</div>			                                
-			                            </div>
-			                        </div>
-			                        <!-- <div class="form-group">
-			                            <label class="col-sm-3 control-label">Pajak Reklame</label>
-			                            <div class="col-sm-8">
-			                            	<div class="input-group">
-			                            		<span class="input-group-addon curr">Rp</span>
-			                            		<input class="form-control chgcount curr-num" type="text" name="appr_bbtax">
-			                            	</div>
-			                            </div>
-			                        </div> -->
-			                        <div class="form-group">
-			                            <label class="col-sm-3 control-label">Sub Total</label>
-			                            <div class="col-sm-8">
-			                                <input class="form-control curr-num" type="text" name="subtotal2" readonly>
-			                            </div>
-			                        </div>
-			                        <div class="form-group">
-			                            <label class="col-sm-3 control-label">PPH</label>
-			                            <!-- <div class="col-sm-4">
-			                            	<div class="input-group">
-			                            		<span class="input-group-addon">%</span>
-			                                	<input class="form-control chgcount curr-num-perc" type="text" name="pphp" placeholder="PPH">
-			                                </div>
-			                            </div> -->
-			                            <div class="col-sm-4">
-			                            	<div class="input-group">
-			                            		<span class="input-group-addon curr">Rp</span>
-			                            		<input class="form-control curr-num" type="text" name="pphn" readonly>
-			                            	</div>
-			                            </div>
-			                        </div>
-			                        <div class="form-group">
-			                            <label class="col-sm-3 control-label">Grand Total</label>
-			                            <div class="col-sm-8">
-			                            	<div class="input-group">
-			                            		<span class="input-group-addon">Rp</span>
-			                            		<input class="form-control curr-num" type="text" name="gtotal" readonly>
-			                            	</div>			                                
-			                            </div>
-			                        </div>
-			                        <div class="form-group">
-										<div class="col-sm-offset-3 col-sm-2 text-center">
-			                            	<a href="javascript:void(0)" onclick="saveapp()" class="btn btn-block btn-primary btn-default btnCh">Simpan</a>
-			                            </div>
-			                            <div class="col-sm-2 text-center">
-			                            	<button type="button" onclick="aprapp()" class="btn btn-block btn-primary btn-default btnApr" disabled>Approve</button>
-			                            </div>
-			                            <div class="col-sm-2 text-center">
-			                            	<button type="button" onclick="disaprapp()" class="btn btn-block btn-primary btn-default btnApr" disabled>Disapprove</button>
+			                    </div>
+			                    <div class="form-group">
+			                    	<label class="col-sm-3 control-label">Disc. 2</label>
+			                        <div class="col-sm-4">
+			                        	<div class="input-group">
+			                            	<span class="input-group-addon">%</span>
+			                                <input class="form-control chgcount curr-num-perc" type="text" name="discp2" placeholder="Diskon 2">
 			                            </div>
 									</div>
-                				</div>
-                				<div class="tab-pane fade" id="2">
-                					<div class="form-group">
-		                            	<div class="col-xs-4 col-xs-offset-3 text-center">
-		                                	<h2>Detail Termin</h2>
-		                                </div>
-	                            	</div>
-	                            	<div id="termappbrc" class="hid-form">
-	                            		<div class="row">
-	                            			<div class="col-sm-12 col-xs-12 table-responsive">
-							                    <table id="dtb_terminbranch" class="table table-striped table-bordered" cellspacing="0" width="100%">
-							                        <thead>
-							                            <tr>
-							                                <th class="text-center">
-							                                    No
-							                                </th>
-							                                <th class="text-center">
-							                                    Termin
-							                                </th>                              
-							                                <th class="text-center">
-							                                    Tagihan
-							                                </th>
-							                                <th class="text-center">
-							                                    Nominal
-							                                </th>
-							                                <th class="text-center">
-							                                    DPP
-							                                </th>
-							                                <th class="text-center">
-							                                    PPN
-							                                </th>
-							                                <th class="text-center">
-							                                    PPH
-							                                </th>
-							                                <th class="text-center">
-							                                    Actions
-							                                </th>
-							                            </tr>                            
-							                        </thead>                        
-							                    </table>
-							                </div>
-	                            		</div>
-	                            	</div>
-	                            	<div class="form-group">
-			                        	<label class="col-sm-3 control-label">Detail Biaya</label>
-	                                    <div class="col-sm-8">
-	                                        <label class="radio-inline"><input type="radio" onclick="checkterm_()" id="term_radio0" name="term_" value="0">Persentase</label>
-	                                        <label class="radio-inline"><input type="radio" onclick="checkterm_()" id="term_radio1" name="term_" value="1">Nominal</label> 
-	                                    </div>
+			                        <div class="col-sm-4">
+			                        	<div class="input-group">
+			                            	<span class="input-group-addon curr">Rp</span>
+			                            	<input class="form-control curr-num" type="text" name="discn2" readonly>
+			                           	</div>
 			                        </div>
-	                            	<div class="form-group">
-                            			<label class="col-sm-3 control-label">Termin</label>
-	                                    <div class="col-sm-2">
-	                                        <input class="form-control curr-num" type="text" name="termcode">
-	                                    </div>
-	                                    <div class="col-sm-6">
-	                                    	<div class='input-group date dtp' id='dtp1'>     
-				                                <span class="input-group-addon">
-				                                    <span class="glyphicon glyphicon-calendar"></span>
-				                                </span>
-				                                <input id="tgl" type='text' class="form-control" name="tgl_term" placeholder="Tanggal" />
-				                            </div>
-	                                    </div>
-                            		</div>
-                            		<div class="form-group">
-	                                    <label class="col-sm-3 control-label">Keterangan</label>
-	                                    <div class="col-sm-8">
-	                                        <textarea name="terminfo" class="form-control" rows="2" style="resize: vertical;"></textarea>
-	                                    </div>
+			                    </div>			                        
+			                    <div class="form-group">
+			                    	<label class="col-sm-3 control-label">Sub Total</label>
+			                        <div class="col-sm-8">
+			                        	<div class="input-group">
+			                            	<span class="input-group-addon curr">Rp</span>
+			                            	<input class="form-control curr-num" type="text" name="subtotal1" readonly>
+			                           	</div>
+			                        </div>
+			                    </div>
+			                    <div class="form-group">
+			                    	<label class="col-sm-3 control-label">PPN</label>
+			                        <div class="col-sm-4">
+			                        	<div class="input-group">
+			                            	<span class="input-group-addon curr">Rp</span>
+			                            	<input class="form-control curr-num" type="text" name="ppnn" readonly>
+			                           	</div>			                                
+			                        </div>
+			                    </div>
+			                    <div class="form-group">
+			                    	<label class="col-sm-3 control-label">Sub Total</label>
+			                        <div class="col-sm-8">
+			                        	<input class="form-control curr-num" type="text" name="subtotal2" readonly>
+			                        </div>
+			                    </div>
+			                    <div class="form-group">
+			                    	<label class="col-sm-3 control-label">PPH</label>
+			                        <div class="col-sm-4">
+			                        	<div class="input-group">
+			                            	<span class="input-group-addon curr">Rp</span>
+			                            	<input class="form-control curr-num" type="text" name="pphn" readonly>
+			                           	</div>
+			                        </div>
+			                    </div>
+			                    <div class="form-group">
+			                    	<label class="col-sm-3 control-label">Grand Total</label>
+			                        <div class="col-sm-8">
+			                        	<div class="input-group">
+			                            	<span class="input-group-addon">Rp</span>
+			                            	<input class="form-control curr-num" type="text" name="gtotal" readonly>
+			                           	</div>			                                
+			                        </div>
+			                    </div>
+			                    <div class="form-group">
+									<div class="col-sm-offset-3 col-sm-2 text-center">
+			                        	<button type="button" onclick="saveapp()" class="btn btn-block btn-primary btn-default btnCh">Simpan</button>
+			                        </div>
+			                        <div class="col-sm-2 text-center">
+			                        	<button type="button" onclick="aprapp()" class="btn btn-block btn-primary btn-default btnApr" disabled>Approve</button>
+			                        </div>
+			                        <div class="col-sm-2 text-center">
+			                        	<button type="button" onclick="disaprapp()" class="btn btn-block btn-primary btn-default btnApr" disabled>Disapprove</button>
+			                        </div>
+								</div>
+                			</div>
+                			<div class="tab-pane fade" id="2">
+                				<div class="form-group">
+		                        	<div class="col-xs-4 col-xs-offset-3 text-center">
+		                            	<h2>Detail Termin</h2>
+		                            </div>
+	                            </div>
+	                            <div id="termappbrc" class="hid-form">
+	                            	<div class="row">
+	                            		<div class="col-sm-12 col-xs-12 table-responsive">
+							            	<table id="dtb_terminbranch" class="table table-striped table-bordered" cellspacing="0" width="100%">
+							                	<thead>
+							                    	<tr>
+							                        	<th class="text-center">No</th>
+							                        	<th class="text-center">Termin</th>
+							                        	<th class="text-center">Tagihan</th>
+							                        	<th class="text-center">Nominal</th>
+							                        	<th class="text-center">DPP</th>
+							                        	<th class="text-center">PPN</th>
+							                        	<th class="text-center">PPH</th>
+							                        	<th class="text-center">Actions</th>
+							                        </tr>
+							                    </thead>                        
+							                </table>
+							            </div>
+	                           		</div>
+	                            </div>
+	                            <div class="form-group">
+			                    	<label class="col-sm-3 control-label">Detail Biaya</label>
+	                                <div class="col-sm-8">
+	                                	<label class="radio-inline"><input type="radio" onclick="checkterm_()" id="term_radio0" name="term_" value="0">Persentase</label>
+	                                    <label class="radio-inline"><input type="radio" onclick="checkterm_()" id="term_radio1" name="term_" value="1">Nominal</label> 
 	                                </div>
-	                                <!-- <div class="form-group">
-	                            		<label class="col-sm-3 control-label">Tanggal Bayar</label>
-	                                    <div class="col-sm-8">
-	                                    	<div class='input-group date dtp' id='dtp1'>     
-				                                <span class="input-group-addon">
-				                                    <span class="glyphicon glyphicon-calendar"></span>
-				                                </span>
-				                                <input id="tgl" type='text' class="form-control" name="tgl_term" placeholder="Tanggal" />
-				                            </div>
-	                                    </div>
-	                            	</div> -->
-	                                <div class="form-group">
-                            			<label class="col-sm-3 control-label">DPP Approval</label>
-	                                    <div class="col-sm-8">
-	                                    	<div class="input-group">
-	                                    		<span class="input-group-addon">Rp</span>
-	                                    		<input class="form-control termchgcount curr-num" type="text" name="dpp_appr" readonly>
-	                                    	</div>
-	                                    </div>
-                            		</div>
-                            		<div class="form-group">
-                            			<label class="col-sm-3 control-label">PPN</label>
-	                                    <div class="col-sm-8">
-	                                    	<div class="input-group">
-	                                    		<span class="input-group-addon">Rp</span>
-	                                    		<input class="form-control termchgcount curr-num" type="text" name="ppn_appr" readonly>
-	                                    		<input type="hidden" name="termppn">
-	                                    	</div>
-	                                    </div>
-                            		</div>
+			                    </div>
+	                            <div class="form-group">
+                            		<label class="col-sm-3 control-label">Termin</label>
+	                                <div class="col-sm-2">
+	                                	<input class="form-control curr-num" type="text" name="termcode">
+	                                </div>
+	                                <div class="col-sm-6">
+	                                	<div class='input-group date dtp' id='dtp1'>     
+				                        	<span class="input-group-addon">
+				                            	<span class="glyphicon glyphicon-calendar"></span>
+				                            </span>
+				                            <input id="tgl" type='text' class="form-control" name="tgl_term" placeholder="Tanggal" />
+				                        </div>
+	                                </div>
+                            	</div>
+                            	<div class="form-group">
+	                            	<label class="col-sm-3 control-label">Keterangan</label>
+	                                <div class="col-sm-8">
+	                                	<textarea name="terminfo" class="form-control" rows="2" style="resize: vertical;"></textarea>
+	                                </div>
+	                            </div>
+	                            <div class="form-group">
+                            		<label class="col-sm-3 control-label">DPP Approval</label>
+	                                <div class="col-sm-8">
+	                                	<div class="input-group">
+	                                    	<span class="input-group-addon">Rp</span>
+	                                    	<input class="form-control termchgcount curr-num" type="text" name="dpp_appr" readonly>
+	                                   	</div>
+	                                </div>
+                            	</div>
+                            	<div class="form-group">
+                            		<label class="col-sm-3 control-label">PPN</label>
+	                                <div class="col-sm-8">
+	                                	<div class="input-group">
+	                                    	<span class="input-group-addon">Rp</span>
+	                                    	<input class="form-control termchgcount curr-num" type="text" name="ppn_appr" readonly>
+	                                    	<input type="hidden" name="termppn">
+	                                   	</div>
+	                                </div>
+                            	</div>
                             		<div class="form-group">
                             			<label class="col-sm-3 control-label">Tagihan</label>
 	                                    <div class="col-sm-8">
@@ -685,8 +614,8 @@
 						                    </table>
 						                </div>
                             		</div>
-                				</div>
-                				<div class="tab-pane fade" id="3">
+                			</div>
+                			<div class="tab-pane fade" id="3">
                 					<div class="form-group">
 		                            	<div class="col-xs-4 col-xs-offset-3 text-center">
 		                                	<h2>Detail Perijinan</h2>
@@ -758,10 +687,9 @@
 						                    </table>
 						                </div>
                             		</div>
-                				</div>
                 			</div>
-                		</form>
-                	<!-- </div> -->
+                		</div>
+                	</form>
                 </div>
             </div>            
         </div>        
@@ -2301,9 +2229,9 @@
 	                pick_loc(data.LOC_ID);
 	                pick_plc(data.PLC_ID);
 	                pick_curr(data.CURR_ID);
-	                costapp_(id);
-	                termapp_(id);
-	                ijinapp_(id);
+	                costapp(id);
+	                termapp(id);
+	                ijinapp(id);
 	                pick_init(data.BRANCH_ID);
 	                get_subcost2(data.APPR_ID);
 	                $('[name="subtotal2"]').val(data.APPR_SUB_PPN);
