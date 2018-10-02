@@ -524,7 +524,7 @@
             $.ajax({
                 url : "<?php echo site_url('Dashboard/save_giroacc/')?>",
                 type: "POST",
-                data: $('#form_giroacc').serialize(),
+                data: $('form').serialize(),
                 dataType: "JSON",
                 success: function(data)
                 {

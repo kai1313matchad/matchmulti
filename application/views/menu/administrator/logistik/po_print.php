@@ -125,7 +125,7 @@
                     www.match-advertising.com - www.matchadonline.com -->
                 </address>
             </div>
-            <div class="col-xs-4 head-font">
+            <div class="col-xs-offset-5 col-xs-3 head-font">
                 <address>
                     <strong>Kepada Yth:</strong><br>
                     <span name="inv_suppname"></span><br>
@@ -134,27 +134,36 @@
                     <span name="inv_suppinfo"></span>
                 </address>
             </div>
-            <div class="col-xs-4 head-font">
+            <!-- <div class="col-xs-4 head-font">
                 <address>
                     <strong>Info:</strong><br> 
                     Lokasi <br><span name="loc_name"></span>, <span name="loc_det"></span><br>
-                    <!-- <span name="inv_suppdue"></span><br> -->
                     <span name="po_info"></span>
                 </address>
-            </div>
+            </div> -->
         </div>
         <div class="row row-content content-font">
             <div class="col-sm-12 col-xs-12 table-responsive">
                 <table id="dtb_rptpappr" class="table table-bordered" cellspacing="0" width="100%">
                     <thead>
                         <tr>
-                            <th class="col-xs-1 text-center" >No</th>
+                            <th class="col-xs-1 text-center">No</th>
                             <th class="col-xs-7 text-center">Order</th>
                             <th class="col-xs-2 text-center">Quantity</th>
                             <th class="col-xs-2 text-center">Harga</th>
                         </tr>
                     </thead>
                     <tbody id="tb_content"></tbody>
+                    <tfoot id="tb_foot">
+                        <tr>
+                            <th colspan="2">
+                                Lokasi <br><span name="loc_name"></span>, <span name="loc_det"></span><br>
+                                <span name="po_info"></span>
+                            </th>
+                            <th class="text-right">Total</th>
+                            <th class="text-right chgnum" name="gt"></th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
@@ -187,7 +196,7 @@
             </div>
         </div>
         <div class="row foot-font">
-            <div class="col-xs-6 text-left">
+            <div class="col-xs-5 text-left" style="border: solid 1px black;">
                 <strong>Surat Order Asli HARUS dilampirkan saat penagihan</strong>
             </div>
         </div>
@@ -218,8 +227,7 @@
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)
-                {   
-                    // $('[name="img_logo"]').text(data.BRANCH_NAME);
+                {
                     var newSrc = "<?php echo base_url()?>/assets/img/branchlogo/"+data.BRANCH_LOGO;
                     $('#img_logo').attr('src', newSrc);
                 },
@@ -257,7 +265,7 @@
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)
-                {   
+                {
                     $('[name="po_id"]').val(data.PO_ID);
                     $('[name="po_code"]').val(data.PO_CODE);
                     $('[name="no_po"]').text(data.PO_CODE);
@@ -310,7 +318,8 @@
                 dataType: "JSON",
                 success: function(data)
                 {                       
-                    for (var i = 0; i < data.length; i++) {
+                    for (var i = 0; i < data.length; i++)
+                    {
                       var $tr = $('<tr>').append(
                             $('<td class="text-center">'+(i+1)+'</td>'),
                             $('<td class="text-center text-uppercase">'+data[i]["GD_NAME"]+'</td>'),
@@ -318,10 +327,11 @@
                             $('<td class="text-right chgnum">'+data[i]["PODET_SUB"]+'</td>')
                             ).appendTo('#tb_content');
                     }
-                    var $tr = $('<tr>').append(                            
-                            $('<th colspan="3" class="text-right">Total Rp </th>'),
-                            $('<th class="text-right chgnum">'+data[0]["PO_GTOTAL"]+'</th>')
-                            ).appendTo('#tb_content');
+                    $('[name="gt"]').text(data[0]["PO_GTOTAL"]);
+                    // var $tr = $('<tr>').append(
+                    //         $('<th colspan="3" class="text-right">Total Rp </th>'),
+                    //         $('<th class="text-right chgnum">'+data[0]["PO_GTOTAL"]+'</th>')
+                    //         ).appendTo('#tb_content');
                     $('td.chgnum').number(true);
                     $('th.chgnum').number(true);
                 },

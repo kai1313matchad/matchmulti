@@ -238,6 +238,7 @@
 					'hisbnko_new' => 'None',
 					'hisbnko_info' => 'Create By System',
 					'hisbnko_date' => date('Y-m-d'),
+					'hisbnko_time' => date('H:i:s'),
 					'hisbnko_upcount' => 0
 				);
 			$this->db->insert('his_bankout',$data2);
@@ -272,6 +273,7 @@
 					'hisgrin_new' => 'None',
 					'hisgrin_info' => 'Create By System',
 					'hisgrin_date' => date('Y-m-d'),
+					'hisgrin_time' => date('H:i:s'),
 					'hisgrin_upcount' => 0
 				);
 			$this->db->insert('his_giroin',$data2);
@@ -306,6 +308,7 @@
 					'hisgro_new' => 'None',
 					'hisgro_info' => 'Create By System',
 					'hisgro_date' => date('Y-m-d'),
+					'hisgro_time' => date('H:i:s'),
 					'hisgro_upcount' => 0
 				);
 			$this->db->insert('his_giroout',$data2);
@@ -790,6 +793,7 @@
 			$data = array(
 					'appr_code'=>$res,
 					'branch_id'=>$brc,
+					'appr_date'=>date('Y-m-d'),
 					'appr_sts'=>'0'
 				);			
 			$this->db->insert('trx_approvalbill',$data);

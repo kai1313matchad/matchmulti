@@ -269,14 +269,31 @@
 			$accrcvname = $getaccrcv->row()->COA_ACCNAME;
 			$getdebt = $this->db->get_where('chart_of_account',array('coa_id'=>$debt));
 			$debtname = $getdebt->row()->COA_ACCNAME;
-			$d_up = array(
-					'accrcvgiro_acc'=>$accrcv,
-					'accrcvgiro_accname'=>$accrcvname,
-					'debtgiro_acc'=>$debt,
-					'debtgiro_accname'=>$debtname
-					);
-			$update = $this->crud->update('other_settings',$d_up,array('os_id'=>'1'));
-			$data['status'] = TRUE;
+			$brc = $this->input->post('os_branch');
+			$getlist = $this->db->get_where('other_settings',array('branch_id'=>$brc))->num_rows();
+			if($getlist > 0)
+			{
+				$d_up = array(
+						'accrcvgiro_acc'=>$accrcv,
+						'accrcvgiro_accname'=>$accrcvname,
+						'debtgiro_acc'=>$debt,
+						'debtgiro_accname'=>$debtname
+						);
+				$update = $this->crud->update('other_settings',$d_up,array('branch_id'=>$brc));
+				$data['status'] = TRUE;
+			}
+			else
+			{
+				$d_ins = array(
+						'branch_id'=>$brc,
+						'accrcvgiro_acc'=>$accrcv,
+						'accrcvgiro_accname'=>$accrcvname,
+						'debtgiro_acc'=>$debt,
+						'debtgiro_accname'=>$debtname
+						);
+				$insert = $this->db->insert('other_settings',$d_ins);
+				$data['status'] = TRUE;
+			}
 			echo json_encode($data);
 		}
 

@@ -335,24 +335,15 @@
                     <span class="font-txt pull-right" name="print_apprppnsum"></span>
                 </div>
             </div>
-            <!-- <div class="row row-ins tax-hid">
-                <div class="col-sm-3 col-xs-3">
-                    <label class="font-nd">Pajak Reklame</label>
-                </div>
-                <div class="col-sm-2 col-xs-2">
-                    <label class="font-nd">: </label>
-                    <span class="font-txt pull-right" name="print_apprbbtax"></span>
-                </div>
-            </div>
             <div class="row row-ins">
                 <div class="col-sm-3 col-xs-3">
-                    <label class="font-nd">Media Placement Setelah Pajak</label>
+                    <label class="font-nd">Total</label>
                 </div>
                 <div class="col-sm-2 col-xs-2 top-row-count">
                     <label class="font-nd">: </label>
-                    <span class="font-txt pull-right" name="print_apprdppaftertax1"></span>
+                    <span class="font-txt pull-right" name="print_apprgrandtotal"></span>
                 </div>
-            </div> -->
+            </div>
             <div class="row row-ins">
                 <div class="col-sm-2 col-xs-2">
                     <label class="font-nd">PPH</label>
@@ -363,15 +354,6 @@
                 <div class="col-sm-2 col-xs-2">
                     <label class="font-nd">: </label>
                     <span class="font-txt font-red pull-right" name="print_apprpphsum"></span>
-                </div>
-            </div>
-            <div class="row row-ins">
-                <div class="col-sm-3 col-xs-3">
-                    <label class="font-nd">Total</label>
-                </div>
-                <div class="col-sm-2 col-xs-2 top-row-count">
-                    <label class="font-nd">: </label>
-                    <span class="font-txt pull-right" name="print_apprgrandtotal"></span>
                 </div>
             </div>
             <div class="row row-ins">
@@ -497,7 +479,7 @@
                 dataType: "JSON",
                 success: function(data)
                 {
-                    pick_spelledtotal(data.APPR_TOT_INCOME);
+                    pick_spelledtotal(data.APPR_SUB_PPN);
                     $('[name="appr_id"]').val(data.APPR_ID);
                     pick_cust(data.CUST_ID);
                     $('[name="print_apprcode"]').text(data.APPR_CODE);
@@ -517,7 +499,7 @@
                     $('[name="print_apprdppafterdisc"]').text(money_conv(data.APPR_SUB_DSC));
                     $('[name="print_apprppnsum"]').text(money_conv(data.APPR_PPN_SUM));
                     $('[name="print_apprpphsum"]').text(money_conv(data.APPR_PPH_SUM));
-                    $('[name="print_apprgrandtotal"]').text(money_conv(data.APPR_TOT_INCOME));
+                    $('[name="print_apprgrandtotal"]').text(money_conv(data.APPR_SUB_PPN));
                     $('[name="print_apprrecov"]').text(data.APPR_RECOV);                    
                     pick_getappcost(id);
                     pick_getappterm(id);

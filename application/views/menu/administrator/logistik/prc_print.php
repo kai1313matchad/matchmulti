@@ -138,7 +138,7 @@
                     www.match-advertising.com - www.matchadonline.com -->
                 </address>
             </div>
-            <div class="col-xs-4 head-font">
+            <div class="col-xs-offset-5 col-xs-3 head-font">
                 <address>
                     <strong>Kepada Yth:</strong><br>
                     <span name="inv_suppname"></span><br>
@@ -147,14 +147,13 @@
                     <span name="inv_suppinfo"></span>
                 </address>
             </div>
-            <div class="col-xs-4 head-font">
+            <!-- <div class="col-xs-4 head-font">
                 <address>
                     <strong>Info:</strong><br> 
                     Lokasi <br><span name="loc_name"></span>, <span name="loc_det"></span><br>
-                    <!-- <span name="inv_suppdue"></span><br> -->
                     <span name="prc_info"></span>
                 </address>
-            </div>
+            </div> -->
         </div>
         <div class="row row-content content-font">
             <div class="col-sm-12 col-xs-12 table-responsive">
@@ -168,6 +167,7 @@
                         </tr>
                     </thead>
                     <tbody id="tb_content"></tbody>
+                    <tfoot id="tb_foot"></tfoot>
                 </table>
             </div>
         </div>
@@ -227,8 +227,7 @@
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)
-                {   
-                    // $('[name="img_logo"]').text(data.BRANCH_NAME);
+                {
                     var newSrc = "<?php echo base_url()?>/assets/img/branchlogo/"+data.BRANCH_LOGO;
                     $('#img_logo').attr('src', newSrc);
                 },
@@ -249,7 +248,7 @@
                     $('[name="po_id"]').val(data.PO_ID);
                     $('[name="prc_code"]').val(data.PRC_CODE);
                     $('[name="no_prc"]').text(data.PRC_CODE);
-                    $('[name="prc_info"]').text(data.PRC_INFO);
+                    // $('[name="prc_info"]').text(data.PRC_INFO);
                     $('[name="prc_id"]').val(data.PRC_ID);
                     $('[name="supp_id"]').val(data.SUPP_ID);
                     $('[name="appr_id"]').val(data.APPR_ID);
@@ -309,40 +308,42 @@
                     if (data.length > 5)
                     {
                         var $trexp1 = $('<tr>').append(
-                            $('<th colspan="3" class="text-right">Sub Total Rp</th>'),
+                            $('<th rowspan="3" colspan="2">'+'Lokasi<br><span name="loc_name"></span>,<span name="loc_det"></span><br><span name="prc_info">'+data[0]["PRC_INFO"]+'</span>'+'</th>'),
+                            $('<th  class="text-right">Sub Total Rp</th>'),
                             $('<th class="text-right chgnum">'+data[0]["PRC_SUB"]+'</th>')
-                            ).appendTo('#tb_content');
+                            ).appendTo('#tb_foot');
                         var $trexp2 = $('<tr>').append(
-                            $('<th colspan="3" class="text-right">(Diskon,PPN,Biaya) Rp</th>'),
+                            $('<th  class="text-right">(Diskon,PPN,Biaya) Rp</th>'),
                             $('<th class="text-right chgnum">'+(Math.abs(data[0]["PRC_DISC"])-Math.abs(data[0]["PRC_PPN"])+Math.abs(data[0]["PRC_COST"]))+'</th>')
-                            ).appendTo('#tb_content');
+                            ).appendTo('#tb_foot');
                         var $trexp3 = $('<tr>').append(
-                            $('<th colspan="3" class="text-right">Grand Total Rp</th>'),
+                            $('<th  class="text-right">Grand Total Rp</th>'),
                             $('<th class="text-right chgnum">'+data[0]["PRC_GTOTAL"]+'</th>')
-                            ).appendTo('#tb_content');
+                            ).appendTo('#tb_foot');
                     }
                     else
                     {
                         var $tr1 = $('<tr>').append(
-                            $('<th colspan="3" class="text-right">Sub Total Rp</th>'),
+                            $('<th rowspan="5" colspan="2">'+'Lokasi<br><span name="loc_name"></span>,<span name="loc_det"></span><br><span name="prc_info">'+data[0]["PRC_INFO"]+'</span>'+'</th>'),
+                            $('<th  class="text-right">Sub Total Rp</th>'),
                             $('<th class="text-right chgnum">'+data[0]["PRC_SUB"]+'</th>')
-                            ).appendTo('#tb_content');
+                            ).appendTo('#tb_foot');
                         var $tr2 = $('<tr>').append(
-                                $('<th colspan="3" class="text-right">Diskon Rp</th>'),
+                                $('<th  class="text-right">Diskon Rp</th>'),
                                 $('<th class="text-right chgnum">'+data[0]["PRC_DISC"]+'</th>')
-                                ).appendTo('#tb_content');
+                                ).appendTo('#tb_foot');
                         var $tr3 = $('<tr>').append(
-                                $('<th colspan="3" class="text-right">PPN Rp</th>'),
+                                $('<th  class="text-right">PPN Rp</th>'),
                                 $('<th class="text-right chgnum">'+data[0]["PRC_PPN"]+'</th>')
-                                ).appendTo('#tb_content');
+                                ).appendTo('#tb_foot');
                         var $tr4 = $('<tr>').append(
-                                $('<th colspan="3" class="text-right">Biaya Rp</th>'),
+                                $('<th  class="text-right">Biaya Rp</th>'),
                                 $('<th class="text-right chgnum">'+data[0]["PRC_COST"]+'</th>')
-                                ).appendTo('#tb_content');
+                                ).appendTo('#tb_foot');
                         var $tr5 = $('<tr>').append(
-                                $('<th colspan="3" class="text-right">Grand Total Rp</th>'),
+                                $('<th  class="text-right">Grand Total Rp</th>'),
                                 $('<th class="text-right chgnum">'+data[0]["PRC_GTOTAL"]+'</th>')
-                                ).appendTo('#tb_content');
+                                ).appendTo('#tb_foot');
                     }
                     $('td.chgnum').number(true);
                     $('th.chgnum').number(true);

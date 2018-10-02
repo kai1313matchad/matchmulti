@@ -499,7 +499,7 @@
             });
         }
         function save_giro_in_detail()
-        {            
+        {
             $.ajax({
                 url : "<?php echo site_url('administrator/Finance/ajax_simpan_giro_in_detail')?>",
                 type: "POST",

@@ -69,17 +69,7 @@
 					                <div class="col-sm-2">
 					                	<input type="text" class="form-control" name="appr_init" readonly>
 					                </div>
-								</div>									
-								<div class="form-group hid-form">
-		                        	<label class="col-sm-3 control-label">Nomor Approval Cabang</label>
-		                            <div class="col-sm-1">
-		                            	<a href="javascript:void(0)" onclick="srch_appr()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-search"></span></a>
-		                            </div>
-		                            <div class="col-sm-7">
-		                            	<input class="form-control" type="text" name="appr_brc" readonly>
-		                                <input type="hidden" name="appr_brcid" value="0">
-		                            </div>
-								</div>									
+								</div>
 	                            <div class="form-group">
 	                            	<label class="col-sm-3 control-label">Nomor PO</label>
 	                            	<div class="col-sm-8">
@@ -266,27 +256,6 @@
 	                                </div>
 			                    </div>
 			                    <div id="det_biaya" class="col-sm-offset-3">
-			                    	<div id="det_biayabranch" class="hid-form">
-			                        	<div class="form-group">
-			                        		<div class="col-xs-4 col-xs-offset-3 text-center">
-				                            	<h4>Detail Biaya Cabang</h4>
-				                            </div>
-			                        	</div>
-			                        	<div class="row">
-		                            		<div class="col-sm-11 col-xs-11 table-responsive">
-		                            			<table id="dtb_biayabranch" class="table table-striped table-bordered" cellspacing="0" width="100%">
-		                            				<thead>
-		                            					<tr>
-		                            						<th class="text-center">No</th>
-								                            <th class="text-center">Deskripsi</th>
-								                            <th class="text-center">Jumlah</th>
-								                            <th class="text-center">Actions</th>
-		                            					</tr>
-		                            				</thead>
-		                            			</table>
-		                            		</div>
-		                            	</div>
-			                        </div>			                        	
 			                        <div class="form-group">
 	                            		<label class="col-sm-3 control-label">Ket Biaya</label>
 	                            		<div class="col-sm-7">
@@ -334,15 +303,6 @@
 	                            			</table>
 	                            		</div>
 	                            	</div>
-			                    </div>
-			                    <div class="form-group hid-form">
-			                    	<label class="col-sm-3 control-label">Nominal Cabang</label>
-			                        <div class="col-sm-8">
-			                        	<div class="input-group">
-			                            	<span class="input-group-addon">Rp</span>
-			                            	<input class="form-control curr-num" type="text" name="brc_nom" readonly>
-			                           	</div>
-			                        </div>
 			                    </div>
                             	<div class="form-group">
                             		<label class="col-sm-3 control-label">DPP</label>
@@ -443,26 +403,6 @@
 		                            	<h2>Detail Termin</h2>
 		                            </div>
 	                            </div>
-	                            <div id="termappbrc" class="hid-form">
-	                            	<div class="row">
-	                            		<div class="col-sm-12 col-xs-12 table-responsive">
-							            	<table id="dtb_terminbranch" class="table table-striped table-bordered" cellspacing="0" width="100%">
-							                	<thead>
-							                    	<tr>
-							                        	<th class="text-center">No</th>
-							                        	<th class="text-center">Termin</th>
-							                        	<th class="text-center">Tagihan</th>
-							                        	<th class="text-center">Nominal</th>
-							                        	<th class="text-center">DPP</th>
-							                        	<th class="text-center">PPN</th>
-							                        	<th class="text-center">PPH</th>
-							                        	<th class="text-center">Actions</th>
-							                        </tr>
-							                    </thead>                        
-							                </table>
-							            </div>
-	                           		</div>
-	                            </div>
 	                            <div class="form-group">
 			                    	<label class="col-sm-3 control-label">Detail Biaya</label>
 	                                <div class="col-sm-8">
@@ -473,21 +413,21 @@
 	                            <div class="form-group">
                             		<label class="col-sm-3 control-label">Termin</label>
 	                                <div class="col-sm-2">
-	                                	<input class="form-control curr-num" type="text" name="termcode">
+	                                	<input class="form-control curr-num termDet" type="text" name="termcode">
 	                                </div>
 	                                <div class="col-sm-6">
 	                                	<div class='input-group date dtp' id='dtp1'>     
 				                        	<span class="input-group-addon">
 				                            	<span class="glyphicon glyphicon-calendar"></span>
 				                            </span>
-				                            <input id="tgl" type='text' class="form-control" name="tgl_term" placeholder="Tanggal" />
+				                            <input id="tgl" type='text' class="form-control termDet" name="tgl_term" placeholder="Tanggal" />
 				                        </div>
 	                                </div>
                             	</div>
                             	<div class="form-group">
 	                            	<label class="col-sm-3 control-label">Keterangan</label>
 	                                <div class="col-sm-8">
-	                                	<textarea name="terminfo" class="form-control" rows="2" style="resize: vertical;"></textarea>
+	                                	<textarea name="terminfo" class="form-control termDet" rows="2" style="resize: vertical;"></textarea>
 	                                </div>
 	                            </div>
 	                            <div class="form-group">
@@ -509,147 +449,77 @@
 	                                   	</div>
 	                                </div>
                             	</div>
-                            		<div class="form-group">
-                            			<label class="col-sm-3 control-label">Tagihan</label>
-	                                    <div class="col-sm-8">
-	                                    	<div class="input-group">
-	                                    		<span class="input-group-addon">%</span>
-	                                        	<input class="form-control termchgcount curr-num-perc" type="text" name="termperc">
-	                                        </div>
+                            	<div class="form-group">
+                            		<label class="col-sm-3 control-label">Tagihan</label>
+	                                <div class="col-sm-8">
+	                                	<div class="input-group">
+	                                    	<span class="input-group-addon">%</span>
+	                                        <input class="form-control termchgcount curr-num-perc termDet" type="text" name="termperc">
 	                                    </div>
+	                                </div>
+                            	</div>
+                            	<div class="form-group">
+                            		<label class="col-sm-3 control-label">DPP Termin</label>
+	                                <div class="col-sm-8">
+	                                	<div class="input-group">
+	                                    	<span class="input-group-addon">Rp</span>
+	                                    	<input class="form-control termchgcount curr-num" type="text" name="termdpp" readonly>
+	                                    </div>	                                        
+	                                </div>
+                            	</div>
+                            	<div class="form-group">
+			                    	<label class="col-sm-3 control-label">PPN</label>
+			                        <div class="col-sm-4">
+			                        	<div class="input-group">
+			                            	<span class="input-group-addon">Rp</span>
+			                            	<input class="form-control termchgcount curr-num" type="text" name="termppnn" readonly>
+			                            </div>			                                
+			                        </div>
+			                    </div>
+			                    <div class="form-group">
+                            		<label class="col-sm-3 control-label">Total Termin</label>
+	                                <div class="col-sm-8">
+	                                	<div class="input-group">
+	                                    	<span class="input-group-addon">Rp</span>
+	                                    	<input class="form-control curr-num" type="text" name="termsum" readonly>
+	                                   	</div>	                                        
+	                                </div>
+                            	</div>
+			                    <div class="form-group">
+                            		<div class="col-sm-offset-3 col-sm-4">
+                            			<a href="javascript:void(0)" onclick="add_termapp()" class="btn btn-sm btn-primary btnCh"><span class="glyphicon glyphicon-plus"></span> Tambah</a>
                             		</div>
-                            		<div class="form-group">
-                            			<label class="col-sm-3 control-label">DPP Termin</label>
-	                                    <div class="col-sm-8">
-	                                    	<div class="input-group">
-	                                    		<span class="input-group-addon">Rp</span>
-	                                    		<input class="form-control termchgcount curr-num" type="text" name="termdpp" readonly>
-	                                    	</div>	                                        
-	                                    </div>
-                            		</div>
-                            		<!-- <div class="form-group">
-                            			<label class="col-sm-3 control-label">Sub Total</label>
-	                                    <div class="col-sm-8">
-	                                    	<div class="input-group">
-	                                    		<span class="input-group-addon">Rp</span>
-	                                    		<input class="form-control termchgcount curr-num" type="text" name="termsub" readonly>
-	                                    	</div>
-	                                    </div>
-                            		</div> -->
-                            		<div class="form-group">
-			                            <label class="col-sm-3 control-label">PPN</label>
-			                            <!-- <div class="col-sm-4">
-			                            	<div class="input-group">
-			                            		<span class="input-group-addon">%</span>
-			                            		<input class="form-control termchgcount curr-num-perc" type="text" name="termppnp">
-			                            	</div>			                                
-			                            </div> -->
-			                            <div class="col-sm-4">
-			                            	<div class="input-group">
-			                            		<span class="input-group-addon">Rp</span>
-			                            		<input class="form-control termchgcount curr-num" type="text" name="termppnn" readonly>
-			                            	</div>			                                
-			                            </div>
-			                        </div>			                        
-			                        <!-- <div class="form-group">
-			                            <label class="col-sm-3 control-label">PPH</label>
-			                            <div class="col-sm-4">
-			                            	<div class="input-group">
-			                            		<span class="input-group-addon">%</span>
-			                        			<input class="form-control termchgcount curr-num-perc" type="text" name="termpphp">
-			                            	</div>
-			                            </div>
-			                            <div class="col-sm-4">
-			                            	<div class="input-group">
-			                            		<span class="input-group-addon">Rp</span>
-			                            		<input class="form-control curr-num" type="text" name="termpphn" readonly>
-			                            	</div>
-			                            </div>
-			                        </div> -->
-			                        <div class="form-group">
-                            			<label class="col-sm-3 control-label">Total Termin</label>
-	                                    <div class="col-sm-8">
-	                                    	<div class="input-group">
-	                                    		<span class="input-group-addon">Rp</span>
-	                                    		<input class="form-control curr-num" type="text" name="termsum" readonly>
-	                                    	</div>	                                        
-	                                    </div>
-                            		</div>
-			                        <div class="form-group">
-                            			<div class="col-sm-offset-3 col-sm-4">
-                            				<a href="javascript:void(0)" onclick="add_termapp()" class="btn btn-sm btn-primary btnCh"><span class="glyphicon glyphicon-plus"></span> Tambah</a>
-                            			</div>
-                            		</div>
-                            		<div class="row">
-                            			<div class="col-sm-12 col-xs-12 table-responsive">
-						                    <table id="dtb_termin" class="table table-striped table-bordered" cellspacing="0" width="100%">
-						                        <thead>
-						                            <tr>
-						                                <th class="text-center">
-						                                    No
-						                                </th>
-						                                <th class="text-center">
-						                                    Termin
-						                                </th>                              
-						                                <th class="text-center">
-						                                    Tagihan
-						                                </th>
-						                                <th class="text-center">
-						                                    Nominal
-						                                </th>
-						                                <th class="text-center">
-						                                    DPP
-						                                </th>
-						                                <th class="text-center">
-						                                    PPN
-						                                </th>
-						                                <th class="text-center">
-						                                    PPH
-						                                </th>
-						                                <th class="text-center">
-						                                    Actions
-						                                </th>
-						                            </tr>                            
-						                        </thead>                        
-						                    </table>
-						                </div>
-                            		</div>
+                            	</div>
+                            	<div class="row">
+                            		<div class="col-sm-12 col-xs-12 table-responsive">
+						            	<table id="dtb_termin" class="table table-striped table-bordered" cellspacing="0" width="100%">
+						                	<thead>
+						                    	<tr>
+						                    		<th class="text-center">No</th>
+						                    		<th class="text-center">Termin</th>
+						                            <th class="text-center">Tagihan</th>
+						                            <th class="text-center">Nominal</th>
+						                            <th class="text-center">DPP</th>
+						                            <th class="text-center">PPN</th>
+						                            <th class="text-center">PPH</th>
+						                            <th class="text-center">Actions</th>
+						                        </tr>
+						                    </thead>                        
+						                </table>
+						            </div>
+                            	</div>
                 			</div>
                 			<div class="tab-pane fade" id="3">
-                					<div class="form-group">
-		                            	<div class="col-xs-4 col-xs-offset-3 text-center">
-		                                	<h2>Detail Perijinan</h2>
-		                                </div>
-	                            	</div>
-	                            	<div id="permitappbrc" class="hid-form">
-	                            		<div class="row">
-	                            			<div class="col-sm-12 col-xs-12 table-responsive">
-							                    <table id="dtb_ijinappbrc" class="table table-striped table-bordered" cellspacing="0" width="100%">
-							                        <thead>
-							                            <tr>
-							                                <th class="text-center">
-							                                    No
-							                                </th>
-							                                <th class="text-center">
-							                                    Kode
-							                                </th>
-							                                <th class="text-center">
-							                                    Nama
-							                                </th>                              
-							                                <th class="text-center">
-							                                    Actions
-							                                </th>
-							                            </tr>                            
-							                        </thead>                        
-							                    </table>
-							                </div>
-	                            		</div>
-	                            	</div>
-	                            	<div class="form-group">
-                            			<label class="col-sm-3 control-label">Jenis Ijin</label>
-	                                    <div class="col-sm-8">
-	                                        <select id="pattyp" name="pat_id" class="form-control" data-live-search="true">
-		                                        <option value="">Pilih</option>
+                				<div class="form-group">
+		                        	<div class="col-xs-4 col-xs-offset-3 text-center">
+		                            	<h2>Detail Perijinan</h2>
+		                            </div>
+	                           	</div>
+	                            <div class="form-group">
+                            		<label class="col-sm-3 control-label">Jenis Ijin</label>
+	                                <div class="col-sm-8">
+	                                	<select id="pattyp" name="pat_id" class="form-control" data-live-search="true">
+		                                	<option value="">Pilih</option>
 		                                    <?php
 		                                        for($i=0; $i<count($pattyp); $i++)
 		                                    { ?>
@@ -657,36 +527,28 @@
 		                                    <?php
 		                                        }
 		                                    ?>
-		                                    </select>
-	                                    </div>
+		                                </select>
+	                                </div>
+                            	</div>
+                            	<div class="form-group">
+                            		<div class="col-sm-offset-3 col-sm-4">
+                            			<a href="javascript:void(0)" onclick="add_ijinapp()" class="btn btn-sm btn-primary btnCh"><span class="glyphicon glyphicon-plus"></span> Tambah</a>
                             		</div>
-                            		<div class="form-group">
-                            			<div class="col-sm-offset-3 col-sm-4">
-                            				<a href="javascript:void(0)" onclick="add_ijinapp()" class="btn btn-sm btn-primary btnCh"><span class="glyphicon glyphicon-plus"></span> Tambah</a>
-                            			</div>
-                            		</div>
-                            		<div class="row">
-                            			<div class="col-sm-12 col-xs-12 table-responsive">
-						                    <table id="dtb_ijinapp" class="table table-striped table-bordered" cellspacing="0" width="100%">
-						                        <thead>
-						                            <tr>
-						                                <th class="text-center">
-						                                    No
-						                                </th>
-						                                <th class="text-center">
-						                                    Kode
-						                                </th>
-						                                <th class="text-center">
-						                                    Nama
-						                                </th>                              
-						                                <th class="text-center">
-						                                    Actions
-						                                </th>
-						                            </tr>                            
-						                        </thead>                        
-						                    </table>
-						                </div>
-                            		</div>
+                            	</div>
+                            	<div class="row">
+                            		<div class="col-sm-12 col-xs-12 table-responsive">
+						            	<table id="dtb_ijinapp" class="table table-striped table-bordered" cellspacing="0" width="100%">
+						                	<thead>
+						                    	<tr>
+						                    		<th class="text-center">No</th>
+						                    		<th class="text-center">Kode</th>
+						                    		<th class="text-center">Nama</th>
+						                    		<th class="text-center">Actions</th>
+						                        </tr>
+						                    </thead>                        
+						                </table>
+						            </div>
+                            	</div>
                 			</div>
                 		</div>
                 	</form>
@@ -964,19 +826,6 @@
     	});
     	function test()
     	{
-    		var biaya = $('[name="cost_amount"]').val();
-    		var ppnbiaya = 0;
-    		var pphbiaya = 0;
-    		if($('[name="checkppn"]').is(':checked'))
-    		{
-    			ppnbiaya = biaya*10/100;
-    		}
-    		if($('[name="checkpph"]').is(':checked'))
-    		{
-    			pphbiaya = biaya*2/100;
-    		}
-    		$('[name="ppncost"]').val(ppnbiaya);
-    		$('[name="pphcost"]').val(pphbiaya);
     		$.ajax({
 	            url : "<?php echo site_url('administrator/Marketing/ajax_add_costappt1')?>",
 	            type: "POST",
@@ -1091,7 +940,6 @@
 	            {
 	                if(data.status)
 	                {
-	                	// alert('Sukses Approve');
 	                	var url = "<?php echo site_url('administrator/Marketing/mkt_trx_approval')?>";
               			window.location = url;
 	                }
@@ -1133,10 +981,10 @@
             {
                 $('#det_biaya').css({'display':'block'});
             }
-            if($('[name="user_brcsts"]').val() != '0')
-            {
-            	$('.hid-form').css({'display':'none'});
-            }
+            // if($('[name="user_brcsts"]').val() != '0')
+            // {
+            // 	$('.hid-form').css({'display':'none'});
+            // }
         }
         function checkterm_()
         {
@@ -1159,6 +1007,11 @@
             $('#dtb_biaya').DataTable().ajax.reload(null,false);
             $('#dtb_termin').DataTable().ajax.reload(null,false);
             $('#dtb_ijinapp').DataTable().ajax.reload(null,false);
+        }
+        function cleanterm()
+        {
+        	$('.termDet').val('');
+        	$('.termDet').text('');
         }
     </script>
     <!-- Fungsi Hitung -->
@@ -1184,34 +1037,6 @@
 			$('[name="dpp_appr"]').val(sub1);
 			$('[name="ppn_appr"]').val(ppnn);
     	}
-    	function hitung_()
-    	{
-    		var currrate = $('[name="curr_rate"]').val();
-    		var dpp = $('[name="dpp"]').val();
-    		var discp1 = $('[name="discp1"]').val();
-    		var discp2 = $('[name="discp2"]').val();
-    		var discn1 = dpp*discp1/100;
-    		$('[name="discn1"]').val(discn1);
-    		var discn2 = (dpp-discn1)*1*discp2/100;
-    		$('[name="discn2"]').val(discn2);
-    		var sub1 = (dpp-discn1-discn2)*1;//PPH dan PPN didapat dari ini
-			$('[name="subtotal1"]').val(sub1);
-			var ppnp = $('[name="ppnp"]').val();
-			var ppnn = sub1*ppnp/100;
-			$('[name="ppnn"]').val(ppnn);
-			var bbtax = $('[name="appr_bbtax"]').val();
-			var sub2 = (sub1*1)+(ppnn*1)+(bbtax*1);
-			var sub3 = (sub1*1)+(bbtax*1);
-			$('[name="subtotal2"]').val(sub2);
-			var pphp = $('[name="pphp"]').val();
-			var pphn = sub1*pphp/100;
-			$('[name="pphn"]').val(pphn);			
-			var grandtotal = Math.abs(((sub1*1)+(ppnn*1)+(bbtax*1)-(pphn*1))*currrate);
-			$('[name="gtotal"]').val(grandtotal);
-			// $('[name="dpp_appr"]').val(((sub1*1)+(bbtax*1)));
-			$('[name="dpp_appr"]').val(sub1);
-			$('[name="bbtax_appr"]').val(bbtax);
-    	}
     	function hitungtermt1_()
     	{
     		var dppappr = $('[name="dpp_appr"]').val();
@@ -1233,26 +1058,6 @@
                 var gt = dppterm+ppnterm*1;
                 $('[name="termsum"]').val(gt);
             }
-    	}
-    	function hitungterm_()
-    	{
-    		var dppappr = $('[name="dpp_appr"]').val();
-    		var bbappr = $('[name="bbtax_appr"]').val();
-    		var trmp = $('[name="termperc"]').val();
-    		var dppterm = dppappr*trmp/100;
-    		var bbterm = bbappr*trmp/100;
-    		$('[name="termbbtax"]').val(bbterm);
-    		$('[name="termdpp"]').val(dppterm);
-    		var sub1 = (dppterm+bbterm)*1;
-    		$('[name="termsub"]').val(sub1);
-    		var ppnptrm = $('[name="termppnp"]').val();
-    		var ppnntrm = dppterm*ppnptrm/100;
-    		$('[name="termppnn"]').val(ppnntrm);
-    		var pphptrm = $('[name="termpphp"]').val();
-    		var pphntrm = dppterm*pphptrm/100;
-    		$('[name="termpphn"]').val(pphntrm);
-    		var sub2 = (sub1*1)+(ppnntrm*1)-(pphntrm*1);
-    		$('[name="termsum"]').val(sub2);
     	}
     	function hit_luas_()
     	{
@@ -1417,28 +1222,6 @@
     			}
     		});
     	}
-    	//Detail Biaya Cabang
-    	function costappbrc(id)
-    	{
-	        table = $('#dtb_biayabranch').DataTable({
-	            "info": false,
-	            "destroy": true,
-	            "responsive": true,
-	            "processing": true,
-	            "serverSide": true,
-	            "order": [],	            
-	            "ajax": {
-	                "url": "<?php echo site_url('administrator/Marketing/ajax_costappbrc/')?>"+id,
-	                "type": "POST",                
-	            },	            
-	            "columnDefs": [
-	            { 
-	                "targets": [ 0 ],
-	                "orderable": false,
-	            },
-	            ],
-	        });
-    	}
     	//Detail Termin
     	function termapp(id)
     	{
@@ -1496,6 +1279,7 @@
 	                    alert('Data Berhasil Ditambahkan');
 	                    id = $('[name="appr_id"]').val();
 	                    termapp(id);
+	                    cleanterm();
 	                }	                
 	            },
 	            error: function (jqXHR, textStatus, errorThrown)
@@ -1524,28 +1308,6 @@
 	                }
 	            });
 	        }
-    	}
-    	//Detail Termin Cabang
-    	function termappbrc(id)
-    	{
-	        table = $('#dtb_terminbranch').DataTable({
-	            "info": false,
-	            "destroy": true,
-	            "responsive": true,
-	            "processing": true,
-	            "serverSide": true,
-	            "order": [],	            
-	            "ajax": {
-	                "url": "<?php echo site_url('administrator/Marketing/ajax_termappbrc/')?>"+id,
-	                "type": "POST",	                
-	            },	            
-	            "columnDefs": [
-	            { 
-	                "targets": [ 0 ],
-	                "orderable": false,
-	            },
-	            ],
-	        });
     	}
     	//Detail Permit
     	function ijinapp(id)
@@ -1632,28 +1394,6 @@
 	                }
 	            });
 	        }
-    	}
-    	//Detail Permit Cabang
-    	function ijinappbrc(id)
-    	{
-	        table = $('#dtb_ijinappbrc').DataTable({
-	            "info": false,
-	            "destroy": true,
-	            "responsive": true,
-	            "processing": true,
-	            "serverSide": true,
-	            "order": [],	            
-	            "ajax": {
-	                "url": "<?php echo site_url('administrator/Marketing/ajax_ijinappbrc/')?>"+id,
-	                "type": "POST",                
-	            },	            
-	            "columnDefs": [
-	            { 
-	                "targets": [ 0 ],
-	                "orderable": false,
-	            },
-	            ],
-	        });
     	}
     </script>
     <!-- Fungsi Search -->
@@ -2044,7 +1784,7 @@
 	                $('[name="curr_name"]').val(data.CURR_NAME);
 	                $('[name="curr_rate"]').val(data.CURR_RATE);
 	                $('.curr').text(data.CURR_SYMBOL);
-	                hitung_();
+	                hitungt1_();
 	                $('#modal_curr').modal('hide');
 	            },
 	            error: function (jqXHR, textStatus, errorThrown)
@@ -2109,28 +1849,6 @@
 	            {   
 	                $('[name="cost_code"]').val(data.CSTDT_CODE);
 	                $('[name="cost_amount"]').val(data.CSTDT_AMOUNT);
-	            },
-	            error: function (jqXHR, textStatus, errorThrown)
-	            {
-	                alert('Error get data from ajax');
-	            }
-	        });
-    	}
-    	function pick_termappbrc(id)
-    	{
-    		$.ajax({
-	            url : "<?php echo site_url('administrator/Marketing/pick_termapprbrc/')?>" + id,
-	            type: "GET",
-	            dataType: "JSON",
-	            success: function(data)
-	            {   
-	                $('[name="termcode"]').val(data.TERMSDET_CODE);
-	                $('[name="terminfo"]').val(data.TERMSDET_INFO);
-	                $('[name="tgl_term"]').val(data.TERMSDET_DATE);
-	                $('[name="termperc"]').val(data.TERMSDET_PERC);
-	                $('[name="termppnp"]').val(data.TERMSDET_PPN_PERC);
-	                $('[name="termpphp"]').val(data.TERMSDET_PPH_PERC);
-	                hitungterm_();
 	            },
 	            error: function (jqXHR, textStatus, errorThrown)
 	            {
@@ -2354,22 +2072,6 @@
 	            	$('[name="appr_brcid"]').val(data.APPR_ID);
 	            	$('[name="appr_brc"]').val(data.APPR_CODE+' '+data.BRANCH_INIT);
 	            	$('[name="brc_nom"]').val(data.APPR_DPP_INCOME);
-	            },
-	            error: function (jqXHR, textStatus, errorThrown)
-	            {
-	                alert('Error get data from ajax');
-	            }
-	        });
-    	}
-    	function tes()
-    	{
-	        $.ajax({
-	            url : "<?php echo site_url('administrator/Marketing/tes')?>",
-	            type: "GET",
-	            dataType: "JSON",
-	            success: function(data)
-	            {   
-	                alert(data.tes);
 	            },
 	            error: function (jqXHR, textStatus, errorThrown)
 	            {

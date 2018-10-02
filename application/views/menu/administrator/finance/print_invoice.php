@@ -77,7 +77,7 @@
                 <span>Nomor : </span>
                 <span name="inv_code">INV/1712/000001</span>
             </div>
-            <div class="col-sm-4 col-xs-4">                
+            <div class="col-sm-offset-1 col-xs-offset-1 col-sm-3 col-xs-3">                
                 <strong>Kepada Yth :</strong><br>
                 <span name="inv_custname"></span><br>
                 <span name="inv_custaddr">JL. SEMAMPIR II/1 UNIT X, KEDIRI</span><br>
@@ -119,18 +119,18 @@
                 <div class="col-sm-offset-7 col-xs-offset-7 col-sm-3 col-xs-3 text-right">
                     <span><strong>PPN</strong></span>
                 </div>
-                <div class="col-sm-2 col-xs-2 text-right">
+                <div class="col-sm-2 col-xs-2 bt-border text-right">
                     <span name="inv_ppn">0.00</span>
                 </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-sm-offset-7 col-xs-offset-7 col-sm-3 col-xs-3 text-right">
                     <span><strong>PPH</strong></span>
                 </div>
                 <div class="col-sm-2 col-xs-2 bt-border text-right">
                     <span name="inv_pph">0.00</span>
                 </div>
-            </div>
+            </div> -->
             <div class="row">
                 <div class="col-sm-offset-7 col-xs-offset-7 col-sm-3 col-xs-3 text-right">
                     <span><strong>Grand Total</strong></span>
@@ -181,8 +181,7 @@
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)
-                {   
-                    // $('[name="img_logo"]').text(data.BRANCH_NAME);
+                {
                     var newSrc = "<?php echo base_url()?>/assets/img/branchlogo/"+data.BRANCH_LOGO;
                     $('#img_logo').attr('src', newSrc);
                 },
@@ -270,7 +269,7 @@
                             $('<td>').css('text-align','center').text(data[i]["APPR_CODE"]),
                             $('<td>').css('text-align','center').text(data[i]["APPR_PO"]),
                             $('<td>').css('text-align','center').text(data[i]["LOC_NAME"]),
-                            $('<td>').css('text-align','center').text(data[i]["APPR_INFO"]),
+                            $('<td>').css('text-align','center').text(data[i]["TERMSDET_INFO"]),
                             $('<td>').css('text-align','right').text(money_conv(data[i]["INVDET_AMOUNT"]))
                             ).appendTo('#tb_content');
                     }                   
