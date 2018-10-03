@@ -167,12 +167,12 @@
                                             </a>
                                         </div>
                                         <div class="col-sm-2">
-                                            <button type="button" onclick="approve_giro_in()" class="btn btn-block btn-primary btnApr">
+                                            <button type="button" onclick="approve_giro_in()" class="btn btn-block btn-primary btnApr" disabled>
                                                 Approve
                                             </button>
                                         </div>
                                         <div class="col-sm-2">
-                                            <button type="button" onclick="disapprove_giro_in()" class="btn btn-block btn-primary btnApr">
+                                            <button type="button" onclick="disapprove_giro_in()" class="btn btn-block btn-primary btnApr" disabled>
                                                 Disapprove
                                             </button>
                                         </div>
@@ -591,6 +591,34 @@
                 ],
             });
         }
+        function check_giro_in()
+        {
+            $('#modal_giro_in_edit').modal('show');
+            $('.modal-title').text('Cari Giro Masuk');
+            table = $('#dtb_giro_in_edit').DataTable({
+                "info": false,
+                "destroy": true,
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "order": [],                
+                "ajax": {
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_giro_in_bysts')?>",
+                    "type": "POST",
+                    "data": function(data){
+                        data.sts = '1';
+                        data.brch = $('[name="user_branch"]').val();
+                        data.chk = '2';
+                    },
+                },
+                "columnDefs": [
+                { 
+                    "targets": [ 0 ],
+                    "orderable": false,
+                },
+                ],
+            });
+        }
         function open_giro_in()
         {
             $('#modal_giro_in_edit').modal('show');
@@ -609,6 +637,34 @@
                         data.sts = '1';
                         data.brch = $('[name="user_branch"]').val();
                         data.chk = '1';
+                    },
+                },                
+                "columnDefs": [
+                { 
+                    "targets": [ 0 ],
+                    "orderable": false,
+                },
+                ],
+            });
+        }
+        function apr_giro_in()
+        {
+            $('#modal_giro_in_edit').modal('show');
+            $('.modal-title').text('Cari Giro Masuk');            
+            table = $('#dtb_giro_in_edit').DataTable({
+                "info": false,
+                "destroy": true,
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "order": [],                
+                "ajax": {
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_giro_in_bysts')?>",
+                    "type": "POST",
+                    "data": function(data){
+                        data.sts = '2';
+                        data.brch = $('[name="user_branch"]').val();
+                        data.chk = '3';
                     },
                 },                
                 "columnDefs": [

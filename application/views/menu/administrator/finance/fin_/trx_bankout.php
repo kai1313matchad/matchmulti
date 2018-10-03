@@ -1780,6 +1780,42 @@
                 }
             });
         }
+        function pick_bankoutapr(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_bankoutgb/')?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('#form_bank')[0].reset();
+                    $('[name="bank_id"]').val(data.BNKO_ID);
+                    $('[name="bank_nomor"]').val(data.BNKO_CODE);
+                    $('[name="bank_tgl"]').val(data.BNKO_DATE);
+                    pick_bank(data.BANK_ID);
+                    sts=1;
+                    pick_acc(data.COA_ID);
+                    pick_appr(data.BNKO_APPR);
+                    pick_supp(data.BNKO_SUPP);
+                    pick_loc(data.BNKO_LOC);
+                    $('[name="bank_info"]').val(data.BNKO_INFO);
+                    pick_dept(data.DEPT_ID);
+                    $('[name="bank_anggaran"]').val(data.BNKO_BUDGET);
+                    $('[name="head_taxnumber"]').val(data.BNKO_TAXHEADCODE);
+                    $('[name="taxnumber"]').val(data.BNKO_TAXCODE);
+                    pick_curr(data.CURR_ID)
+                    bank_keluar_detail1(data.BNKO_ID);
+                    bank_keluar_detail2(data.BNKO_ID);
+                    $('.btnCh').css({'display':'none'});
+                    $('.btnApr').prop('disabled',false);
+                    $('#modal_bank_out_edit').modal('hide');
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
     </script>
 </body>
 </html>

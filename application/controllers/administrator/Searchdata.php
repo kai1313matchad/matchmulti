@@ -2420,37 +2420,68 @@
 		{
 			$id = $this->input->post('sts');
 			$br = $this->input->post('brch');
-			$brc = ($this->input->post('chk') != '0')? 'd.branch_id = '.$br : 'd.branch_id = '.$br.' OR d.branch_id IS null';
+			$chk = $this->input->post('chk');
+			$brc = 'a.branch_id = '.$br;
 			$list = $this->s_giroinbysts->get_datatables($id,$brc);
 			$data = array();
 			$no = $_POST['start'];
-			if($this->input->post('chk') != '0')
+			switch ($chk)
 			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-				    $row[] = $dat->GRIN_CODE;
-				    $row[] = $dat->BANK_NAME;
-				    $row[] = $dat->GRIN_DATE;				
-				    $row[] = $dat->GRIN_INFO;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_giroinopen('."'".$dat->GRIN_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
-			}
-			else
-			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-				    $row[] = $dat->GRIN_CODE;
-				    $row[] = $dat->BANK_NAME;
-				    $row[] = $dat->GRIN_DATE;				
-				    $row[] = $dat->GRIN_INFO;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_giroinedit('."'".$dat->GRIN_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
+				case '0':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+					    $row[] = $dat->GRIN_CODE;
+					    $row[] = $dat->BANK_NAME;
+					    $row[] = $dat->GRIN_DATE;
+					    $row[] = $dat->GRIN_INFO;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_giroinedit('."'".$dat->GRIN_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '1':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+					    $row[] = $dat->GRIN_CODE;
+					    $row[] = $dat->BANK_NAME;
+					    $row[] = $dat->GRIN_DATE;
+					    $row[] = $dat->GRIN_INFO;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_giroinopen('."'".$dat->GRIN_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '2':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+					    $row[] = $dat->GRIN_CODE;
+					    $row[] = $dat->BANK_NAME;
+					    $row[] = $dat->GRIN_DATE;
+					    $row[] = $dat->GRIN_INFO;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_giroinchk('."'".$dat->GRIN_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '3':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+					    $row[] = $dat->GRIN_CODE;
+					    $row[] = $dat->BANK_NAME;
+					    $row[] = $dat->GRIN_DATE;
+					    $row[] = $dat->GRIN_INFO;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_giroinapr('."'".$dat->GRIN_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				default:
+					# code...
+					break;
 			}
 			$output = array(
 							"draw" => $_POST['draw'],

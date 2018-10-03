@@ -16,7 +16,7 @@
 			$this->db->join('master_branch b','b.branch_id = a.branch_id');
 			$this->db->join('parent_chart c','c.par_id = a.par_id');
 			$this->db->where('a.branch_id',$brc);
-			$this->db->where('c.par_acc','1120000');
+			$this->db->where('c.par_acc = 1120000 or c.par_acc = 2120000 or c.par_acc = 1140000');
 			$this->db->where('coa_dtsts','1');
 			$i = 0;
 			foreach ($this->column_search as $item)
