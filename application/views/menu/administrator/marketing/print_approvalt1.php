@@ -283,14 +283,14 @@
             </div>
             <div class="row row-ins">
                 <div class="col-sm-3 col-xs-3">
-                    <label class="font-nd">Total Sebelum Discount</label>
+                    <label class="font-nd strPrc">Total Sebelum Discount</label>
                 </div>
                 <div class="col-sm-2 col-xs-2">
                     <label class="font-nd">: </label>
                     <span class="font-txt pull-right" name="print_apprdpp"></span>
                 </div>
             </div>
-            <div class="row row-ins">
+            <div class="row row-ins disc1">
                 <div class="col-sm-2 col-xs-2">
                     <label class="font-nd">Disc 1</label>
                 </div>
@@ -302,7 +302,7 @@
                     <span class="font-txt font-red pull-right" name="print_apprdiscsum1"></span>
                 </div>
             </div>
-            <div class="row row-ins">
+            <div class="row row-ins disc2">
                 <div class="col-sm-2 col-xs-2">
                     <label class="font-nd">Disc 2</label>
                 </div>
@@ -314,7 +314,7 @@
                     <span class="font-txt font-red pull-right" name="print_apprdiscsum2"></span>
                 </div>
             </div>
-            <div class="row row-ins">
+            <div class="row row-ins afterDisc">
                 <div class="col-sm-3 col-xs-3">
                     <label class="font-nd">Media Placement Sesudah Discount</label>
                 </div>
@@ -506,6 +506,19 @@
                     if(data.APPR_BBTAX == '0')
                     {
                         $('.tax-hid').css({'display':'none'});
+                    }
+                    if(parseFloat(data.APPR_DISC_SUM1) <= 0)
+                    {
+                        $('.disc1').css({'display':'none'})
+                    }
+                    if(parseFloat(data.APPR_DISC_SUM2) <= 0)
+                    {
+                        $('.disc2').css({'display':'none'})
+                    }
+                    if(parseFloat(data.APPR_DISC_SUM1) <= 0 && parseFloat(data.APPR_DISC_SUM2) <= 0)
+                    {
+                        $('.strPrc').text('Media Placement');
+                        $('.afterDisc').css({'display':'none'});
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown)
