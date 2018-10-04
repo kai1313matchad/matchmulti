@@ -498,6 +498,48 @@
                 }
             });
         }
+        function approve_giro_in()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/ajax_approve_giro_in')?>",
+                type: "POST",
+                data: $('#form_giro').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Finance/bg_in')?>";
+                        window.location = url;
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
+        function disapprove_giro_in()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/ajax_disapprove_giro_in')?>",
+                type: "POST",
+                data: $('#form_giro').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Finance/bg_in')?>";
+                        window.location = url;
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
         function save_giro_in_detail()
         {
             $.ajax({
@@ -716,6 +758,57 @@
                     pick_bank(data.BANK_ID);
                     $('[name="giro_info"]').val(data.GRIN_INFO);
                     giro_masuk_detail(data.GRIN_ID);
+                    $('#modal_giro_in_edit').modal('hide');                    
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function pick_giroinchk(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_giroingb/')?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('[name="giro_id"]').val(data.GRIN_ID);
+                    $('[name="giro_nomor"]').val(data.GRIN_CODE);
+                    $('[name="giro_tgl"]').val(data.GRIN_DATE);
+                    pick_giroin(data.GRIN_ID);
+                    sts=1;
+                    pick_bank(data.BANK_ID);
+                    $('[name="giro_info"]').val(data.GRIN_INFO);
+                    giro_masuk_detail(data.GRIN_ID);
+                    $('.btnCh').css({'display':'none'});
+                    $('#modal_giro_in_edit').modal('hide');                    
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function pick_giroinapr(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_giroingb/')?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('[name="giro_id"]').val(data.GRIN_ID);
+                    $('[name="giro_nomor"]').val(data.GRIN_CODE);
+                    $('[name="giro_tgl"]').val(data.GRIN_DATE);
+                    pick_giroin(data.GRIN_ID);
+                    sts=1;
+                    pick_bank(data.BANK_ID);
+                    $('[name="giro_info"]').val(data.GRIN_INFO);
+                    giro_masuk_detail(data.GRIN_ID);
+                    $('.btnCh').css({'display':'none'});
+                    $('.btnApr').prop('disabled',false);
                     $('#modal_giro_in_edit').modal('hide');                    
                 },
                 error: function (jqXHR, textStatus, errorThrown)

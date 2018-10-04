@@ -2122,7 +2122,7 @@
 	                'grin_info' => $this->input->post('giro_info')	                
 	            );
 	        $update = $this->crud->update('trx_giro_in',$data,array('grin_id'=>$this->input->post('giro_id')));
-	        $this->logupd_giroin_save($this->input->post('grin_id'),$this->input->post('user_name'),'Posted');
+	        $this->logupd_giroin_save($this->input->post('giro_id'),$this->input->post('user_name'),'Posted');
 	        echo json_encode(array("status" => TRUE));
 		}
 
@@ -2132,7 +2132,7 @@
 	                'grin_sts' => '1'
 	            );
 	        $update = $this->crud->update('trx_giro_in',$data,array('grin_id'=>$this->input->post('giro_id')));
-	        $this->logupd_giroin_save($this->input->post('grin_id'),$this->input->post('user_name'),'Approved');
+	        $this->logupd_giroin_save($this->input->post('giro_id'),$this->input->post('user_name'),'Approved');
 	        //cek jurnal
 	        $giroin_code = $this->input->post('giro_nomor');
 	    	$brc = $this->input->post('user_branch');
@@ -2156,15 +2156,15 @@
 		    	$update = $this->crud->update('account_journal',$jou,array('jou_id'=>$get->JOU_ID));
 		    	//Hapus Detail Jurnal
 		    	$this->crud->delete_by_id('jou_details',array('jou_id' => $get->JOU_ID));
-		    	//Input Detail Debet
+		    	//Input Detail Kredit
 		    	$joudet1 = array(
 						'jou_id'=>$get->JOU_ID,
 						'coa_id'=>$coagiro,
-						'joudet_debit'=>$getsum,
-						'joudet_credit'=>0,
+						'joudet_debit'=>0,
+						'joudet_credit'=>$getsum
 						);
 				$insjoudet1 = $this->crud->save('jou_details',$joudet1);
-				//Input Detail Kredit
+				//Input Detail Debet
 	    	    $que2 = $this->db->get_where('giroin_det',array('grin_id'=>$this->input->post('giro_id')));
 	    	    $get2 = $que2->result();
 	    	    foreach($get2 as $dat) 
@@ -2172,8 +2172,8 @@
 					$joudet2 = array(
 						'jou_id'=>$get->JOU_ID,
 						'coa_id'=>$coabank,
-						'joudet_debit'=>0,
-						'joudet_credit'=>$dat->GRINDET_AMOUNT
+						'joudet_debit'=>$dat->GRINDET_AMOUNT,
+						'joudet_credit'=>0
 						);
 					$insjoudet2 = $this->crud->save('jou_details',$joudet2);
 			    }
@@ -2194,15 +2194,15 @@
 						'jou_sts'=>'1'
 		    	);
 		    	$update = $this->crud->update('account_journal',$jou,array('jou_id'=>$jouid));
-		    	//Input Detail Debet
+		    	//Input Detail Kredit
 		    	$joudet1 = array(
 						'jou_id'=>$jouid,
 						'coa_id'=>$coagiro,
-						'joudet_debit'=>$getsum,
-						'joudet_credit'=>0
+						'joudet_debit'=>0,
+						'joudet_credit'=>$getsum
 						);
 				$insjoudet1 = $this->crud->save('jou_details',$joudet1);
-				//Input Detail Kredit
+				//Input Detail Debet
 				$que2 = $this->db->get_where('giroin_det',array('grin_id'=>$this->input->post('giro_id')));
 	    	    $get2 = $que2->result();
 	    	    foreach($get2 as $dat) 
@@ -2210,8 +2210,8 @@
 					$joudet2 = array(
 						'jou_id'=>$jouid,
 						'coa_id'=>$coabank,
-						'joudet_debit'=>0,
-						'joudet_credit'=>$dat->GRINDET_AMOUNT
+						'joudet_debit'=>$dat->GRINDET_AMOUNT,
+						'joudet_credit'=>0
 						);
 					$insjoudet2 = $this->crud->save('jou_details',$joudet2);
 				}
@@ -2225,7 +2225,7 @@
 	                'grin_sts' => '0'
 	            );
 	        $update = $this->crud->update('trx_giro_in',$data,array('grin_id'=>$this->input->post('giro_id')));
-	        $this->logupd_giroin_save($this->input->post('grin_id'),$this->input->post('user_name'),'Disapproved');
+	        $this->logupd_giroin_save($this->input->post('giro_id'),$this->input->post('user_name'),'Disapproved');
 	        echo json_encode(array("status" => TRUE));
 		}
 
@@ -2270,7 +2270,7 @@
 	                'grout_info' => $this->input->post('giro_info')
 	            );
 	        $update = $this->crud->update('trx_giro_out',$data,array('grout_id'=>$this->input->post('giro_id')));
-	        $this->logupd_giroout_save($this->input->post('grout_id'),$this->input->post('user_name'),'Posted');
+	        $this->logupd_giroout_save($this->input->post('giro_id'),$this->input->post('user_name'),'Posted');
 	        echo json_encode(array("status" => TRUE));
 		}
 
@@ -2280,7 +2280,7 @@
 	                'grout_sts' => '1'
 	            );
 	        $update = $this->crud->update('trx_giro_out',$data,array('grout_id'=>$this->input->post('giro_id')));
-	        $this->logupd_giroout_save($this->input->post('grout_id'),$this->input->post('user_name'),'Approved');
+	        $this->logupd_giroout_save($this->input->post('giro_id'),$this->input->post('user_name'),'Approved');
 	        //cek jurnal
 	        $giroout_code = $this->input->post('giro_nomor');
 	    	$brc = $this->input->post('user_branch');
@@ -2373,7 +2373,7 @@
 	                'grout_sts' => '0'
 	            );
 	        $update = $this->crud->update('trx_giro_out',$data,array('grout_id'=>$this->input->post('giro_id')));
-	        $this->logupd_giroout_save($this->input->post('grout_id'),$this->input->post('user_name'),'Disapproved');
+	        $this->logupd_giroout_save($this->input->post('giro_id'),$this->input->post('user_name'),'Disapproved');
 	        echo json_encode(array("status" => TRUE));
 		}
 
@@ -3983,6 +3983,7 @@
 					'hisbnko_new' => 'Open By User '.$user,
 					'hisbnko_info' => 'Open Record by Bank Keluar form',
 					'hisbnko_date' => date('Y-m-d'),
+					'hisbnko_time' => date('H:i:s'),
 					'hisbnko_upcount' => $his->HISBNKO_UPCOUNT+1
 				);
 			$this->db->insert('his_bankout',$dthis);
@@ -4026,10 +4027,26 @@
 		public function open_giroin($id)
 		{
 			$user = $this->input->post('user_name');
-			$get = $this->db->get_where('trx_giro_in',array('grin_id'=>$id));
-			$code = $get->row()->GRIN_CODE;
+			$get_giroin = $this->db->get_where('trx_giro_in',array('grin_id'=>$id))->row();
+			$get_jou = $this->db->get_where('account_journal',array('jou_reff'=>$get_giroin->GRIN_CODE,'branch_id'=>$this->session->userdata('user_branch')));
+			if($get_jou->num_rows() > 0)
+			{
+				$this->crud->delete_by_id('jou_details',array('jou_id'=>$get_jou->row()->JOU_ID));
+			}
 			$dt = array('grin_sts'=>'0');
 			$update = $this->crud->update('trx_giro_in',$dt,array('grin_id' => $id));
+			$his = $this->finance->getlog_giroin($id);
+			$dthis = array(
+					'grin_id' => $id,
+					'hisgrin_sts' => 'Open by User '.$user,
+					'hisgrin_old' => $his->HISGRIN_STS,
+					'hisgrin_new' => 'Open By User '.$user,
+					'hisgrin_info' => 'Open Record by Giro In form',
+					'hisgrin_date' => date('Y-m-d'),
+					'hisgrin_time' => date('H:i:s'),
+					'hisgrin_upcount' => $his->HISGRIN_UPCOUNT+1
+				);
+			$this->db->insert('his_giroin',$dthis);
 			$data['status'] = TRUE;
 			echo json_encode($data);
 		}
@@ -4070,10 +4087,27 @@
 		public function open_giroout($id)
 		{
 			$user = $this->input->post('user_name');
-			$get = $this->db->get_where('trx_giro_out',array('grout_id'=>$id));
-			$code = $get->row()->GROUT_CODE;
+			$user = $this->input->post('user_name');
+			$get_giroout = $this->db->get_where('trx_giro_out',array('grout_id'=>$id))->row();
+			$get_jou = $this->db->get_where('account_journal',array('jou_reff'=>$get_giroout->GROUT_CODE,'branch_id'=>$this->session->userdata('user_branch')));
+			if($get_jou->num_rows() > 0)
+			{
+				$this->crud->delete_by_id('jou_details',array('jou_id'=>$get_jou->row()->JOU_ID));
+			}
 			$dt = array('grout_sts'=>'0');
 			$update = $this->crud->update('trx_giro_out',$dt,array('grout_id' => $id));
+			$his = $this->finance->getlog_giroout($id);
+			$dthis = array(
+					'grout_id' => $id,
+					'hisgrout_sts' => 'Open by User '.$user,
+					'hisgrout_old' => $his->HISGROUT_STS,
+					'hisgrout_new' => 'Open By User '.$user,
+					'hisgrout_info' => 'Open Record by Giro Out form',
+					'hisgrout_date' => date('Y-m-d'),
+					'hisgrout_time' => date('H:i:s'),
+					'hisgrout_upcount' => $his->HISGROUT_UPCOUNT+1
+				);
+			$this->db->insert('his_giroin',$dthis);
 			$data['status'] = TRUE;
 			echo json_encode($data);
 		}

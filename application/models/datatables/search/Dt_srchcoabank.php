@@ -3,9 +3,9 @@
 	class Dt_srchcoabank extends CI_Model 
 	{
 		var $table = 'chart_of_account a';
-		var $column_order = array(null,'coa_acc','coa_accname');
-		var $column_search = array('coa_acc','coa_accname');
-		var $order = array('coa_acc' => 'asc');
+		var $column_order = array(null,'a.coa_acc','a.coa_accname');
+		var $column_search = array('a.coa_acc','a.coa_accname');
+		var $order = array('a.coa_acc' => 'asc');
 		public function __construct()
 		{
 			parent::__construct();		
@@ -17,7 +17,7 @@
 			$this->db->join('parent_chart c','c.par_id = a.par_id');
 			$this->db->where('a.branch_id',$brc);
 			$this->db->where('c.par_acc = 1120000 or c.par_acc = 2120000 or c.par_acc = 1140000');
-			$this->db->where('coa_dtsts','1');
+			$this->db->where('a.coa_dtsts','1');
 			$i = 0;
 			foreach ($this->column_search as $item)
 			{

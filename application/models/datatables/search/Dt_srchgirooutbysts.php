@@ -11,10 +11,13 @@
 		{
 			parent::__construct();		
 		}
-		private function _get_datatables_query()
+		private function _get_datatables_query($id,$brc)
 		{
+			$this->db->from($this->table);
 			$this->db->join('master_bank b','b.bank_id = a.bank_id','left');
-			$this->db->from($this->table);			
+			$this->db->join('master_branch c','c.branch_id = a.branch_id');
+			$this->db->where('a.grout_sts',$id);
+			$this->db->where($brc);
 			$i = 0;
 			foreach ($this->column_search as $item)
 			{
@@ -45,17 +48,17 @@
 				$this->db->order_by(key($order), $order[key($order)]);
 			}
 		}
-		public function get_datatables()
+		public function get_datatables($id,$brc)
 		{
-			$this->_get_datatables_query();
+			$this->_get_datatables_query($id,$brc);
 			if($_POST['length'] != -1)
 			$this->db->limit($_POST['length'], $_POST['start']);
 			$query = $this->db->get();
 			return $query->result();
 		}
-		public function count_filtered()
+		public function count_filtered($id,$brc)
 		{
-			$this->_get_datatables_query();
+			$this->_get_datatables_query($id,$brc);
 			$query = $this->db->get();
 			return $query->num_rows();
 		}

@@ -166,6 +166,16 @@
                                                 Cetak
                                             </a>
                                         </div>
+                                        <div class="col-sm-2">
+                                            <button type="button" onclick="approve_giro_out()" class="btn btn-block btn-primary btnApr" disabled>
+                                                Approve
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button type="button" onclick="disapprove_giro_out()" class="btn btn-block btn-primary btnApr" disabled>
+                                                Disapprove
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -487,8 +497,50 @@
                 }
             });
         }
+        function approve_giro_out()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/ajax_approve_giro_out')?>",
+                type: "POST",
+                data: $('#form_giro').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Finance/bg_out')?>";
+                        window.location = url;
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
+        function disapprove_giro_out()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/ajax_disapprove_giro_out')?>",
+                type: "POST",
+                data: $('#form_giro').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Finance/bg_out')?>";
+                        window.location = url;
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
         function save_giro_out_detail()
-        {            
+        {
             $.ajax({
                 url : "<?php echo site_url('administrator/Finance/ajax_simpan_giro_out_detail')?>",
                 type: "POST",
@@ -608,6 +660,62 @@
                 ],
             });
         }
+        function check_giro_out()
+        {
+            $('#modal_giro_out_edit').modal('show');
+            $('.modal-title').text('Cari Giro Keluar');
+            table = $('#dtb_giro_out_edit').DataTable({
+                "info": false,
+                "destroy": true,
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "order": [],
+                "ajax": {
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_giro_out_bysts')?>",
+                    "type": "POST",
+                    "data": function(data){
+                        data.sts = '1';
+                        data.brch = $('[name="user_branch"]').val();
+                        data.chk = '2';
+                    },
+                },
+                "columnDefs": [
+                { 
+                    "targets": [ 0 ],
+                    "orderable": false,
+                },
+                ],
+            });
+        }
+        function apr_giro_out()
+        {
+            $('#modal_giro_out_edit').modal('show');
+            $('.modal-title').text('Cari Giro Keluar');
+            table = $('#dtb_giro_out_edit').DataTable({
+                "info": false,
+                "destroy": true,
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "order": [],
+                "ajax": {
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_giro_out_bysts')?>",
+                    "type": "POST",
+                    "data": function(data){
+                        data.sts = '2';
+                        data.brch = $('[name="user_branch"]').val();
+                        data.chk = '3';
+                    },
+                },
+                "columnDefs": [
+                { 
+                    "targets": [ 0 ],
+                    "orderable": false,
+                },
+                ],
+            });
+        }
         function pick_girooutopen(id)
         {
             $.ajax({
@@ -649,6 +757,57 @@
                     pick_bank(data.BANK_ID);
                     $('[name="giro_info"]').val(data.GROUT_INFO);
                     giro_keluar_detail(data.GROUT_ID);
+                    $('#modal_giro_out_edit').modal('hide');                    
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function pick_girooutchk(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_girooutgb/')?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('[name="giro_id"]').val(data.GROUT_ID);
+                    $('[name="giro_nomor"]').val(data.GROUT_CODE);
+                    $('[name="giro_tgl"]').val(data.GROUT_DATE);
+                    pick_giroout(data.GROUT_ID);
+                    sts=1;
+                    pick_bank(data.BANK_ID);
+                    $('[name="giro_info"]').val(data.GROUT_INFO);
+                    giro_keluar_detail(data.GROUT_ID);
+                    $('.btnCh').css({'display':'none'});
+                    $('#modal_giro_out_edit').modal('hide');                    
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function pick_girooutapr(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_girooutgb/')?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('[name="giro_id"]').val(data.GROUT_ID);
+                    $('[name="giro_nomor"]').val(data.GROUT_CODE);
+                    $('[name="giro_tgl"]').val(data.GROUT_DATE);
+                    pick_giroout(data.GROUT_ID);
+                    sts=1;
+                    pick_bank(data.BANK_ID);
+                    $('[name="giro_info"]').val(data.GROUT_INFO);
+                    giro_keluar_detail(data.GROUT_ID);
+                    $('.btnCh').css({'display':'none'});
+                    $('.btnApr').prop('disabled',false);
                     $('#modal_giro_out_edit').modal('hide');                    
                 },
                 error: function (jqXHR, textStatus, errorThrown)
