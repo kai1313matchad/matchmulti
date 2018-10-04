@@ -291,7 +291,8 @@
                     dt_tp1();
                     var sal_deb = data['c'];
                     var sal_cre = data['d'];
-                    var sal_str = (sal_deb-sal_cre)*1;
+                    var sal_strcoa = data['g']["COA_DEBIT"]-data['g']["COA_CREDIT"]*1;
+                    var sal_str = (sal_deb-sal_cre)*1+(sal_strcoa*1);
                     var sum_deb =  Math.abs($('[name="sum_debit"]').text());
                     var sum_cre = Math.abs($('[name="sum_credit"]').text());
                     var sal_end = (sal_str+sum_deb)*1-sum_cre;

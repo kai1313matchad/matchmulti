@@ -413,10 +413,11 @@
 			$data['g'] = $this->finance->gen_saldostr($brc,$coa,$datestr,$dateend);
 			$data['c'] = $this->finance->get_cashsaldosum('trx_cash_in a','sum(d.CSHDETIN_AMOUNT) as SUM','cashin_det d','d.csh_id = a.csh_id','a.csh_date <',$this->input->post('branch'),$this->input->post('coa_id'),$this->input->post('date_start'));
 			$data['d'] = $this->finance->get_cashsaldosum('trx_cash_out a','sum(d.CSHODET_AMOUNT) as SUM','cashout_det d','d.csho_id = a.csho_id','a.csho_date <',$this->input->post('branch'),$this->input->post('coa_id'),$this->input->post('date_start'));
-			$get = $this->db->get_where('other_settings',array('os_id'=>'1'));
-			$notafin = $get->row()->NOTAFIN_ACC;			
+			$get = $this->db->get_where('other_settings',array('branch_id'=>$brc));
+			$notafin = $get->row()->NOTAFIN_ACC;
 			$data['e'] = $this->finance->get_notafinsum('trx_cash_in a','sum(d.CSHDETIN_AMOUNT) as SUM','cashin_det d','d.csh_id = a.csh_id','a.csh_date <',$this->input->post('branch'),$notafin,$this->input->post('date_start'));
 			$data['f'] = $this->finance->get_notafinsum('trx_cash_out a','sum(d.CSHODET_AMOUNT) as SUM','cashout_det d','d.csho_id = a.csho_id','a.csho_date <',$this->input->post('branch'),$notafin,$this->input->post('date_start'));
+			$data['g'] = $this->db->get_where('chart_of_account',array('coa_id'=>$coa))->row();
 			echo json_encode($data);
 		}
 
