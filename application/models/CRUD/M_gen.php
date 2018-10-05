@@ -120,6 +120,7 @@
 			$data = array(
 					'csh_code'=>$res,
 					'branch_id'=>$brc,
+					'csh_date'=>date('Y-m-d'),
 					'csh_sts'=>'0'
 				);			
 			$this->db->insert('trx_cash_in',$data);
@@ -155,6 +156,7 @@
 			$data = array(
 					'csho_code'=>$res,
 					'branch_id'=>$brc,
+					'csho_date'=>date('Y-m-d'),
 					'csho_sts'=>'0'
 				);			
 			$this->db->insert('trx_cash_out',$data);
@@ -190,6 +192,7 @@
 			$data = array(
 					'bnk_code'=>$res,
 					'branch_id'=>$brc,
+					'bnk_date'=>date('Y-m-d'),
 					'bnk_sts'=>'0'
 				);			
 			$this->db->insert('trx_bankin',$data);			
@@ -225,6 +228,7 @@
 			$data = array(
 					'bnko_code'=>$res,
 					'branch_id'=>$brc,
+					'bnko_date'=>date('Y-m-d'),
 					'bnko_sts'=>'0'
 				);			
 			$this->db->insert('trx_bankout',$data);			
@@ -260,6 +264,7 @@
 			$data = array(
 					'grin_code'=>$res,
 					'branch_id'=>$brc,
+					'grin_date'=>date('Y-m-d'),
 					'grin_sts'=>'0'
 				);			
 			$this->db->insert('trx_giro_in',$data);			
@@ -295,6 +300,7 @@
 			$data = array(
 					'grout_code'=>$res,
 					'branch_id'=>$brc,
+					'grout_date'=>date('Y-m-d'),
 					'grout_sts'=>'0'
 				);			
 			$this->db->insert('trx_giro_out',$data);			
@@ -330,6 +336,7 @@
 			$data = array(
 					'bud_code'=>$res,
 					'branch_id'=>$brc,
+					'bud_date'=>date('Y-m-d'),
 					'bud_dtsts'=>'0'
 				);			
 			$this->db->insert('trx_budget',$data);			
@@ -364,6 +371,7 @@
 			$data = array(
 					'poga_code'=>$res,
 					'branch_id'=>$brc,
+					'poga_date'=>date('Y-m-d'),
 					'poga_sts'=>'0'
 				);			
 			$this->db->insert('trx_po_ga',$data);			
@@ -397,6 +405,7 @@
 			$data = array(
 					'prcga_code'=>$res,
 					'branch_id'=>$brc,
+					'prcga_date'=>date('Y-m-d'),
 					'prcga_sts'=>'0'
 				);			
 			$this->db->insert('trx_prc_ga',$data);			
@@ -430,6 +439,7 @@
 			$data = array(
 					'rtprcga_code'=>$res,
 					'branch_id'=>$brc,
+					'rtprcga_date'=>date('Y-m-d'),
 					'rtprcga_sts'=>'0'
 				);			
 			$this->db->insert('prcga_ret',$data);			
@@ -463,6 +473,7 @@
 			$data = array(
 					'usgga_code'=>$res,
 					'branch_id'=>$brc,
+					'usgga_date'=>date('Y-m-d'),
 					'usgga_sts'=>'0'
 				);			
 			$this->db->insert('trx_usage_ga',$data);			
@@ -496,6 +507,7 @@
 			$data = array(
 					'rtusgga_code'=>$res,
 					'branch_id'=>$brc,
+					'rtusgga_date'=>date('Y-m-d'),
 					'rtusgga_sts'=>'0'
 				);			
 			$this->db->insert('usage_ga_ret',$data);			
@@ -530,6 +542,7 @@
 			$data = array(
 					'po_code'=>$res,
 					'branch_id'=>$brc,
+					'po_date'=>date('Y-m-d'),
 					'po_sts'=>'0'
 				);
 			$this->db->insert('trx_po',$data);
@@ -564,6 +577,7 @@
 			$data = array(
 					'prc_code'=>$res,
 					'branch_id'=>$brc,
+					'prc_date'=>date('Y-m-d'),
 					'prc_sts'=>'0'
 				);			
 			$this->db->insert('trx_procurement',$data);			
@@ -598,6 +612,7 @@
 			$data = array(
 					'rtprc_code'=>$res,
 					'branch_id'=>$brc,
+					'rtprc_date'=>date('Y-m-d'),
 					'rtprc_sts'=>'0'
 				);			
 			$this->db->insert('procurement_ret',$data);			
@@ -631,6 +646,7 @@
 			$data = array(
 					'usg_code'=>$res,
 					'branch_id'=>$brc,
+					'usg_date'=>date('Y-m-d'),
 					'usg_sts'=>'0'
 				);			
 			$this->db->insert('trx_usage',$data);			
@@ -664,6 +680,7 @@
 			$data = array(
 					'rtusg_code'=>$res,
 					'branch_id'=>$brc,
+					'rtusg_date'=>date('Y-m-d'),
 					'rtusg_sts'=>'0'
 				);			
 			$this->db->insert('usage_ret',$data);			
@@ -697,6 +714,7 @@
 			$data = array(
 					'adj_code'=>$res,
 					'branch_id'=>$brc,
+					'adj_date'=>date('Y-m-d'),
 					'adj_dtsts'=>'0'
 				);			
 			$this->db->insert('trx_adjustment',$data);			
@@ -730,6 +748,7 @@
 			$data = array(
 					'adjga_code'=>$res,
 					'branch_id'=>$brc,
+					'adjga_date'=>date('Y-m-d'),
 					'adjga_dtsts'=>'0'
 				);			
 			$this->db->insert('trx_adj_ga',$data);			
@@ -761,6 +780,7 @@
 			$data = array(
 					'balg_code'=>$res,
 					'branch_id'=>$brc,
+					'balg_date'=>date('Y-m-d'),
 					'balg_sts'=>'0'
 				);			
 			$this->db->insert('trx_bapplog',$data);			
@@ -829,6 +849,7 @@
 			$data = array(
 					'bapp_code'=>$res,
 					'branch_id'=>$brc,
+					'bapp_date'=>date('Y-m-d'),
 					'bapp_sts'=>'0'
 				);			
 			$this->db->insert('trx_bapp',$data);
@@ -864,6 +885,7 @@
 			$data = array(
 					'inv_code'=>$res,
 					'branch_id'=>$brc,
+					'inv_date'=>date('Y-m-d'),
 					'inv_sts'=>'0'
 				);			
 			$this->db->insert('trx_invoice',$data);
@@ -919,6 +941,7 @@
 			$data = array(
 					'pappr_code'=>$res,
 					'branch_id'=>$brc,
+					'pappr_date'=>date('Y-m-d'),
 					'pappr_sts'=>'0'
 				);			
 			$this->db->insert('trx_permitappr',$data);
