@@ -1,3 +1,13 @@
+08102018
+- edit tabel his_poga
+	ALTER TABLE `his_poga`
+	ADD COLUMN `HISPOGA_TIME` TIME NULL DEFAULT NULL AFTER `HISPOGA_DATE`;
+- edit tabel his_prcga
+	ALTER TABLE `his_prcga`
+	ADD COLUMN `HISPRCGA_TIME` TIME NULL DEFAULT NULL AFTER `HISPRCGA_DATE`;
+- edit tabel his_usgga
+	ALTER TABLE `his_usgga`
+	ADD COLUMN `HISUSGGA_TIME` TIME NULL DEFAULT NULL AFTER `HISUSGGA_DATE`;
 30092018
 - edit tabel his_giroout
 	ALTER TABLE `his_giroout`
