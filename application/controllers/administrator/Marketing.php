@@ -42,15 +42,41 @@
 			echo json_encode($data);
 		}
 
-		public function mkt_trx_approval()
+		public function mkt_trx_test()
 		{
 			$this->authsys->trx_check_($_SESSION['user_id'],'MKT');
 			$data['pattyp'] = $this->crud->get_pattyp();			
 			$data['title']='Match Terpadu - Dashboard Marketing';
 			$data['menu']='marketing';
 			$data['menulist']='approval';
-			$data['isi']='menu/administrator/marketing/mkt_trx_approval2';
+			$data['isi']='menu/administrator/marketing/mkt_trx_approvalt1';
 			$this->load->view('layout/administrator/wrapper',$data);
+		}
+
+		public function mkt_trx_approval()
+		{
+			$brc = $this->session->userdata('user_branch');
+			switch ($brc)
+			{
+				case '3':
+					$this->authsys->trx_check_($_SESSION['user_id'],'MKT');
+					$data['pattyp'] = $this->crud->get_pattyp();
+					$data['title']='Match Terpadu - Dashboard Marketing';
+					$data['menu']='marketing';
+					$data['menulist']='approval';
+					$data['isi']='menu/administrator/marketing/mkt_trx_approvalt1';
+					$this->load->view('layout/administrator/wrapper',$data);
+					break;
+				default:
+					$this->authsys->trx_check_($_SESSION['user_id'],'MKT');
+					$data['pattyp'] = $this->crud->get_pattyp();
+					$data['title']='Match Terpadu - Dashboard Marketing';
+					$data['menu']='marketing';
+					$data['menulist']='approval';
+					$data['isi']='menu/administrator/marketing/mkt_trx_approval2';
+					$this->load->view('layout/administrator/wrapper',$data);
+					break;
+			}
 		}
 
 		public function gen_bapp()
@@ -116,12 +142,26 @@
 
 		public function pageprint_approval($id)
 		{
-			$this->authsys->trx_check_($_SESSION['user_id'],'MKT');
-			$data['id']=$id;
-			$data['title']='Match Terpadu - Dashboard Marketing';
-			$data['menu']='marketing';
-			$data['menulist']='report_marketing';
-			$this->load->view('menu/administrator/marketing/print_approval',$data);
+			$brc = $this->session->userdata('user_branch');
+			switch ($brc)
+			{
+				case '3':
+					$this->authsys->trx_check_($_SESSION['user_id'],'MKT');
+					$data['id']=$id;
+					$data['title']='Match Terpadu - Dashboard Marketing';
+					$data['menu']='marketing';
+					$data['menulist']='report_marketing';
+					$this->load->view('menu/administrator/marketing/print_approvalt1',$data);
+					break;
+				default:
+					$this->authsys->trx_check_($_SESSION['user_id'],'MKT');
+					$data['id']=$id;
+					$data['title']='Match Terpadu - Dashboard Marketing';
+					$data['menu']='marketing';
+					$data['menulist']='report_marketing';
+					$this->load->view('menu/administrator/marketing/print_approval',$data);
+					break;
+			}
 		}
 
 		public function print_bapp()
@@ -899,8 +939,8 @@
 				$row[] = $dat->TERMSDET_PERC.'%';
 				$row[] = $dat->TERMSDET_SUM;
 				$row[] = $dat->TERMSDET_DPP;
-				$row[] = $dat->TERMSDET_PPN_PERC.'%';
-				$row[] = $dat->TERMSDET_PPH_PERC.'%';
+				$row[] = $dat->TERMSDET_PPN_SUM;
+				$row[] = $dat->TERMSDET_PPH_SUM;
 				$row[] = '<a href="javascript:void(0)" title="Hapus Data" class="btn btnCh btn-sm btn-danger btn-responsive" onclick="del_termapp('."'".$dat->TERMSDET_ID."'".')"><span class="glyphicon glyphicon-remove"></span></a>';
 				$data[] = $row;
 			}
@@ -926,8 +966,8 @@
 				$row[] = $dat->TERMSDET_PERC.'%';
 				$row[] = $dat->TERMSDET_SUM;
 				$row[] = $dat->TERMSDET_DPP;
-				$row[] = $dat->TERMSDET_PPN_PERC.'%';
-				$row[] = $dat->TERMSDET_PPH_PERC.'%';
+				$row[] = $dat->TERMSDET_PPN_SUM;
+				$row[] = $dat->TERMSDET_PPH_SUM;
 				$row[] = '<a href="javascript:void(0)" title="Hapus Data" class="btn btnCh btn-sm btn-danger btn-responsive" disabled><span class="glyphicon glyphicon-remove"></span></a>';
 				$data[] = $row;
 			}
@@ -989,6 +1029,23 @@
 	        echo json_encode(array("status" => TRUE));
 	    }
 
+	    public function ajax_add_termappt1()
+	    {
+	        $table = 'appr_terms_det';
+	        $data = array(
+	                'appr_id' => $this->input->post('appr_id'),
+	                'termsdet_code' => $this->input->post('termcode'),
+	                'termsdet_info' => $this->input->post('terminfo'),
+	                'termsdet_date' => $this->input->post('tgl_term'),
+	                'termsdet_perc' => $this->input->post('termperc'),
+	                'termsdet_dpp' => $this->input->post('termdpp'),
+	                'termsdet_sum' => $this->input->post('termsum'),
+	                'termsdet_ppn_sum' => $this->input->post('termppnn')
+	            );
+	        $insert = $this->crud->save($table,$data);
+	        echo json_encode(array("status" => TRUE));
+	    }
+
 	    public function ajax_del_termapp($id)
 	    {
 	    	$this->crud->delete_by_id('appr_terms_det',array('termsdet_id' => $id));
@@ -1041,6 +1098,56 @@
 			echo json_encode($output);
 		}
 
+		public function ajax_costappt1($id)
+		{
+			$list = $this->costapp->get_datatables($id);
+			$data = array();
+			$no = $_POST['start'];
+			foreach ($list as $dat) {
+				$no++;
+				$row = array();
+				$row[] = $no;
+				$row[] = $dat->CSTDT_CODE;
+				$row[] = $dat->CSTDT_PPNAMOUNT;
+				$row[] = $dat->CSTDT_PPHAMOUNT;
+				$row[] = $dat->CSTDT_AMOUNT;
+				$row[] = '<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive btnCh" onclick="del_costapp('."'".$dat->CSTDT_ID."'".')"><span class="glyphicon glyphicon-remove"></span></a>';
+				$data[] = $row;
+			}
+			$output = array(
+							"draw" => $_POST['draw'],
+							"recordsTotal" => $this->costapp->count_all(),
+							"recordsFiltered" => $this->costapp->count_filtered($id),
+							"data" => $data,
+					);			
+			echo json_encode($output);
+		}
+
+		public function ajax_costappt1_($id)
+		{
+			$list = $this->costapp->get_datatables($id);
+			$data = array();
+			$no = $_POST['start'];
+			foreach ($list as $dat) {
+				$no++;
+				$row = array();
+				$row[] = $no;
+				$row[] = $dat->CSTDT_CODE;
+				$row[] = $dat->CSTDT_PPNAMOUNT;
+				$row[] = $dat->CSTDT_PPHAMOUNT;
+				$row[] = $dat->CSTDT_AMOUNT;
+				$row[] = '<a href="javascript:void(0)" title="Hapus Data" class="btn btn-sm btn-danger btn-responsive btnCh" disabled)"><span class="glyphicon glyphicon-remove"></span></a>';
+				$data[] = $row;
+			}
+			$output = array(
+							"draw" => $_POST['draw'],
+							"recordsTotal" => $this->costapp->count_all(),
+							"recordsFiltered" => $this->costapp->count_filtered($id),
+							"data" => $data,
+					);			
+			echo json_encode($output);
+		}
+
 		public function ajax_costappbrc($id)
 		{
 			$list = $this->costapp->get_datatables($id);
@@ -1071,7 +1178,22 @@
 	        $data = array(
 	                'appr_id' => $this->input->post('appr_id'),
 	                'cstdt_code' => $this->input->post('cost_code'),
-	                'cstdt_amount' => $this->input->post('cost_amount')	                
+	                'cstdt_amount' => $this->input->post('cost_amount')
+	            );
+	        $insert = $this->crud->save($table,$data);
+	        echo json_encode(array("status" => TRUE));
+	    }
+
+	    public function ajax_add_costappt1()
+	    {
+	    	$this->_validate_costapp();
+	        $table = 'appr_cost_det';
+	        $data = array(
+	                'appr_id' => $this->input->post('appr_id'),
+	                'cstdt_code' => $this->input->post('cost_code'),
+	                'cstdt_ppnamount' => $this->input->post('ppncost'),
+	                'cstdt_pphamount' => $this->input->post('pphcost'),
+	                'cstdt_amount' => $this->input->post('cost_amount')
 	            );
 	        $insert = $this->crud->save($table,$data);
 	        echo json_encode(array("status" => TRUE));
@@ -1155,6 +1277,60 @@
 	                'appr_bbtax' => $this->input->post('appr_bbtax'),
 	                'appr_sub_ppn' => $this->input->post('subtotal2'),	                
 	                'appr_pph_perc' => $this->input->post('pphp'),	                
+	                'appr_pph_sum' => $this->input->post('pphn'),
+	                'appr_tot_income' => $this->input->post('gtotal')
+	            );
+	        $update = $this->crud->update('trx_approvalbill',$data,array('appr_id' => $this->input->post('appr_id')));
+	        $this->logupd_appr_save($this->input->post('appr_id'),$this->input->post('user_name'),'Posted');
+	        echo json_encode(array("status" => TRUE));
+	    }
+
+	    public function ajax_simpanappt1()
+	    {
+	    	$this->_validate_appr();
+	    	$get = $this->crud->get_by_id('master_user',array('user_id' => $this->input->post('user_id')));
+	    	$get2 = $this->crud->get_by_id('master_branch',array('branch_id' => $get->BRANCH_ID));
+	    	$data = array(
+	    			// Kumpulan Key
+	                'user_id' => $this->input->post('user_id'),
+	                'bb_id' => ($this->input->post('bb_id') != '')?$this->input->post('bb_id'):NULL,
+	                'loc_id' => ($this->input->post('loc_id') != '')?$this->input->post('loc_id'):NULL,
+	                'cust_id' => $this->input->post('cust_id'),
+	                'sales_id' => $this->input->post('sales_id'),
+	                'curr_id' => $this->input->post('curr_id'),
+	                'plc_id' => ($this->input->post('plc_id') != '')?$this->input->post('plc_id'):NULL,
+	                // Data Tabel
+	                'appr_code' => $this->input->post('appr_code'),
+	                'appr_sts' => '2', //Ubah status jadi menunggu approve
+	                'appr_branchid' => $this->input->post('appr_brcid'),
+	                'appr_own' => $get2->BRANCH_STATUS,
+	                'appr_branch' => $this->input->post('appr_brc'),
+	                'appr_brcname' => $get2->BRANCH_NAME,
+	                'appr_branch_income' => $this->input->post('brc_nom'),	                
+	                'appr_po' => $this->input->post('appr_po'),
+	                'appr_date' => $this->input->post('tgl'),
+	                'appr_contract_start' => $this->input->post('tgl_awal'),
+	                'appr_contract_end' => $this->input->post('tgl_akhir'),
+	                'appr_recov' => $this->input->post('appr_rec'),
+	                'appr_info' => $this->input->post('appr_info'),
+	                'appr_height' => $this->input->post('appr_height'),
+	                'appr_width' => $this->input->post('appr_width'),
+	                'appr_length' => $this->input->post('appr_length'),
+	                'appr_sumsize' => $this->input->post('appr_sumsize'),
+	                'appr_side' => $this->input->post('appr_side'),
+	                'appr_plcsum' => $this->input->post('appr_plcsum'),	                
+	                'appr_visual' => $this->input->post('appr_vis'),	                
+	                'appr_dpp_income' => $this->input->post('dpp'),
+	                'appr_disc_perc1' => $this->input->post('discp1'),
+	                'appr_disc_perc2' => $this->input->post('discp2'),
+	                'appr_disc_sum1' => $this->input->post('discn1'),
+	                'appr_disc_sum2' => $this->input->post('discn2'),
+	                'appr_sub_dsc' => $this->input->post('subtotal1'),
+	                // 'appr_ppn_perc' => $this->input->post('ppnp'),
+	                'appr_ppn_sum' => $this->input->post('ppnn'),
+	                // 'appr_bbtax' => $this->input->post('appr_bbtax'),
+	                'appr_sub_ppn' => $this->input->post('subtotal2'),	                
+	                // 'appr_pph_perc' => $this->input->post('pphp'),
 	                'appr_pph_sum' => $this->input->post('pphn'),
 	                'appr_tot_income' => $this->input->post('gtotal')
 	            );
@@ -1566,6 +1742,16 @@
 		public function get_subcost($id)
 		{
 			$this->db->select_sum('a.cstdt_amount', 'subtotal');
+			$this->db->join('trx_approvalbill b','b.appr_id = a.appr_id');
+			$this->db->where('a.appr_id',$id);
+			$query = $this->db->get('appr_cost_det a');
+	        $data = $query->row();
+	        echo json_encode($data);
+		}
+
+		public function get_subcost_t1($id)
+		{
+			$this->db->select('sum(a.cstdt_ppnamount) as subppn, sum(a.cstdt_pphamount) as subpph, sum(a.cstdt_amount) as subtotal');
 			$this->db->join('trx_approvalbill b','b.appr_id = a.appr_id');
 			$this->db->where('a.appr_id',$id);
 			$query = $this->db->get('appr_cost_det a');

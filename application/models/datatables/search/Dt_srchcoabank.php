@@ -1,23 +1,23 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
-	class Dt_srchgirooutbysts extends CI_Model 
+	class Dt_srchcoabank extends CI_Model 
 	{
-
-		var $table = 'trx_giro_out a';
-		var $column_order = array(null,'grout_code','grout_date','bank_name','grout_info');
-		var $column_search = array('grout_code','grout_date','bank_name','grout_info');
-		var $order = array('grout_id' => 'desc');
+		var $table = 'chart_of_account a';
+		var $column_order = array(null,'a.coa_acc','a.coa_accname');
+		var $column_search = array('a.coa_acc','a.coa_accname');
+		var $order = array('a.coa_acc' => 'asc');
 		public function __construct()
 		{
 			parent::__construct();		
 		}
-		private function _get_datatables_query($id,$brc)
+		private function _get_datatables_query($brc)
 		{
 			$this->db->from($this->table);
-			$this->db->join('master_bank b','b.bank_id = a.bank_id','left');
-			$this->db->join('master_branch c','c.branch_id = a.branch_id');
-			$this->db->where('a.grout_sts',$id);
-			$this->db->where($brc);
+			$this->db->join('master_branch b','b.branch_id = a.branch_id');
+			$this->db->join('parent_chart c','c.par_id = a.par_id');
+			$this->db->where('a.branch_id',$brc);
+			$this->db->where('c.par_acc = 1120000 or c.par_acc = 2120000 or c.par_acc = 1140000');
+			$this->db->where('a.coa_dtsts','1');
 			$i = 0;
 			foreach ($this->column_search as $item)
 			{
@@ -48,17 +48,17 @@
 				$this->db->order_by(key($order), $order[key($order)]);
 			}
 		}
-		public function get_datatables($id,$brc)
+		public function get_datatables($brc)
 		{
-			$this->_get_datatables_query($id,$brc);
+			$this->_get_datatables_query($brc);
 			if($_POST['length'] != -1)
 			$this->db->limit($_POST['length'], $_POST['start']);
 			$query = $this->db->get();
 			return $query->result();
 		}
-		public function count_filtered($id,$brc)
+		public function count_filtered($brc)
 		{
-			$this->_get_datatables_query($id,$brc);
+			$this->_get_datatables_query($brc);
 			$query = $this->db->get();
 			return $query->num_rows();
 		}

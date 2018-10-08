@@ -60,7 +60,7 @@
                                             <a id="genbtn" href="javascript:void(0)" onclick="gen_invo()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-plus"></span></a>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control" name="inv_code" >
+                                            <input type="text" class="form-control" name="inv_code" readonly>
                                             <input type="hidden" name="inv_id" value="0">
                                         </div>
                                     </div>

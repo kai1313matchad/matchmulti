@@ -55,6 +55,24 @@
 			return $que->row();
 		}
 
+		//Fungsi ambil log histori untuk Giro Masuk
+		public function getlog_giroin($id)
+		{
+			$this->db->where('grin_id',$id);
+			$this->db->where('hisgrin_upcount = (select max(hisgrin_upcount) from his_giroin where grin_id = '.$id.')');
+			$que = $this->db->get('his_giroin');
+			return $que->row();
+		}
+
+		//Fungsi ambil log histori untuk Giro keluar
+		public function getlog_giroout($id)
+		{
+			$this->db->where('grout_id',$id);
+			$this->db->where('hisgro_upcount = (select max(hisgro_upcount) from his_giroout where grout_id = '.$id.')');
+			$que = $this->db->get('his_giroout');
+			return $que->row();
+		}
+
 		//Fungsi ambil nilai jumlah detail kas masuk
 		public function get_sumcashindet($id)
 		{

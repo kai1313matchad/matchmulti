@@ -47,12 +47,12 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">No Kas Masuk </label>
+                                        <label class="col-sm-3 control-label">No Kas Masuk</label>
                                         <div class="col-sm-1">
                                             <a id="genbtn" href="javascript:void(0)" onclick="gen_cashin()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-plus"></span></a>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control" name="kas_nomor">
+                                            <input type="text" class="form-control" name="kas_nomor" readonly>
                                         </div>
                                         <input type="hidden" value='0' class="form-control" name="kas_id">
                                     </div>
@@ -63,14 +63,14 @@
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
-                                                <input type='text' class="form-control input-group-addon" name="kas_tgl" value="<?= date('Y-m-d')?>" />
+                                                <input type='text' class="form-control input-group-addon" name="kas_tgl" value="<?= date('Y-m-d')?>" readonly/>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">No Akun</label>
                                         <div class="col-sm-1">
-                                            <button type="button" class="btn btn-info btn-block" onclick="srch_acc('1')"><span class="glyphicon glyphicon-search"></span></button>
+                                            <button type="button" class="btn btn-info btn-block" onclick="srch_acc()"><span class="glyphicon glyphicon-search"></span></button>
                                         </div>
                                         <div class="col-sm-7">
                                             <input class="form-control" type="text" name="kas_acc" readonly>
@@ -118,7 +118,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">No Akun</label>
                                             <div class="col-sm-2">
-                                                <button type="button" class="btn btn-info btn-block" onclick="srch_acc2('2')"><span class="glyphicon glyphicon-search"></span></button>
+                                                <button type="button" class="btn btn-info btn-block" onclick="srch_acc2()"><span class="glyphicon glyphicon-search"></span></button>
                                             </div>
                                             <div class="col-sm-5">
                                                 <input type="text" class="form-control" name="acc_detail" readonly>
@@ -181,6 +181,16 @@
                                                 <span class="glyphicon glyphicon-print"></span>
                                                 Cetak
                                             </a>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button type="button" onclick="approve_cash_in()" class="btn btn-block btn-primary btnApr" disabled>
+                                                Approve
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button type="button" onclick="disapprove_cash_in()" class="btn btn-block btn-primary btnApr" disabled>
+                                                Disapprove
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -432,8 +442,6 @@
                     $('[name="kas_id"]').val(data.id);
                     $('[name="kas_nomor"]').val(data.kode);
                     $('#genbtn').attr('disabled',true);
-                    // termapp(data.id);
-                    // costapp(data.id);
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
@@ -460,13 +468,12 @@
                 }
             });
         }
-        function add_gd(t)
+        function add_gd()
         {
             $('#modal_account').modal('show');
             $('.modal-title').text('Daftar Account');
-            sts=t;
         }
-        function add_cst(t)
+        function add_cst()
         {
             $('#modal_customer').modal('show');
             $('.modal-title').text('Daftar Customer');
@@ -507,10 +514,8 @@
                 }
             });
         }
-        function srch_acc(t)
+        function srch_acc()
         {
-            sts=t;
-            acc='1110000';
             $('#modal_account').modal('show');
             $('.modal-title').text('Cari Account');
             table = $('#dtb_acc').DataTable({
@@ -521,7 +526,7 @@
                 "serverSide": true,
                 "order": [],
                 "ajax": {
-                    "url": "<?php echo site_url('administrator/Finance/ajax_srch_acc/')?>" + acc,
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_coa_cash')?>",
                     "type": "POST",
                 },
                 "columnDefs": [
@@ -532,9 +537,26 @@
                 ],
             });
         }
-        function srch_acc2(t)
+        function pick_coacash(id)
         {
-            sts=t;
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_coagb/')?>"+id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('[name="kas_acc"]').val(data.COA_ACC +" - "+ data.COA_ACCNAME);
+                    $('[name="acc_id"]').val(data.COA_ID);
+                    $('#modal_account').modal('hide');
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function srch_acc2()
+        {
             $('#modal_account').modal('show');
             $('.modal-title').text('Cari Account');
             table = $('#dtb_acc').DataTable({
@@ -545,7 +567,7 @@
                 "serverSide": true,
                 "order": [],
                 "ajax": {
-                    "url": "<?php echo site_url('administrator/Finance/ajax_srch_acc2/')?>",
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_coabybrc')?>",
                     "type": "POST",
                 },
                 "columnDefs": [
@@ -554,6 +576,24 @@
                     "orderable": false,
                 },
                 ],
+            });
+        }
+        function pick_coagb(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_coagb/')?>"+id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('[name="acc_detail"]').val(data.COA_ACC +" - "+data.COA_ACCNAME);
+                    $('[name="acc_id_detail"]').val(data.COA_ID);
+                    $('#modal_account').modal('hide');
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
             });
         }
         function pick_acc(id)
@@ -796,6 +836,48 @@
                 }
             });
         }
+        function approve_cash_in()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/ajax_approve_cash_in')?>",
+                type: "POST",
+                data: $('#form_kas').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Finance/cash_in')?>";
+                        window.location = url;
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
+        function disapprove_cash_in()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/ajax_disapprove_cash_in')?>",
+                type: "POST",
+                data: $('#form_kas').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Finance/cash_in')?>";
+                        window.location = url;
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
         function kas_masuk_detail(id)
         {
             table = $('#dtb_kas_in_detail').DataTable({
@@ -988,8 +1070,7 @@
                     $('[name="kas_id"]').val(data.CSH_ID);
                     $('[name="kas_nomor"]').val(data.CSH_CODE);
                     $('[name="kas_tgl"]').val(data.CSH_DATE);
-                    sts=1;
-                    pick_acc(data.COA_ID);
+                    pick_coacash(data.COA_ID);
                     $('[name="kas_info"]').val(data.CSH_INFO);
                     cust = (data.CUST_ID != null)?data.CUST_ID:data.CSTIN_ID;
                     md = (data.CUST_ID != null)?'0':'1';
@@ -1016,8 +1097,7 @@
                     $('[name="kas_id"]').val(data.CSH_ID);
                     $('[name="kas_nomor"]').val(data.CSH_CODE);
                     $('[name="kas_tgl"]').val(data.CSH_DATE);
-                    sts=1;
-                    pick_acc(data.COA_ID);
+                    pick_coacash(data.COA_ID);
                     $('[name="kas_info"]').val(data.CSH_INFO);
                     cust = (data.CUST_ID != null)?data.CUST_ID:data.CSTIN_ID;
                     md = (data.CUST_ID != null)?'0':'1';
@@ -1025,6 +1105,35 @@
                     pick_curr(data.CURR_ID)
                     kas_masuk_detail(data.CSH_ID);
                     $('.btnCh').css({'display':'none'});
+                    $('#modal_cash_in_edit').modal('hide');                    
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function pick_cashinapr(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_cashingb/')?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('#form_kas')[0].reset();
+                    $('[name="kas_id"]').val(data.CSH_ID);
+                    $('[name="kas_nomor"]').val(data.CSH_CODE);
+                    $('[name="kas_tgl"]').val(data.CSH_DATE);
+                    pick_coacash(data.COA_ID);
+                    $('[name="kas_info"]').val(data.CSH_INFO);
+                    cust = (data.CUST_ID != null)?data.CUST_ID:data.CSTIN_ID;
+                    md = (data.CUST_ID != null)?'0':'1';
+                    pick_custedit(md,cust);
+                    pick_curr(data.CURR_ID)
+                    kas_masuk_detail(data.CSH_ID);
+                    $('.btnCh').css({'display':'none'});
+                    $('.btnApr').prop('disabled',false);
                     $('#modal_cash_in_edit').modal('hide');                    
                 },
                 error: function (jqXHR, textStatus, errorThrown)

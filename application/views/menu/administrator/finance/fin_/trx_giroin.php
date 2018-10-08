@@ -12,6 +12,16 @@
                             <span class="glyphicon glyphicon-edit"> Edit</span>
                         </a>
                     </div>
+                    <div class="col-sm-2">
+                        <a href="javascript:void(0)" onclick="check_giro_in()" class="btn btn-block btn-primary">
+                            <span class="glyphicon glyphicon-edit"> Lihat</span>
+                        </a>
+                    </div>
+                    <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '3')?'':'style="display:none"');?>>
+                        <a href="javascript:void(0)" onclick="apr_giro_in()" class="btn btn-block btn-primary">
+                            <span class="glyphicon glyphicon-ok"> Approve</span>
+                        </a>
+                    </div>
                     <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '3')?'':'style="display:none"');?>>
                         <a href="javascript:void(0)" onclick="open_giro_in()" class="btn btn-block btn-primary">
                             <span class="glyphicon glyphicon-open"> Open</span>
@@ -155,6 +165,16 @@
                                                 <span class="glyphicon glyphicon-print"></span>
                                                 Cetak
                                             </a>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button type="button" onclick="approve_giro_in()" class="btn btn-block btn-primary btnApr" disabled>
+                                                Approve
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button type="button" onclick="disapprove_giro_in()" class="btn btn-block btn-primary btnApr" disabled>
+                                                Disapprove
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -478,8 +498,50 @@
                 }
             });
         }
+        function approve_giro_in()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/ajax_approve_giro_in')?>",
+                type: "POST",
+                data: $('#form_giro').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Finance/bg_in')?>";
+                        window.location = url;
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
+        function disapprove_giro_in()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/ajax_disapprove_giro_in')?>",
+                type: "POST",
+                data: $('#form_giro').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Finance/bg_in')?>";
+                        window.location = url;
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
         function save_giro_in_detail()
-        {            
+        {
             $.ajax({
                 url : "<?php echo site_url('administrator/Finance/ajax_simpan_giro_in_detail')?>",
                 type: "POST",
@@ -571,6 +633,34 @@
                 ],
             });
         }
+        function check_giro_in()
+        {
+            $('#modal_giro_in_edit').modal('show');
+            $('.modal-title').text('Cari Giro Masuk');
+            table = $('#dtb_giro_in_edit').DataTable({
+                "info": false,
+                "destroy": true,
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "order": [],                
+                "ajax": {
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_giro_in_bysts')?>",
+                    "type": "POST",
+                    "data": function(data){
+                        data.sts = '1';
+                        data.brch = $('[name="user_branch"]').val();
+                        data.chk = '2';
+                    },
+                },
+                "columnDefs": [
+                { 
+                    "targets": [ 0 ],
+                    "orderable": false,
+                },
+                ],
+            });
+        }
         function open_giro_in()
         {
             $('#modal_giro_in_edit').modal('show');
@@ -589,6 +679,34 @@
                         data.sts = '1';
                         data.brch = $('[name="user_branch"]').val();
                         data.chk = '1';
+                    },
+                },                
+                "columnDefs": [
+                { 
+                    "targets": [ 0 ],
+                    "orderable": false,
+                },
+                ],
+            });
+        }
+        function apr_giro_in()
+        {
+            $('#modal_giro_in_edit').modal('show');
+            $('.modal-title').text('Cari Giro Masuk');            
+            table = $('#dtb_giro_in_edit').DataTable({
+                "info": false,
+                "destroy": true,
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "order": [],                
+                "ajax": {
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_giro_in_bysts')?>",
+                    "type": "POST",
+                    "data": function(data){
+                        data.sts = '2';
+                        data.brch = $('[name="user_branch"]').val();
+                        data.chk = '3';
                     },
                 },                
                 "columnDefs": [
@@ -640,6 +758,57 @@
                     pick_bank(data.BANK_ID);
                     $('[name="giro_info"]').val(data.GRIN_INFO);
                     giro_masuk_detail(data.GRIN_ID);
+                    $('#modal_giro_in_edit').modal('hide');                    
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function pick_giroinchk(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_giroingb/')?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('[name="giro_id"]').val(data.GRIN_ID);
+                    $('[name="giro_nomor"]').val(data.GRIN_CODE);
+                    $('[name="giro_tgl"]').val(data.GRIN_DATE);
+                    pick_giroin(data.GRIN_ID);
+                    sts=1;
+                    pick_bank(data.BANK_ID);
+                    $('[name="giro_info"]').val(data.GRIN_INFO);
+                    giro_masuk_detail(data.GRIN_ID);
+                    $('.btnCh').css({'display':'none'});
+                    $('#modal_giro_in_edit').modal('hide');                    
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function pick_giroinapr(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_giroingb/')?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('[name="giro_id"]').val(data.GRIN_ID);
+                    $('[name="giro_nomor"]').val(data.GRIN_CODE);
+                    $('[name="giro_tgl"]').val(data.GRIN_DATE);
+                    pick_giroin(data.GRIN_ID);
+                    sts=1;
+                    pick_bank(data.BANK_ID);
+                    $('[name="giro_info"]').val(data.GRIN_INFO);
+                    giro_masuk_detail(data.GRIN_ID);
+                    $('.btnCh').css({'display':'none'});
+                    $('.btnApr').prop('disabled',false);
                     $('#modal_giro_in_edit').modal('hide');                    
                 },
                 error: function (jqXHR, textStatus, errorThrown)

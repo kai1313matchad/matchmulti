@@ -1,21 +1,3 @@
-<!-- Page Content -->
-        <!-- <style>
-              /*#myDIV {
-                    width: 100%;
-                    padding: 50px 0;
-                    text-align: center;
-                    background-color: lightblue;
-                    margin-top: 20px;
-              }
-              #myKas {
-                    width: 100%;
-                    text-align: center;
-              }
-              #mySave {
-                    width: 100%;
-                    text-align: center;
-              }*/
-        </style> -->
         <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row">
@@ -35,6 +17,11 @@
                         </a>
                     </div>
                     <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '3')?'':'style="display:none"');?>>
+                        <a href="javascript:void(0)" onclick="apr_cash_out()" class="btn btn-block btn-primary">
+                            <span class="glyphicon glyphicon-ok"> Approve</span>
+                        </a>
+                    </div>
+                    <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '3')?'':'style="display:none"');?>>
                         <a href="javascript:void(0)" onclick="open_cash_out()" class="btn btn-block btn-primary">
                             <span class="glyphicon glyphicon-open"> Open</span>
                         </a>
@@ -46,9 +33,6 @@
                             <li class="active">
                                 <a href="#myKas" data-toggle="tab">Kas Keluar</a>
                             </li>
-                            <!-- <li>
-                                <a href="#2" data-toggle="tab">Detail Kas Keluar</a>
-                            </li> -->
                         </ul>
                         <form action="#" method="post" class="form-horizontal" id="form_kas">
                             <div class="tab-content">
@@ -68,7 +52,7 @@
                                             <a id="genbtn" href="javascript:void(0)" onclick="gen_cashout()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-plus"></span></a>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control" name="kas_nomor" >
+                                            <input type="text" class="form-control" name="kas_nomor" readonly>
                                             <input type="hidden" name="kas_id" value="0">
                                         </div>
                                     </div>
@@ -79,20 +63,14 @@
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
-                                                <input type='text' class="form-control input-group-addon" name="kas_tgl" value="<?= date('Y-m-d')?>" />
+                                                <input type='text' class="form-control input-group-addon" name="kas_tgl" value="<?= date('Y-m-d')?>" readonly/>
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div class="form-group">
-                                        <label class="col-sm-3 control-label">Tanggal</label>
-                                        <div class="col-sm-4">
-                                            <input class="form-control" type="text" name="kas_tgl" value="<?php echo date("d/m/Y"); ?>" readonly>
-                                        </div>
-                                    </div> -->
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">No Akun</label>
                                         <div class="col-sm-1">
-                                            <button type="button" class="btn btn-info btn-block" onclick="srch_acc('1')"><span class="glyphicon glyphicon-search"></span></button>
+                                            <button type="button" class="btn btn-info btn-block" onclick="srch_acc()"><span class="glyphicon glyphicon-search"></span></button>
                                         </div>
                                         <div class="col-sm-7">
                                             <input class="form-control" type="text" name="kas_acc" readonly>
@@ -194,7 +172,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-sm-2">No Akun</label>
                                             <div class="col-sm-2">
-                                                <button type="button" class="btn btn-info btn-block" onclick="srch_acc2('2')"><span class="glyphicon glyphicon-search"></span></button>
+                                                <button type="button" class="btn btn-info btn-block" onclick="srch_acc2()"><span class="glyphicon glyphicon-search"></span></button>
                                             </div>
                                             <div class="col-sm-5">
                                                 <input class="form-control" type="text" name="acc_detail">
@@ -258,96 +236,18 @@
                                                 Cetak
                                             </a>
                                         </div>
-                                    </div>
-                                </div>      
-                                <!-- <div class="tab-pane fade" id="2">
-                                    <div class="form-group">
-                                        <div class="col-sm-4 col-sm-offset-3 text-center">
-                                            <h2>Data Kas Keluar</h2>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-2">
-                                            <button type="button" class="btn btn-success" onclick="myFunction()"><i class="glyphicon glyphicon-plus"></i> Tambah Kas Keluar</button>
-                                        </div>
-                                    </div><br>
-                                    <div id="myDIV">
-                                        <div class="form-group">
-                                             <label class="col-sm-3 control-label">No Account</label>
-                                             <div class="col-sm-4">
-                                                  <input class="form-control" type="text" name="acc_detail" readonly>
-                                             </div>
-                                             <div class="col-sm-1">
-                                                  <button type="button" class="btn btn-info" onclick="srch_acc2('2')"><span class="glyphicon glyphicon-search"></span> Cari</button>
-                                             </div>
-                                             <input class="form-control" type="hidden" name="acc_id_detail">
-                                        </div>
-                                        <div class="form-group">
-                                             <label class="col-sm-3 control-label">No Beli</label>
-                                             <div class="col-sm-4">
-                                                  <input class="form-control" type="text" name="no_beli">
-                                             </div>
-                                             <div class="col-sm-1">
-                                                  <button type="button" class="btn btn-info" onclick="srch_prc()"><span class="glyphicon glyphicon-search"></span> Cari</button>
-                                             </div>
-                                             <input class="form-control" type="hidden" name="id_beli">
-                                        </div>
-                                        <div class="form-group">
-                                             <label class="col-sm-3 control-label">Keterangan</label>
-                                             <div class="col-sm-4">
-                                                  <input class="form-control" type="text" name="ket_detail">
-                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                             <label class="col-sm-3 control-label">Nominal</label>
-                                             <div class="col-sm-4">
-                                                  <input class="form-control curr-num" type="text" name="nominal">
-                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <button type="button" class="btn btn-success" onclick="save_cash_out_detail()"><i class="glyphicon glyphicon-floppy-save"></i> Simpan</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-xs-12 table-responsive">
-                                        <table id="dtb_kas_out_detail" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center">No</th>
-                                                    <th class="text-center">No Acc</th>
-                                                    <th class="text-center">No Beli</th>
-                                                    <th class="text-center">Keterangan</th>
-                                                    <th class="text-center">Nominal</th>
-                                                    <th class="text-center">Actions</th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label">Mata Uang || Rate</label>
                                         <div class="col-sm-2">
-                                            <input class="form-control" type="text" name="curr_name" readonly>
-                                            <input type="hidden" name="curr_id" value="">
+                                            <button type="button" onclick="approve_cash_out()" class="btn btn-block btn-primary btnApr" disabled>
+                                                Approve
+                                            </button>
                                         </div>
                                         <div class="col-sm-2">
-                                            <input class="form-control" type="text" name="curr_rate" readonly>
+                                            <button type="button" onclick="disapprove_cash_out()" class="btn btn-block btn-primary btnApr" disabled>
+                                                Disapprove
+                                            </button>
                                         </div>
-                                        <div class="col-sm-1">
-                                            <a href="javascript:void(0)" onclick="srch_curr()" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-search"></span> Cari</a>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <input class="form-control" type="text" name="total">
-                                        </div>
-                                    </div> 
-                                    <div id="mySave" class="row">
-                                    <div class="form-group">
-                                        <button type="button" class="btn btn-success" onclick="save_cash_out()"><i class="glyphicon glyphicon-floppy-save"></i> Simpan</button>
-                                        <button type="button" class="btn btn-success" onclick="printPre()" class="btn btn-block btn-info btn-default">
-                                                <i class="glyphicon glyphicon-print"></i>
-                                                Cetak
-                                        </button>
                                     </div>
-                                    </div>
-                                </div> -->
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -662,9 +562,6 @@
         {
             $('#det_radio0').prop('checked',true);
             $('#myDIV').css({'display':'none'});
-            // $('[name="kas_mu"]').change(function(){
-            //     curr($('select :selected').val());
-            // })
             var id = $('[name="kas_id"]').val();
             kas_keluar_detail(id);
         })
@@ -724,10 +621,8 @@
                 }
             });
         }
-        function srch_acc(t)
+        function srch_acc()
         {
-            sts=t;
-            acc='1110000';
             $('#modal_account').modal('show');
             $('.modal-title').text('Cari Account');
             table = $('#dtb_acc').DataTable({
@@ -738,7 +633,7 @@
                 "serverSide": true,
                 "order": [],
                 "ajax": {
-                    "url": "<?php echo site_url('administrator/Finance/ajax_srch_acc/')?>" + acc,
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_coa_cash')?>",
                     "type": "POST",
                 },
                 "columnDefs": [
@@ -749,10 +644,26 @@
                 ],
             });
         }
-        function srch_acc2(t)
+        function pick_coacash(id)
         {
-            sts=t;
-            //acc=1;
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_coagb/')?>"+id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('[name="kas_acc"]').val(data.COA_ACC +" - "+ data.COA_ACCNAME);
+                    $('[name="acc_id"]').val(data.COA_ID);
+                    $('#modal_account').modal('hide');
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function srch_acc2()
+        {
             $('#modal_account').modal('show');
             $('.modal-title').text('Cari Account');
             table = $('#dtb_acc').DataTable({
@@ -763,7 +674,7 @@
                 "serverSide": true,
                 "order": [],
                 "ajax": {
-                    "url": "<?php echo site_url('administrator/Finance/ajax_srch_acc2/')?>",
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_coabybrc')?>",
                     "type": "POST",
                 },
                 "columnDefs": [
@@ -772,6 +683,24 @@
                     "orderable": false,
                 },
                 ],
+            });
+        }
+        function pick_coagb(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_coagb/')?>"+id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('[name="acc_detail"]').val(data.COA_ACC +" - "+data.COA_ACCNAME);
+                    $('[name="acc_id_detail"]').val(data.COA_ID);
+                    $('#modal_account').modal('hide');
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
             });
         }
         function pick_acc(id)
@@ -781,9 +710,7 @@
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)
-                {   
-                    // $('[name="kas_acc"]').val(data.COA_ACC);
-                    // $('[name="acc_id"]').val(data.COA_ID);     
+                {
                     if (sts=='1')
                     {
                         $('[name="kas_acc"]').val(data.COA_ACC +" - "+ data.COA_ACCNAME);
@@ -1199,6 +1126,48 @@
                 }
             });
         }
+        function approve_cash_out()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/ajax_approve_cash_out')?>",
+                type: "POST",
+                data: $('#form_kas').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Finance/cash_out')?>";
+                        window.location = url;
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
+        function disapprove_cash_out()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/ajax_disapprove_cash_out')?>",
+                type: "POST",
+                data: $('#form_kas').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Finance/cash_out')?>";
+                        window.location = url;
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
         function save_cash_out_detail()
         {
             $.ajax({
@@ -1332,12 +1301,40 @@
                 "serverSide": true,
                 "order": [],
                 "ajax": {
-                    "url": "<?php echo site_url('administrator/Searchdata/srch_cash_out_bystschk')?>",
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_cash_out_bysts')?>",
                     "type": "POST",
                     "data": function(data){
                         data.sts = '1';
                         data.brch = $('[name="user_branch"]').val();
-                        data.chk = '1';
+                        data.chk = '2';
+                    },
+                },
+                "columnDefs": [
+                { 
+                    "targets": [ 0 ],
+                    "orderable": false,
+                },
+                ],
+            });
+        }
+        function apr_cash_out()
+        {
+            $('#modal_cash_out_edit').modal('show');
+            $('.modal-title').text('Cari Kas Keluar');
+            table = $('#dtb_cash_out_edit').DataTable({
+                "info": false,
+                "destroy": true,
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "order": [],
+                "ajax": {
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_cash_out_bysts')?>",
+                    "type": "POST",
+                    "data": function(data){
+                        data.sts = '2';
+                        data.brch = $('[name="user_branch"]').val();
+                        data.chk = '3';
                     },
                 },
                 "columnDefs": [
@@ -1430,6 +1427,40 @@
                     pick_curr(data.CURR_ID);
                     kas_keluar_detail(data.CSHO_ID);
                     $('.btnCh').css({'display':'none'});
+                    $('#modal_cash_out_edit').modal('hide');
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function pick_cashoutapr(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_cashoutgb/')?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('#form_kas')[0].reset();
+                    $('[name="kas_id"]').val(data.CSHO_ID);
+                    $('[name="kas_nomor"]').val(data.CSHO_CODE);
+                    $('[name="kas_tgl"]').val(data.CSHO_DATE);
+                    sts=1;
+                    pick_acc(data.COA_ID);
+                    $('[name="kas_keterangan"]').val(data.CSHO_INFO);
+                    pick_appr(data.CSHO_APPR);
+                    pick_supp(data.CSHO_SUPP);
+                    $('[name="kas_info"]').val(data.CSHO_INFO);
+                    pick_dept(data.DEPT_ID);
+                    pick_anggaran(data.CSHO_BUDGET);
+                    $('[name="head_taxnumber"]').val(data.CSHO_TAXHEADCODE);
+                    $('[name="taxnumber"]').val(data.CSHO_TAXCODE);
+                    pick_curr(data.CURR_ID);
+                    kas_keluar_detail(data.CSHO_ID);
+                    $('.btnCh').css({'display':'none'});
+                    $('.btnApr').prop('disabled',false);
                     $('#modal_cash_out_edit').modal('hide');
                 },
                 error: function (jqXHR, textStatus, errorThrown)

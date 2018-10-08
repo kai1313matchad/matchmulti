@@ -18,6 +18,11 @@
                         </a>
                     </div>
                     <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '3')?'':'style="display:none"');?>>
+                        <a href="javascript:void(0)" onclick="apr_bank_out()" class="btn btn-block btn-primary">
+                            <span class="glyphicon glyphicon-ok"> Approve</span>
+                        </a>
+                    </div>
+                    <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '3')?'':'style="display:none"');?>>
                         <a href="javascript:void(0)" onclick="open_bank_out()" class="btn btn-block btn-primary">
                             <span class="glyphicon glyphicon-open"> Open</span>
                         </a>
@@ -48,7 +53,7 @@
                                             <a id="genbtn" href="javascript:void(0)" onclick="gen_bankout()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-plus"></span></a>
                                         </div>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control" name="bank_nomor">
+                                            <input type="text" class="form-control" name="bank_nomor" readonly>
                                             <input type="hidden" value='0' class="form-control" name="bank_id">
                                         </div>
                                     </div>
@@ -59,7 +64,7 @@
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
-                                                <input type='text' class="form-control input-group-addon" name="bank_tgl" value="<?= date('Y-m-d')?>" />
+                                                <input type='text' class="form-control input-group-addon" name="bank_tgl" value="<?= date('Y-m-d')?>" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -318,6 +323,16 @@
                                                 <span class="glyphicon glyphicon-print"></span>
                                                 Cetak
                                             </a>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button type="button" onclick="approve_bank_out()" class="btn btn-block btn-primary btnApr" disabled>
+                                                Approve
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button type="button" onclick="disapprove_bank_out()" class="btn btn-block btn-primary btnApr" disabled>
+                                                Disapprove
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -687,9 +702,6 @@
             $('[name="nominal1"]').on('input',function(){
                 $('[name="nominal2"]').val($('[name="nominal1"]').val());
             });
-            // $('[name="nominal2"]').on('input',function(){
-            //     $('[name="nominal1"]').val($('[name="nominal2"]').val());
-            // });
             var id = $('[name="bank_id"]').val();
             bank_keluar_detail1(id);
             bank_keluar_detail2(id);
@@ -821,9 +833,8 @@
                 }
             });
         }
-        function srch_acc(t)
+        function srch_acc()
         {
-            sts=t;
             $('#modal_account').modal('show');
             $('.modal-title').text('Cari Account');
             table = $('#dtb_acc').DataTable({
@@ -834,7 +845,7 @@
                 "serverSide": true,
                 "order": [],
                 "ajax": {
-                    "url": "<?php echo site_url('administrator/Finance/ajax_srch_acc2/')?>",
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_coa_bank')?>",
                     "type": "POST",
                 },
                 "columnDefs": [
@@ -845,9 +856,27 @@
                 ],
             });
         }
-        function srch_acc2(t)
+        function pick_coabank(id)
         {
-            sts=t;
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_coagb/')?>"+id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('[name="bank_acc"]').val(data.COA_ACC);
+                    $('[name="bank_acc_info"]').val(data.COA_ACCNAME);
+                    $('[name="acc_id"]').val(data.COA_ID);
+                    $('#modal_account').modal('hide');
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function srch_acc2()
+        {
             $('#modal_account').modal('show');
             $('.modal-title').text('Cari Account');
             table = $('#dtb_acc').DataTable({
@@ -858,7 +887,7 @@
                 "serverSide": true,
                 "order": [],
                 "ajax": {
-                    "url": "<?php echo site_url('administrator/Finance/ajax_srch_acc2/')?>",
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_coabybrc')?>",
                     "type": "POST",
                 },
                 "columnDefs": [
@@ -867,6 +896,24 @@
                     "orderable": false,
                 },
                 ],
+            });
+        }
+        function pick_coagb(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_coagb/')?>"+id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('[name="acc_detail"]').val(data.COA_ACC +" - "+data.COA_ACCNAME);
+                    $('[name="acc_id_detail"]').val(data.COA_ID);
+                    $('#modal_account').modal('hide');
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
             });
         }
         function pick_acc(id)
@@ -1355,6 +1402,48 @@
                 }
             });
         }
+        function approve_bank_out()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/ajax_approve_bank_out')?>",
+                type: "POST",
+                data: $('#form_bank').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Finance/bank_out')?>";
+                        window.location = url;
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
+        function disapprove_bank_out()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/ajax_disapprove_bank_out')?>",
+                type: "POST",
+                data: $('#form_bank').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Finance/bank_out')?>";
+                        window.location = url;
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
         function save_bank_out_detail1()
         {
             $.ajax({
@@ -1553,12 +1642,40 @@
                 "serverSide": true,
                 "order": [],
                 "ajax": {
-                    "url": "<?php echo site_url('administrator/Searchdata/srch_bank_out_bystschk')?>",
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_bank_out_bysts')?>",
                     "type": "POST",
                     "data": function(data){
                         data.sts = '1';
                         data.brch = $('[name="user_branch"]').val();
-                        data.chk = '1';
+                        data.chk = '2';
+                    },
+                },
+                "columnDefs": [
+                { 
+                    "targets": [ 0 ],
+                    "orderable": false,
+                },
+                ],
+            });
+        }
+        function apr_bank_out()
+        {
+            $('#modal_bank_out_edit').modal('show');
+            $('.modal-title').text('Cari Bank Keluar');
+            table = $('#dtb_bank_out_edit').DataTable({
+                "info": false,
+                "destroy": true,
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "order": [],
+                "ajax": {
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_bank_out_bysts')?>",
+                    "type": "POST",
+                    "data": function(data){
+                        data.sts = '2';
+                        data.brch = $('[name="user_branch"]').val();
+                        data.chk = '3';
                     },
                 },
                 "columnDefs": [
@@ -1655,6 +1772,42 @@
                     bank_keluar_detail1(data.BNKO_ID);
                     bank_keluar_detail2(data.BNKO_ID);
                     $('.btnCh').css({'display':'none'});
+                    $('#modal_bank_out_edit').modal('hide');
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function pick_bankoutapr(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_bankoutgb/')?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('#form_bank')[0].reset();
+                    $('[name="bank_id"]').val(data.BNKO_ID);
+                    $('[name="bank_nomor"]').val(data.BNKO_CODE);
+                    $('[name="bank_tgl"]').val(data.BNKO_DATE);
+                    pick_bank(data.BANK_ID);
+                    sts=1;
+                    pick_acc(data.COA_ID);
+                    pick_appr(data.BNKO_APPR);
+                    pick_supp(data.BNKO_SUPP);
+                    pick_loc(data.BNKO_LOC);
+                    $('[name="bank_info"]').val(data.BNKO_INFO);
+                    pick_dept(data.DEPT_ID);
+                    $('[name="bank_anggaran"]').val(data.BNKO_BUDGET);
+                    $('[name="head_taxnumber"]').val(data.BNKO_TAXHEADCODE);
+                    $('[name="taxnumber"]').val(data.BNKO_TAXCODE);
+                    pick_curr(data.CURR_ID)
+                    bank_keluar_detail1(data.BNKO_ID);
+                    bank_keluar_detail2(data.BNKO_ID);
+                    $('.btnCh').css({'display':'none'});
+                    $('.btnApr').prop('disabled',false);
                     $('#modal_bank_out_edit').modal('hide');
                 },
                 error: function (jqXHR, textStatus, errorThrown)

@@ -2,7 +2,6 @@
 	defined('BASEPATH') OR exit('No direct script access allowed');
 	class Dt_srchgiroinbysts extends CI_Model 
 	{
-
 		var $table = 'trx_giro_in a';
 		var $column_order = array(null,'grin_code','grin_date','bank_name','grin_info');
 		var $column_search = array('grin_code','grin_date','bank_name','grin_info');
@@ -11,10 +10,13 @@
 		{
 			parent::__construct();		
 		}
-		private function _get_datatables_query()
+		private function _get_datatables_query($id,$brc)
 		{
+			$this->db->from($this->table);
 			$this->db->join('master_bank b','b.bank_id = a.bank_id','left');
-			$this->db->from($this->table);			
+			$this->db->join('master_branch c','c.branch_id = a.branch_id');
+			$this->db->where('a.grin_sts',$id);
+			$this->db->where($brc);
 			$i = 0;
 			foreach ($this->column_search as $item)
 			{
@@ -45,17 +47,17 @@
 				$this->db->order_by(key($order), $order[key($order)]);
 			}
 		}
-		public function get_datatables()
+		public function get_datatables($id,$brc)
 		{
-			$this->_get_datatables_query();
+			$this->_get_datatables_query($id,$brc);
 			if($_POST['length'] != -1)
 			$this->db->limit($_POST['length'], $_POST['start']);
 			$query = $this->db->get();
 			return $query->result();
 		}
-		public function count_filtered()
+		public function count_filtered($id,$brc)
 		{
-			$this->_get_datatables_query();
+			$this->_get_datatables_query($id,$brc);
 			$query = $this->db->get();
 			return $query->num_rows();
 		}

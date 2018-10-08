@@ -1,23 +1,21 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
-	class Dt_srchgirooutbysts extends CI_Model 
+	class Dt_srchcoabybrc extends CI_Model 
 	{
-
-		var $table = 'trx_giro_out a';
-		var $column_order = array(null,'grout_code','grout_date','bank_name','grout_info');
-		var $column_search = array('grout_code','grout_date','bank_name','grout_info');
-		var $order = array('grout_id' => 'desc');
+		var $table = 'chart_of_account a';
+		var $column_order = array(null,'coa_acc','coa_accname');
+		var $column_search = array('coa_acc','coa_accname');
+		var $order = array('coa_acc' => 'asc');
 		public function __construct()
 		{
 			parent::__construct();		
 		}
-		private function _get_datatables_query($id,$brc)
+		private function _get_datatables_query($brc)
 		{
 			$this->db->from($this->table);
-			$this->db->join('master_bank b','b.bank_id = a.bank_id','left');
-			$this->db->join('master_branch c','c.branch_id = a.branch_id');
-			$this->db->where('a.grout_sts',$id);
-			$this->db->where($brc);
+			$this->db->join('master_branch b','b.branch_id = a.branch_id');
+			$this->db->where('a.branch_id',$brc);
+			$this->db->where('coa_dtsts','1');			
 			$i = 0;
 			foreach ($this->column_search as $item)
 			{
@@ -48,17 +46,17 @@
 				$this->db->order_by(key($order), $order[key($order)]);
 			}
 		}
-		public function get_datatables($id,$brc)
+		public function get_datatables($brc)
 		{
-			$this->_get_datatables_query($id,$brc);
+			$this->_get_datatables_query($brc);
 			if($_POST['length'] != -1)
 			$this->db->limit($_POST['length'], $_POST['start']);
 			$query = $this->db->get();
 			return $query->result();
 		}
-		public function count_filtered($id,$brc)
+		public function count_filtered($brc)
 		{
-			$this->_get_datatables_query($id,$brc);
+			$this->_get_datatables_query($brc);
 			$query = $this->db->get();
 			return $query->num_rows();
 		}
