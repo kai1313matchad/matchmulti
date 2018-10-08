@@ -918,35 +918,89 @@
 		{
 			$id = $this->input->post('sts');
 			$br = $this->input->post('brch');
+			$chk = $this->input->post('chk');
 			$brc = 'a.branch_id = '.$br;
 			$list = $this->s_pogabysts->get_datatables($id,$brc);
 			$data = array();
 			$no = $_POST['start'];
-			if($this->input->post('chk') != '0')
-			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-					$row[] = $dat->POGA_CODE;
-					$row[] = $dat->POGA_DATE;
-					$row[] = $dat->SUPP_NAME;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_pogaopen('."'".$dat->POGA_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
-			}
-			else
-			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-					$row[] = $dat->POGA_CODE;
-					$row[] = $dat->POGA_DATE;
-					$row[] = $dat->SUPP_NAME;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_pogaedit('."'".$dat->POGA_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
+			// if($this->input->post('chk') != '0')
+			// {
+			// 	foreach ($list as $dat) {
+			// 		$no++;
+			// 		$row = array();
+			// 		$row[] = $no;
+			// 		$row[] = $dat->POGA_CODE;
+			// 		$row[] = $dat->POGA_DATE;
+			// 		$row[] = $dat->SUPP_NAME;
+			// 		$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_pogaopen('."'".$dat->POGA_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+			// 		$data[] = $row;
+			// 	}
+			// }
+			// else
+			// {
+			// 	foreach ($list as $dat) {
+			// 		$no++;
+			// 		$row = array();
+			// 		$row[] = $no;
+			// 		$row[] = $dat->POGA_CODE;
+			// 		$row[] = $dat->POGA_DATE;
+			// 		$row[] = $dat->SUPP_NAME;
+			// 		$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_pogaedit('."'".$dat->POGA_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+			// 		$data[] = $row;
+			// 	}
+			// }
+			switch ($chk) {
+				case '0':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->POGA_CODE;
+						$row[] = $dat->POGA_DATE;
+						$row[] = $dat->SUPP_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_pogaedit('."'".$dat->POGA_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '1':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->POGA_CODE;
+						$row[] = $dat->POGA_DATE;
+						$row[] = $dat->SUPP_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_pogaopen('."'".$dat->POGA_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '2':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->POGA_CODE;
+						$row[] = $dat->POGA_DATE;
+						$row[] = $dat->SUPP_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_pogachk('."'".$dat->POGA_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '3':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->POGA_CODE;
+						$row[] = $dat->POGA_DATE;
+						$row[] = $dat->SUPP_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_pogaapr('."'".$dat->POGA_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				default:
+					# code...
+					break;
 			}
 			$output = array(
 							"draw" => $_POST['draw'],
@@ -996,34 +1050,88 @@
 			$id = $this->input->post('sts');
 			$br = $this->input->post('brch');
 			$brc = 'a.branch_id = '.$br;
+			$chk = $this->input->post('chk');
 			$list = $this->s_prcgabysts->get_datatables($id,$brc);
 			$data = array();
 			$no = $_POST['start'];
-			if($this->input->post('chk') != '0')
-			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-					$row[] = $dat->PRCGA_CODE;
-					$row[] = $dat->POGA_CODE;
-					$row[] = $dat->PRCGA_DATE;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_prcgaopen('."'".$dat->PRCGA_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
-			}
-			else
-			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-					$row[] = $dat->PRCGA_CODE;
-					$row[] = $dat->POGA_CODE;
-					$row[] = $dat->PRCGA_DATE;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_prcgaedit('."'".$dat->PRCGA_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
+			// if($this->input->post('chk') != '0')
+			// {
+			// 	foreach ($list as $dat) {
+			// 		$no++;
+			// 		$row = array();
+			// 		$row[] = $no;
+			// 		$row[] = $dat->PRCGA_CODE;
+			// 		$row[] = $dat->POGA_CODE;
+			// 		$row[] = $dat->PRCGA_DATE;
+			// 		$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_prcgaopen('."'".$dat->PRCGA_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+			// 		$data[] = $row;
+			// 	}
+			// }
+			// else
+			// {
+			// 	foreach ($list as $dat) {
+			// 		$no++;
+			// 		$row = array();
+			// 		$row[] = $no;
+			// 		$row[] = $dat->PRCGA_CODE;
+			// 		$row[] = $dat->POGA_CODE;
+			// 		$row[] = $dat->PRCGA_DATE;
+			// 		$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_prcgaedit('."'".$dat->PRCGA_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+			// 		$data[] = $row;
+			// 	}
+			// }
+			switch ($chk) {
+				case '0':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->PRCGA_CODE;
+						$row[] = $dat->POGA_CODE;
+						$row[] = $dat->PRC_DATE;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_prcgaedit('."'".$dat->PRCGA_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '1':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->PRCGA_CODE;
+						$row[] = $dat->POGA_CODE;
+						$row[] = $dat->PRCGA_DATE;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_prcgaopen('."'".$dat->PRCGA_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '2':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->PRCGA_CODE;
+						$row[] = $dat->POGA_CODE;
+						$row[] = $dat->PRCGA_DATE;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_prcgachk('."'".$dat->PRCGA_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '3':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->PRCGA_CODE;
+						$row[] = $dat->POGA_CODE;
+						$row[] = $dat->PRCGA_DATE;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_prcgaapr('."'".$dat->PRCGA_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				default:
+					# code...
+					break;
 			}
 			$output = array(
 							"draw" => $_POST['draw'],

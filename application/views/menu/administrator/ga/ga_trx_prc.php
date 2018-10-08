@@ -23,6 +23,11 @@
                         </a>
                     </div>
                     <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '3')?'':'style="display:none"');?>>
+                        <a href="javascript:void(0)" onclick="apr_gaprc()" class="btn btn-block btn-primary">
+                            <span class="glyphicon glyphicon-open"> Approve</span>
+                        </a>
+                    </div>
+                    <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '3')?'':'style="display:none"');?>>
                         <a href="javascript:void(0)" onclick="open_gaprc()" class="btn btn-block btn-primary">
                             <span class="glyphicon glyphicon-open"> Open</span>
                         </a>
@@ -298,6 +303,12 @@
                                             <a href="javascript:void(0)" onclick="saveprc()" class="btn btn-block btn-primary btn-default btnCh">Simpan</a>
                                         </div>
                                     </div>
+                                    <div class="col-sm-2 text-center">
+                                        <button type="button" onclick="aprprc()" class="btn btn-block btn-primary btn-default btnApr" disabled>Approve</button>
+                                    </div>
+                                    <div class="col-sm-2 text-center">
+                                        <button type="button" onclick="disaprprc()" class="btn btn-block btn-primary btn-default btnApr" disabled>Disapprove</button>
+                                    </div>
                                     <br><br>
                                 </div>
                             </div>
@@ -536,6 +547,48 @@
                     if(data.status)
                     {
                         alert('Data Berhasil Disimpan');                        
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
+        function aprprc()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Genaff/ajax_approveprc')?>",
+                type: "POST",
+                data: $('#form_po').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/ga/ga_trx_prc')?>";
+                        window.location = url;
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
+        function disaprprc()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Genaff/ajax_disapproveprc')?>",
+                type: "POST",
+                data: $('#form_po').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/ga/ga_trx_prc')?>";
+                        window.location = url;
                     }                   
                 },
                 error: function (jqXHR, textStatus, errorThrown)
@@ -956,6 +1009,34 @@
                         data.sts = '1';
                         data.brch = $('[name="user_branch"]').val();
                         data.chk = '1';
+                    },
+                },                
+                "columnDefs": [
+                { 
+                    "targets": [ 0 ],
+                    "orderable": false,
+                },
+                ],
+            });
+        }
+        function apr_gaprc()
+        {
+            $('#modal_prcga_edit').modal('show');
+            $('.modal-title').text('Cari Pembelian');            
+            table = $('#dtb_prcga_edit').DataTable({
+                "info": false,
+                "destroy": true,
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "order": [],                
+                "ajax": {
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_prcgabysts')?>",
+                    "type": "POST",
+                    "data": function(data){
+                        data.sts = '2';
+                        data.brch = $('[name="user_branch"]').val();
+                        data.chk = '3';
                     },
                 },                
                 "columnDefs": [

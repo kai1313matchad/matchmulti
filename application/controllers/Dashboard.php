@@ -330,5 +330,62 @@
 			$data['isi']='menu/administrator/dashboard';
 			$this->load->view('layout/administrator/wrapper',$data);
 		}
+
+		public function save_prcgacoa()
+		{
+			$brc = $this->input->post('os_branch');
+			$deb = $this->input->post('os_prcgacoadeb');
+			$crd = $this->input->post('os_prcgacoacrd');
+			$disc = $this->input->post('os_prcgacoadisc');
+			$ppn = $this->input->post('os_prcgacoappn');
+			$cost = $this->input->post('os_prcgacoacost');
+			$getdeb = $this->db->get_where('chart_of_account',array('coa_id'=>$deb));
+			$debname = $getdeb->row()->COA_ACCNAME;
+			$getcrd = $this->db->get_where('chart_of_account',array('coa_id'=>$crd));
+			$crdname = $getcrd->row()->COA_ACCNAME;
+			$getdisc = $this->db->get_where('chart_of_account',array('coa_id'=>$disc));
+			$discname = $getdisc->row()->COA_ACCNAME;
+			$getppn = $this->db->get_where('chart_of_account',array('coa_id'=>$ppn));
+			$ppnname = $getppn->row()->COA_ACCNAME;
+			$getcost = $this->db->get_where('chart_of_account',array('coa_id'=>$cost));
+			$costname = $getcost->row()->COA_ACCNAME;
+			$getlist = $this->db->get_where('other_settings',array('branch_id'=>$brc))->num_rows();
+			if($getlist > 0)
+			{
+				$d_up = array(
+						'prcga_coasupply'=>$deb,
+						'prcga_coanamesupply'=>$debname,
+						'prcga_coadebt'=>$crd,
+						'prcga_coanamedebt'=>$crdname,
+						'prcga_coadisc'=>$disc,
+						'prcga_coanamedisc'=>$discname,
+						'prcga_coappn'=>$ppn,
+						'prcga_coanameppn'=>$ppnname,
+						'prcga_coacost'=>$cost,
+						'prcga_coanamecost'=>$costname
+						);
+				$update = $this->crud->update('other_settings',$d_up,array('branch_id'=>$brc));
+				$data['status'] = TRUE;
+			}
+			else
+			{
+				$d_ins = array(
+						'branch_id'=>$brc,
+						'prcga_coasupply'=>$deb,
+						'prcga_coanamesupply'=>$debname,
+						'prcga_coadebt'=>$crd,
+						'prcga_coanamedebt'=>$crdname,
+						'prcga_coadisc'=>$disc,
+						'prcga_coanamedisc'=>$discname,
+						'prcga_coappn'=>$ppn,
+						'prcga_coanameppn'=>$ppnname,
+						'prcga_coacost'=>$cost,
+						'prcga_coanamecost'=>$costname
+						);
+				$update = $this->db->insert('other_settings',$d_ins);
+				$data['status'] = TRUE;
+			}
+			echo json_encode($data);
+		}
 	}
 ?>

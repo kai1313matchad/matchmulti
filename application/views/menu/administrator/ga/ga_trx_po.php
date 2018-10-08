@@ -23,6 +23,11 @@
                         </a>
                     </div>
                     <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '3')?'':'style="display:none"');?>>
+                        <a href="javascript:void(0)" onclick="apr_gapo()" class="btn btn-block btn-primary">
+                            <span class="glyphicon glyphicon-open"> Approve</span>
+                        </a>
+                    </div>
+                    <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '3')?'':'style="display:none"');?>>
                         <a href="javascript:void(0)" onclick="open_gapo()" class="btn btn-block btn-primary">
                             <span class="glyphicon glyphicon-open"> Open</span>
                         </a>
@@ -225,6 +230,12 @@
                                         <div class="col-sm-offset-3 col-sm-2 text-center">
                                             <a href="javascript:void(0)" onclick="savepo()" class="btn btn-block btn-primary btn-default btnCh">Simpan</a>
                                         </div>
+                                        <div class="col-sm-2 text-center">
+                                            <button type="button" onclick="aprpo()" class="btn btn-block btn-primary btn-default btnApr" disabled>Approve</button>
+                                        </div>
+                                        <div class="col-sm-2 text-center">
+                                            <button type="button" onclick="disaprpo()" class="btn btn-block btn-primary btn-default btnApr" disabled>Disapprove</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -410,6 +421,48 @@
                     if(data.status)
                     {
                         alert('Data Berhasil Disimpan');                        
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
+        function aprpo()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Genaff/ajax_approvepo')?>",
+                type: "POST",
+                data: $('#form_po').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/ga/ga_trx_po')?>";
+                        window.location = url;
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
+        function disaprpo()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Genaff/ajax_disapprovepo')?>",
+                type: "POST",
+                data: $('#form_po').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/ga/ga_trx_po')?>";
+                        window.location = url;
                     }                   
                 },
                 error: function (jqXHR, textStatus, errorThrown)
@@ -800,6 +853,64 @@
                 {
                     alert('Error get data from ajax');
                 }
+            });
+        }
+
+        function pick_pogaapr(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_pogagb/')?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('#form_po')[0].reset();
+                    $('[name="po_id"]').val(data.POGA_ID);
+                    $('[name="po_code"]').val(data.POGA_CODE);
+                    $('[name="po_so"]').val(data.POGA_ORDNUM);
+                    $('[name="po_tgl"]').val(data.POGA_DATE);
+                    pick_supp(data.SUPP_ID);
+                    barang(data.POGA_ID);
+                    $('[name="po_term"]').val(data.POGA_TERM);
+                    $('[name="po_info"]').val(data.POGA_INFO);
+                    pick_curr(data.CURR_ID);
+                    sub_total(data.POGA_ID);
+                    $('.btnCh').css({'display':'none'});
+                    $('.btnApr').prop('disabled',false);
+                    $('#modal_poga_edit').modal('hide');
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function apr_gapo()
+        {
+            $('#modal_poga_edit').modal('show');
+            $('.modal-title').text('Cari PO');            
+            table = $('#dtb_poga_edit').DataTable({
+                "info": false,
+                "destroy": true,
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "order": [],                
+                "ajax": {
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_pogabysts')?>",
+                    "type": "POST",
+                    "data": function(data){
+                        data.sts = '2';
+                        data.brch = $('[name="user_branch"]').val();
+                        data.chk = '3';
+                    },
+                },                
+                "columnDefs": [
+                { 
+                    "targets": [ 0 ],
+                    "orderable": false,
+                },
+                ],
             });
         }
     </script>

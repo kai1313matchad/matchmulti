@@ -206,6 +206,65 @@
                             <div class="col-xs-12">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
+                                        <strong>Setting - Rekening/Akun Transaksi Pembelian GA</strong>
+                                    </div>
+                                    <div class="panel-body">
+                                        <form id="form_prccoa" class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Akun HPP</label>
+                                                <div class="col-sm-6">
+                                                    <select class="form-control text-center" name="os_prcgacoadeb" id="os_prcgacoadeb" data-live-search="true">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Akun Diskon</label>
+                                                <div class="col-sm-6">
+                                                    <select class="form-control text-center" name="os_prcgacoadisc" id="os_prcgacoadisc" data-live-search="true">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Akun PPN</label>
+                                                <div class="col-sm-6">
+                                                    <select class="form-control text-center" name="os_prcgacoappn" id="os_prcgacoappn" data-live-search="true">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Akun Biaya</label>
+                                                <div class="col-sm-6">
+                                                    <select class="form-control text-center" name="os_prcgacoacost" id="os_prcgacoacost" data-live-search="true">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-3">Akun Hutang</label>
+                                                <div class="col-sm-6">
+                                                    <select class="form-control text-center" name="os_prcgacoacrd" id="os_prcgacoacrd" data-live-search="true">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-xs-offset-1 col-xs-2 control-label">Keterangan</label>
+                                                <div class="col-xs-6">
+                                                    <textarea name="stg_infoprcgacoa" class="form-control" rows="4" style="resize:vertical;" readonly></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-xs-offset-3 col-xs-6">
+                                                    <button type="button" class="btn btn-sm btn-primary" onclick="sub_prcgacoa()">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
                                         <strong>Setting - Keterangan Invoice</strong>
                                     </div>
                                     <div class="panel-body">
@@ -377,6 +436,11 @@
             drop_coa('os_prccoadisc');
             drop_coa('os_prccoappn');
             drop_coa('os_prccoacost');
+            drop_coa('os_prcgacoadeb');
+            drop_coa('os_prcgacoacrd');
+            drop_coa('os_prcgacoadisc');
+            drop_coa('os_prcgacoappn');
+            drop_coa('os_prcgacoacost');
             drop_coa('os_nota');
             drop_coa('os_giroaccrcv');
             drop_coa('os_girodebt');
@@ -406,6 +470,7 @@
                     $('[name="stg_infoinvc"]').val(data.PRINT_BANKINVOICE);
                     $('[name="stg_infoinvppn"]').val('Akun PPN : '+data.INV_COANAMEPPN);
                     $('[name="stg_infoprccoa"]').val('Akun HPP : '+data.PRC_COANAME+'\n'+'Akun Hutang : '+data.PRC_COANAMEAG+'\n'+'Akun Diskon : '+data.PRC_COANAMEDISC+'\n'+'Akun PPN : '+data.PRC_COANAMEPPN+'\n'+'Akun Biaya : '+data.PRC_COANAMECOST);
+                    $('[name="stg_infoprcgacoa"]').val('Akun HPP : '+data.PRCGA_COANAMESUPPLY+'\n'+'Akun Hutang : '+data.PRCGA_COANAMEDEBT+'\n'+'Akun Diskon : '+data.PRCGA_COANAMEDISC+'\n'+'Akun PPN : '+data.PRCGA_COANAMEPPN+'\n'+'Akun Biaya : '+data.PRCGA_COANAMECOST);
                     $('[name="stg_infonotafin"]').val('Akun Nota Gantung : '+data.NOTAFIN_ACCNAME);
                     $('[name="stg_infogiroacc"]').val('Akun Piutang Giro : '+data.ACCRCVGIRO_ACCNAME+'\n'+'Akun Hutang Giro : '+data.DEBTGIRO_ACCNAME);
                 },
@@ -775,6 +840,24 @@
                 error: function (jqXHR, textStatus, errorThrown)
                 {
                     alert('Error adding / update data');
+                }
+            });
+        }
+        function sub_prcgacoa()
+        {
+            $.ajax({
+                url : "<?php echo site_url('Dashboard/save_prcgacoa/')?>",
+                type: "POST",
+                data: $('form').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    alert('Data Berhasil Disimpan');
+                    os_data();
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');                    
                 }
             });
         }
