@@ -1478,11 +1478,11 @@
 	    	$que = $this->db->get_where('account_journal',array('jou_reff'=>$prc_code,'branch_id'=>$brc));
 	    	$get = $que->row();
 	    	$hppnom = ($this->input->post('prc_gtotal')-($this->input->post('prc_disc')+$this->input->post('prc_ppn')+$this->input->post('prc_cost')));
-	    	$hpp = $this->db->get_where('other_settings',array('os_id'=>'1'))->row()->PRC_COA;
-	    	$dbt = $this->db->get_where('other_settings',array('os_id'=>'1'))->row()->PRC_COAAG;
-	    	$disc = $this->db->get_where('other_settings',array('os_id'=>'1'))->row()->PRC_COADISC;
-	    	$ppn = $this->db->get_where('other_settings',array('os_id'=>'1'))->row()->PRC_COAPPN;
-	    	$cost = $this->db->get_where('other_settings',array('os_id'=>'1'))->row()->PRC_COACOST;
+	    	$hpp = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRC_COA;
+	    	$dbt = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRC_COAAG;
+	    	$disc = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRC_COADISC;
+	    	$ppn = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRC_COAPPN;
+	    	$cost = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRC_COACOST;
 	    	$infos = 'Jurnal Pembelian '.$prc_code.' dari '.$this->input->post('supp_name');
 	    	if($que->num_rows() > 0)
 	    	{

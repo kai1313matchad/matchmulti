@@ -328,7 +328,7 @@
 				$row[] = $dat->POGA_CODE;
 				$row[] = $dat->PRCGA_INV;				
 				$row[] = $dat->PRCGA_DATE;
-				$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_prc('."'".$dat->PRCGA_ID."'".')">Pilih</a>';
+				$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_prc2('."'".$dat->PRCGA_ID."'".')">Pilih</a>';
 				$data[] = $row;
 			}
 			$output = array(
@@ -461,7 +461,7 @@
 		            'user_id' => $this->input->post('user_id'),
 		            'curr_id' => $this->input->post('curr_id'),
 		            'supp_id' => $this->input->post('supp_id'),
-		            'poga_sts' => '1',
+		            'poga_sts' => '2',
 		            'poga_code' => $this->input->post('po_code'),
 		            'poga_date' => $this->input->post('po_tgl'),
 		            'poga_ordnum' => $this->input->post('po_so'),
@@ -478,7 +478,7 @@
 		public function ajax_approvepo()
 		{
 			$data = array(
-	                'po_sts' => '1'
+	                'poga_sts' => '1'
 	            );
 	        $update = $this->crud->update('trx_po_ga',$data,array('poga_id' => $this->input->post('po_id')));
 	        $this->logupd_poga_save($this->input->post('po_id'),$this->input->post('user_name'),'Approved');
@@ -488,7 +488,7 @@
 		public function ajax_disapprovepo()
 		{
 			$data = array(
-	                'po_sts' => '0'
+	                'poga_sts' => '0'
 	            );
 	        $update = $this->crud->update('trx_po_ga',$data,array('poga_id' => $this->input->post('po_id')));
 	        $this->logupd_poga_save($this->input->post('po_id'),$this->input->post('user_name'),'Disapproved');
@@ -538,7 +538,7 @@
 	                'user_id' => $this->input->post('user_id'),
 	                'curr_id' => $this->input->post('curr_id'),
 	                'poga_id' => $this->input->post('po_id'),	                
-	                'prcga_sts' => '1',
+	                'prcga_sts' => '2',
 	                'prcga_code' => $this->input->post('prc_code'),
 	                'prcga_date' => $this->input->post('prc_tgl'),
 	                'prcga_inv' => $this->input->post('prc_inv'),	                
@@ -625,9 +625,9 @@
 		public function ajax_approveprc()
 		{
 			$data = array(
-	                'prc_sts' => '1'
+	                'prcga_sts' => '1'
 	            );
-	        $update = $this->crud->update('trx_procurement',$data,array('prcga_id'=>$this->input->post('prc_id')));
+	        $update = $this->crud->update('trx_prc_ga',$data,array('prcga_id'=>$this->input->post('prc_id')));
 	        $this->logupd_prcga_save($this->input->post('prc_id'),$this->input->post('user_name'),'Approved');
 	        //cek jurnal
 	    	$prc_code = $this->input->post('prc_code');
@@ -641,6 +641,11 @@
 	    	$ppn = $this->db->get_where('other_settings',array('os_id'=>'1'))->row()->PRCGA_COAPPN;
 	    	$cost = $this->db->get_where('other_settings',array('os_id'=>'1'))->row()->PRCGA_COACOST;
 	    	$infos = 'Jurnal Pembelian '.$prc_code.' dari '.$this->input->post('supp_name');
+	    	echo $hpp;
+	    	echo $dbt;
+	    	echo $disc;
+	    	echo $ppn;
+	    	echo $cost;
 	    	if($que->num_rows() > 0)
 	    	{
 	    		//Update Data Jurnal
@@ -781,9 +786,9 @@
 		public function ajax_disapproveprc()
 		{
 			$data = array(
-	                'prc_sts' => '0'
+	                'prcga_sts' => '0'
 	            );
-	        $update = $this->crud->update('trx_procurement',$data,array('prc_id' => $this->input->post('prc_id')));
+	        $update = $this->crud->update('trx_prc_ga',$data,array('prcga_id' => $this->input->post('prc_id')));
 	        $this->logupd_prcga_save($this->input->post('prc_id'),$this->input->post('user_name'),'Disapproved');
 	        echo json_encode(array("status" => TRUE));
 		}

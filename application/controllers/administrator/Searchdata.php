@@ -1088,7 +1088,7 @@
 						$row[] = $no;
 						$row[] = $dat->PRCGA_CODE;
 						$row[] = $dat->POGA_CODE;
-						$row[] = $dat->PRC_DATE;
+						$row[] = $dat->PRCGA_DATE;
 						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_prcgaedit('."'".$dat->PRCGA_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
 						$data[] = $row;
 					}

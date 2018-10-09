@@ -405,13 +405,13 @@
             <div class="col-sm-2 col-xs-2 left-bd text-center">
                 <label class="font-3rd">COO</label>
             </div>
-            <div class="col-sm-3 col-xs-3 left-bd text-center">
+            <div class="col-sm-2 col-xs-2 left-bd text-center">
                 <label class="font-3rd">Corp. Secretary</label>
             </div>
             <div class="col-sm-2 col-xs-2 left-bd text-center">
                 <label class="font-3rd">Finance Dept.</label>
             </div>
-            <div class="col-sm-3 col-xs-3 left-bd text-center">
+            <div class="col-sm-4 col-xs-4 left-bd text-center">
                 <label class="font-3rd">CLIENT APPROVAL</label>
             </div>
         </div>
@@ -422,13 +422,13 @@
             <div class="col-sm-2 col-xs-2 div-height div-bd text-center">
                 
             </div>
-            <div class="col-sm-3 col-xs-3 div-height div-bd text-center">
+            <div class="col-sm-2 col-xs-2 div-height div-bd text-center">
                 
             </div>
             <div class="col-sm-2 col-xs-2 div-height div-bd text-center">
                 
             </div>
-            <div class="col-sm-3 col-xs-3 div-height div-bd">
+            <div class="col-sm-4 col-xs-4 div-height div-bd">
                 <label class="font-nd">DATE</label><br>
                 <label class="font-nd">REMARKS</label>
             </div>

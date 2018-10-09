@@ -440,7 +440,7 @@
                 {
                     if(data.status)
                     {
-                        var url = "<?php echo site_url('administrator/ga/ga_trx_po')?>";
+                        var url = "<?php echo site_url('administrator/Genaff/ga_trx_po')?>";
                         window.location = url;
                     }                   
                 },
@@ -461,7 +461,7 @@
                 {
                     if(data.status)
                     {
-                        var url = "<?php echo site_url('administrator/ga/ga_trx_po')?>";
+                        var url = "<?php echo site_url('administrator/Genaff/ga_trx_po')?>";
                         window.location = url;
                     }                   
                 },
