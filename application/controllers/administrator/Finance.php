@@ -2140,7 +2140,7 @@
 	    	$que = $this->db->get_where('account_journal',array('jou_reff'=>$giroin_code,'branch_id'=>$brc));
 	    	$get = $que->row();
 	    	$coabank = $this->input->post('giro_bank_acc_id');
-	    	$coagiro = $this->db->get_where('other_settings',array('os_id'=>'1'))->row()->ACCRCVGIRO_ACC;
+	    	$coagiro = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->ACCRCVGIRO_ACC;
 	    	$infos = 'Pencairan Giro ke '.$this->input->post('giro_nama_bank').', '.$this->input->post('giro_info');
 	    	$getsum = $this->finance->get_sumgrindet($this->input->post('giro_id'));
 	    	if($que->num_rows() > 0)
@@ -2288,7 +2288,7 @@
 	    	$que = $this->db->get_where('account_journal',array('jou_reff'=>$giroout_code,'branch_id'=>$brc));
 	    	$get = $que->row();
 	    	$coabank = $this->input->post('giro_bank_acc_id');
-	    	$coagiro = $this->db->get_where('other_settings',array('os_id'=>'1'))->row()->DEBTGIRO_ACC;
+	    	$coagiro = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->DEBTGIRO_ACC;
 	    	$infos = 'Pencairan Giro dari '.$this->input->post('giro_nama_bank').', '.$this->input->post('giro_info');
 	    	$getsum = $this->finance->get_sumgroutdet($this->input->post('giro_id'));
 	    	if($que->num_rows() > 0)
