@@ -495,16 +495,16 @@
 	        echo json_encode(array("status" => TRUE));
 		}
 
-		public function logupd_poga_save($id,$user)
+		public function logupd_poga_save($id,$user,$sts)
 	    {
 	    	$his = $this->genaff->getlog_poga($id);
 	    	if ($his->HISPOGA_UPCOUNT == '0') 
 	    	{
 	    		$data = array(
 						'poga_id' => $id,
-						'hispoga_sts' => 'Posted by User '.$user,
+						'hispoga_sts' => $sts.' by User '.$user,
 						'hispoga_old' => $his->HISPOGA_STS,
-						'hispoga_new' => 'Posted By User '.$user,
+						'hispoga_new' => $sts.' By User '.$user,
 						'hispoga_info' => 'Original Save by PO GA form',
 						'hispoga_date' => date('Y-m-d'),
 						'hispoga_upcount' => $his->HISPOGA_UPCOUNT+1
@@ -515,9 +515,9 @@
 	    	{
 	    		$data = array(
 						'poga_id' => $id,
-						'hispoga_sts' => 'Posted by User '.$user,
+						'hispoga_sts' => $sts.' by User '.$user,
 						'hispoga_old' => $his->HISPOGA_STS,
-						'hispoga_new' => 'Posted By User '.$user,
+						'hispoga_new' => $sts.' By User '.$user,
 						'hispoga_info' => 'Update by '.$user.' from PO GA form',
 						'hispoga_date' => date('Y-m-d'),
 						'hispoga_upcount' => $his->HISPOGA_UPCOUNT
@@ -550,7 +550,7 @@
 	                'prcga_gtotal' => $this->input->post('prc_gtotal')	                
 	            );
 	        $update = $this->crud->update('trx_prc_ga',$data,array('prcga_id' => $this->input->post('prc_id')));
-	        $this->logupd_prcga_save($this->input->post('prc_id'),$this->input->post('user_name'));
+	        $this->logupd_prcga_save($this->input->post('prc_id'),$this->input->post('user_name'),'Posted');
 	        //cek jurnal
 	   //  	$this->db->from('account_journal');
 	   //  	$this->db->where('jou_reff',$this->input->post('prc_code'));
@@ -788,16 +788,16 @@
 	        echo json_encode(array("status" => TRUE));
 		}
 
-		public function logupd_prcga_save($id,$user)
+		public function logupd_prcga_save($id,$user,$sts)
 	    {
 	    	$his = $this->genaff->getlog_prcga($id);
 	    	if ($his->HISPRCGA_UPCOUNT == '0') 
 	    	{
 	    		$data = array(
 						'prcga_id' => $id,
-						'hisprcga_sts' => 'Posted by User '.$user,
+						'hisprcga_sts' => $sts.' by User '.$user,
 						'hisprcga_old' => $his->HISPRCGA_STS,
-						'hisprcga_new' => 'Posted By User '.$user,
+						'hisprcga_new' => $sts.' By User '.$user,
 						'hisprcga_info' => 'Original Save by Pembelian GA form',
 						'hisprcga_date' => date('Y-m-d'),
 						'hisprcga_upcount' => $his->HISPRCGA_UPCOUNT+1
@@ -808,9 +808,9 @@
 	    	{
 	    		$data = array(
 						'prcga_id' => $id,
-						'hisprcga_sts' => 'Posted by User '.$user,
+						'hisprcga_sts' => $sts.' by User '.$user,
 						'hisprcga_old' => $his->HISPRCGA_STS,
-						'hisprcga_new' => 'Posted By User '.$user,
+						'hisprcga_new' => $sts.' By User '.$user,
 						'hisprcga_info' => 'Update by '.$user.' from Pembelian GA form',
 						'hisprcga_date' => date('Y-m-d'),
 						'hisprcga_upcount' => $his->HISPRCGA_UPCOUNT
