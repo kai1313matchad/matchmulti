@@ -182,6 +182,18 @@
 			$this->load->view('layout/administrator/wrapper',$data);
 		}
 
+		public function lgt_trx_prc_sub()
+		{
+			$this->authsys->trx_check_($_SESSION['user_id'],'LOG');
+			// $id=$this->crud->add_bl();
+			// $data['prc'] = $this->crud->get_by_id('trx_procurement',array('prc_id' => $id));
+			$data['title']='Match Terpadu - Dashboard Logistik';
+			$data['menu']='logistik';
+			$data['menulist']='prc_sub';
+			$data['isi']='menu/administrator/logistik/lgt_trx_prc_sub';
+			$this->load->view('layout/administrator/wrapper',$data);
+		}
+
 		public function lgt_trx_prc()
 		{
 			$this->authsys->trx_check_($_SESSION['user_id'],'LOG');

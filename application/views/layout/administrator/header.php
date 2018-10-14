@@ -165,6 +165,9 @@
                                     <a <?php if ($menulist == 'prc') {echo 'class=active';} ?> href="<?php echo base_url('administrator/Logistik/lgt_trx_prc') ?>"><i class="fa <?php if ($menulist == 'prc') {echo 'fa-circle';} else {echo 'fa-circle-o';}?> fa-fw"></i> Form Pembelian</a>
                                 </li>
                                 <li>
+                                    <a <?php if ($menulist == 'prc_sub') {echo 'class=active';} ?> href="<?php echo base_url('administrator/Logistik/lgt_trx_prc_sub') ?>"><i class="fa <?php if ($menulist == 'prc_sub') {echo 'fa-circle';} else {echo 'fa-circle-o';}?> fa-fw"></i> Form Pembelian Sub-Kontrak</a>
+                                </li>
+                                <li>
                                     <a <?php if ($menulist == 'retprc') {echo 'class=active';} ?> href="<?php echo base_url('administrator/Logistik/lgt_trx_retprc') ?>"><i class="fa <?php if ($menulist == 'retprc') {echo 'fa-circle';} else {echo 'fa-circle-o';}?> fa-fw"></i> Retur Pembelian</a>
                                 </li>
                                 <li>
