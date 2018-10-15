@@ -350,11 +350,8 @@
                         </form>
                     </div>
                 </div>
-                <!-- /.row -->
             </div>
-            <!-- /.container-fluid -->
         </div>
-        <!-- /#page-wrapper -->
     </div>
     <!-- Modal Search -->
     <div class="modal fade" id="modal_supp" role="dialog">
@@ -515,7 +512,6 @@
             </div>
         </div>
     </div>
-    <!-- /#wrapper -->
     <!-- jQuery -->
     <?php include 'application/views/layout/administrator/jspack.php' ?>
     <script>

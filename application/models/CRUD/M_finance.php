@@ -197,11 +197,12 @@
 				$this->db->where('b.csh_date >=', $datestr);
         		$this->db->where('b.csh_date <=', $dateend);
 			}
-			$this->db->select('c.*, b.CSH_DATE, b.CSH_CODE, d.COA_ACC, d.COA_ACCNAME, a.CSHINDET_INFO, a.CSHDETIN_AMOUNT');
+			$this->db->select('c.*, b.CSH_DATE, b.CSH_CODE, d.COA_ACC, d.COA_ACCNAME, a.CSHINDET_INFO, a.CSHDETIN_AMOUNT, e.COA_ACCNAME as COADET');
 			$this->db->from('cashin_det a');
 			$this->db->join('trx_cash_in b','b.csh_id = a.csh_id');
 			$this->db->join('master_branch c','c.branch_id = b.branch_id');
 			$this->db->join('chart_of_account d','d.coa_id = b.coa_id');
+			$this->db->join('chart_of_account e','e.coa_id = a.coa_id');
 			$this->db->order_by('b.csh_date');
 			$que = $this->db->get();
 			return $que->result();
@@ -222,11 +223,12 @@
 				$this->db->where('b.csho_date >=', $datestr);
         		$this->db->where('b.csho_date <=', $dateend);
 			}
-			$this->db->select('c.*, b.CSHO_DATE, b.CSHO_CODE, d.COA_ACC, d.COA_ACCNAME, a.CSHODET_INFO, a.CSHODET_AMOUNT');
+			$this->db->select('c.*, b.CSHO_DATE, b.CSHO_CODE, d.COA_ACC, d.COA_ACCNAME, a.CSHODET_INFO, a.CSHODET_AMOUNT, e.COA_ACCNAME as COADET');
 			$this->db->from('cashout_det a');
 			$this->db->join('trx_cash_out b','b.csho_id = a.csho_id');
 			$this->db->join('master_branch c','c.branch_id = b.branch_id');
 			$this->db->join('chart_of_account d','d.coa_id = b.coa_id');
+			$this->db->join('chart_of_account e','e.coa_id = a.coa_id');
 			$this->db->order_by('b.csho_date');
 			$que = $this->db->get();
 			return $que->result();

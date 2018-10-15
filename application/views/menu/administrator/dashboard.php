@@ -187,6 +187,13 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
+                                                <label class="control-label col-xs-3">Akun Hutang Sub-Kontrak</label>
+                                                <div class="col-sm-6">
+                                                    <select class="form-control text-center" name="os_prccoasubcrd" id="os_prccoasubcrd" data-live-search="true">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
                                                 <label class="col-xs-offset-1 col-xs-2 control-label">Keterangan</label>
                                                 <div class="col-xs-6">
                                                     <textarea name="stg_infoprccoa" class="form-control" rows="4" style="resize:vertical;" readonly></textarea>
@@ -374,6 +381,7 @@
             drop_branch('os_branch');
             drop_coa('os_prccoadeb');
             drop_coa('os_prccoacrd');
+            drop_coa('os_prccoasubcrd');
             drop_coa('os_prccoadisc');
             drop_coa('os_prccoappn');
             drop_coa('os_prccoacost');
@@ -405,7 +413,7 @@
                 {
                     $('[name="stg_infoinvc"]').val(data.PRINT_BANKINVOICE);
                     $('[name="stg_infoinvppn"]').val('Akun PPN : '+data.INV_COANAMEPPN);
-                    $('[name="stg_infoprccoa"]').val('Akun HPP : '+data.PRC_COANAME+'\n'+'Akun Hutang : '+data.PRC_COANAMEAG+'\n'+'Akun Diskon : '+data.PRC_COANAMEDISC+'\n'+'Akun PPN : '+data.PRC_COANAMEPPN+'\n'+'Akun Biaya : '+data.PRC_COANAMECOST);
+                    $('[name="stg_infoprccoa"]').val('Akun HPP : '+data.PRC_COANAME+'\n'+'Akun Hutang : '+data.PRC_COANAMEAG+'\n'+'Akun Hutang Sub-Kontrak : '+data.PRC_COASUBNAMEAG+'\n'+'Akun Diskon : '+data.PRC_COANAMEDISC+'\n'+'Akun PPN : '+data.PRC_COANAMEPPN+'\n'+'Akun Biaya : '+data.PRC_COANAMECOST);
                     $('[name="stg_infonotafin"]').val('Akun Nota Gantung : '+data.NOTAFIN_ACCNAME);
                     $('[name="stg_infogiroacc"]').val('Akun Piutang Giro : '+data.ACCRCVGIRO_ACCNAME+'\n'+'Akun Hutang Giro : '+data.DEBTGIRO_ACCNAME);
                 },

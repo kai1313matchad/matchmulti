@@ -270,7 +270,7 @@
                             // $('<td class="text-center">'+data['a'][i]["BRANCH_NAME"]+'</td>'),
                             $('<td class="text-center">'+moment(data['a'][i]["CSH_DATE"]).locale('id').format('DD-MMM-YYYY')+'</td>'),
                             $('<td class="text-center">'+data['a'][i]["CSH_CODE"]+data['a'][i]["BRANCH_INIT"]+'</td>'),
-                            $('<td class="text-center">'+data['a'][i]["CSHINDET_INFO"]+'</td>'),
+                            $('<td class="text-center">'+data['a'][i]["COADET"]+' - '+data['a'][i]["CSHINDET_INFO"]+'</td>'),
                             $('<td class="text-center">'+data['a'][i]["COA_ACC"]+' - '+data['a'][i]["COA_ACCNAME"]+'</td>'),
                             $('<td class="text-right chgnum">'+data['a'][i]["CSHDETIN_AMOUNT"]+'</td>'),
                             $('<td class="text-right chgnum">0</td>')
@@ -282,7 +282,7 @@
                             // $('<td class="text-center">'+data['b'][i]["BRANCH_NAME"]+'</td>'),
                             $('<td class="text-center">'+moment(data['b'][i]["CSHO_DATE"]).locale('id').format('DD-MMM-YYYY')+'</td>'),
                             $('<td class="text-center">'+data['b'][i]["CSHO_CODE"]+data['b'][i]["BRANCH_INIT"]+'</td>'),
-                            $('<td class="text-center">'+data['b'][i]["CSHODET_INFO"]+'</td>'),
+                            $('<td class="text-center">'+data['b'][i]["COADET"]+' - '+data['b'][i]["CSHODET_INFO"]+'</td>'),
                             $('<td class="text-center">'+data['b'][i]["COA_ACC"]+' - '+data['b'][i]["COA_ACCNAME"]+'</td>'),
                             $('<td class="text-right chgnum">0</td>'),
                             $('<td class="text-right chgnum">'+data['b'][i]["CSHODET_AMOUNT"]+'</td>')

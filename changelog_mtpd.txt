@@ -1,3 +1,8 @@
+15102018
+- Edit tabel other_settings
+	ALTER TABLE `other_settings`
+	ADD COLUMN `PRC_COASUB` INT(11) NULL DEFAULT NULL AFTER `PRC_COA`,
+	ADD COLUMN `PRC_COASUBNAME` CHAR(200) NULL DEFAULT NULL AFTER `PRC_COANAME`;
 14102018
 - edit tabel trx_procurement
 	ALTER TABLE `trx_procurement`

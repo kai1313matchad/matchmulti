@@ -147,15 +147,18 @@
 		public function save_prccoa()
 		{
 			$brc = $this->input->post('os_branch');
-			$deb = $this->input->post('os_prccoadeb');
-			$crd = $this->input->post('os_prccoacrd');
-			$disc = $this->input->post('os_prccoadisc');
-			$ppn = $this->input->post('os_prccoappn');
-			$cost = $this->input->post('os_prccoacost');
+			$deb = ($this->input->post('os_prccoadeb') != '')?$this->input->post('os_prccoadeb'):NULL;
+			$crd = ($this->input->post('os_prccoacrd') != '')?$this->input->post('os_prccoacrd'):NULL;
+			$subcrd = ($this->input->post('os_prccoasubcrd') != '')?$this->input->post('os_prccoasubcrd'):NULL;
+			$disc = ($this->input->post('os_prccoadisc') != '')?$this->input->post('os_prccoadisc'):NULL;
+			$ppn = ($this->input->post('os_prccoappn') != '')?$this->input->post('os_prccoappn'):NULL;
+			$cost = ($this->input->post('os_prccoacost') != '')?$this->input->post('os_prccoacost'):NULL;
 			$getdeb = $this->db->get_where('chart_of_account',array('coa_id'=>$deb));
 			$debname = $getdeb->row()->COA_ACCNAME;
 			$getcrd = $this->db->get_where('chart_of_account',array('coa_id'=>$crd));
 			$crdname = $getcrd->row()->COA_ACCNAME;
+			$getsubcrd = $this->db->get_where('chart_of_account',array('coa_id'=>$subcrd));
+			$subcrdname = $getsubcrd->row()->COA_ACCNAME;
 			$getdisc = $this->db->get_where('chart_of_account',array('coa_id'=>$disc));
 			$discname = $getdisc->row()->COA_ACCNAME;
 			$getppn = $this->db->get_where('chart_of_account',array('coa_id'=>$ppn));
@@ -168,6 +171,8 @@
 				$d_up = array(
 						'prc_coa'=>$deb,
 						'prc_coaname'=>$debname,
+						'prc_coasub'=>$subcrd,
+						'prc_coasubname'=>$subcrdname,
 						'prc_coaag'=>$crd,
 						'prc_coanameag'=>$crdname,
 						'prc_coadisc'=>$disc,
@@ -186,6 +191,8 @@
 						'branch_id'=>$brc,
 						'prc_coa'=>$deb,
 						'prc_coaname'=>$debname,
+						'prc_coasub'=>$subcrd,
+						'prc_coasubname'=>$subcrdname,
 						'prc_coaag'=>$crd,
 						'prc_coanameag'=>$crdname,
 						'prc_coadisc'=>$disc,
