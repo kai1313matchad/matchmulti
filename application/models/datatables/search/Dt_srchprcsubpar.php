@@ -1,6 +1,6 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
-	class Dt_srchprcsubbysts extends CI_Model 
+	class Dt_srchprcsubpar extends CI_Model 
 	{
 		var $table = 'trx_procurement a';
 		var $column_order = array(null,'prc_code','po_code','appr_code','prc_date','loc_name');
@@ -19,7 +19,7 @@
 			$this->db->join('master_branch f','f.branch_id = a.branch_id','left');
 			$this->db->from($this->table);
 			$this->db->where('a.prc_sts',$id);
-			$this->db->where('a.prc_substs = "0" OR a.prc_substs = "1"');
+			$this->db->where('a.prc_substs = "0"');
 			$this->db->where($brc);
 			$i = 0;
 			foreach ($this->column_search as $item)

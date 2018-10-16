@@ -78,7 +78,7 @@
                                     <div class="form-group subHide">
                                         <label class="col-sm-3 control-label">Nomor BL Induk</label>
                                         <div class="col-sm-1">
-                                            <a href="javascript:void(0)" onclick="srch_orcparent()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-search"></span></a>
+                                            <a href="javascript:void(0)" onclick="srch_prcparent()" class="btn btn-block btn-info"><span class="glyphicon glyphicon-search"></span></a>
                                         </div>
                                         <div class="col-sm-7">
                                             <input class="form-control" type="text" name="prcpar_code" readonly>
@@ -521,6 +521,7 @@
             $('#dtp1').datetimepicker({                
                 format: 'YYYY-MM-DD'
             });
+            prcsubchk();
             id=$('[name="prc_id"]').val();            
             barang(id);
             prc = 0; qty = 0; sub = 0;
@@ -540,6 +541,21 @@
                 gtotal();
             });
         });
+        function prcsubchk()
+        {
+            if($('[name="prcsub_type"][value="0"]').is(':checked'))
+            {
+                $('.subHide').css({'display':'none'});
+                $('[name="prcpar_id"]').val('');
+                $('[name="prcpar_code"]').val('');
+            }
+            if($('[name="prcsub_type"][value="1"]').is(':checked'))
+            {
+                $('.subHide').css({'display':'block'});
+                $('[name="prcpar_id"]').val('');
+                $('[name="prcpar_code"]').val('');
+            }
+        }
         function print_prcsub()
         {
             var ids = $('[name=prc_id]').val();
@@ -548,7 +564,7 @@
         function tambah()
         {
             $.ajax({
-                url : "<?php echo site_url('administrator/Logistik/gen_bl_lgt') ?>",
+                url : "<?php echo site_url('administrator/Logistik/gen_blsub_lgt') ?>",
                 type : "GET",
                 dataType : "JSON",
                 success : function(data)
@@ -594,7 +610,7 @@
                 {
                     if(data.status)
                     {
-                        var url = "<?php echo site_url('administrator/Logistik/lgt_trx_prcsub')?>";
+                        var url = "<?php echo site_url('administrator/Logistik/lgt_trx_prc_sub')?>";
                         window.location = url;
                     }                   
                 },
@@ -615,7 +631,7 @@
                 {
                     if(data.status)
                     {
-                        var url = "<?php echo site_url('administrator/Logistik/lgt_trx_prcsub')?>";
+                        var url = "<?php echo site_url('administrator/Logistik/lgt_trx_prc_sub')?>";
                         window.location = url;
                     }                   
                 },
@@ -794,6 +810,32 @@
                 });
             }
         }
+        function srch_prcparent()
+        {
+            $('#modal_prc_edit').modal('show');
+            $('.modal-title').text('Cari BL Induk');
+            table = $('#dtb_prc_edit').DataTable({
+                "info": false,
+                "destroy": true,
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "order": [],
+                "ajax": {
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_prcsubpar')?>",
+                    "type": "POST",
+                    "data": function(data){
+                        data.brch = $('[name="user_branch"]').val();
+                    },
+                },
+                "columnDefs": [
+                { 
+                    "targets": [ 0 ],
+                    "orderable": false,
+                },
+                ],
+            });
+        }
         function srch_po()
         {
             $('#modal_po').modal('show');
@@ -933,6 +975,24 @@
                 }
             });
         }
+        function pick_prcsubpar(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_prclgtgb/')?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('[name="prcpar_id"]').val(data.PRC_ID);
+                    $('[name="prcpar_code"]').val(data.PRC_CODE);
+                    $('#modal_prc_edit').modal('hide');
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
         function srch_curr()
         {
             $('#modal_curr').modal('show');
@@ -1055,7 +1115,7 @@
                 ],
             });
         }
-        function open_lgtprc()
+        function open_lgtprcsub()
         {
             $('#modal_prc_edit').modal('show');
             $('.modal-title').text('Cari Pembelian');            
@@ -1083,7 +1143,7 @@
                 ],
             });
         }
-        function check_lgtprc()
+        function check_lgtprcsub()
         {
             $('#modal_prc_edit').modal('show');
             $('.modal-title').text('Cari Pembelian');            
@@ -1111,7 +1171,7 @@
                 ],
             });
         }
-        function apr_lgtprc()
+        function apr_lgtprcsub()
         {
             $('#modal_prc_edit').modal('show');
             $('.modal-title').text('Cari Pembelian');            
@@ -1139,10 +1199,10 @@
                 ],
             });
         }
-        function pick_prclgtopen(id)
+        function pick_prcsublgtopen(id)
         {
             $.ajax({
-                url : "<?php echo site_url('administrator/Logistik/open_lgtprcsub/')?>" + id,
+                url : "<?php echo site_url('administrator/Logistik/open_lgtprc/')?>" + id,
                 type: "POST",
                 data: $('#form_po').serialize(),
                 dataType: "JSON",
@@ -1164,10 +1224,10 @@
                 }
             });
         }
-        function pick_prclgtedit(id)
+        function pick_prcsublgtedit(id)
         {
             $.ajax({
-                url : "<?php echo site_url('administrator/Searchdata/pick_prcsublgtgb/')?>" + id,
+                url : "<?php echo site_url('administrator/Searchdata/pick_prclgtgb/')?>" + id,
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)
@@ -1194,10 +1254,10 @@
                 }
             });
         }
-        function pick_prclgtchk(id)
+        function pick_prcsublgtchk(id)
         {
             $.ajax({
-                url : "<?php echo site_url('administrator/Searchdata/pick_prcsublgtgb/')?>" + id,
+                url : "<?php echo site_url('administrator/Searchdata/pick_prclgtgb/')?>" + id,
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)
@@ -1225,10 +1285,10 @@
                 }
             });
         }
-        function pick_prclgtapr(id)
+        function pick_prcsublgtapr(id)
         {
             $.ajax({
-                url : "<?php echo site_url('administrator/Searchdata/pick_prcsublgtgb/')?>" + id,
+                url : "<?php echo site_url('administrator/Searchdata/pick_prclgtgb/')?>" + id,
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)

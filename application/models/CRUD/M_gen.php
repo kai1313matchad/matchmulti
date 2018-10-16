@@ -598,6 +598,40 @@
 			return  $out;
 		}
 
+		public function gen_numblsublgt()
+		{
+			$brc = $this->session->userdata('user_branch');
+			$res = $this->gen_numbybrc_('trx_procurement','prc_code',$brc,'BL');
+			$check = $this->db->get_where('trx_procurement',array('prc_code' => $res));
+			if($check->num_rows() > 0)
+			{
+				$res = $this->gen_numbybrc_('trx_procurement','prc_code',$brc,'BL');
+			}
+			$data = array(
+					'prc_code'=>$res,
+					'branch_id'=>$brc,
+					'prc_substs'=>'0',
+					'prc_date'=>date('Y-m-d'),
+					'prc_sts'=>'0'
+				);			
+			$this->db->insert('trx_procurement',$data);			
+			$insID = $this->db->insert_id();
+			$out['insertId'] = $insID;
+			$out['prc_code'] = $res;
+			$data2 = array(
+					'prc_id' => $insID,
+					'hisprc_sts' => 'Void By System',
+					'hisprc_old' => 'None',
+					'hisprc_new' => 'None',
+					'hisprc_info' => 'Create By System',
+					'hisprc_date' => date('Y-m-d'),
+					'hisprc_time' => date('H:i:s'),
+					'hisprc_upcount' => 0
+				);
+			$this->db->insert('his_prc',$data2);
+			return  $out;
+		}
+
 		public function gen_numretlgt()
 		{
 			$brc = $this->session->userdata('user_branch');

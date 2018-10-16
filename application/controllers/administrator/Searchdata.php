@@ -36,6 +36,8 @@
 			$this->load->model('datatables/search/Dt_srchpobysts','s_pobysts');
 			$this->load->model('datatables/search/Dt_srchpogabysts','s_pogabysts');
 			$this->load->model('datatables/search/Dt_srchprcbysts','s_prcbysts');
+			$this->load->model('datatables/search/Dt_srchprcsubbysts','s_prcsubbysts');
+			$this->load->model('datatables/search/Dt_srchprcsubpar','s_prcsubpar');
 			$this->load->model('datatables/search/Dt_srchprcgabysts','s_prcgabysts');
 			$this->load->model('datatables/search/Dt_srchprcgabysupp','s_prcgabysupp');
 			$this->load->model('datatables/search/Dt_srchrtprcbysts','s_rtprcbysts');
@@ -697,6 +699,116 @@
 		{
 			$data = $this->crud->get_by_id('trx_procurement',array('prc_id' => $id));
 			echo json_encode($data);
+		}
+
+		public function srch_prcsubbysts()
+		{
+			$id = $this->input->post('sts');
+			$br = $this->input->post('brch');
+			$brc = 'a.branch_id = '.$br;
+			$chk = $this->input->post('chk');
+			$list = $this->s_prcsubbysts->get_datatables($id,$brc);
+			$data = array();
+			$no = $_POST['start'];
+			switch ($chk) {
+				case '0':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->PRC_CODE;
+						$row[] = $dat->PO_CODE;
+						$row[] = $dat->APPR_CODE;
+						$row[] = $dat->PRC_DATE;
+						$row[] = $dat->LOC_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_prcsublgtedit('."'".$dat->PRC_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '1':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->PRC_CODE;
+						$row[] = $dat->PO_CODE;
+						$row[] = $dat->APPR_CODE;
+						$row[] = $dat->PRC_DATE;
+						$row[] = $dat->LOC_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_prcsublgtopen('."'".$dat->PRC_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '2':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->PRC_CODE;
+						$row[] = $dat->PO_CODE;
+						$row[] = $dat->APPR_CODE;
+						$row[] = $dat->PRC_DATE;
+						$row[] = $dat->LOC_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_prcsublgtchk('."'".$dat->PRC_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '3':
+					foreach ($list as $dat) {
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->PRC_CODE;
+						$row[] = $dat->PO_CODE;
+						$row[] = $dat->APPR_CODE;
+						$row[] = $dat->PRC_DATE;
+						$row[] = $dat->LOC_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_prcsublgtapr('."'".$dat->PRC_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				default:
+					# code...
+					break;
+			}
+			$output = array(
+							"draw" => $_POST['draw'],
+							"recordsTotal" => $this->s_prcsubbysts->count_all(),
+							"recordsFiltered" => $this->s_prcsubbysts->count_filtered($id,$brc),
+							"data" => $data,
+					);			
+			echo json_encode($output);
+		}
+
+		public function srch_prcsubpar()
+		{
+			$id = '1';
+			$br = $this->input->post('brch');
+			$brc = 'a.branch_id = '.$br;
+			$chk = $this->input->post('chk');
+			$list = $this->s_prcsubpar->get_datatables($id,$brc);
+			$data = array();
+			$no = $_POST['start'];
+			foreach ($list as $dat)
+			{
+				$no++;
+				$row = array();
+				$row[] = $no;
+				$row[] = $dat->PRC_CODE;
+				$row[] = $dat->PO_CODE;
+				$row[] = $dat->APPR_CODE;
+				$row[] = $dat->PRC_DATE;
+				$row[] = $dat->LOC_NAME;
+				$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_prcsubpar('."'".$dat->PRC_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+				$data[] = $row;
+			}
+			$output = array(
+							"draw" => $_POST['draw'],
+							"recordsTotal" => $this->s_prcsubpar->count_all(),
+							"recordsFiltered" => $this->s_prcsubpar->count_filtered($id,$brc),
+							"data" => $data,
+					);			
+			echo json_encode($output);
 		}
 
 		//Search Retur Pembelian Berdasarkan Status Untuk Edit dan Buka Record di halaman Retur Pembelian Logistik
