@@ -113,7 +113,7 @@
         <div class="row">
             <label class="col-xs-2 col-xs-offset-1 control-label">Nama</label>
             <div class="col-xs-9 bapp-border">
-                <strong>Rudy Wijaya</strong>
+                <strong>Gozali Puspo</strong>
             </div>
         </div>
         <div class="row bapp-row">
@@ -249,7 +249,7 @@
             <div class="col-xs-4 text-center">
                 <span>Yang Menyerahkan</span>
                 <br><br><br><br><br><br>
-                <strong><span>( Rudy Wijaya )</span></strong><br>
+                <strong><span>( Gozali Puspo )</span></strong><br>
                 <i>Director</i>
             </div>
             <div class="col-xs-offset-4 col-xs-4 text-center">

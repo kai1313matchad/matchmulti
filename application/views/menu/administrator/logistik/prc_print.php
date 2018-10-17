@@ -30,7 +30,7 @@
         .row-content
         {
             margin-top: 10px;
-            min-height: 350px;
+            min-height: 320px;
             margin-top: -10px !important;
             margin-bottom: -10px !important;
         }
@@ -81,7 +81,7 @@
             }
             .row-content
             {
-                min-height: 225px;
+                min-height: 205px;
                 margin-top: -10px !important;
                 margin-bottom: -10px !important;
             }
@@ -138,7 +138,7 @@
                     www.match-advertising.com - www.matchadonline.com -->
                 </address>
             </div>
-            <div class="col-xs-offset-5 col-xs-3 head-font">
+            <div class="col-xs-offset-4 col-xs-4 head-font">
                 <address>
                     <strong>Kepada Yth:</strong><br>
                     <span name="inv_suppname"></span><br>
@@ -391,19 +391,5 @@
                 }
             });
         }
-    </script>
-
-    <!-- print area -->
-    <script type="text/javascript">
-    function printContent(printpage){
-        var headstr = "<html><head><title></title></head><body>";
-        var footstr = "</body>";
-        var newstr = document.all.item(printpage).innerHTML;
-        var oldstr = document.body.innerHTML;
-        document.body.innerHTML = headstr+newstr+footstr;
-        window.print();
-        document.body.innerHTML = oldstr;
-        return false;
-    }
     </script>
 </body>

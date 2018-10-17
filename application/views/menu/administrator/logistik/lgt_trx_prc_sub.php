@@ -1231,12 +1231,16 @@
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)
-                {   
+                {
+                    (data.PRC_SUBSTS != '1')?$('[name="prcsub_type"][value="0"]').prop('checked',true):$('[name="prcsub_type"][value="1"]').prop('checked',true);
+                    prcsubchk();
+                    $('[name="prcpar_id"]').val(data.PRC_SUBID);
+                    $('[name="prcpar_code"]').val(data.PRC_SUBCODE);
                     $('[name="prc_id"]').val(data.PRC_ID);
                     $('[name="prc_code"]').val(data.PRC_CODE);
                     $('[name="prc_tgl"]').val(data.PRC_DATE);
                     $('[name="prc_inv"]').val(data.PRC_INVOICE);
-                    pick_po(data.PO_ID);                    
+                    pick_po(data.PO_ID);
                     barang(data.PRC_ID);
                     pick_curr(data.CURR_ID);
                     sub_total(data.PRC_ID);
@@ -1261,7 +1265,11 @@
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)
-                {   
+                {
+                    (data.PRC_SUBSTS != '1')?$('[name="prcsub_type"][value="0"]').prop('checked',true):$('[name="prcsub_type"][value="1"]').prop('checked',true);
+                    prcsubchk();
+                    $('[name="prcpar_id"]').val(data.PRC_SUBID);
+                    $('[name="prcpar_code"]').val(data.PRC_SUBCODE);
                     $('[name="prc_id"]').val(data.PRC_ID);
                     $('[name="prc_code"]').val(data.PRC_CODE);
                     $('[name="prc_tgl"]').val(data.PRC_DATE);

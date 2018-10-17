@@ -29,7 +29,7 @@
         }
         .row-content
         {            
-            min-height: 350px;
+            min-height: 320px;
         }
         .table th
         {
@@ -74,7 +74,7 @@
             }
             .row-content
             {                
-                min-height: 220px;
+                min-height: 200px;
             }
             .head-font
             {
@@ -121,11 +121,9 @@
                     Telp. (031) 567 8346 (Hunting)<br>
                     Fax. (031) 568 0646<br>
                     Email : info@match-advertising.com<br>
-                    <!-- Website :<br>
-                    www.match-advertising.com - www.matchadonline.com -->
                 </address>
             </div>
-            <div class="col-xs-offset-5 col-xs-3 head-font">
+            <div class="col-xs-offset-4 col-xs-4 head-font">
                 <address>
                     <strong>Kepada Yth:</strong><br>
                     <span name="inv_suppname"></span><br>
@@ -134,13 +132,6 @@
                     <span name="inv_suppinfo"></span>
                 </address>
             </div>
-            <!-- <div class="col-xs-4 head-font">
-                <address>
-                    <strong>Info:</strong><br> 
-                    Lokasi <br><span name="loc_name"></span>, <span name="loc_det"></span><br>
-                    <span name="po_info"></span>
-                </address>
-            </div> -->
         </div>
         <div class="row row-content content-font">
             <div class="col-sm-12 col-xs-12 table-responsive">
@@ -375,20 +366,6 @@
                     alert('Error get data from ajax');
                 }
             });
-        }
-    </script>
-    <!-- print area -->
-    <script type="text/javascript">
-        function printContent(printpage)
-        {
-            var headstr = "<html><head><title></title></head><body>";
-            var footstr = "</body>";
-            var newstr = document.all.item(printpage).innerHTML;
-            var oldstr = document.body.innerHTML;
-            document.body.innerHTML = headstr+newstr+footstr;
-            window.print();
-            document.body.innerHTML = oldstr;
-            return false;
         }
     </script>    
 </body>
