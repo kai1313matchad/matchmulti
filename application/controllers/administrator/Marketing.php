@@ -67,6 +67,15 @@
 					$data['isi']='menu/administrator/marketing/mkt_trx_approvalt1';
 					$this->load->view('layout/administrator/wrapper',$data);
 					break;
+				case '6':
+					$this->authsys->trx_check_($_SESSION['user_id'],'MKT');
+					$data['pattyp'] = $this->crud->get_pattyp();
+					$data['title']='Match Terpadu - Dashboard Marketing';
+					$data['menu']='marketing';
+					$data['menulist']='approval';
+					$data['isi']='menu/administrator/marketing/mkt_trx_approvalt2';
+					$this->load->view('layout/administrator/wrapper',$data);
+					break;
 				default:
 					$this->authsys->trx_check_($_SESSION['user_id'],'MKT');
 					$data['pattyp'] = $this->crud->get_pattyp();
