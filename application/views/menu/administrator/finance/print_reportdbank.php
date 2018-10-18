@@ -229,7 +229,7 @@
                         </tr>
                         <tr>
                             <td class="text-left col-perc10">Kas Bon</td>
-                            <td class="text-centercol-perc15"></td>
+                            <td class="text-center chgnum col-perc15" name="notafin_sum">0</td>
                             <td class="text-center col-perc15"><strong>Diketahui Oleh</strong></td>
                             <td class="text-center col-perc30" colspan="2"><strong>Diperiksa Oleh</strong></td>
                             <td class="text-center col-perc30" colspan="2"><strong>Dibuat Oleh</strong></td>
@@ -364,16 +364,16 @@
                     var ctrl_cre = (sal_end+sum_cre)*1;
                     // var nota_deb = data['e'];
                     // var nota_cre = data['f'];
-                    // var nota_sum = (nota_cre-nota_deb)*1;
-                    // var sal_fin = (nota_sum+sal_end)*1;
-                    var sal_diff = Math.abs(sal_str-sal_end);
+                    var nota_sum = $('[name="notafin_sum"]').val();
+                    var sal_mn = (nota_sum+sal_end)*1;
+                    var sal_diff = Math.abs(sal_mn-sal_end);
                     $('[name="saldo_start"]').text(sal_str);
-                    $('[name="saldoend_credit"]').text(sal_end);
-                    $('[name="saldo_bank"]').text(sal_str);
+                    $('[name="saldo_end"]').text(sal_end);
+                    $('[name="saldo_bank"]').text(sal_end);
                     $('[name="ctrl_debit"]').text(ctrl_deb);
                     $('[name="ctrl_credit"]').text(ctrl_cre);
                     // $('[name="notafin_sum"]').text(nota_sum);
-                    $('[name="saldo_mn"]').text(sal_end);
+                    $('[name="saldo_mn"]').text(sal_mn);
                     $('[name="saldo_diff"]').text(sal_diff);
                     $('td.chgnum').number(true);
                 },
