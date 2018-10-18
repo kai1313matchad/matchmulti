@@ -353,11 +353,12 @@
 				$this->db->where('b.bnk_date >=', $datestr);
         		$this->db->where('b.bnk_date <=', $dateend);
 			}
-			$this->db->select('c.*, b.BNK_DATE, b.BNK_CODE, d.COA_ACC, d.COA_ACCNAME, a.BNKDET_INFO, a.BNKDET_AMOUNT');
+			$this->db->select('c.*, b.BNK_DATE, b.BNK_CODE, d.COA_ACC, d.COA_ACCNAME, a.BNKDET_INFO, a.BNKDET_AMOUNT, e.COA_ACCNAME as COADET');
 			$this->db->from('bankin_det a');
 			$this->db->join('trx_bankin b','b.bnk_id = a.bnk_id');
 			$this->db->join('master_branch c','c.branch_id = b.branch_id');
 			$this->db->join('chart_of_account d','d.coa_id = b.coa_id');
+			$this->db->join('chart_of_account e','e.coa_id = a.coa_id');
 			$this->db->where('a.bnkdet_type','T');
 			$this->db->order_by('b.bnk_date');
 			$que = $this->db->get();
@@ -379,15 +380,101 @@
 				$this->db->where('b.bnko_date >=', $datestr);
         		$this->db->where('b.bnko_date <=', $dateend);
 			}
-			$this->db->select('c.*, b.BNKO_DATE, b.BNKO_CODE, d.COA_ACC, d.COA_ACCNAME, a.BNKODET_INFO, a.BNKODET_AMOUNT');
+			$this->db->select('c.*, b.BNKO_DATE, b.BNKO_CODE, d.COA_ACC, d.COA_ACCNAME, a.BNKODET_INFO, a.BNKODET_AMOUNT, e.COA_ACCNAME as COADET');
 			$this->db->from('bankout_det a');
 			$this->db->join('trx_bankout b','b.bnko_id = a.bnko_id');
 			$this->db->join('master_branch c','c.branch_id = b.branch_id');
-			$this->db->join('chart_of_account d','d.coa_id = b.coa_id');	
+			$this->db->join('chart_of_account d','d.coa_id = b.coa_id');
+			$this->db->join('chart_of_account e','e.coa_id = a.coa_id');
 			$this->db->where('a.bnkodet_type','T');		
 			$this->db->order_by('b.bnko_date');
 			$que = $this->db->get();
 			return $que->result();
+		}
+
+		public function get_trxgiroin($brc,$coa,$datestr,$dateend)
+		{
+			if($brc != NULL)
+			{
+				$this->db->where('b.branch_id',$brc);
+			}
+			if($coa != NULL)
+			{
+				$this->db->where('b.coa_id',$coa);
+			}
+			if ($datestr != NULL AND $dateend != NULL)
+			{
+				$this->db->where('b.grin_date >=', $datestr);
+        		$this->db->where('b.grin_date <=', $dateend);
+			}
+			$this->db->select('c.*, b.GRIN_DATE, b.GRIN_CODE, b.GRIN_INFO, a.GRINDET_AMOUNT, a.GRINDET_CODE');
+			$this->db->from('giroin_det a');
+			$this->db->join('trx_giro_in b','b.grin_id = a.grin_id');
+			$this->db->join('master_branch c','c.branch_id = b.branch_id');
+			$this->db->join('chart_of_account d','d.coa_id = b.coa_id');
+			$this->db->where('b.grin_sts','1');
+			$this->db->order_by('b.grin_date');
+			$que = $this->db->get();
+			return $que->result();
+		}
+
+		public function get_trxgiroout($brc,$coa,$datestr,$dateend)
+		{
+			if($brc != NULL)
+			{
+				$this->db->where('b.branch_id',$brc);
+			}
+			if($coa != NULL)
+			{
+				$this->db->where('b.coa_id',$coa);
+			}
+			if ($datestr != NULL AND $dateend != NULL)
+			{
+				$this->db->where('b.grout_date >=', $datestr);
+        		$this->db->where('b.grout_date <=', $dateend);
+			}
+			$this->db->select('c.*, b.GROUT_DATE, b.GROUT_CODE, b.GROUT_INFO, a.GROUTDET_AMOUNT, a.GROUTDET_CODE');
+			$this->db->from('giroout_det a');
+			$this->db->join('trx_giro_out b','b.grout_id = a.grout_id');
+			$this->db->join('master_branch c','c.branch_id = b.branch_id');
+			$this->db->join('chart_of_account d','d.coa_id = b.coa_id');
+			$this->db->where('b.grout_sts','1');
+			$this->db->order_by('b.grout_date');
+			$que = $this->db->get();
+			return $que->result();
+		}
+
+		public function get_banksaldosum($table,$sumfield,$tabledet,$idjoin,$datefield,$brc,$coa,$date,$bnksts)
+		{
+			$this->db->select($sumfield);
+			$this->db->from($table);
+			$this->db->join('master_branch b','b.branch_id = a.branch_id');
+			$this->db->join('chart_of_account c','c.coa_id = a.coa_id');
+			$this->db->join($tabledet,$idjoin);
+			$this->db->where('b.branch_id', $brc);
+			$this->db->where('a.coa_id', $coa);
+			$this->db->where($datefield, $date);
+			$this->db->where($bnksts);
+			$this->db->group_by('a.coa_id');
+			$que = $this->db->get();
+			$data = ($que->num_rows() != NULL)?$que->row()->SUM:0;
+			return $data;
+		}
+
+		public function get_girosaldosum($table,$sumfield,$tabledet,$idjoin,$datefield,$brc,$coa,$date)
+		{
+			$this->db->select($sumfield);
+			$this->db->from($table);
+			$this->db->join('master_branch b','b.branch_id = a.branch_id');
+			$this->db->join('chart_of_account c','c.coa_id = a.coa_id');
+			$this->db->join($tabledet,$idjoin);
+			$this->db->where('b.branch_id', $brc);
+			$this->db->where('a.coa_id', $coa);
+			$this->db->where($datefield, $date);
+			$this->db->group_by('a.coa_id');
+			$que = $this->db->get();
+			$data = ($que->num_rows() != NULL)?$que->row()->SUM:0;
+			return $data;
 		}
 	}
 ?>

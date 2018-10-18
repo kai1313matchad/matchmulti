@@ -1,3 +1,12 @@
+18102018
+- Edit tabel trx_giro_in
+	ALTER TABLE `trx_giro_in`
+	ADD COLUMN `COA_ID` INT(11) NULL DEFAULT NULL AFTER `BRANCH_ID`,
+	ADD CONSTRAINT `FK_trx_giro_in_chart_of_account` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`);
+- Edit tabel trx_giro_out
+	ALTER TABLE `trx_giro_out`
+	ADD COLUMN `COA_ID` INT(11) NULL DEFAULT NULL AFTER `BRANCH_ID`,
+	ADD CONSTRAINT `FK_trx_giro_out_chart_of_account` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`);
 15102018
 - Edit tabel other_settings
 	ALTER TABLE `other_settings`

@@ -472,6 +472,20 @@
 			$this->load->view('menu/administrator/finance/print_reportbank',$data);
 		}
 
+		public function print_rptdbank()
+		{
+			$this->authsys->trx_check_($_SESSION['user_id'],'FIN');
+			$data['coa'] = ($this->uri->segment(4) == 'null') ? '' : $this->uri->segment(4);
+			$data['datestart'] = ($this->uri->segment(5) == 'null') ? '' : $this->uri->segment(5);
+			$data['dateend'] = ($this->uri->segment(6) == 'null') ? '' : $this->uri->segment(6);
+			$data['branch'] = ($this->uri->segment(7) == 'null') ? '' : $this->uri->segment(7);
+			$data['rpttype'] = ($this->uri->segment(8) == 'null') ? '' : $this->uri->segment(8);
+			$data['title']='Match Terpadu - Dashboard Finance';
+			$data['menu']='finance';
+			$data['menulist']='report_finance';
+			$this->load->view('menu/administrator/finance/print_reportdbank',$data);
+		}
+
 		public function gen_rptbank()
 		{
 			$brc = ($this->input->post('branch'))?$this->input->post('branch'):NULL;
@@ -480,6 +494,13 @@
 			$dateend = ($this->input->post('date_end'))?$this->input->post('date_end'):NULL;
 			$data['a'] = $this->finance->get_trxbankin($brc,$coa,$datestr,$dateend);
 			$data['b'] = $this->finance->get_trxbankout($brc,$coa,$datestr,$dateend);
+			$data['c'] = $this->finance->get_trxgiroin($brc,$coa,$datestr,$dateend);
+			$data['d'] = $this->finance->get_trxgiroout($brc,$coa,$datestr,$dateend);
+			$data['e'] = $this->finance->get_banksaldosum('trx_bankin a','sum(d.BNKDET_AMOUNT) as SUM','bankin_det d','d.bnk_id = a.bnk_id','a.bnk_date <',$brc,$coa,$datestr,'d.bnkdet_type = "T"');
+			$data['f'] = $this->finance->get_banksaldosum('trx_bankout a','sum(d.BNKODET_AMOUNT) as SUM','bankout_det d','d.bnko_id = a.bnko_id','a.bnko_date <',$brc,$coa,$datestr,'d.bnkodet_type = "T"');
+			$data['g'] = $this->finance->get_girosaldosum('trx_giro_in a','sum(d.GRINDET_AMOUNT) as SUM','giroin_det d','d.grin_id = a.grin_id','a.grin_date <',$brc,$coa,$datestr);
+			$data['h'] = $this->finance->get_girosaldosum('trx_giro_out a','sum(d.GROUTDET_AMOUNT) as SUM','giroout_det d','d.grout_id = a.grout_id','a.grout_date <',$brc,$coa,$datestr);
+			$data['i'] = $this->db->get_where('chart_of_account',array('coa_id'=>$coa))->row();
 			echo json_encode($data);
 		}
 
@@ -2118,6 +2139,7 @@
 	                'user_id' => $this->input->post('user_id'),
                     'grin_code' => $this->input->post('giro_nomor'),
                     'bank_id' => $this->input->post('giro_bank_id'),
+                    'coa_id' => $this->input->post('giro_bank_acc_id'),
 	                'grin_sts' => '2',
 	                'grin_date' => $this->input->post('giro_tgl'),
 	                'grin_info' => $this->input->post('giro_info')	                
@@ -2266,6 +2288,7 @@
 				    'user_id' => $this->input->post('user_id'),
                     'grout_code' => $this->input->post('giro_nomor'),
                     'bank_id' => $this->input->post('giro_bank_id'),
+                    'coa_id' => $this->input->post('giro_bank_acc_id'),
 	                'grout_sts' => '2',
 	                'grout_date' => $this->input->post('giro_tgl'),
 	                'grout_info' => $this->input->post('giro_info')
