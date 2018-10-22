@@ -57,8 +57,8 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Jenis</label>
                                         <div class="col-sm-8">
-                                            <label class="radio-inline"><input type="radio" name="prcsub_type" value="0" onclick="prcsubchk()" checked>Induk</label>
-                                            <label class="radio-inline"><input type="radio" name="prcsub_type" value="1" onclick="prcsubchk()">Anak</label> 
+                                            <label class="radio-inline"><input type="radio" name="prcsub_type" value="0" onclick="prcsubchk()" checked>Main Vendor</label>
+                                            <label class="radio-inline"><input type="radio" name="prcsub_type" value="1" onclick="prcsubchk()">Sub Vendor</label> 
                                         </div>
                                     </div>
                                     <div class="form-group">

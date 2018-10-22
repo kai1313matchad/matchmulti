@@ -162,7 +162,7 @@ CREATE TABLE IF NOT EXISTS `bankin_det` (
   CONSTRAINT `FK_R102` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.bankin_det: ~3 rows (approximately)
+-- Dumping data for table mtpdmulti.bankin_det: ~2 rows (approximately)
 /*!40000 ALTER TABLE `bankin_det` DISABLE KEYS */;
 INSERT INTO `bankin_det` (`BNKDET_ID`, `COA_ID`, `BNK_ID`, `BNKDET_INVID`, `BNKDET_TYPE`, `BNKDET_NUM`, `BNKDET_REFF`, `BNKDET_INFO`, `BNKDET_AMOUNT`) VALUES
 	(2, 1172, 1, '', 'T', 'TT1234567890', '', 'kolom keterangan bank masuk', 100000.00),
@@ -185,7 +185,7 @@ CREATE TABLE IF NOT EXISTS `bankin_trxdet` (
   CONSTRAINT `FK_R100` FOREIGN KEY (`BNK_ID`) REFERENCES `trx_bankin` (`BNK_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.bankin_trxdet: ~1 rows (approximately)
+-- Dumping data for table mtpdmulti.bankin_trxdet: ~0 rows (approximately)
 /*!40000 ALTER TABLE `bankin_trxdet` DISABLE KEYS */;
 INSERT INTO `bankin_trxdet` (`BNKTRX_ID`, `BNK_ID`, `BNKTRX_TYPE`, `BNKTRX_CODE`, `BNKTRX_NUM`, `BNKTRX_DATE`, `BNKTRX_AMOUNT`) VALUES
 	(2, 1, 'T', NULL, 'TT1234567890', '2018-10-01', 100000.00),
@@ -212,7 +212,7 @@ CREATE TABLE IF NOT EXISTS `bankout_det` (
   CONSTRAINT `FK_R121` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.bankout_det: ~1 rows (approximately)
+-- Dumping data for table mtpdmulti.bankout_det: ~0 rows (approximately)
 /*!40000 ALTER TABLE `bankout_det` DISABLE KEYS */;
 INSERT INTO `bankout_det` (`BNKODET_ID`, `BNKO_ID`, `COA_ID`, `BNKODET_PRCID`, `BNKODET_TYPE`, `BNKODET_NUM`, `BNKODET_REFF`, `BNKODET_INFO`, `BNKODET_AMOUNT`) VALUES
 	(1, 2, 1200, '', 'T', 'TT1029875', '', 'TES KETERANGAN DETAIL', 10000.00),
@@ -235,13 +235,32 @@ CREATE TABLE IF NOT EXISTS `bankout_trxdet` (
   CONSTRAINT `FK_R119` FOREIGN KEY (`BNKO_ID`) REFERENCES `trx_bankout` (`BNKO_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.bankout_trxdet: ~1 rows (approximately)
+-- Dumping data for table mtpdmulti.bankout_trxdet: ~0 rows (approximately)
 /*!40000 ALTER TABLE `bankout_trxdet` DISABLE KEYS */;
 INSERT INTO `bankout_trxdet` (`BNKTRXO_ID`, `BNKO_ID`, `BNKTRXO_TYPE`, `BNKTRXO_CODE`, `BNKTRXO_NUM`, `BNKTRXO_DATE`, `BNKTRXO_AMOUNT`) VALUES
 	(1, 2, 'T', NULL, 'TT1029875', '2018-10-03', 10000.00),
 	(2, 3, 'G', NULL, 'G123', '2018-10-04', 100000.00),
 	(3, 4, 'T', NULL, 'TT78901', '2018-10-18', 100000.00);
 /*!40000 ALTER TABLE `bankout_trxdet` ENABLE KEYS */;
+
+-- Dumping structure for table mtpdmulti.bapplog_details
+DROP TABLE IF EXISTS `bapplog_details`;
+CREATE TABLE IF NOT EXISTS `bapplog_details` (
+  `DETBALG_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `BALG_ID` int(11) DEFAULT NULL,
+  `DETBALG_IMGNAME` varchar(1024) DEFAULT NULL,
+  `DETBALG_IMGPATH` varchar(1024) DEFAULT NULL,
+  `DETBALG_THUMBS` varchar(1024) DEFAULT NULL,
+  PRIMARY KEY (`DETBALG_ID`),
+  KEY `FK__trx_bapplog` (`BALG_ID`),
+  CONSTRAINT `FK__trx_bapplog` FOREIGN KEY (`BALG_ID`) REFERENCES `trx_bapplog` (`BALG_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table mtpdmulti.bapplog_details: ~0 rows (approximately)
+/*!40000 ALTER TABLE `bapplog_details` DISABLE KEYS */;
+INSERT INTO `bapplog_details` (`DETBALG_ID`, `BALG_ID`, `DETBALG_IMGNAME`, `DETBALG_IMGPATH`, `DETBALG_THUMBS`) VALUES
+	(1, 1, 'img_1540190159_.jpg', './assets/img/bapplog/img_1540190159_.jpg', './assets/img/bapplog/thumbs/img_1540190159_.jpg');
+/*!40000 ALTER TABLE `bapplog_details` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.bapp_details
 DROP TABLE IF EXISTS `bapp_details`;
@@ -2063,14 +2082,24 @@ CREATE TABLE IF NOT EXISTS `his_bapplog` (
   `HISBALG_NEW` char(50) DEFAULT NULL,
   `HISBALG_INFO` char(200) DEFAULT NULL,
   `HISBALG_DATE` date DEFAULT NULL,
+  `HISBALG_TIME` time DEFAULT NULL,
   `HISBALG_UPCOUNT` char(50) DEFAULT NULL,
   PRIMARY KEY (`HISBALG_ID`),
   KEY `FKHISBALG1` (`BALG_ID`),
   CONSTRAINT `FKHISBALG1` FOREIGN KEY (`BALG_ID`) REFERENCES `trx_bapplog` (`BALG_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.his_bapplog: ~0 rows (approximately)
+-- Dumping data for table mtpdmulti.his_bapplog: ~1 rows (approximately)
 /*!40000 ALTER TABLE `his_bapplog` DISABLE KEYS */;
+INSERT INTO `his_bapplog` (`HISBALG_ID`, `BALG_ID`, `HISBALG_STS`, `HISBALG_OLD`, `HISBALG_NEW`, `HISBALG_INFO`, `HISBALG_DATE`, `HISBALG_TIME`, `HISBALG_UPCOUNT`) VALUES
+	(1, 1, 'Void By System', 'None', 'None', 'Create By System', '2018-10-22', NULL, '0'),
+	(2, 1, 'Posted by User kaisha', 'Void By System', 'Posted By User kaisha', 'Original Save by BAPP Logistik form', '2018-10-22', '13:35:05', '1'),
+	(3, 1, 'Disapproved by User kaisha', 'Posted by User kaisha', 'Disapproved By User kaisha', 'Update by kaisha from BAPP Logistik form', '2018-10-22', '15:13:56', '1'),
+	(4, 1, 'Posted by User kaisha', 'Posted by User kaisha', 'Posted By User kaisha', 'Update by kaisha from BAPP Logistik form', '2018-10-22', '15:14:05', '1'),
+	(5, 1, 'Approved by User kaisha', 'Posted by User kaisha', 'Approved By User kaisha', 'Update by kaisha from BAPP Logistik form', '2018-10-22', '15:14:12', '1'),
+	(6, 1, 'Open by User kaisha', 'Posted by User kaisha', 'Open By User kaisha', 'Open Record by BAPP Logistik form', '2018-10-22', '15:15:14', '2'),
+	(7, 1, 'Posted by User kaisha', 'Open by User kaisha', 'Posted By User kaisha', 'Update by kaisha from BAPP Logistik form', '2018-10-22', '15:15:21', '2'),
+	(8, 1, 'Approved by User kaisha', 'Open by User kaisha', 'Approved By User kaisha', 'Update by kaisha from BAPP Logistik form', '2018-10-22', '15:15:28', '2');
 /*!40000 ALTER TABLE `his_bapplog` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.his_budget
@@ -2682,7 +2711,7 @@ CREATE TABLE IF NOT EXISTS `jou_details` (
   CONSTRAINT `FKJOUDET2` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.jou_details: ~55 rows (approximately)
+-- Dumping data for table mtpdmulti.jou_details: ~54 rows (approximately)
 /*!40000 ALTER TABLE `jou_details` DISABLE KEYS */;
 INSERT INTO `jou_details` (`JOUDET_ID`, `JOU_ID`, `COA_ID`, `JOUDET_DEBIT`, `JOUDET_CREDIT`, `JOUDET_STS`) VALUES
 	(4, 1, 206, 0.00, 30000.00, '0'),
@@ -3936,10 +3965,12 @@ CREATE TABLE IF NOT EXISTS `trx_bapplog` (
   CONSTRAINT `FKBALG2` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`),
   CONSTRAINT `FKBALG3` FOREIGN KEY (`LOC_ID`) REFERENCES `master_location` (`LOC_ID`),
   CONSTRAINT `FKBALG4` FOREIGN KEY (`CUST_ID`) REFERENCES `master_customer` (`CUST_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.trx_bapplog: ~0 rows (approximately)
+-- Dumping data for table mtpdmulti.trx_bapplog: ~1 rows (approximately)
 /*!40000 ALTER TABLE `trx_bapplog` DISABLE KEYS */;
+INSERT INTO `trx_bapplog` (`BALG_ID`, `USER_ID`, `BRANCH_ID`, `LOC_ID`, `CUST_ID`, `BALG_CODE`, `BALG_CODEPRINT`, `BALG_DATE`, `BALG_STS`, `BALG_DEALER`, `BALG_SIZE`, `BALG_WORK`, `BALG_NOTE`, `BALG_WORKDATE`, `BALG_CONTRACTOR`, `BALG_LOGISTIC`, `BALG_PROD`, `BALG_PRINTTYPE`) VALUES
+	(1, 1, 1, 1, 1, 'B1/1810/000001', NULL, '2018-10-22', '1', 'tes dealer', '4x8 horizontal', 'recovering', 'tes', '2018-10-22', 'frengky', 'diana', 'fitri', 'Recovering');
 /*!40000 ALTER TABLE `trx_bapplog` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.trx_brc_ppn
