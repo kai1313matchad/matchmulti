@@ -366,6 +366,16 @@
 			$this->load->view('menu/administrator/logistik/print_bapplog',$data);
 		}
 
+		public function pageprint_bapplogimg()
+		{
+			$this->authsys->trx_check_($_SESSION['user_id'],'LOG');
+			$data['ids']=$this->uri->segment(4);
+			$data['title']='Match Terpadu - Dashboard Marketing';
+			$data['menu']='marketing';
+			$data['menulist']='report_marketing';
+			$this->load->view('menu/administrator/logistik/print_bapplogimg',$data);
+		}
+
 		public function open_lgtpo($id)
 		{
 			$user = $this->input->post('user_name');
@@ -541,6 +551,7 @@
 					'hisbalg_new' => 'Open By User '.$user,
 					'hisbalg_info' => 'Open Record by BAPP Logistik form',
 					'hisbalg_date' => date('Y-m-d'),
+					'hisbalg_time' => date('H:i:s'),
 					'hisbalg_upcount' => $his->HISBALG_UPCOUNT+1
 				);
 			$this->db->insert('his_bapplog',$dthis);
@@ -2315,11 +2326,11 @@
 		{
 			$loc = ($this->input->post('loc_id') != '')?$this->input->post('loc_id'):NULL;
 			$cust = ($this->input->post('cust_id') != '')?$this->input->post('cust_id'):NULL;
-			$data = array(	                
-	                'user_id' => $this->input->post('user_id'),              
+			$data = array(
+	                'user_id' => $this->input->post('user_id'),
 	                'loc_id' => $loc,
 	                'cust_id' => $cust,
-	                'balg_sts' => '1',
+	                'balg_sts' => '2',
 	                'balg_code' => $this->input->post('bapp_code'),
 	                'balg_date' => $this->input->post('bapp_date'),
 	                'balg_dealer' => $this->input->post('bapp_dealer'),
@@ -2333,22 +2344,47 @@
 	                'balg_printtype' => $this->input->post('bapp_print')
 	            );
 	        $update = $this->crud->update('trx_bapplog',$data,array('balg_id' => $this->input->post('bapp_id')));
-	        $this->logupd_bapplgt_save($this->input->post('bapp_id'),$this->input->post('user_name'));
+	        $this->logupd_bapplgt_save($this->input->post('bapp_id'),$this->input->post('user_name'),'Posted');
 	        echo json_encode(array("status" => TRUE));
 		}
 
-		public function logupd_bapplgt_save($id,$user)
+		public function approve_bapp()
+		{
+			$loc = ($this->input->post('loc_id') != '')?$this->input->post('loc_id'):NULL;
+			$cust = ($this->input->post('cust_id') != '')?$this->input->post('cust_id'):NULL;
+			$data = array(
+	                'balg_sts' => '1'
+	            );
+	        $update = $this->crud->update('trx_bapplog',$data,array('balg_id' => $this->input->post('bapp_id')));
+	        $this->logupd_bapplgt_save($this->input->post('bapp_id'),$this->input->post('user_name'),'Approved');
+	        echo json_encode(array("status" => TRUE));
+		}
+
+		public function disapprove_bapp()
+		{
+			$loc = ($this->input->post('loc_id') != '')?$this->input->post('loc_id'):NULL;
+			$cust = ($this->input->post('cust_id') != '')?$this->input->post('cust_id'):NULL;
+			$data = array(
+	                'balg_sts' => '0'
+	            );
+	        $update = $this->crud->update('trx_bapplog',$data,array('balg_id' => $this->input->post('bapp_id')));
+	        $this->logupd_bapplgt_save($this->input->post('bapp_id'),$this->input->post('user_name'),'Disapproved');
+	        echo json_encode(array("status" => TRUE));
+		}
+
+		public function logupd_bapplgt_save($id,$user,$sts)
 	    {
 	    	$his = $this->logistik->getlog_bapplgt($id);
 	    	if ($his->HISBALG_UPCOUNT == '0') 
 	    	{
 	    		$data = array(
 						'balg_id' => $id,
-						'hisbalg_sts' => 'Posted by User '.$user,
+						'hisbalg_sts' => $sts.' by User '.$user,
 						'hisbalg_old' => $his->HISBALG_STS,
-						'hisbalg_new' => 'Posted By User '.$user,
+						'hisbalg_new' => $sts.' By User '.$user,
 						'hisbalg_info' => 'Original Save by BAPP Logistik form',
 						'hisbalg_date' => date('Y-m-d'),
+						'hisbalg_time' => date('H:i:s'),
 						'hisbalg_upcount' => $his->HISBALG_UPCOUNT+1
 					);
 				$this->db->insert('his_bapplog',$data);
@@ -2357,11 +2393,12 @@
 	    	{
 	    		$data = array(
 						'balg_id' => $id,
-						'hisbalg_sts' => 'Posted by User '.$user,
+						'hisbalg_sts' => $sts.' by User '.$user,
 						'hisbalg_old' => $his->HISBALG_STS,
-						'hisbalg_new' => 'Posted By User '.$user,
+						'hisbalg_new' => $sts.' By User '.$user,
 						'hisbalg_info' => 'Update by '.$user.' from BAPP Logistik form',
 						'hisbalg_date' => date('Y-m-d'),
+						'hisbalg_time' => date('H:i:s'),
 						'hisbalg_upcount' => $his->HISBALG_UPCOUNT
 					);
 				$this->db->insert('his_bapplog',$data);
@@ -2636,6 +2673,95 @@
 	            echo json_encode($data);
 	            exit();
 	        }
+	    }
+
+	    //image configuration
+	    public function img_conf($name,$path)
+		{
+			$nmfile='img_'.time().'_'.$name;
+			$config['upload_path']='./assets/img/'.$path.'/';
+			$config['allowed_types']='jpg|jpeg';
+			$config['max_size']='500';
+			$config['file_name']=$nmfile;
+			$this->upload->initialize($config);
+		}
+
+		public function img_resize($name,$path)
+		{
+			$config['source_image']='./assets/img/'.$path.'/'.$name;
+			$config['new_image']='./assets/img/'.$path.'/thumbs/'.$name;
+			$config['maintain_ratio']=TRUE;
+			$config['width']=800;
+			$config['height']=450;
+			$this->image_lib->initialize($config);
+			if(!$this->image_lib->resize())
+			{
+				echo $this->image_lib->display_errors();
+			}
+		}
+
+	    public function upload_bapp()
+		{
+			if (!empty($_FILES)) 
+			{
+				$name = $this->input->post('bapp_code');
+				$id = $this->input->post('bapp_id');
+				$path = 'bapplog';
+				$this->img_conf($name,$path);
+				if ($this->upload->do_upload('file'))
+				{
+					$fileData = $this->upload->data();
+					$imgname = $fileData['file_name'];
+					$imgpath = './assets/img/'.$path.'/'.$imgname;
+					$thumbs = './assets/img/'.$path.'/thumbs/'.$imgname;
+
+					$this->img_resize($imgname,$path);
+
+					$table = 'bapplog_details';
+			        $data = array(
+			                'balg_id' => $id,
+			                'detbalg_imgname' => $imgname,
+			                'detbalg_imgpath' => $imgpath,
+			                'detbalg_thumbs' => $thumbs
+			            );
+			        $insert = $this->crud->save($table,$data);
+				}
+			}
+		}
+
+		//get image
+		public function temp_gallery($id)
+		{
+			$list = $this->db->where('balg_id',$id)->get('bapplog_details')->result();
+			echo json_encode($list);
+		}
+
+		public function getimgbapp($id)
+		{
+			$data = $this->crud->get_by_id('bapplog_details',array('detbalg_id' => $id));
+        	echo json_encode($data);
+		}
+
+		public function bapp_delimg($id)
+	    {
+	    	$get = $this->crud->get_by_id('bapplog_details',array('detbalg_id' => $id));
+	    	$imgpath = $get->DETBALG_IMGPATH;
+	    	$imgthumbs = $get->DETBALG_THUMBS;
+	    	@unlink($imgpath);
+	    	@unlink($imgthumbs);
+	    	$this->crud->delete_by_id('bapplog_details',array('detbalg_id' => $id));
+        	echo json_encode(array("status" => TRUE,"img" => $imgpath, "thumbs" => $imgthumbs));
+	    }
+
+	    public function get_imgsum($id)
+	    {
+	    	$this->db->select('count(a.detbalg_id) as sum');
+	    	$this->db->from('bapplog_details a');
+	    	$this->db->join('trx_bapplog b','b.balg_id = a.balg_id');
+	    	$this->db->where('a.balg_id',$id);
+	    	$que = $this->db->get();
+	    	$data = $que->row();
+	    	echo json_encode($data);
 	    }
 	}
 ?>

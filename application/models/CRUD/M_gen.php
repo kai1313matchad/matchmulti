@@ -828,6 +828,7 @@
 					'hisbalg_new' => 'None',
 					'hisbalg_info' => 'Create By System',
 					'hisbalg_date' => date('Y-m-d'),
+					'hisbalg_time' => date('H:i:s'),
 					'hisbalg_upcount' => 0
 				);
 			$this->db->insert('his_bapplog',$data2);

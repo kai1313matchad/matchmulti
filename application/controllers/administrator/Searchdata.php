@@ -977,38 +977,72 @@
 		{
 			$id = $this->input->post('sts');
 			$br = $this->input->post('brch');
-			// $brc = ($this->input->post('chk') != '0')? 'e.branch_id = '.$br : 'e.branch_id = '.$br.' OR e.branch_id IS null';
 			$brc = 'a.branch_id = '.$br;
+			$chk = $this->input->post('chk');
 			$list = $this->s_bapplogbysts->get_datatables($id,$brc);
 			$data = array();
 			$no = $_POST['start'];
-			if($this->input->post('chk') != '0')
+			switch ($chk)
 			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-					$row[] = $dat->BALG_CODE;
-					$row[] = $dat->BALG_DATE;
-					$row[] = $dat->CUST_NAME;
-					$row[] = $dat->LOC_NAME;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bapplogopen('."'".$dat->BALG_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
-			}
-			else
-			{
-				foreach ($list as $dat) {
-					$no++;
-					$row = array();
-					$row[] = $no;
-					$row[] = $dat->BALG_CODE;
-					$row[] = $dat->BALG_DATE;
-					$row[] = $dat->CUST_NAME;
-					$row[] = $dat->LOC_NAME;
-					$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bapplogedit('."'".$dat->BALG_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
-					$data[] = $row;
-				}
+				case '0':
+					foreach ($list as $dat)
+					{
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->BALG_CODE;
+						$row[] = $dat->BALG_DATE;
+						$row[] = $dat->CUST_NAME;
+						$row[] = $dat->LOC_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bapplogedit('."'".$dat->BALG_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '1':
+					foreach ($list as $dat)
+					{
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->BALG_CODE;
+						$row[] = $dat->BALG_DATE;
+						$row[] = $dat->CUST_NAME;
+						$row[] = $dat->LOC_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bapplogopen('."'".$dat->BALG_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '2':
+					foreach ($list as $dat)
+					{
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->BALG_CODE;
+						$row[] = $dat->BALG_DATE;
+						$row[] = $dat->CUST_NAME;
+						$row[] = $dat->LOC_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bapplogchk('."'".$dat->BALG_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				case '3':
+					foreach ($list as $dat)
+					{
+						$no++;
+						$row = array();
+						$row[] = $no;
+						$row[] = $dat->BALG_CODE;
+						$row[] = $dat->BALG_DATE;
+						$row[] = $dat->CUST_NAME;
+						$row[] = $dat->LOC_NAME;
+						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bapplogapr('."'".$dat->BALG_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$data[] = $row;
+					}
+					break;
+				default:
+					# code...
+					break;
 			}
 			$output = array(
 							"draw" => $_POST['draw'],

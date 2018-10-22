@@ -12,14 +12,24 @@
                             <span class="glyphicon glyphicon-print"> CetakForm</span>
                         </a>
                     </div>
-                    <!-- <div class="col-sm-2">
+                    <div class="col-sm-2">
                         <a href="javascript:void(0)" onclick="print_bappimg()" class="btn btn-block btn-primary">
                             <span class="glyphicon glyphicon-print"> CetakGambar</span>
                         </a>
-                    </div> -->
+                    </div>
                     <div class="col-sm-2">
                         <a href="javascript:void(0)" onclick="edit_bapplog()" class="btn btn-block btn-primary">
                             <span class="glyphicon glyphicon-edit"> Edit</span>
+                        </a>
+                    </div>
+                    <div class="col-sm-2">
+                        <a href="javascript:void(0)" onclick="check_bapplog()" class="btn btn-block btn-primary">
+                            <span class="glyphicon glyphicon-edit"> Lihat</span>
+                        </a>
+                    </div>
+                    <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '3')?'':'style="display:none"');?>>
+                        <a href="javascript:void(0)" onclick="apr_bapplog()" class="btn btn-block btn-primary">
+                            <span class="glyphicon glyphicon-ok"> Approve</span>
                         </a>
                     </div>
                     <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '3')?'':'style="display:none"');?>>
@@ -34,9 +44,9 @@
                 			<li class="active">
                 				<a href="#1" data-toggle="tab">BAPP</a>
                 			</li>
-                			<!-- <li>
+                			<li>
                 				<a href="#2" data-toggle="tab">Gambar</a>
-                			</li> -->
+                			</li>
                 		</ul>
                 		<form class="form-horizontal" id="form_bapplog" enctype="multipart/form-data">
                 			<div class="tab-content">
@@ -166,11 +176,17 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-3 col-sm-2 text-center">
-                                            <a href="javascript:void(0)" onclick="savebapp()" class="btn btn-block btn-primary btn-default">Simpan</a>
+                                            <a href="javascript:void(0)" onclick="savebapp()" class="btn btn-block btn-primary btn-default btnCh">Simpan</a>
+                                        </div>
+                                        <div class="col-sm-2 text-center">
+                                            <button type="button" onclick="aprbapplog()" class="btn btn-block btn-primary btn-default btnApr" disabled>Approve</button>
+                                        </div>
+                                        <div class="col-sm-2 text-center">
+                                            <button type="button" onclick="disaprbapplog()" class="btn btn-block btn-primary btn-default btnApr" disabled>Disapprove</button>
                                         </div>
                                     </div>
                             	</div>
-                            	<!-- <div class="tab-pane fade" id="2">
+                            	<div class="tab-pane fade" id="2">
                             		<div class="form-group">
                                     	<div class="col-sm-4 col-sm-offset-3 text-center">
                                         	<h2>Data Gambar</h2>
@@ -187,7 +203,7 @@
                                             </div>
                                         </div>
                                     </div>
-                            	</div> -->
+                            	</div>
                 			</div>
                 		</form>
                 	</div>
@@ -392,7 +408,7 @@
         function print_bappimg()
         {
             var ids = $('[name=bapp_id]').val();
-            window.open ( "<?php echo site_url('administrator/Marketing/pageprint_bappimg/')?>"+ids,'_blank');
+            window.open ( "<?php echo site_url('administrator/Logistik/pageprint_bapplogimg/')?>"+ids,'_blank');
         }
         function srch_cust()
         {
@@ -486,7 +502,7 @@
         function get_images(id)
         {
             $.ajax({
-                url : "<?php echo site_url('administrator/Marketing/temp_gallery/')?>"+id,
+                url : "<?php echo site_url('administrator/Logistik/temp_gallery/')?>"+id,
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)
@@ -495,21 +511,21 @@
                     {
                         var div = $('<div>').attr({'class':'col-sm-3 col-xs-6 text-center'}).append(
                             $('<a>').attr({
-                                'href':'<?php echo base_url()?>'+data[i]["DETBAPP_IMGPATH"],
+                                'href':'<?php echo base_url()?>'+data[i]["DETBALG_IMGPATH"],
                                 'target':'_blank'
                             }).append(
                                 $('<img />').attr({
-                                'src':'<?php echo base_url()?>'+data[i]["DETBAPP_THUMBS"],
+                                'src':'<?php echo base_url()?>'+data[i]["DETBALG_THUMBS"],
                                 'class':'img-responsive img-thumbnail',
-                                'title': data[i]["DETBAPP_IMGNAME"]
+                                'title': data[i]["DETBALG_IMGNAME"]
                                 }).css({'margin-top':'10px'})
                             )
                             ).appendTo('#foo')
                         var rem = $('<a>').attr({
                             'href':'javascript:void(0)',
                             'class':'btn btn-sm btn-danger btn-responsive',
-                            'onclick':'del_img('+data[i]["DETBAPP_ID"]+')',
-                            'title':data[i]["DETBAPP_ID"]
+                            'onclick':'del_img('+data[i]["DETBALG_ID"]+')',
+                            'title':data[i]["DETBALG_ID"]
                         }).css({'margin-top':'5px'}).append(
                             $('<span>').attr({
                                 'class':'glyphicon glyphicon-remove'
@@ -573,6 +589,48 @@
                 alert('Ada Input yang Salah');
             }
         }
+        function aprbapplog()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Logistik/approve_bapp')?>",
+                type: "POST",
+                data: $('#form_bapplog').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Logistik/lgt_trx_bapp')?>";
+                        window.location = url;
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
+        function disaprbapplog()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Logistik/disapprove_bapp')?>",
+                type: "POST",
+                data: $('#form_bapplog').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Logistik/lgt_trx_bapp')?>";
+                        window.location = url;
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
         function del_img(id)
         {
             if(confirm('Are you sure delete this data?'))
@@ -614,7 +672,7 @@
         {
             var id = $('[name="bapp_id"]').val();
             $.ajax({
-                url : "<?php echo site_url('administrator/Marketing/get_imgsum/')?>"+id,
+                url : "<?php echo site_url('administrator/Logistik/get_imgsum/')?>"+id,
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)
@@ -625,7 +683,7 @@
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
-                    alert('Gagal Ambil Nomor Approval');
+                    alert('Gagal cek jumlah gambar');
                 }
             });
         }
@@ -633,7 +691,7 @@
         {
             var id = $('[name="bapp_id"]').val();
             $.ajax({
-                url : "<?php echo site_url('administrator/Marketing/get_imgsum/')?>"+id,
+                url : "<?php echo site_url('administrator/Logistik/get_imgsum/')?>"+id,
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)
@@ -643,7 +701,7 @@
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
-                    alert('Gagal Ambil Nomor Approval');
+                    alert('Gagal Cek Jumlah Gambar');
                 }
             });
             $('#modal_upload').modal('show');
@@ -652,14 +710,14 @@
         function edit_bapplog()
         {
             $('#modal_bapp_edit').modal('show');
-            $('.modal-title').text('Cari BAPP');            
+            $('.modal-title').text('Cari BAPP');
             table = $('#dtb_bapp_edit').DataTable({
                 "info": false,
                 "destroy": true,
                 "responsive": true,
                 "processing": true,
                 "serverSide": true,
-                "order": [],                
+                "order": [],
                 "ajax": {
                     "url": "<?php echo site_url('administrator/Searchdata/srch_bapplogbysts')?>",
                     "type": "POST",
@@ -680,14 +738,14 @@
         function open_bapplog()
         {
             $('#modal_bapp_edit').modal('show');
-            $('.modal-title').text('Cari BAPP');            
+            $('.modal-title').text('Cari BAPP');
             table = $('#dtb_bapp_edit').DataTable({
                 "info": false,
                 "destroy": true,
                 "responsive": true,
                 "processing": true,
                 "serverSide": true,
-                "order": [],                
+                "order": [],
                 "ajax": {
                     "url": "<?php echo site_url('administrator/Searchdata/srch_bapplogbysts')?>",
                     "type": "POST",
@@ -705,12 +763,68 @@
                 ],
             });
         }
+        function check_bapplog()
+        {
+            $('#modal_bapp_edit').modal('show');
+            $('.modal-title').text('Cari BAPP');
+            table = $('#dtb_bapp_edit').DataTable({
+                "info": false,
+                "destroy": true,
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "order": [],
+                "ajax": {
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_bapplogbysts')?>",
+                    "type": "POST",
+                    "data": function(data){
+                        data.sts = '1';
+                        data.brch = $('[name="user_brc"]').val();
+                        data.chk = '2';
+                    },
+                },                
+                "columnDefs": [
+                { 
+                    "targets": [ 0 ],
+                    "orderable": false,
+                },
+                ],
+            });
+        }
+        function apr_bapplog()
+        {
+            $('#modal_bapp_edit').modal('show');
+            $('.modal-title').text('Cari BAPP');
+            table = $('#dtb_bapp_edit').DataTable({
+                "info": false,
+                "destroy": true,
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "order": [],
+                "ajax": {
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_bapplogbysts')?>",
+                    "type": "POST",
+                    "data": function(data){
+                        data.sts = '2';
+                        data.brch = $('[name="user_brc"]').val();
+                        data.chk = '3';
+                    },
+                },                
+                "columnDefs": [
+                { 
+                    "targets": [ 0 ],
+                    "orderable": false,
+                },
+                ],
+            });
+        }
         function pick_bapplogopen(id)
         {
             $.ajax({
                 url : "<?php echo site_url('administrator/Logistik/open_bapplog/')?>" + id,
                 type: "POST",
-                data: $('#form_bapp').serialize(),
+                data: $('#form_bapplog').serialize(),
                 dataType: "JSON",
                 success: function(data)
                 {   
@@ -753,6 +867,74 @@
                     $('#bapp_print').selectpicker('refresh');
                     pick_cust(data.CUST_ID);
                     pick_loc(data.LOC_ID);
+                    reload();
+                    $('.btnCh').css({'display':'block'});
+                    $('#modal_bapp_edit').modal('hide');
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function pick_bapplogchk(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_bapploggb/')?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {   
+                    $('[name="bapp_id"]').val(data.BALG_ID);
+                    $('[name="bapp_code"]').val(data.BALG_CODE);
+                    $('[name="bapp_date"]').val(data.BALG_DATE);
+                    $('[name="bapp_dealer"]').val(data.BALG_DEALER);
+                    $('[name="bapp_size"]').val(data.BALG_SIZE);
+                    $('[name="bapp_work"]').val(data.BALG_WORK);
+                    $('[name="bapp_note"]').val(data.BALG_NOTE);
+                    $('[name="bapp_workdate"]').val(data.BALG_WORKDATE);
+                    $('[name="bapp_contr"]').val(data.BALG_CONTRACTOR);
+                    $('[name="bapp_log"]').val(data.BALG_LOGISTIC);
+                    $('[name="bapp_prod"]').val(data.BALG_PROD);
+                    $('select#bapp_print').val(data.BALG_PRINTTYPE);
+                    $('#bapp_print').selectpicker('refresh');
+                    pick_cust(data.CUST_ID);
+                    pick_loc(data.LOC_ID);
+                    reload();
+                    $('.btnCh').css({'display':'none'});
+                    $('#modal_bapp_edit').modal('hide');
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function pick_bapplogapr(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_bapploggb/')?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {   
+                    $('[name="bapp_id"]').val(data.BALG_ID);
+                    $('[name="bapp_code"]').val(data.BALG_CODE);
+                    $('[name="bapp_date"]').val(data.BALG_DATE);
+                    $('[name="bapp_dealer"]').val(data.BALG_DEALER);
+                    $('[name="bapp_size"]').val(data.BALG_SIZE);
+                    $('[name="bapp_work"]').val(data.BALG_WORK);
+                    $('[name="bapp_note"]').val(data.BALG_NOTE);
+                    $('[name="bapp_workdate"]').val(data.BALG_WORKDATE);
+                    $('[name="bapp_contr"]').val(data.BALG_CONTRACTOR);
+                    $('[name="bapp_log"]').val(data.BALG_LOGISTIC);
+                    $('[name="bapp_prod"]').val(data.BALG_PROD);
+                    $('select#bapp_print').val(data.BALG_PRINTTYPE);
+                    $('#bapp_print').selectpicker('refresh');
+                    pick_cust(data.CUST_ID);
+                    pick_loc(data.LOC_ID);
+                    $('.btnCh').css({'display':'none'});
+                    $('.btnApr').prop('disabled',false);
                     $('#modal_bapp_edit').modal('hide');
                 },
                 error: function (jqXHR, textStatus, errorThrown)
@@ -771,7 +953,7 @@
     	var previewTemplate = previewNode.parentNode.innerHTML;
     	previewNode.parentNode.removeChild(previewNode);
     	var myDropzone = new Dropzone(document.body, {
-    		url: '<?php echo base_url('administrator/Marketing/upload_bapp');?>',
+    		url: '<?php echo base_url('administrator/Logistik/upload_bapp');?>',
     		thumbnailWidth: 80,
     		thumbnailHeight: 80,
     		parallelUploads: 1,
