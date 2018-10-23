@@ -1710,7 +1710,7 @@
 	    	{
 	    		case '0':
 	    			$hpp = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRC_COA;
-			    	$dbt = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRC_COASUB;
+			    	$dbt = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRC_COAMAIN;
 			    	$disc = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRC_COADISC;
 			    	$ppn = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRC_COAPPN;
 			    	$cost = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRC_COACOST;
@@ -1850,8 +1850,8 @@
 			    	}
 	    		break;
 	    		case '1':
-	    			$hpp = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRC_COASUB;
-			    	$dbt = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRC_COAAG;
+	    			$hpp = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRC_COAMAIN;
+			    	$dbt = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRC_COASUB;
 			    	$disc = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRC_COADISC;
 			    	$ppn = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRC_COAPPN;
 			    	$cost = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRC_COACOST;

@@ -149,38 +149,42 @@
 			$brc = $this->input->post('os_branch');
 			$deb = ($this->input->post('os_prccoadeb') != '')?$this->input->post('os_prccoadeb'):NULL;
 			$crd = ($this->input->post('os_prccoacrd') != '')?$this->input->post('os_prccoacrd'):NULL;
+			$maincrd = ($this->input->post('os_prccoamaincrd') != '')?$this->input->post('os_prccoamaincrd'):NULL;
 			$subcrd = ($this->input->post('os_prccoasubcrd') != '')?$this->input->post('os_prccoasubcrd'):NULL;
 			$disc = ($this->input->post('os_prccoadisc') != '')?$this->input->post('os_prccoadisc'):NULL;
 			$ppn = ($this->input->post('os_prccoappn') != '')?$this->input->post('os_prccoappn'):NULL;
 			$cost = ($this->input->post('os_prccoacost') != '')?$this->input->post('os_prccoacost'):NULL;
-			$getdeb = $this->db->get_where('chart_of_account',array('coa_id'=>$deb));
-			$debname = $getdeb->row()->COA_ACCNAME;
-			$getcrd = $this->db->get_where('chart_of_account',array('coa_id'=>$crd));
-			$crdname = $getcrd->row()->COA_ACCNAME;
-			$getsubcrd = $this->db->get_where('chart_of_account',array('coa_id'=>$subcrd));
-			$subcrdname = $getsubcrd->row()->COA_ACCNAME;
-			$getdisc = $this->db->get_where('chart_of_account',array('coa_id'=>$disc));
-			$discname = $getdisc->row()->COA_ACCNAME;
-			$getppn = $this->db->get_where('chart_of_account',array('coa_id'=>$ppn));
-			$ppnname = $getppn->row()->COA_ACCNAME;
-			$getcost = $this->db->get_where('chart_of_account',array('coa_id'=>$cost));
-			$costname = $getcost->row()->COA_ACCNAME;
+			$getdeb = ($deb != NULL)?$this->db->get_where('chart_of_account',array('coa_id'=>$deb))->row()->COA_ACCNAME:NULL;
+			// $debname = $getdeb->row()->COA_ACCNAME;
+			$getcrd = ($crd != NULL)?$this->db->get_where('chart_of_account',array('coa_id'=>$crd))->row()->COA_ACCNAME:NULL;
+			// $crdname = $getcrd->row()->COA_ACCNAME;
+			$getmaincrd = ($maincrd != NULL)?$this->db->get_where('chart_of_account',array('coa_id'=>$maincrd))->row()->COA_ACCNAME:NULL;
+			$getsubcrd = ($subcrd != NULL)?$this->db->get_where('chart_of_account',array('coa_id'=>$subcrd))->row()->COA_ACCNAME:NULL;
+			// $subcrdname = $getsubcrd->row()->COA_ACCNAME;
+			$getdisc = ($disc != NULL)?$this->db->get_where('chart_of_account',array('coa_id'=>$disc))->row()->COA_ACCNAME:NULL;
+			// $discname = $getdisc->row()->COA_ACCNAME;
+			$getppn = ($ppn != NULL)?$this->db->get_where('chart_of_account',array('coa_id'=>$ppn))->row()->COA_ACCNAME:NULL;
+			// $ppnname = $getppn->row()->COA_ACCNAME;
+			$getcost = ($cost != NULL)?$this->db->get_where('chart_of_account',array('coa_id'=>$cost))->row()->COA_ACCNAME:NULL;
+			// $costname = $getcost->row()->COA_ACCNAME;
 			$getlist = $this->db->get_where('other_settings',array('branch_id'=>$brc))->num_rows();
 			if($getlist > 0)
 			{
 				$d_up = array(
 						'prc_coa'=>$deb,
-						'prc_coaname'=>$debname,
+						'prc_coaname'=>$getdeb,
+						'prc_coamain'=>$maincrd,
+						'prc_coamainname'=>$getmaincrd,
 						'prc_coasub'=>$subcrd,
-						'prc_coasubname'=>$subcrdname,
+						'prc_coasubname'=>$getsubcrd,
 						'prc_coaag'=>$crd,
-						'prc_coanameag'=>$crdname,
+						'prc_coanameag'=>$getcrd,
 						'prc_coadisc'=>$disc,
-						'prc_coanamedisc'=>$discname,
+						'prc_coanamedisc'=>$getdisc,
 						'prc_coappn'=>$ppn,
-						'prc_coanameppn'=>$ppnname,
+						'prc_coanameppn'=>$getppn,
 						'prc_coacost'=>$cost,
-						'prc_coanamecost'=>$costname
+						'prc_coanamecost'=>$getcost
 						);
 				$update = $this->crud->update('other_settings',$d_up,array('branch_id'=>$brc));
 				$data['status'] = TRUE;
@@ -190,17 +194,19 @@
 				$d_ins = array(
 						'branch_id'=>$brc,
 						'prc_coa'=>$deb,
-						'prc_coaname'=>$debname,
+						'prc_coaname'=>$getdeb,
+						'prc_coamain'=>$maincrd,
+						'prc_coamainname'=>$getmaincrd,
 						'prc_coasub'=>$subcrd,
-						'prc_coasubname'=>$subcrdname,
+						'prc_coasubname'=>$getsubcrd,
 						'prc_coaag'=>$crd,
-						'prc_coanameag'=>$crdname,
+						'prc_coanameag'=>$getcrd,
 						'prc_coadisc'=>$disc,
-						'prc_coanamedisc'=>$discname,
+						'prc_coanamedisc'=>$getdisc,
 						'prc_coappn'=>$ppn,
-						'prc_coanameppn'=>$ppnname,
+						'prc_coanameppn'=>$getppn,
 						'prc_coacost'=>$cost,
-						'prc_coanamecost'=>$costname
+						'prc_coanamecost'=>$getcost
 						);
 				$update = $this->db->insert('other_settings',$d_ins);
 				$data['status'] = TRUE;

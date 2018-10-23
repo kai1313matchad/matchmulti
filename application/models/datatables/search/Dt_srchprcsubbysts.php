@@ -19,7 +19,7 @@
 			$this->db->join('master_branch f','f.branch_id = a.branch_id','left');
 			$this->db->from($this->table);
 			$this->db->where('a.prc_sts',$id);
-			$this->db->where('a.prc_substs = "0" OR a.prc_substs = "1"');
+			$this->db->where('(a.prc_substs = "0" OR a.prc_substs = "1")');
 			$this->db->where($brc);
 			$i = 0;
 			foreach ($this->column_search as $item)
