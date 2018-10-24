@@ -49,8 +49,11 @@
           {
             border: none;
           }
+          img
+          {
+            max-height: 415px;
+          }
         }
-        /*.img-size*/
     </style> 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -60,54 +63,27 @@
     <![endif]-->
 </head>
 <body>
-    <!-- <page size="A4"> -->
-        <input type="hidden" name="img_siang" value="<?php echo $img_siang;?>">
-        <input type="hidden" name="img_malam" value="<?php echo $img_malam;?>">
-        <div class="container" id="images">                
-            <div class="row">
-                <hr style="border: solid 2px; color: black;"">
-                <div class="text-center">
-                    <h3 style="font-family: 'arial black'"><strong>Berita Acara Penyerahan Pekerjaan</strong></h3>
-                    <hr style="border: solid 1.5px; color: black;"">                    
-                </div>                
-            </div>
-            <!-- <div class="row">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <img id="img_siang" class="img-responsive" src="">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <img id="img_malam" class="img-responsive" src="">
-                    </div>
-                </div>
-            </div> -->
+    <input type="hidden" name="img_siang" value="<?php echo $img_siang;?>">
+    <input type="hidden" name="img_malam" value="<?php echo $img_malam;?>">
+    <div class="container-fluid">
+        <div class="row">
+            <hr style="border: solid 2px; color: black;">
+            <div class="text-center">
+                <h3 style="font-family: 'arial black'"><strong>Berita Acara Penyerahan Pekerjaan</strong></h3>
+                <hr style="border: solid 1.5px; color: black;">                    
+            </div>                
         </div>
+        <div class="col-xs-12" id="images">
+            
+        </div>
+    </div>
     <!-- </page> -->
     <!-- jQuery -->
-    <script src="<?php echo base_url('assets/jquery/jquery-2.2.3.min.js')?>"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="<?php echo base_url('assets/bootstrap/js/bootstrap.min.js')?>"></script>    
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="<?php echo base_url('assets/sbadmin/metisMenu/metisMenu.min.js')?>"></script>
-    <!-- Custom Theme JavaScript -->
-    <script src="<?php echo base_url('assets/sbadmin/js/sb-admin-2.js')?>"></script>
-    <!-- Datetime -->
-    <script src="<?php echo base_url('assets/addons/moment.js')?>"></script>
-    <script src="<?php echo base_url('assets/addons/bootstrap-datetimepicker.min.js')?>"></script>
-    <!-- Datatables -->
-    <script src="<?php echo base_url('assets/datatables/js/jquery.dataTables.min.js')?>"></script>
-    <script src="<?php echo base_url('assets/datatables/js/dataTables.bootstrap.min.js')?>"></script>
-    <script src="<?php echo base_url('assets/datatables/js/dataTables.responsive.js')?>"></script>
+    <?php include 'application/views/layout/administrator/jspack.php' ?>
     <script>
         $(document).ready(function()
         {
             get_images($('[name="img_siang"]').val());
-            // set_imgsiang($('[name="img_siang"]').val());
-            // set_imgmalam($('[name="img_malam"]').val());
         });
 
         function set_imgsiang(id)
@@ -150,7 +126,6 @@
 
         function get_images(id)
         {
-            
             $.ajax({
                 url : "<?php echo site_url('administrator/Marketing/temp_gallery/')?>"+id,
                 type: "GET",
@@ -160,7 +135,7 @@
                     for (var i = 0; i < data.length; i++)
                     {
                         var cr = $('<div class=row>').append(
-                                $('<div class="panel panel-default"><div class="panel-body"><div class="col-xs-12"><img src="<?php echo base_url()?>'+data[i]['DETBAPP_IMGPATH']+'" class="img-responsive img-thumbnail" title="'+data[i]['DETBAPP_IMGNAME']+'"></div></div></div>')
+                                $('<div class="panel panel-default"><div class="panel-body"><div class="col-xs-12"><img src="<?php echo base_url()?>'+data[i]['DETBAPP_IMGPATH']+'" class="img-responsive img-thumbnail center-block" title="'+data[i]['DETBAPP_IMGNAME']+'"></div></div></div>')
                             ).appendTo('#images');
                     }
                 },
