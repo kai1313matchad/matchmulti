@@ -2681,7 +2681,7 @@
 			$nmfile='img_'.time().'_'.$name;
 			$config['upload_path']='./assets/img/'.$path.'/';
 			$config['allowed_types']='jpg|jpeg';
-			$config['max_size']='500';
+			$config['max_size']='1024';
 			$config['file_name']=$nmfile;
 			$this->upload->initialize($config);
 		}
