@@ -63,7 +63,7 @@
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
-                                                <input type='text' class="form-control input-group-addon" name="bank_tgl" value="<?= date('Y-m-d')?>" readonly />
+                                                <input type='text' class="form-control input-group-addon" name="bank_tgl" value="<?= date('Y-m-d')?>"  />
                                             </div>
                                         </div>
                                     </div>
