@@ -642,6 +642,7 @@
 			$this->db->join('master_branch g','g.branch_id = f.branch_id');
 			$this->db->join('master_goods h','h.gd_id = a.gd_id');
 			$this->db->join('master_location i','i.loc_id = c.loc_id');
+			$this->db->order_by('b.prc_code');
 			$que = $this->db->get();
 			$data['a'] = $que->result();
 			if ($this->input->post('apprid')) 

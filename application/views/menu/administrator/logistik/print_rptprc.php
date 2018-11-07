@@ -489,26 +489,39 @@
                 // responsive: true,
                 columnDefs:
                 [
-                    {visible: false, targets: v},                    
+                    // {visible: false, targets: v},
                     {orderable: false, targets: '_all'}
                 ],
-                // order: [[0, 'asc']],
-                rowGroup:
+                dom: 'Bfrtip',
+                buttons: 
                 {
-                    endRender: function(rows, group)
-                    {                        
-                        var sum = rows.data().pluck(8)
-                        .reduce(function(a,b)
+                    dom: 
+                    {
+                        button: 
                         {
-                            return a+b.replace(/[^\d]/g, '')*1;
-                        }, 0);                        
-                        sum = $.fn.dataTable.render.number(',','.',0,'Rp ').display(sum);
-                        return $('<tr/>')                        
-                        .append( '<td colspan="7" class="text-right">Sub Total<br>Disc.<br>PPN<br>Biaya<br>Grand Total</td>' )
-                        .append( '<td class="text-right">'+sum+'<br><span name="dsc'+group+'"></span><br><span name="ppn'+group+'"></span><br><span name="cst'+group+'"></span><br><span style="border-bottom: 3px double;" name="gt'+group+'"></span></td>');
+                            tag: 'button',
+                            className: 'btn btn-sm btn-info'
+                        }
                     },
-                    dataSrc: v
+                    buttons: ['excelHtml5']
                 },
+                // order: [[0, 'asc']],
+                // rowGroup:
+                // {
+                //     endRender: function(rows, group)
+                //     {                        
+                //         var sum = rows.data().pluck(8)
+                //         .reduce(function(a,b)
+                //         {
+                //             return a+b.replace(/[^\d]/g, '')*1;
+                //         }, 0);                        
+                //         sum = $.fn.dataTable.render.number(',','.',0,'Rp ').display(sum);
+                //         return $('<tr/>')                        
+                //         .append( '<td colspan="7" class="text-right">Sub Total<br>Disc.<br>PPN<br>Biaya<br>Grand Total</td>' )
+                //         .append( '<td class="text-right">'+sum+'<br><span name="dsc'+group+'"></span><br><span name="ppn'+group+'"></span><br><span name="cst'+group+'"></span><br><span style="border-bottom: 3px double;" name="gt'+group+'"></span></td>');
+                //     },
+                //     dataSrc: v
+                // },
             });
         }
 
