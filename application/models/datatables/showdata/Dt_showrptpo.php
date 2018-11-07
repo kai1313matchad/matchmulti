@@ -3,9 +3,9 @@
 	class Dt_showrptpo extends CI_Model 
 	{
 		var $table = 'trx_po a';
-		var $column_order = array(null,'appr_code','appr_contract_end','loc_name','cust_name','appr_branch','appr_tot_income');
-		var $column_search = array('appr_code','appr_contract_end','loc_name','cust_name','appr_branch','appr_tot_income');
-		var $order = array('appr_date' => 'desc');
+		var $column_order = array(null,'po_code','po_date','loc_name','appr_code','supp_name');
+		var $column_search = array('po_code','po_date','loc_name','appr_code','supp_name');
+		var $order = array('po_code' => 'desc');
 		public function __construct()
 		{
 			parent::__construct();		

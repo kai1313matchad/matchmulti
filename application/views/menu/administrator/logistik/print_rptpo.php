@@ -182,26 +182,7 @@
         </div> -->
     </div>
     <!-- jQuery -->
-    <script src="<?php echo base_url('assets/jquery/jquery-2.2.3.min.js')?>"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="<?php echo base_url('assets/bootstrap/js/bootstrap.min.js')?>"></script>    
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="<?php echo base_url('assets/sbadmin/metisMenu/metisMenu.min.js')?>"></script>
-    <!-- Custom Theme JavaScript -->
-    <script src="<?php echo base_url('assets/sbadmin/js/sb-admin-2.js')?>"></script>
-    <!-- Datetime -->
-    <script src="<?php echo base_url('assets/addons/moment.js')?>"></script>
-    <script src="<?php echo base_url('assets/addons/bootstrap-datetimepicker.min.js')?>"></script>
-    <!-- Datatables -->
-    <script src="<?php echo base_url('assets/datatables/js/jquery.dataTables.min.js')?>"></script>
-    <script src="<?php echo base_url('assets/datatables/js/dataTables.bootstrap.min.js')?>"></script>
-    <script src="<?php echo base_url('assets/datatables/js/dataTables.responsive.js')?>"></script>
-    <script src="<?php echo base_url('assets/datatables/js/dataTables.rowGroup.min.js')?>"></script>
-    <script src="<?php echo base_url('assets/datatables/js/jquery.dataTables.rowGrouping.js')?>"></script>
-    <!-- Number to Money -->
-    <script src="<?php echo base_url('assets/addons/jquery.number.js') ?>"></script>
-    <!-- Addon -->
-    <script src="<?php echo base_url('assets/addons/extra.js')?>"></script>
+    <?php include 'application/views/layout/administrator/jspack.php'; ?>
     <script>
         $(document).ready(function()
         {
@@ -344,26 +325,39 @@
                 // responsive: true,
                 columnDefs:
                 [
-                    {visible: false, targets: v},                    
+                    // {visible: false, targets: v},
                     {orderable: false, targets: '_all'}
                 ],
-                // order: [[0, 'asc']],
-                rowGroup:
+                dom: 'Bfrtip',
+                buttons: 
                 {
-                    endRender: function(rows, group)
+                    dom: 
                     {
-                        var sum = rows.data().pluck(8)
-                        .reduce(function(a,b)
+                        button: 
                         {
-                            return a+b.replace(/[^\d]/g, '')*1;
-                        }, 0);                        
-                        sum = $.fn.dataTable.render.number(',','.',0,'Rp ').display(sum);
-                        return $('<tr/>')                        
-                        .append( '<td colspan="7" class="text-right">Sub Total</td>' )
-                        .append( '<td class="text-right">'+sum+'</td>');
+                            tag: 'button',
+                            className: 'btn btn-sm btn-info'
+                        }
                     },
-                    dataSrc: v
+                    buttons: ['excelHtml5']
                 },
+                // order: [[0, 'asc']],
+                // rowGroup:
+                // {
+                //     endRender: function(rows, group)
+                //     {
+                //         var sum = rows.data().pluck(8)
+                //         .reduce(function(a,b)
+                //         {
+                //             return a+b.replace(/[^\d]/g, '')*1;
+                //         }, 0);                        
+                //         sum = $.fn.dataTable.render.number(',','.',0,'Rp ').display(sum);
+                //         return $('<tr/>')                        
+                //         .append( '<td colspan="7" class="text-right">Sub Total</td>' )
+                //         .append( '<td class="text-right">'+sum+'</td>');
+                //     },
+                //     dataSrc: v
+                // },
             });
         }
 

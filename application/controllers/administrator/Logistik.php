@@ -595,6 +595,7 @@
 			$this->db->join('master_branch f','f.branch_id = e.branch_id');
 			$this->db->join('master_goods g','g.gd_id = a.gd_id');
 			$this->db->join('master_location h','h.loc_id = b.loc_id');
+			$this->db->order_by('b.po_code');
 			$que = $this->db->get();
 			$data['a'] = $que->result();
 			echo json_encode($data);

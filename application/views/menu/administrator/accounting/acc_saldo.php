@@ -28,13 +28,13 @@
                                     <div class="col-sm-4">
                                         <div class="input-group">
                                             <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control curr-num" name="sal_accdebetsum" placeholder="Debit">
+                                            <input type="text" class="form-control curr-num-perc" name="sal_accdebetsum" placeholder="Debit">
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="input-group">
                                             <span class="input-group-addon">Rp</span>
-                                            <input type="text" class="form-control curr-num" name="sal_acccreditsum" placeholder="Kredit">
+                                            <input type="text" class="form-control curr-num-perc" name="sal_acccreditsum" placeholder="Kredit">
                                         </div>
                                     </div>
                                 </div>
