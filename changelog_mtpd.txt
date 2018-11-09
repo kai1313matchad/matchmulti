@@ -1,3 +1,7 @@
+09112018
+- edit tabel trx_procurement
+	ALTER TABLE `trx_procurement`
+	ADD COLUMN `PRC_TERM` CHAR(50) NULL DEFAULT NULL AFTER `PRC_INVOICE`;
 07112018
 - edit tabel chart_of_account
 	ALTER TABLE `chart_of_account`
