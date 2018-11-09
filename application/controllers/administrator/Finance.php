@@ -269,6 +269,30 @@
 			echo json_encode($data);
 		}
 
+		public function gen_rptagercv()
+		{  
+			if ($this->input->post('branch'))
+			{
+				$this->db->where('b.branch_id', $this->input->post('branch') );
+			}
+			if ($this->input->post('cust_id'))
+			{
+				$this->db->where('b.cust_id', $this->input->post('cust_id') );
+			}
+			if ($this->input->post('date_start') != null AND $this->input->post('date_end') != null ) {
+				$this->db->where('b.inv_date >=', $this->input->post('date_start'));
+        		$this->db->where('b.inv_date <=', $this->input->post('date_end'));
+			}
+			$this->db->from('inv_details a');
+			$this->db->join('trx_invoice b','b.inv_id = a.inv_id');
+			$this->db->join('master_customer e','e.cust_id = b.cust_id');
+			$this->db->join('master_branch f','f.branch_id = b.branch_id');
+			$this->db->where_not_in('a.inv_id', 'select cashindet_invid from cashin_det join bankin_det on cashin_det.cashindet_invid=bankin_det.bnkdet_invid');
+			$que = $this->db->get();
+			$data = $que->result();
+			echo json_encode($data);
+		}
+
 		public function gen_rptaccrcvsummary()
 		{
 			if ($this->input->post('branch'))
@@ -318,6 +342,31 @@
 			echo json_encode($data);
 		}
 
+		public function gen_rptagepay()
+		{
+			if ($this->input->post('branch'))
+			{
+				$this->db->where('b.branch_id', $this->input->post('branch') );
+			}
+			if ($this->input->post('supp_id'))
+			{
+				$this->db->where('c.supp_id', $this->input->post('supp_id') );
+			}
+			if ($this->input->post('date_start') != null AND $this->input->post('date_end') != null ) {
+				$this->db->where('b.prc_date >=', $this->input->post('date_start'));
+        		$this->db->where('b.prc_date <=', $this->input->post('date_end'));
+			}
+			$this->db->from('prc_details a');
+			$this->db->join('trx_procurement b','b.prc_id = a.prc_id');
+			$this->db->join('trx_po c','c.po_id = b.po_id');
+			$this->db->join('master_supplier e','e.supp_id = c.supp_id');
+			$this->db->join('master_branch f','f.branch_id = b.branch_id');
+			$this->db->where_not_in('a.prc_id', 'select cshodet_prcid from cashout_det join bankout_det on cashout_det.cshodet_prcid=bankout_det.bnkodet_prcid');
+			$que = $this->db->get();
+			$data = $que->result();
+			echo json_encode($data);
+		}
+
 		public function gen_rptaccpaysummary()
 		{
 			if ($this->input->post('branch'))
@@ -354,6 +403,16 @@
 			$this->load->view('layout/administrator/wrapper',$data);
 		}
 
+		public function rpt_agercv()
+		{
+			$this->authsys->trx_check_($_SESSION['user_id'],'FIN');
+			$data['title']='Match Terpadu - Dashboard Finance';
+			$data['menu']='finance';
+			$data['menulist']='report_finance';
+			$data['isi']='menu/administrator/finance/report_agercv';
+			$this->load->view('layout/administrator/wrapper',$data);
+		}
+
 		public function rpt_accpay()
 		{
 			$this->authsys->trx_check_($_SESSION['user_id'],'FIN');
@@ -361,6 +420,16 @@
 			$data['menu']='finance';
 			$data['menulist']='report_finance';
 			$data['isi']='menu/administrator/finance/report_accpay';
+			$this->load->view('layout/administrator/wrapper',$data);
+		}
+
+		public function rpt_agepay()
+		{
+			$this->authsys->trx_check_($_SESSION['user_id'],'FIN');
+			$data['title']='Match Terpadu - Dashboard Finance';
+			$data['menu']='finance';
+			$data['menulist']='report_finance';
+			$data['isi']='menu/administrator/finance/report_agepay';
 			$this->load->view('layout/administrator/wrapper',$data);
 		}
 
@@ -4172,6 +4241,21 @@
 			$this->load->view('menu/administrator/finance/print_rptaccrcv',$data);
 		}
 
+		public function print_rptagercv()
+		{
+			$this->authsys->trx_check_($_SESSION['user_id'],'FIN');
+			$data['cust'] = ($this->uri->segment(4) == 'null') ? '' : $this->uri->segment(4);
+			$data['datestart'] = ($this->uri->segment(5) == 'null') ? '' : $this->uri->segment(5);
+			$data['dateend'] = ($this->uri->segment(6) == 'null') ? '' : $this->uri->segment(6);
+			// $data['appr'] = ($this->uri->segment(7) == 'null') ? '' : $this->uri->segment(7);
+			$data['branch'] = ($this->uri->segment(7) == 'null') ? '' : $this->uri->segment(7);
+			$data['rpttype'] = ($this->uri->segment(8) == 'null') ? '' : $this->uri->segment(8);
+			$data['title']='Match Terpadu - Dashboard Finance';
+			$data['menu']='finance';
+			$data['menulist']='report_finance';
+			$this->load->view('menu/administrator/finance/print_rptagercv',$data);
+		}
+
 		public function print_rptaccrcvsummary()
 		{
 			$this->authsys->trx_check_($_SESSION['user_id'],'FIN');
@@ -4200,6 +4284,21 @@
 			$data['menu']='finance';
 			$data['menulist']='report_finance';
 			$this->load->view('menu/administrator/finance/print_rptaccpay',$data);
+		}
+
+		public function print_rptagepay()
+		{
+			$this->authsys->trx_check_($_SESSION['user_id'],'FIN');
+			$data['supp'] = ($this->uri->segment(4) == 'null') ? '' : $this->uri->segment(4);
+			$data['datestart'] = ($this->uri->segment(5) == 'null') ? '' : $this->uri->segment(5);
+			$data['dateend'] = ($this->uri->segment(6) == 'null') ? '' : $this->uri->segment(6);
+			// $data['appr'] = ($this->uri->segment(7) == 'null') ? '' : $this->uri->segment(7);
+			$data['branch'] = ($this->uri->segment(7) == 'null') ? '' : $this->uri->segment(7);
+			$data['rpttype'] = ($this->uri->segment(8) == 'null') ? '' : $this->uri->segment(8);
+			$data['title']='Match Terpadu - Dashboard Finance';
+			$data['menu']='finance';
+			$data['menulist']='report_finance';
+			$this->load->view('menu/administrator/finance/print_rptagepay',$data);
 		}
 
 		public function print_rptaccpaysummary()

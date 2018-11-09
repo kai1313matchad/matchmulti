@@ -30,6 +30,7 @@
 			$this->load->model('datatables/showdata/Dt_showrptjou','rpt_jou');
 			$this->load->model('datatables/showdata/Dt_showrptinv','rpt_inv');
 			$this->load->model('datatables/showdata/Dt_showrptaccrcv','rpt_accrcv');
+			$this->load->model('datatables/showdata/Dt_showrptagercv','rpt_agercv');
 			$this->load->model('datatables/showdata/Dt_showrptaccpay','rpt_accpay');
 			$this->load->model('datatables/showdata/Dt_showrpttrialbal','rpt_trialbal');
 			$this->load->model('datatables/showdata/Dt_picostdet','picost_det');
@@ -1001,6 +1002,30 @@
 							"draw" => $_POST['draw'],
 							"recordsTotal" => $this->rpt_accrcv->count_all(),
 							"recordsFiltered" => $this->rpt_accrcv->count_filtered(),
+							"data" => $data,
+					);			
+			echo json_encode($output);
+		}
+
+		public function showrpt_agercv()		
+		{
+			$list = $this->rpt_agercv->get_datatables();
+			$data = array();
+			$no = $_POST['start'];
+			foreach ($list as $dat) {
+				$no++;
+				if ($dat->total != 0) {$tot = $dat->total;} else {$tot = 0;};
+				$row = array();
+				$row[] = $no;
+				$row[] = $dat->kode;
+				$row[] = $dat->nama;
+				$row[] = number_format($tot,2);
+				$data[] = $row;
+			}
+			$output = array(
+							"draw" => $_POST['draw'],
+							"recordsTotal" => $this->rpt_agercv->count_all(),
+							"recordsFiltered" => $this->rpt_agercv->count_filtered(),
 							"data" => $data,
 					);			
 			echo json_encode($output);
