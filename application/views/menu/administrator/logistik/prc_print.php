@@ -125,18 +125,14 @@
                 <h4><strong>No.<span name="no_prc"></span></strong></h4>
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="padding-bottom: 2px;">
             <div class="col-xs-4 head-font">
-                <address>
-                    <strong>Dari:</strong><br>
-                    Match Advertising<br>
-                    JL. Lesti No.42, Surabaya 60241<br>
-                    Telp. (031) 567 8346 (Hunting)<br>
-                    Fax. (031) 568 0646<br>
-                    Email : info@match-advertising.com<br>
-                    <!-- Website :<br>
-                    www.match-advertising.com - www.matchadonline.com -->
-                </address>
+                <strong>Dari:</strong><br>
+                Match Advertising<br>
+                JL. Lesti No.42, Surabaya 60241<br>
+                Telp. (031) 567 8346 (Hunting)<br>
+                Fax. (031) 568 0646<br>
+                Email : info@match-advertising.com
             </div>
             <div class="col-xs-offset-4 col-xs-4 head-font">
                 <address>
@@ -154,6 +150,14 @@
                     <span name="prc_info"></span>
                 </address>
             </div> -->
+        </div>
+        <div class="row" style="padding-top: 2px;">
+            <div class="col-xs-3">
+                <span>No PO : </span><span name="po_codes">PO/1811/000001</span>
+            </div>
+            <div class="col-xs-3">
+                <span>No Approval : </span><span name="appr_codes">AB/1811/000001</span>
+            </div>
         </div>
         <div class="row row-content content-font">
             <div class="col-sm-12 col-xs-12 table-responsive">
@@ -184,7 +188,8 @@
             <div class="col-xs-3 text-center">
                 Surabaya, <?php echo date('d-M-Y')?>
             </div>
-        </div>    
+        </div>
+        <br>
         <div class="row">
             <div class="col-xs-3 text-center">
                 (.................)
@@ -260,7 +265,8 @@
                     if(appr_id != null)
                     {
                         pick_appr(appr_id);
-                    }                    
+                    }
+                    $('[name="po_codes"]').text(data.PO_CODE);
                     $('#modal_po').modal('hide');
                 },
                 error: function (jqXHR, textStatus, errorThrown)
@@ -365,6 +371,7 @@
                 {   
                     $('[name="loc_name"]').text(data.LOC_NAME);
                     $('[name="loc_det"]').text(data.LOC_ADDRESS+', '+data.LOC_CITY);
+                    $('[name="appr_codes"]').text(data.APPR_CODE);
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {

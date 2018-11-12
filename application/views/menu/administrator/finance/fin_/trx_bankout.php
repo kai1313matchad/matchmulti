@@ -846,6 +846,7 @@
                 "order": [],
                 "ajax": {
                     "url": "<?php echo site_url('administrator/Searchdata/srch_coa_bank')?>",
+                    // "url": "<?php echo site_url('administrator/Searchdata/srch_coabybrc')?>",
                     "type": "POST",
                 },
                 "columnDefs": [

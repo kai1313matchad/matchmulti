@@ -148,7 +148,7 @@
                     <tfoot id="tb_foot">
                         <tr>
                             <th colspan="2">
-                                Lokasi <br><span name="loc_name"></span>, <span name="loc_det"></span><br>
+                                Lokasi : <span name="loc_name"></span>, <span name="loc_det"></span><br>
                                 <span name="po_info"></span>
                             </th>
                             <th class="text-right">Total</th>
@@ -207,9 +207,6 @@
             prc = 0; qty = 0; sub = 0;
             pick_branch("<?= $this->session->userdata('user_branch')?>");
             pick_po(id);
-            $('[name=po_qty]').on('input', function() {
-                // hitung();
-            });
         });
         function pick_branch(id)
         {
