@@ -169,7 +169,7 @@
                 Penerima
             </div>
             <div class="col-xs-3 text-center">
-                Surabaya, <?php echo date('d-M-Y')?>
+                Surabaya, <span name="podate"></span>
             </div>
         </div>
         <br><br>
@@ -257,6 +257,7 @@
                     $('[name="po_id"]').val(data.PO_ID);
                     $('[name="po_code"]').val(data.PO_CODE);
                     $('[name="no_po"]').text(data.PO_CODE);
+                    $('[name="podate"]').text(moment(data.PO_DATE).locale('id').format('DD-MMM-YYYY'));
                     $('[name="po_info"]').text(data.PO_INFO);
                     $('[name="appr_id"]').val(data.APPR_ID);
                     $('[name="supp_id"]').val(data.SUPP_ID);

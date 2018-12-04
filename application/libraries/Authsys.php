@@ -55,6 +55,7 @@
 		//fungsi cek menu master
 		public function master_check_($id,$mn)
 		{
+			$this->logcheck_();
 			$this->CI->db->where('user_id = '.$id.' AND menu_code = "'.$mn.'"');
 			$get = $this->CI->db->get('group_user');
 			if($get->num_rows() < 1)
@@ -67,6 +68,7 @@
 		//fungsi cek menu transaksi
 		public function trx_check_($id,$mn)
 		{
+			$this->logcheck_();
 			$this->CI->db->where('user_id = '.$id.' AND menu_code = "'.$mn.'"');
 			$get = $this->CI->db->get('group_user');
 			if($get->num_rows() < 1)
@@ -79,6 +81,7 @@
 		//fungsi cek hak akses admin
 		public function admlog()
 		{
+			$this->logcheck_();
 			if($this->CI->session->userdata('akses_admin') != '1')
 			{
 				$this->CI->session->set_flashdata('success', '<div class="col-lg-12"><div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>Hak Akses Tidak Dimiliki!!!</strong></div></div>');				
