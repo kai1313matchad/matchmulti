@@ -48,9 +48,9 @@
 			echo json_encode($data);
 		}
 
-		public function get_printbankinv()
+		public function get_printbankinv($id)
 		{
-			$data = $this->db->get('other_settings')->row();
+			$data = $this->db->get_where('other_settings',array('branch_id'=>$id))->row();
 			echo json_encode($data);
 		}
 
@@ -149,7 +149,7 @@
 			$data['title']='Match Terpadu - Dashboard Finance';
 			$data['menu']='finance';
 			$data['menulist']='report_inv';
-			$this->load->view('menu/administrator/finance/print_invoice',$data);
+			$this->load->view('menu/administrator/finance/print_inv_new',$data);
 		}
 
 		public function print_invoicetax($id)

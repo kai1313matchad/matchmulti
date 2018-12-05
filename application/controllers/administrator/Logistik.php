@@ -293,7 +293,7 @@
 			$data['title']='Match Terpadu - Dashboard Logistik';
 			$data['menu']='logistik';
 			$data['menulist']='report_logistik';
-			$this->load->view('menu/administrator/logistik/po_print',$data);
+			$this->load->view('menu/administrator/logistik/po_print_new',$data);
 		}
 
 		public function print_prc()
@@ -2423,6 +2423,12 @@
 		public function ajax_pick_appr($id)
 		{
 			$data = $this->crud->get_by_id2('trx_approvalbill','master_location',array('appr_id' => $id),'master_location.loc_id = trx_approvalbill.loc_id');
+        	echo json_encode($data);
+		}
+
+		public function ajax_pick_apprfull($id)
+		{
+			$data = $this->db->join('master_location b','b.loc_id = a.loc_id')->join('master_customer c','c.cust_id = a.cust_id')->get_where('trx_approvalbill a')->row();
         	echo json_encode($data);
 		}
 
