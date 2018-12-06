@@ -94,6 +94,10 @@
             padding-bottom: 0 !important;
             border: solid 1px black !important;
         }
+        .table .notice-row
+        {
+            height: 61px !important;
+        }
         .table td
         {
             margin: 0 !important;
@@ -129,6 +133,13 @@
             margin-top: 0;
             margin-bottom: 0;
         }
+        @media print
+        {
+            .hidden-print
+            {
+                display: none;
+            }
+        }
     </style>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -138,7 +149,25 @@
     <![endif]-->
 </head>
 <body>
-    <div class="container purchase">
+    <div class="container hidden-print">
+        <div class="row">
+            <div class="col-sm-2 col-xs-3">
+                <button class="btn btn-block btn-primary" type="button" onclick="printDiv()">Print</button>
+            </div>
+            <div class="col-sm-4 col-xs-6">
+                <div class="form-group">
+                    <label>Lokasi Project</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="showRadio" id="showRadio1" value="option1" onclick="checkRadio()" checked>Tampil
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="showRadio" id="showRadio2" value="option2" onclick="checkRadio()">Sembunyi
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container purchase" id="purchase-div">
         <input type="hidden" name="idpo" value="<?= $id;?>">
         <header>
             <div class="row">
@@ -146,9 +175,9 @@
                     <img id="img_logo" class="img-responsive" src="">
                 </div>
                 <div class="col-sm-9 col-xs-9 company-details">
-                    <div>JL. Lesti No.42, Surabaya 60241</div>
-                    <div>Telp. (031) 567 8346 (Hunting)</div>
-                    <div>Fax. (031) 568 0646</div>
+                    <div><span name="comp-address"></span></div>
+                    <div>Phone <span name="comp-phone"></span></div>
+                    <div>Fax <span name="comp-fax"></span></div>
                 </div>
             </div>
         </header>
@@ -158,7 +187,6 @@
                     <div>DITUJUKAN UNTUK :</div>
                     <div class="to-name" name="inv_suppname"></div>
                     <div class="to-address"><span name="inv_suppaddr"></span></div>
-                    <div class="to-city"><span name="inv_suppcity"></span></div>
                 </div>
                 <div class="col-sm-8 col-xs-8 purchase-info">
                     <h4 class="info-code" name="no_po"></h4>
@@ -172,14 +200,14 @@
                             <tr>
                                 <th class="text-center col-xs-1 col-sm-1">#</th>
                                 <th class="text-center col-xs-7 col-sm-7">Deskripsi</th>
-                                <th class="text-center col-xs-1 col-sm-1">Qty</th>
-                                <th class="text-center col-xs-3 col-sm-3">Jumlah</th>
+                                <th class="text-center col-xs-2 col-sm-2">Qty</th>
+                                <th class="text-center col-xs-2 col-sm-2">Jumlah</th>
                             </tr>
                         </thead>
                         <tbody id="tb_content"></tbody>
                         <tfoot>
                             <tr>
-                                <th colspan="2">
+                                <th colspan="2" class="notice-row">
                                     <div name="loc-info"><span name="loc_info"></span><br></div>
                                     Notice : <span name="po_info"></span>
                                 </th>
@@ -224,18 +252,30 @@
                 </div>                
             </div>
         </footer>
-    </div>
+    </div>    
     <!-- jQuery -->
     <?php include 'application/views/layout/administrator/jspack.php' ?>
     <script>
-        var id; var suppid; var prc; var qty; var sub;
         $(document).ready(function()
         {
-            id=$('[name="idpo"]').val();            
+            var id; var suppid; var prc; var qty; var sub;
+            id=$('[name="idpo"]').val();
             prc = 0; qty = 0; sub = 0;
             pick_branch("<?= $this->session->userdata('user_branch')?>");
             pick_po(id);
+            checkRadio();
         });
+        function checkRadio()
+        {
+            if($('#showRadio2').is(':checked'))
+            {
+                $('[name="loc-info"]').css({'display':'none'});
+            }
+            if($('#showRadio1').is(':checked'))
+            {
+                $('[name="loc-info"]').css({'display':'block'});
+            }
+        }
         function pick_branch(id)
         {
             $.ajax({
@@ -246,33 +286,15 @@
                 {
                     var newSrc = "<?php echo base_url()?>/assets/img/branchlogo/"+data.BRANCH_LOGO;
                     $('#img_logo').attr('src', newSrc);
+                    $('[name="comp-address"]').text(data.BRANCH_ADDRESS+', '+data.BRANCH_CITY);
+                    $('[name="comp-phone"]').text(data.BRANCH_PHONE);
+                    $('[name="comp-fax"]').text(data.BRANCH_FAX);
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
                     alert('Error get data from ajax');
                 }
             })
-        }
-        function dtable()
-        {
-            table = $('#dtb_po').DataTable({
-                "info": false,
-                "destroy": true,
-                "responsive": true,
-                "processing": true,
-                "serverSide": true,
-                "order": [],
-                "ajax": {
-                    "url": "<?php echo site_url('administrator/Logistik/ajax_printpo')?>",
-                    "type": "POST",                
-                },                
-                "columnDefs": [
-                { 
-                    "targets": [ 0 ],
-                    "orderable": false,
-                },
-                ],
-            });
         }
         function pick_po(id)
         {
@@ -316,11 +338,10 @@
                 success: function(data)
                 {   
                     $('[name="inv_suppname"]').text(data.SUPP_NAME);
-                    $('[name="inv_suppaddr"]').text(data.SUPP_ADDRESS);
+                    $('[name="inv_suppaddr"]').text(data.SUPP_ADDRESS+', '+data.SUPP_CITY);
                     $('[name="inv_suppcity"]').text(data.SUPP_CITY);
                     $('[name="inv_suppphone"]').text(data.SUPP_PHONE);
                     $('[name="inv_suppinfo"]').text(data.SUPP_OTHERCTC);
-                    // $('[name="inv_suppdue"]').text(data.SUPP_DUE);
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
@@ -397,6 +418,10 @@
                     alert('Error get data from ajax');
                 }
             });
+        }
+        function printDiv()
+        {
+            window.print();
         }
     </script>    
 </body>
