@@ -60,7 +60,6 @@
             font-family:"times new roman";
             font-size: 16px;
         }
-
         @media print
         {            
             h3, h4 
@@ -108,8 +107,10 @@
                 <img id="img_logo" class="img-responsive logo" src="">
             </div>
             <div class="col-xs-4 text-center">
-                <h3><strong><u>SURAT ORDER</u></strong></h3>
-                <h4><strong>No.<span name="no_po"></span></strong></h4>
+                <h3><strong><u>SURAT ORDER</u></strong><br/>
+                    <strong>No.<span name="no_po"></span></strong>
+                </h3>
+                <!-- <h4><strong>No.<span name="no_po"></span></strong></h4> -->
             </div>
         </div>
         <div class="row">
@@ -320,13 +321,38 @@
                 {                       
                     for (var i = 0; i < data.length; i++)
                     {
-                      var $tr = $('<tr>').append(
-                            $('<td class="text-center">'+(i+1)+'</td>'),
-                            $('<td class="text-center text-uppercase">'+data[i]["GD_NAME"]+'</td>'),
-                            $('<td class="text-center">'+data[i]["PODET_QTYUNIT"]+' '+data[i]["GD_MEASURE"]+'</td>'),
-                            $('<td class="text-right chgnum">'+data[i]["PODET_SUB"]+'</td>')
-                            ).appendTo('#tb_content');
+                      if (data.length-1 != i) 
+                      { 
+                          var $tr = $('<tr>').append(
+                                $('<td class="text-center">'+(i+1)+'</td>'),
+                                $('<td class="text-center text-uppercase">'+data[i]["GD_NAME"]+'</td>'),
+                                $('<td class="text-center">'+data[i]["PODET_QTYUNIT"]+' '+data[i]["GD_MEASURE"]+'</td>'),
+                                $('<td class="text-right chgnum">'+data[i]["PODET_SUB"]+'</td>')
+                                ).appendTo('#tb_content');
+                        } else {
+                           var $height=(8-data.length)*19;
+                           var $tr = $('<tr>').append(
+                                $('<td height="'+$height+'" class="text-center">'+(i+1)+'</td>'),
+                                $('<td class="text-center text-uppercase">'+data[i]["GD_NAME"]+'</td>'),
+                                $('<td class="text-center">'+data[i]["PODET_QTYUNIT"]+' '+data[i]["GD_MEASURE"]+'</td>'),
+                                $('<td class="text-right chgnum">'+data[i]["PODET_SUB"]+'</td>')
+                                ).appendTo('#tb_content'); 
+                        }
                     }
+
+                    // if (data.length < 8) 
+                    // { 
+                    //     for (var i = 0; i < (8-data.length); i++)
+                    //     {
+                    //         var str1 = $('<tr class="noBorders">').append(
+                    //                 $('<td class="text-center">'+'.'+'</td>'),
+                    //                 $('<td class="text-center">'+''+'</td>'),
+                    //                 $('<td class="text-center">'+''+'</td>'),
+                    //                 $('<td class="text-center">'+''+'</td>')
+                    //                   ).appendTo('#tb_content');
+                    //     }
+                    // }
+
                     $('[name="gt"]').text(data[0]["PO_GTOTAL"]);
                     // var $tr = $('<tr>').append(
                     //         $('<th colspan="3" class="text-right">Total Rp </th>'),
