@@ -21,9 +21,9 @@
     <link href="<?php echo base_url('assets/addons/select2-bootstrap.css')?>" rel="stylesheet">
     <link href="<?php echo base_url('assets/addons/extra.css')?>" rel="stylesheet">
     <!-- Custom Fonts -->
-    <link href="<?php echo base_url('assets/font-awesome/css/font-awesome.min.css')?>" rel="stylesheet"> 
+    <link href="<?php echo base_url('assets/font-awesome/css/font-awesome.min.css')?>" rel="stylesheet">
     <style>
-        .invoice
+        .purchase
         {
             position: relative;
             background-color: #FFF;
@@ -31,60 +31,60 @@
             padding: 0px;
             font-family: Times New Roman;
         }
-        .invoice header
+        .purchase header
         {
             padding: 0px 0px 0px 0px;
             margin-bottom: 0px;
             border-bottom: 1px solid #3989c6;
         }
-        .invoice header img
+        .purchase header img
         {
             max-width: 200px;
             margin-top: 0;
             margin-bottom: 0;
         }
-        .invoice .company-details
+        .purchase .company-details
         {
             text-align: right;
             margin-top: 0;
             margin-bottom: 0;
         }
-        .invoice main
+        .purchase main
         {
             padding: 0px 0px 0px 0px;
             margin-bottom: 0px;
         }
-        .invoice .to-details
+        .purchase .to-details
         {
             text-align: left;
         }
-        .invoice .to-name
+        .purchase .to-name
         {
             font-weight: bold;
         }
-        .invoice .to-name .to-address .to-city
+        .purchase .to-name .to-address .to-city
         {
             margin-top: 0;
             margin-bottom: 0;
         }
-        .invoice .invoice-reff
+        .purchase .purchase-reff
         {
             text-align: center;
         }        
-        .invoice .invoice-info
+        .purchase .purchase-info
         {
             text-align: right;
         }
-        .invoice-info .reff-content
+        .purchase-info .reff-content
         {
             margin-top: 0;
             margin-bottom: 0;
         }
-        .invoice-info .info-code
+        .purchase-info .info-code
         {
             font-weight: bold;
         }
-        .invoice-info .info-code .info-date
+        .purchase-info .info-code .info-date
         {
             margin-top: 0;
             margin-bottom: 0;
@@ -123,7 +123,7 @@
             background-color: #FFFFFF;
             border: none;
         }
-        .invoice .loc-info .loc-notice
+        .purchase .loc-info .loc-notice
         {
             margin-top: 0;
             margin-bottom: 0;
@@ -150,6 +150,12 @@
             }
         }
     </style>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
     <div class="container hidden-print">
@@ -157,9 +163,20 @@
             <div class="col-sm-2 col-xs-3">
                 <button class="btn btn-block btn-primary" type="button" onclick="printDiv()">Print</button>
             </div>
+            <div class="col-sm-4 col-xs-6">
+                <div class="form-group">
+                    <label>Lokasi Project</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="showRadio" id="showRadio1" value="option1" onclick="checkRadio()" checked>Tampil
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="showRadio" id="showRadio2" value="option2" onclick="checkRadio()">Sembunyi
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="container invoice" id="invoice-div">
+    <div class="container purchase" id="purchase-div">
         <header>
             <div class="row">
                 <div class="col-sm-3 col-xs-3">
@@ -176,13 +193,13 @@
             <div class="row">
                 <div class="col-sm-4 col-xs-4 to-details">
                     <div>DITUJUKAN UNTUK :</div>
-                    <div class="to-name" name="inv_to"></div>
-                    <div class="to-address"><span name="inv_to_addr"></span></div>
+                    <div class="to-name" name="inv_suppname"></div>
+                    <div class="to-address"><span name="inv_suppaddr"></span></div>
                 </div>
-                <div class="col-sm-8 col-xs-8 invoice-info">
-                    <h4 class="info-code" name="inv_code"></h4>
-                    <div class="reff-content">Tgl. BL : <span name="inv_date"></span></div>
-                    <div class="reff-content">Jatuh Tempo : <span name="inv_due_date"></span></div>
+                <div class="col-sm-8 col-xs-8 purchase-info">
+                    <h4 class="info-code" name="prc-code"></h4>
+                    <div class="reff-content"><span name="appr-code"></span> - <span name="po-code" style="margin-right: 10px;"></span> Tgl. BL : <span name="prc-date"></span></div>
+                    <div class="info-date"></div>
                 </div>
             </div>
             <div class="row">
@@ -196,7 +213,7 @@
                                 <th class="text-center col-xs-2 col-sm-2">Jumlah</th>
                             </tr>
                         </thead>
-                        <!-- <tbody id="tb_content"></tbody>
+                        <tbody id="tb_content"></tbody>
                         <tfoot id="tb_foot">
                             <tr>
                                 <th rowspan="4" colspan="2">
@@ -218,12 +235,12 @@
                                 <th class="text-right">Total Rp</th>
                                 <th class="text-right chgnum" name="prc_gt"></th>
                             </tr>
-                        </tfoot> -->
+                        </tfoot>
                     </table>
                 </div>
             </div>
         </main>
-        <!-- <footer>
+        <footer>
             <div class="row text-center">
                 <div class="col-xs-3 col-sm-3">
                     <div>Pemesan</div>
@@ -255,18 +272,31 @@
                     <div class="foot-notice">CC : Lembar 1: Supplier; Lembar 2: Accounting; Lembar 3: Direksi; Lembar 4: Purchasing</div>
                 </div>                
             </div>
-        </footer> -->
+        </footer>
     </div>
     <!-- jQuery -->
     <?php include 'application/views/layout/administrator/jspack.php' ?>
     <script>
         $(document).ready(function()
         {
-            var id = <?= $id; ?>;
-            pick_branch(<?= $this->session->userdata('user_branch');?>);
-            pick_invoice(id);
-            pick_bankprint(<?= $this->session->userdata('user_branch');?>);
+            var suppid; var prc; var qty; var sub;
+            var id=<?= $id ;?>;            
+            prc = 0; qty = 0; sub = 0;
+            pick_branch("<?= $this->session->userdata('user_branch')?>");
+            pick_prc(id);
+            checkRadio();
         });
+        function checkRadio()
+        {
+            if($('#showRadio2').is(':checked'))
+            {
+                $('[name="loc-info"]').css({'display':'none'});
+            }
+            if($('#showRadio1').is(':checked'))
+            {
+                $('[name="loc-info"]').css({'display':'block'});
+            }
+        }
         function pick_branch(id)
         {
             $.ajax({
@@ -287,44 +317,31 @@
                 }
             })
         }
-        function pick_invoice(id)
+        function pick_prc(id)
         {
             $.ajax({
-                url : "<?php echo site_url('administrator/Finance/get_inv/')?>"+id,
-                type: "GET",
-                dataType: "JSON",
-                success: function(data)
-                {
-                    var id = data.INV_ID;
-                    var invdate = moment(data.INV_DATE).locale('id').format('DD-MMMM-YYYY')
-                    var duedate = moment(data.INV_DATE).add(data.INV_TERM,'days').locale('id').format('DD-MMMM-YYYY');
-                    $('[name="inv_date"]').text(invdate);
-                    $('[name="inv_due_date"]').text(duedate);
-                    $('[name="inv_code"]').text(data.INV_CODE);
-                    $('[name="inv_to"]').text(data.CUST_NAME);
-                    $('[name="inv_to_addr"]').text(data.CUST_ADDRESS);
-                    $('[name="client-city-postal"]').text(data.CUST_CITY+', '+data.CUST_POSTAL);
-                    $('[name="client-name"]').text(data.CUST_NAME);
-                    $('[name="inv-info"]').text(data.INV_INFO);
-                    pick_invdet(id);
-                    pick_sub(id);
-                },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
-                    alert('Error get data from ajax');
-                }
-            });
-        }
-        function pick_cust(id)
-        {
-            $.ajax({
-                url : "<?php echo site_url('administrator/Marketing/ajax_pick_cust/')?>" + id,
+                url : "<?php echo site_url('administrator/Logistik/ajax_pick_prc/')?>" + id,
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)
                 {   
-                    $('[name="print_clientname"]').text(data.CUST_NAME);
-                    $('[name="print_clientnpwp"]').text(data.CUST_NPWPACC);
+                    $('[name="po_id"]').val(data.PO_ID);
+                    $('[name="prc-code"]').text(data.PRC_CODE);
+                    $('[name="prc-date"]').text(moment(data.PRC_DATE).locale('id').format('DD-MMM-YYYY'));
+                    $('[name="prc_print_date"]').text(moment(data.PRC_DATE).locale('id').format('DD-MMM-YYYY'));
+                    $('[name="prc_id"]').val(data.PRC_ID);
+                    $('[name="supp_id"]').val(data.SUPP_ID);
+                    $('[name="appr_id"]').val(data.APPR_ID);
+                    var appr_id = data.APPR_ID;
+                    var prc_id = data.PRC_ID;
+                    pick_supp(data.SUPP_ID);
+                    pick_prcdet(prc_id);
+                    if(appr_id != null)
+                    {
+                        pick_appr(appr_id);
+                    }
+                    $('[name="po-code"]').text(data.PO_CODE);
+                    $('#modal_po').modal('hide');
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
@@ -332,74 +349,56 @@
                 }
             });
         }
-        function pick_sub(id)
+        function pick_supp(id)
         {
             $.ajax({
-                url : "<?php echo site_url('administrator/Finance/get_subinvdet/')?>" + id,
-                type: "GET",
-                dataType: "JSON",
-                success: function(data)
-                {
-                    pick_spelledtotal(data.gt1);
-                    $('[name="grand-total"]').text(money_conv(data.gt1));
-                    $('[name="sub-total"]').text(money_conv(data.sub1));
-                    $('[name="tax-total"]').text(money_conv(data.ppn1));
-                    $('[name="inv_pph"]').text(money_conv(data.pph1));
-                },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
-                    alert('Error get data from ajax');
-                }
-            });
-        }
-        function pick_invdet(id)
-        {
-            $.ajax({
-                url : "<?php echo site_url('administrator/Finance/get_invdet/')?>" + id,
+                url : "<?php echo site_url('administrator/Logistik/ajax_pick_supp/')?>" + id,
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)
                 {   
-                    for (var i = 0; i < data.length; i++)
+                    $('[name="inv_suppname"]').text(data.SUPP_NAME);
+                    $('[name="inv_suppaddr"]').text(data.SUPP_ADDRESS+', '+data.SUPP_CITY);
+                    $('[name="inv_suppcity"]').text(data.SUPP_CITY);
+                    $('[name="inv_suppphone"]').text(data.SUPP_PHONE);
+                    $('[name="inv_suppinfo"]').text(data.SUPP_OTHERCTC);
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function pick_prcdet(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Logistik/ajax_pick_prcdet/')?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    var blankrow = 7-data.length;
+                    for (var i = 0; i < data.length; i++) {
+                      var $tr = $('<tr>').append(
+                            $('<td class="text-center">'+(i+1)+'</td>'),
+                            $('<td class="text-left text-uppercase">'+data[i]["GD_NAME"]+'</td>'),
+                            $('<td class="text-center">'+data[i]["PRCDET_QTY"]+' '+data[i]["GD_MEASURE"]+'</td>'),
+                            $('<td class="text-right chgnum">'+data[i]["PRCDET_SUB"]+'</td>')
+                            ).appendTo('#tb_content');
+                    }
+                    for (var j = 0; j < blankrow; j++)
                     {
                         var $tr = $('<tr>').append(
-                            $('<td class="no text-center">'+(i+1)+'</td>'),
-                            $('<td>').css('text-align','center').text(data[i]["APPR_CODE"]),
-                            $('<td>').css('text-align','center').text(data[i]["APPR_PO"]),
-                            $('<td>').css('text-align','center').text(data[i]["LOC_NAME"]),
-                            $('<td>').css('text-align','center').text(data[i]["TERMSDET_INFO"]),
-                            $('<td class="total text-right">'+money_conv(data[i]["INVDET_SUB"])+'</td>')
+                            $('<td class="blank-row"></td>'),
+                            $('<td></td>'),$('<td></td>'),$('<td></td>')
                             ).appendTo('#tb_content');
-                    }                   
-                },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
-                    alert('Error get data from ajax');
-                }
-            });
-        }
-        function pick_getappterm(id)
-        {
-            $.ajax({
-                url : "<?php echo site_url('administrator/Marketing/get_appterm/')?>" + id,
-                type: "GET",
-                dataType: "JSON",
-                success: function(data)
-                {   
-                    var all='';
-                    for (var i = 0; i < data.length; i++)
-                    {
-                        var $ctn = data[i]["TERMSDET_CODE"]+' :'+data[i]["TERMSDET_PERC"]+'% '+data[i]["TERMSDET_INFO"];                        
-                        if(i==0)
-                        {
-                            all = all + $ctn;
-                        }
-                        else
-                        {
-                            all = all +', '+ $ctn;
-                        }
                     }
-                    $('<span>').text(all).appendTo('#pcontent');                    
+                    $('[name="prc_disc"]').text(data[0]["PRC_DISC"]);
+                    $('[name="prc_tax"]').text(data[0]["PRC_PPN"]);
+                    $('[name="prc_cost"]').text(data[0]["PRC_COST"]);
+                    $('[name="prc_gt"]').text(data[0]["PRC_GTOTAL"]);
+                    $('td.chgnum').number(true);
+                    $('th.chgnum').number(true);
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
@@ -407,15 +406,17 @@
                 }
             });
         }
-        function pick_spelledtotal(v)
+        function pick_appr(id)
         {
             $.ajax({
-                url : "<?php echo site_url('administrator/Finance/get_numbsp/')?>" + v,
+                url : "<?php echo site_url('administrator/Logistik/ajax_pick_apprfull/')?>" + id,
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)
                 {   
-                    $('[name="spelled"]').text(data.terbilang+' Rupiah');
+                    var locdet = data.LOC_NAME+' - '+data.LOC_ADDRESS+', '+data.LOC_CITY+' - '+data.CUST_NAME;
+                    $('[name="loc_info"]').text(locdet);
+                    $('[name="appr-code"]').text(data.APPR_CODE);
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
@@ -423,22 +424,9 @@
                 }
             });
         }
-        function pick_bankprint(id)
+        function printDiv()
         {
-            $.ajax({
-                url : "<?php echo site_url('administrator/Finance/get_printbankinv/')?>"+id,
-                type: "GET",
-                dataType: "JSON",
-                success: function(data)
-                {   
-                    $('[name="bank-dest"]').text(data.PRINT_BANKINVOICE);
-                },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
-                    alert('Error get data from ajax');
-                }
-            });
+            window.print();
         }
     </script>
 </body>
-</html>

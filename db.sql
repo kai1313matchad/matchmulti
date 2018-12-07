@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `account_journal` (
   KEY `FK_R53` (`BRANCH_ID`),
   CONSTRAINT `FK_R50` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`),
   CONSTRAINT `FK_R53` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table mtpdmulti.account_journal: ~23 rows (approximately)
 /*!40000 ALTER TABLE `account_journal` DISABLE KEYS */;
@@ -54,9 +54,10 @@ INSERT INTO `account_journal` (`JOU_ID`, `BRANCH_ID`, `USER_ID`, `JOU_CODE`, `JO
 	(18, 1, 1, 'JOU/1810/000007', '1', 'BK/1810/000001', '2018-10-04', 'Bank Keluar BK/1810/000001, tes giro keluar dari bank keluar', NULL, NULL),
 	(19, 1, 1, 'JOU/1810/000008', '1', 'GK/1810/000001', '2018-10-04', 'Pencairan Giro dari BANK A, tes giro keluar cair', NULL, NULL),
 	(20, 6, 9, 'JOU/1810/000009', '1', 'BL/1810/000001', '2018-10-16', 'Jurnal Pembelian BL/1810/000001 dari Sup Sub A', NULL, NULL),
-	(21, 6, 1, 'JOU/1810/000010', '1', 'BL/1810/000002', '2018-10-16', 'Jurnal Pembelian BL/1810/000002 dari Supplier A', NULL, NULL),
+	(21, 6, 9, 'JOU/1810/000010', '1', 'BL/1810/000002', '2018-10-16', 'Jurnal Pembelian BL/1810/000002 dari Supplier A', NULL, NULL),
 	(22, 1, 1, 'JOU/1810/000011', '1', 'BM/1810/000002', '2018-10-18', 'Bank Masuk BM/1810/000002, aaaaaa', NULL, NULL),
-	(23, 1, 1, 'JOU/1810/000012', '1', 'BK/1810/000002', '2018-10-18', 'Bank Keluar BK/1810/000002, axzsxxa', NULL, NULL);
+	(23, 1, 1, 'JOU/1810/000012', '1', 'BK/1810/000002', '2018-10-18', 'Bank Keluar BK/1810/000002, axzsxxa', NULL, NULL),
+	(24, 3, 6, 'JOU/1812/000001', '1', 'INV/1812/000001', '2018-12-04', 'Invoice : INV/1812/000001 - Sampoerna', NULL, NULL);
 /*!40000 ALTER TABLE `account_journal` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.appr_cost_det
@@ -73,9 +74,9 @@ CREATE TABLE IF NOT EXISTS `appr_cost_det` (
   PRIMARY KEY (`CSTDT_ID`),
   KEY `FK_R55` (`APPR_ID`),
   CONSTRAINT `FK_R55` FOREIGN KEY (`APPR_ID`) REFERENCES `trx_approvalbill` (`APPR_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.appr_cost_det: ~7 rows (approximately)
+-- Dumping data for table mtpdmulti.appr_cost_det: ~14 rows (approximately)
 /*!40000 ALTER TABLE `appr_cost_det` DISABLE KEYS */;
 INSERT INTO `appr_cost_det` (`CSTDT_ID`, `APPR_ID`, `CSTDT_CODE`, `CSTDT_PPN`, `CSTDT_PPH`, `CSTDT_PPNAMOUNT`, `CSTDT_PPHAMOUNT`, `CSTDT_AMOUNT`) VALUES
 	(1, 1, 'Media Placement', NULL, NULL, NULL, NULL, 100000000),
@@ -86,7 +87,12 @@ INSERT INTO `appr_cost_det` (`CSTDT_ID`, `APPR_ID`, `CSTDT_CODE`, `CSTDT_PPN`, `
 	(8, 7, 'Produksi Media', NULL, NULL, 4000000, 0, 40000000),
 	(10, 7, 'Jasa Media', NULL, NULL, 1000000, 200000, 10000000),
 	(11, 7, 'pajak dan listrik', NULL, NULL, 500000, 0, 5000000),
-	(12, 8, 'tes biaya', NULL, NULL, NULL, NULL, 1000000);
+	(12, 8, 'tes biaya', NULL, NULL, NULL, NULL, 1000000),
+	(13, 9, 'tes', NULL, NULL, 0, 0, 1000000),
+	(14, 10, 'paket blablaba', NULL, NULL, 0, 0, 1000000),
+	(15, 11, 'media placement', NULL, NULL, 2000000, 0, 20000000),
+	(16, 11, 'jasa media', NULL, NULL, 0, 100000, 5000000),
+	(17, 11, 'pajak reklame', NULL, NULL, 0, 0, 5000000);
 /*!40000 ALTER TABLE `appr_cost_det` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.appr_permit_det
@@ -128,9 +134,9 @@ CREATE TABLE IF NOT EXISTS `appr_terms_det` (
   PRIMARY KEY (`TERMSDET_ID`),
   KEY `FK_R15` (`APPR_ID`),
   CONSTRAINT `FK_R15` FOREIGN KEY (`APPR_ID`) REFERENCES `trx_approvalbill` (`APPR_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.appr_terms_det: ~7 rows (approximately)
+-- Dumping data for table mtpdmulti.appr_terms_det: ~10 rows (approximately)
 /*!40000 ALTER TABLE `appr_terms_det` DISABLE KEYS */;
 INSERT INTO `appr_terms_det` (`TERMSDET_ID`, `APPR_ID`, `TERMSDET_CODE`, `TERMSDET_DATE`, `TERMSDET_INFO`, `TERMSDET_PERC`, `TERMSDET_DPP`, `TERMSDET_BBTAX`, `TERMSDET_PPN_PERC`, `TERMSDET_PPH_PERC`, `TERMSDET_PPN_SUM`, `TERMSDET_PPH_SUM`, `TERMSDET_SUB`, `TERMSDET_SUM`) VALUES
 	(1, 1, '1', '2018-10-05', 'Kolom keterangan termin', 100.00, 90000000, 10000000, 10.00, 2.00, 9000000, 1800000, 100000000, 107200000),
@@ -140,7 +146,11 @@ INSERT INTO `appr_terms_det` (`TERMSDET_ID`, `APPR_ID`, `TERMSDET_CODE`, `TERMSD
 	(10, 5, '1', '2018-10-05', 'kolom keterangan termin', 0.00, 100000, NULL, NULL, NULL, 10000, NULL, NULL, 110000),
 	(13, 7, '1', '2018-11-01', '50% setelah approval', 50.00, 27500000, NULL, NULL, NULL, 2750000, NULL, NULL, 30250000),
 	(14, 7, '1', '2018-12-01', '50% setelah BAPP', 50.00, 27500000, NULL, NULL, NULL, 2750000, NULL, NULL, 30250000),
-	(15, 8, '1', '2018-10-16', 'tes termin', 100.00, 1000000, 0, 10.00, 0.00, 100000, 0, 1000000, 1100000);
+	(15, 8, '1', '2018-10-16', 'tes termin', 100.00, 1000000, 0, 10.00, 0.00, 100000, 0, 1000000, 1100000),
+	(16, 10, '1', '2018-11-05', 'setelah bapp', 50.00, 500000, NULL, NULL, NULL, 0, NULL, NULL, 500000),
+	(17, 10, '2', '2018-11-22', 'balabkanakbak', 20.00, 200000, NULL, NULL, NULL, 0, NULL, NULL, 200000),
+	(18, 11, '1', '2018-12-10', 'Termin 1 bayar setelah aaaa', 50.00, 15000000, NULL, NULL, NULL, 1000000, NULL, NULL, 16000000),
+	(20, 11, '2', '2018-12-31', 'Setelah bla bla bla', 50.00, 15000000, NULL, NULL, NULL, 1000000, NULL, NULL, 16000000);
 /*!40000 ALTER TABLE `appr_terms_det` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.bankin_det
@@ -256,7 +266,7 @@ CREATE TABLE IF NOT EXISTS `bapplog_details` (
   CONSTRAINT `FK__trx_bapplog` FOREIGN KEY (`BALG_ID`) REFERENCES `trx_bapplog` (`BALG_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.bapplog_details: ~0 rows (approximately)
+-- Dumping data for table mtpdmulti.bapplog_details: ~1 rows (approximately)
 /*!40000 ALTER TABLE `bapplog_details` DISABLE KEYS */;
 INSERT INTO `bapplog_details` (`DETBALG_ID`, `BALG_ID`, `DETBALG_IMGNAME`, `DETBALG_IMGPATH`, `DETBALG_THUMBS`) VALUES
 	(1, 1, 'img_1540190159_.jpg', './assets/img/bapplog/img_1540190159_.jpg', './assets/img/bapplog/thumbs/img_1540190159_.jpg');
@@ -273,10 +283,15 @@ CREATE TABLE IF NOT EXISTS `bapp_details` (
   PRIMARY KEY (`DETBAPP_ID`),
   KEY `FK_R48` (`BAPP_ID`),
   CONSTRAINT `FK_R48` FOREIGN KEY (`BAPP_ID`) REFERENCES `trx_bapp` (`BAPP_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.bapp_details: ~0 rows (approximately)
+-- Dumping data for table mtpdmulti.bapp_details: ~4 rows (approximately)
 /*!40000 ALTER TABLE `bapp_details` DISABLE KEYS */;
+INSERT INTO `bapp_details` (`DETBAPP_ID`, `BAPP_ID`, `DETBAPP_IMGNAME`, `DETBAPP_IMGPATH`, `DETBAPP_THUMBS`) VALUES
+	(1, 2, 'img_1540345270_BA1810000001.jpg', './assets/img/bapp/img_1540345270_BA1810000001.jpg', './assets/img/bapp/thumbs/img_1540345270_BA1810000001.jpg'),
+	(2, 2, 'img_1540345271_BA1810000001.jpg', './assets/img/bapp/img_1540345271_BA1810000001.jpg', './assets/img/bapp/thumbs/img_1540345271_BA1810000001.jpg'),
+	(3, 1, 'img_1540350443_BA1809000001.jpg', './assets/img/bapp/img_1540350443_BA1809000001.jpg', './assets/img/bapp/thumbs/img_1540350443_BA1809000001.jpg'),
+	(4, 1, 'img_1540350542_BA1809000001.jpg', './assets/img/bapp/img_1540350542_BA1809000001.jpg', './assets/img/bapp/thumbs/img_1540350542_BA1809000001.jpg');
 /*!40000 ALTER TABLE `bapp_details` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.brcppn_details
@@ -425,13 +440,14 @@ CREATE TABLE IF NOT EXISTS `cashout_det` (
   KEY `FK_R98` (`CSHO_ID`),
   CONSTRAINT `FK_R127` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`),
   CONSTRAINT `FK_R98` FOREIGN KEY (`CSHO_ID`) REFERENCES `trx_cash_out` (`CSHO_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.cashout_det: ~0 rows (approximately)
+-- Dumping data for table mtpdmulti.cashout_det: ~2 rows (approximately)
 /*!40000 ALTER TABLE `cashout_det` DISABLE KEYS */;
 INSERT INTO `cashout_det` (`CSHODET_ID`, `CSHO_ID`, `COA_ID`, `CSHODET_PRCID`, `CSHODET_REFF`, `CSHODET_INFO`, `CSHODET_AMOUNT`) VALUES
 	(1, 1, 1200, '', '', 'kolom info kas keluar detail', 100000.00),
-	(2, 2, 1200, '', '', 'tftfttftftf', 10000.00);
+	(2, 2, 1200, '', '', 'tftfttftftf', 10000.00),
+	(4, 3, 319, '2', 'BL/1809/000001', 'asdfghjkjhgfd - BL/1809/000001', 35000.00);
 /*!40000 ALTER TABLE `cashout_det` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.chart_of_account
@@ -443,18 +459,18 @@ CREATE TABLE IF NOT EXISTS `chart_of_account` (
   `COA_ACC` char(30) DEFAULT NULL,
   `COA_ACCNAME` char(100) DEFAULT NULL,
   `COA_OWNER` char(100) DEFAULT NULL,
-  `COA_DEBIT` bigint(20) DEFAULT NULL,
-  `COA_CREDIT` bigint(20) DEFAULT NULL,
-  `COA_SALDO` bigint(20) DEFAULT NULL,
+  `COA_DEBIT` decimal(10,0) DEFAULT NULL,
+  `COA_CREDIT` decimal(10,0) DEFAULT NULL,
+  `COA_SALDO` decimal(10,0) DEFAULT NULL,
   `COA_DTSTS` char(1) DEFAULT NULL,
   PRIMARY KEY (`COA_ID`),
   KEY `FK_R49` (`PAR_ID`),
   KEY `FK_chart_of_account_master_branch` (`BRANCH_ID`),
   CONSTRAINT `FK_R49` FOREIGN KEY (`PAR_ID`) REFERENCES `parent_chart` (`PAR_ID`),
   CONSTRAINT `FK_chart_of_account_master_branch` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=1879 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1880 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.chart_of_account: ~1,073 rows (approximately)
+-- Dumping data for table mtpdmulti.chart_of_account: ~1,076 rows (approximately)
 /*!40000 ALTER TABLE `chart_of_account` DISABLE KEYS */;
 INSERT INTO `chart_of_account` (`COA_ID`, `PAR_ID`, `BRANCH_ID`, `COA_ACC`, `COA_ACCNAME`, `COA_OWNER`, `COA_DEBIT`, `COA_CREDIT`, `COA_SALDO`, `COA_DTSTS`) VALUES
 	(1, 17, 1, '1110001', 'KAS HO', NULL, 0, 0, 0, '1'),
@@ -1531,7 +1547,8 @@ INSERT INTO `chart_of_account` (`COA_ID`, `PAR_ID`, `BRANCH_ID`, `COA_ACC`, `COA
 	(1875, 52, 7, '9110011', 'PEMBULATAN RCP', NULL, 0, 0, 0, '1'),
 	(1876, 52, 7, '9110012', 'SELISIH KAS RCP', NULL, 0, 0, 0, '1'),
 	(1877, 56, 3, '2130012', 'HUTANG PAJAK PPN KELUARAN MATCH', NULL, 0, 0, 0, '1'),
-	(1878, 55, 6, '2120029', 'HUTANG USAHA WPI SUB', NULL, 0, 0, 0, '1');
+	(1878, 55, 6, '2120029', 'HUTANG USAHA WPI MAIN', NULL, 0, 0, 0, '1'),
+	(1879, 55, 6, '2120030', 'HUTANG USAHA WPI SUB', NULL, 0, 0, 0, '1');
 /*!40000 ALTER TABLE `chart_of_account` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.giroin_det
@@ -1932,9 +1949,9 @@ CREATE TABLE IF NOT EXISTS `his_approvalbill` (
   PRIMARY KEY (`HISAPPR_ID`),
   KEY `FK_R9` (`APPR_ID`),
   CONSTRAINT `FK_R9` FOREIGN KEY (`APPR_ID`) REFERENCES `trx_approvalbill` (`APPR_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.his_approvalbill: ~27 rows (approximately)
+-- Dumping data for table mtpdmulti.his_approvalbill: ~37 rows (approximately)
 /*!40000 ALTER TABLE `his_approvalbill` DISABLE KEYS */;
 INSERT INTO `his_approvalbill` (`HISAPPR_ID`, `APPR_ID`, `HISAPPR_STS`, `HISAPPR_OLD`, `HISAPPR_NEW`, `HISAPPR_INFO`, `HISAPPR_DATE`, `HISAPPR_TIME`, `HISAPPR_UPCOUNT`) VALUES
 	(1, 1, 'Void By System', 'None', 'None', 'Create By System', '2018-09-18', '09:58:31', 0),
@@ -1968,7 +1985,18 @@ INSERT INTO `his_approvalbill` (`HISAPPR_ID`, `APPR_ID`, `HISAPPR_STS`, `HISAPPR
 	(35, 7, 'Posted by User superm', 'Posted by User superm', 'Posted By User superm', 'Update by superm from approval form', '2018-10-02', '14:34:14', 1),
 	(36, 8, 'Void By System', 'None', 'None', 'Create By System', '2018-10-16', '14:25:35', 0),
 	(37, 8, 'Posted by User superwpi', 'Void By System', 'Posted By User superwpi', 'Original Save by approval form', '2018-10-16', '14:27:05', 1),
-	(38, 8, 'Approved by User superwpi', 'Posted by User superwpi', 'Approved By User superwpi', 'Update by superwpi from approval form', '2018-10-16', '14:34:33', 1);
+	(38, 8, 'Approved by User superwpi', 'Posted by User superwpi', 'Approved By User superwpi', 'Update by superwpi from approval form', '2018-10-16', '14:34:33', 1),
+	(39, 9, 'Void By System', 'None', 'None', 'Create By System', '2018-11-05', '16:27:04', 0),
+	(40, 9, 'Posted by User superm', 'Void By System', 'Posted By User superm', 'Original Save by approval form', '2018-11-05', '16:27:41', 1),
+	(41, 10, 'Void By System', 'None', 'None', 'Create By System', '2018-11-05', '16:39:47', 0),
+	(42, 10, 'Posted by User superwpi', 'Void By System', 'Posted By User superwpi', 'Original Save by approval form', '2018-11-05', '16:49:21', 1),
+	(43, 10, 'Approved by User superwpi', 'Posted by User superwpi', 'Approved By User superwpi', 'Update by superwpi from approval form', '2018-11-05', '16:51:24', 1),
+	(44, 11, 'Void By System', 'None', 'None', 'Create By System', '2018-12-03', '16:20:57', 0),
+	(45, 11, 'Posted by User superm', 'Void By System', 'Posted By User superm', 'Original Save by approval form', '2018-12-03', '16:27:39', 1),
+	(46, 11, 'Approved by User superm', 'Posted by User superm', 'Approved By User superm', 'Update by superm from approval form', '2018-12-04', '14:47:00', 1),
+	(47, 11, 'Open by User superm', 'Posted by User superm', 'Open By User superm', 'Open Record by appr form', '2018-12-04', '14:47:25', 2),
+	(48, 11, 'Posted by User superm', 'Open by User superm', 'Posted By User superm', 'Update by superm from approval form', '2018-12-04', '14:48:03', 2),
+	(49, 11, 'Approved by User superm', 'Open by User superm', 'Approved By User superm', 'Update by superm from approval form', '2018-12-04', '14:48:16', 2);
 /*!40000 ALTER TABLE `his_approvalbill` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.his_bankin
@@ -2057,9 +2085,9 @@ CREATE TABLE IF NOT EXISTS `his_bapp` (
   PRIMARY KEY (`HISBAPP_ID`),
   KEY `FK_R88` (`BAPP_ID`),
   CONSTRAINT `FK_R88` FOREIGN KEY (`BAPP_ID`) REFERENCES `trx_bapp` (`BAPP_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.his_bapp: ~8 rows (approximately)
+-- Dumping data for table mtpdmulti.his_bapp: ~11 rows (approximately)
 /*!40000 ALTER TABLE `his_bapp` DISABLE KEYS */;
 INSERT INTO `his_bapp` (`HISBAPP_ID`, `BAPP_ID`, `HISBAPP_STS`, `HISBAPP_OLD`, `HISBAPP_NEW`, `HISBAPP_INFO`, `HISBAPP_DATE`, `HISBAPP_TIME`, `HISBAPP_UPCOUNT`) VALUES
 	(1, 1, 'Void By System', 'None', 'None', 'Create By System', '2018-09-18', '15:14:57', '0'),
@@ -2069,7 +2097,11 @@ INSERT INTO `his_bapp` (`HISBAPP_ID`, `BAPP_ID`, `HISBAPP_STS`, `HISBAPP_OLD`, `
 	(5, 1, 'Posted by User super', 'Open by User super', 'Posted By User super', 'Update by super from BAPP form', '2018-09-18', '15:59:53', '2'),
 	(6, 1, 'Disapproved by User super', 'Open by User super', 'Disapproved By User super', 'Update by super from BAPP form', '2018-09-18', '16:00:11', '2'),
 	(7, 1, 'Posted by User super', 'Open by User super', 'Posted By User super', 'Update by super from BAPP form', '2018-09-18', '16:01:14', '2'),
-	(8, 1, 'Approved by User super', 'Open by User super', 'Approved By User super', 'Update by super from BAPP form', '2018-09-18', '16:01:21', '2');
+	(8, 1, 'Approved by User super', 'Open by User super', 'Approved By User super', 'Update by super from BAPP form', '2018-09-18', '16:01:21', '2'),
+	(9, 2, 'Void By System', 'None', 'None', 'Create By System', '2018-10-24', '08:40:26', '0'),
+	(10, 2, 'Posted by User superm', 'Void By System', 'Posted By User superm', 'Original Save by BAPP form', '2018-10-24', '08:40:43', '1'),
+	(11, 2, 'Approved by User superm', 'Posted by User superm', 'Approved By User superm', 'Update by superm from BAPP form', '2018-10-24', '08:41:20', '1'),
+	(12, 1, 'Open by User kaisha', 'Open by User super', 'Open By User kaisha', 'Open Record by BAPP form', '2018-10-24', '10:05:55', '3');
 /*!40000 ALTER TABLE `his_bapp` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.his_bapplog
@@ -2089,7 +2121,7 @@ CREATE TABLE IF NOT EXISTS `his_bapplog` (
   CONSTRAINT `FKHISBALG1` FOREIGN KEY (`BALG_ID`) REFERENCES `trx_bapplog` (`BALG_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.his_bapplog: ~1 rows (approximately)
+-- Dumping data for table mtpdmulti.his_bapplog: ~7 rows (approximately)
 /*!40000 ALTER TABLE `his_bapplog` DISABLE KEYS */;
 INSERT INTO `his_bapplog` (`HISBALG_ID`, `BALG_ID`, `HISBALG_STS`, `HISBALG_OLD`, `HISBALG_NEW`, `HISBALG_INFO`, `HISBALG_DATE`, `HISBALG_TIME`, `HISBALG_UPCOUNT`) VALUES
 	(1, 1, 'Void By System', 'None', 'None', 'Create By System', '2018-10-22', NULL, '0'),
@@ -2167,9 +2199,9 @@ CREATE TABLE IF NOT EXISTS `his_cashout` (
   PRIMARY KEY (`HISCSHO_ID`),
   KEY `FKHISCSHO1` (`CSHO_ID`),
   CONSTRAINT `FKHISCSHO1` FOREIGN KEY (`CSHO_ID`) REFERENCES `trx_cash_out` (`CSHO_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.his_cashout: ~5 rows (approximately)
+-- Dumping data for table mtpdmulti.his_cashout: ~8 rows (approximately)
 /*!40000 ALTER TABLE `his_cashout` DISABLE KEYS */;
 INSERT INTO `his_cashout` (`HISCSHO_ID`, `CSHO_ID`, `HISCSHO_STS`, `HISCSHO_OLD`, `HISCSHO_NEW`, `HISCSHO_INFO`, `HISCSHO_DATE`, `HISCSHO_TIME`, `HISCSHO_UPCOUNT`) VALUES
 	(1, 1, 'Void By System', 'None', 'None', 'Create By System', '2018-09-26', '13:39:54', '0'),
@@ -2177,7 +2209,10 @@ INSERT INTO `his_cashout` (`HISCSHO_ID`, `CSHO_ID`, `HISCSHO_STS`, `HISCSHO_OLD`
 	(3, 1, 'Approved by User superm', 'Posted by User superm', 'Approved By User superm', 'Update by superm from Cash Out form', '2018-09-26', '14:19:01', '1'),
 	(4, 2, 'Void By System', 'None', 'None', 'Create By System', '2018-10-02', '15:25:46', '0'),
 	(5, 2, 'Posted by User superm', 'Void By System', 'Posted By User superm', 'Original Save by Cash Out form', '2018-10-02', '15:28:04', '1'),
-	(6, 2, 'Approved by User superm', 'Posted by User superm', 'Approved By User superm', 'Update by superm from Cash Out form', '2018-10-02', '15:28:58', '1');
+	(6, 2, 'Approved by User superm', 'Posted by User superm', 'Approved By User superm', 'Update by superm from Cash Out form', '2018-10-02', '15:28:58', '1'),
+	(7, 3, 'Void By System', 'None', 'None', 'Create By System', '2018-10-25', '11:42:00', '0'),
+	(8, 3, 'Posted by User kaisha', 'Void By System', 'Posted By User kaisha', 'Original Save by Cash Out form', '2018-10-25', '11:42:57', '1'),
+	(9, 3, 'Posted by User kaisha', 'Posted by User kaisha', 'Posted By User kaisha', 'Update by kaisha from Cash Out form', '2018-10-25', '11:43:37', '1');
 /*!40000 ALTER TABLE `his_cashout` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.his_customer
@@ -2267,7 +2302,7 @@ CREATE TABLE IF NOT EXISTS `his_inv` (
   PRIMARY KEY (`HISINV_ID`),
   KEY `FKHISINV1` (`INV_ID`),
   CONSTRAINT `FKHISINV1` FOREIGN KEY (`INV_ID`) REFERENCES `trx_invoice` (`INV_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table mtpdmulti.his_inv: ~20 rows (approximately)
 /*!40000 ALTER TABLE `his_inv` DISABLE KEYS */;
@@ -2294,7 +2329,11 @@ INSERT INTO `his_inv` (`HISINV_ID`, `INV_ID`, `HISINV_STS`, `HISINV_OLD`, `HISIN
 	(20, 5, 'Approved by User superm', 'Posted by User superm', 'Approved By User superm', 'Update by superm from Invoice form', '2018-09-26', '16:35:38', '1'),
 	(21, 6, 'Void By System', 'None', 'None', 'Create By System', '2018-10-02', '15:09:28', '0'),
 	(22, 6, 'Posted by User superm', 'Void By System', 'Posted By User superm', 'Original Save by Invoice form', '2018-10-02', '15:10:16', '1'),
-	(23, 6, 'Approved by User superm', 'Posted by User superm', 'Approved By User superm', 'Update by superm from Invoice form', '2018-10-02', '15:10:36', '1');
+	(23, 6, 'Approved by User superm', 'Posted by User superm', 'Approved By User superm', 'Update by superm from Invoice form', '2018-10-02', '15:10:36', '1'),
+	(24, 7, 'Void By System', 'None', 'None', 'Create By System', '2018-11-05', '16:52:11', '0'),
+	(25, 8, 'Void By System', 'None', 'None', 'Create By System', '2018-12-04', '15:04:39', '0'),
+	(26, 8, 'Posted by User superm', 'Void By System', 'Posted By User superm', 'Original Save by Invoice form', '2018-12-04', '15:09:58', '1'),
+	(27, 8, 'Approved by User superm', 'Posted by User superm', 'Approved By User superm', 'Update by superm from Invoice form', '2018-12-04', '15:10:06', '1');
 /*!40000 ALTER TABLE `his_inv` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.his_pappr
@@ -2332,7 +2371,7 @@ CREATE TABLE IF NOT EXISTS `his_po` (
   PRIMARY KEY (`HISPO_ID`),
   KEY `FK_R89` (`PO_ID`),
   CONSTRAINT `FK_R89` FOREIGN KEY (`PO_ID`) REFERENCES `trx_po` (`PO_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table mtpdmulti.his_po: ~28 rows (approximately)
 /*!40000 ALTER TABLE `his_po` DISABLE KEYS */;
@@ -2366,7 +2405,10 @@ INSERT INTO `his_po` (`HISPO_ID`, `PO_ID`, `HISPO_STS`, `HISPO_OLD`, `HISPO_NEW`
 	(27, 7, 'Approved by User superwpi', 'Posted by User superwpi', 'Approved By User superwpi', 'Update by superwpi from PO Logistik form', '2018-10-16', '14:37:10', '1'),
 	(28, 8, 'Void By System', 'None', 'None', 'Create By System', '2018-10-16', '14:37:13', '0'),
 	(29, 8, 'Posted by User superwpi', 'Void By System', 'Posted By User superwpi', 'Original Save by PO Logistik form', '2018-10-16', '14:37:35', '1'),
-	(30, 8, 'Approved by User superwpi', 'Posted by User superwpi', 'Approved By User superwpi', 'Update by superwpi from PO Logistik form', '2018-10-16', '14:37:40', '1');
+	(30, 8, 'Approved by User superwpi', 'Posted by User superwpi', 'Approved By User superwpi', 'Update by superwpi from PO Logistik form', '2018-10-16', '14:37:40', '1'),
+	(31, 6, 'Open by User kaisha', 'Posted by User kaisha', 'Open By User kaisha', 'Open Record by PO Logistik form', '2018-11-12', '15:27:50', '2'),
+	(32, 6, 'Posted by User kaisha', 'Open by User kaisha', 'Posted By User kaisha', 'Update by kaisha from PO Logistik form', '2018-11-12', '15:28:33', '2'),
+	(33, 6, 'Approved by User kaisha', 'Open by User kaisha', 'Approved By User kaisha', 'Update by kaisha from PO Logistik form', '2018-11-12', '15:28:37', '2');
 /*!40000 ALTER TABLE `his_po` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.his_poga
@@ -2405,9 +2447,9 @@ CREATE TABLE IF NOT EXISTS `his_prc` (
   PRIMARY KEY (`HISPRC_ID`),
   KEY `FK_R90` (`PRC_ID`),
   CONSTRAINT `FK_R90` FOREIGN KEY (`PRC_ID`) REFERENCES `trx_procurement` (`PRC_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.his_prc: ~34 rows (approximately)
+-- Dumping data for table mtpdmulti.his_prc: ~40 rows (approximately)
 /*!40000 ALTER TABLE `his_prc` DISABLE KEYS */;
 INSERT INTO `his_prc` (`HISPRC_ID`, `PRC_ID`, `HISPRC_STS`, `HISPRC_OLD`, `HISPRC_NEW`, `HISPRC_INFO`, `HISPRC_DATE`, `HISPRC_TIME`, `HISPRC_UPCOUNT`) VALUES
 	(1, 1, 'Void By System', 'None', 'None', 'Create By System', '2018-09-19', '16:16:06', '0'),
@@ -2444,7 +2486,14 @@ INSERT INTO `his_prc` (`HISPRC_ID`, `PRC_ID`, `HISPRC_STS`, `HISPRC_OLD`, `HISPR
 	(32, 6, 'Approved by User superwpi', 'Open by User superwpi', 'Approved By User superwpi', 'Update by superwpi from Pembelian Logistik form', '2018-10-16', '15:30:59', '2'),
 	(33, 7, 'Void By System', 'None', 'None', 'Create By System', '2018-10-16', '17:10:06', '0'),
 	(34, 7, 'Posted by User superwpi', 'Void By System', 'Posted By User superwpi', 'Original Save by Pembelian Logistik form', '2018-10-16', '17:10:38', '1'),
-	(35, 7, 'Approved by User superwpi', 'Posted by User superwpi', 'Approved By User superwpi', 'Update by superwpi from Pembelian Logistik form', '2018-10-16', '17:10:44', '1');
+	(35, 7, 'Approved by User superwpi', 'Posted by User superwpi', 'Approved By User superwpi', 'Update by superwpi from Pembelian Logistik form', '2018-10-16', '17:10:44', '1'),
+	(36, 7, 'Open by User superwpi', 'Posted by User superwpi', 'Open By User superwpi', 'Open Record by Pembelian Logistik form', '2018-10-23', '09:17:57', '2'),
+	(37, 6, 'Open by User superwpi', 'Open by User superwpi', 'Open By User superwpi', 'Open Record by Pembelian Logistik form', '2018-10-23', '09:18:01', '3'),
+	(38, 7, 'Open by User superwpi', 'Open by User superwpi', 'Open By User superwpi', 'Open Record by Pembelian Logistik form', '2018-10-23', '09:18:06', '3'),
+	(39, 6, 'Posted by User superwpi', 'Open by User superwpi', 'Posted By User superwpi', 'Update by superwpi from Pembelian Logistik form', '2018-10-23', '09:24:14', '3'),
+	(40, 7, 'Posted by User superwpi', 'Open by User superwpi', 'Posted By User superwpi', 'Update by superwpi from Pembelian Logistik form', '2018-10-23', '09:24:20', '3'),
+	(41, 6, 'Approved by User superwpi', 'Open by User superwpi', 'Approved By User superwpi', 'Update by superwpi from Pembelian Logistik form', '2018-10-23', '09:24:33', '3'),
+	(42, 7, 'Approved by User superwpi', 'Open by User superwpi', 'Approved By User superwpi', 'Update by superwpi from Pembelian Logistik form', '2018-10-23', '09:24:42', '3');
 /*!40000 ALTER TABLE `his_prc` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.his_prcga
@@ -2638,7 +2687,7 @@ CREATE TABLE IF NOT EXISTS `inv_details` (
   KEY `FK_INVDET2` (`INV_ID`),
   CONSTRAINT `FK_INVDET1` FOREIGN KEY (`APPR_ID`) REFERENCES `trx_approvalbill` (`APPR_ID`),
   CONSTRAINT `FK_INVDET2` FOREIGN KEY (`INV_ID`) REFERENCES `trx_invoice` (`INV_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table mtpdmulti.inv_details: ~5 rows (approximately)
 /*!40000 ALTER TABLE `inv_details` DISABLE KEYS */;
@@ -2648,7 +2697,8 @@ INSERT INTO `inv_details` (`INVDET_ID`, `INV_ID`, `APPR_ID`, `INVDET_TERMID`, `I
 	(3, 3, 3, 4, '1', 120000000, 132000000, 12000000, NULL, 0, '', 0, 0, 0, NULL),
 	(4, 4, 3, 4, '1', 10000000, 10000000, 0, NULL, 0, '', 0, 0, 0, NULL),
 	(5, 5, 4, 5, '1', 100000000, 110000000, 10000000, NULL, 0, '', 0, 0, 0, NULL),
-	(6, 6, 7, 13, '1', 27500000, 30250000, 2750000, NULL, 0, '', 0, 0, 0, NULL);
+	(6, 6, 7, 13, '1', 27500000, 30250000, 2750000, NULL, 0, '', 0, 0, 0, NULL),
+	(7, 8, 11, 18, '1', 15000000, 16000000, 1000000, NULL, 0, '', 0, 0, 0, NULL);
 /*!40000 ALTER TABLE `inv_details` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.jou_credit
@@ -2709,7 +2759,7 @@ CREATE TABLE IF NOT EXISTS `jou_details` (
   KEY `FKJOUDET2` (`COA_ID`),
   CONSTRAINT `FKJOUDET1` FOREIGN KEY (`JOU_ID`) REFERENCES `account_journal` (`JOU_ID`),
   CONSTRAINT `FKJOUDET2` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table mtpdmulti.jou_details: ~54 rows (approximately)
 /*!40000 ALTER TABLE `jou_details` DISABLE KEYS */;
@@ -2761,14 +2811,17 @@ INSERT INTO `jou_details` (`JOUDET_ID`, `JOU_ID`, `COA_ID`, `JOUDET_DEBIT`, `JOU
 	(55, 18, 250, 100000.00, 0.00, '0'),
 	(56, 19, 208, 100000.00, 0.00, '0'),
 	(57, 19, 136, 0.00, 100000.00, '0'),
-	(60, 20, 1878, 0.00, 1000000.00, '0'),
-	(61, 20, 1682, 1000000.00, 0.00, '0'),
-	(62, 21, 1673, 0.00, 100000.00, '0'),
-	(63, 21, 1878, 100000.00, 0.00, '0'),
 	(66, 22, 136, 100000.00, 0.00, '0'),
 	(67, 22, 316, 0.00, 100000.00, '0'),
 	(68, 23, 136, 0.00, 100000.00, '0'),
-	(69, 23, 262, 100000.00, 0.00, '0');
+	(69, 23, 262, 100000.00, 0.00, '0'),
+	(70, 20, 1878, 0.00, 1000000.00, '0'),
+	(71, 20, 1682, 1000000.00, 0.00, '0'),
+	(72, 21, 1879, 0.00, 100000.00, '0'),
+	(73, 21, 1878, 100000.00, 0.00, '0'),
+	(74, 24, 1130, 16000000.00, 0.00, '0'),
+	(75, 24, 1172, 0.00, 15000000.00, '0'),
+	(76, 24, 1877, 0.00, 1000000.00, '0');
 /*!40000 ALTER TABLE `jou_details` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.master_bank
@@ -2834,10 +2887,10 @@ CREATE TABLE IF NOT EXISTS `master_branch` (
 /*!40000 ALTER TABLE `master_branch` DISABLE KEYS */;
 INSERT INTO `master_branch` (`BRANCH_ID`, `BRANCH_CODE`, `BRANCH_NAME`, `BRANCH_STATUS`, `BRANCH_ADDRESS`, `BRANCH_CITY`, `BRANCH_INIT`, `BRANCH_PHONE`, `BRANCH_FAX`, `BRANCH_LOGO`, `BRANCH_DTSTS`) VALUES
 	(1, 'BRC-00001', 'Holding', '0', 'JL Lesti No.42', 'Surabaya', 'HO', NULL, NULL, NULL, '1'),
-	(3, 'BRC-00002', 'Match Advertising', '1', 'JL Lesti No.42', 'Surabaya', 'M', '098765', '098765', NULL, '1'),
-	(4, 'BRC-00003', 'Karya Cipta Tritunggal', '1', 'JL Raya Taman', 'Sidoarjo', 'KCT', '0987654', '09875', NULL, '1'),
+	(3, 'BRC-00002', 'Match Advertising', '1', 'JL Lesti No.42', 'Surabaya 60241', 'M', '(031) 567 8346', '(031) 568 0646', 'logo_BRC-00002_.png', '1'),
+	(4, 'BRC-00003', 'Karya Cipta Tritunggal', '1', 'JL Raya Taman', 'Sidoarjo', 'KCT', '0987654', '09875', 'logo_BRC-00003_.png', '1'),
 	(5, 'BRC-00004', 'Wiklan', '1', '-', '-', 'WI', '-', '-', NULL, '1'),
-	(6, 'BRC-00005', 'Wijaya Persada Indonesia', '1', '-', '-', 'WPI', '-', '-', NULL, '1'),
+	(6, 'BRC-00005', 'Wijaya Persada Indonesia', '1', 'Jl. Raya Taman', 'Sidoarjo', 'WPI', '4567890', '567890', 'logo_BRC-00005_.png', '1'),
 	(7, 'BRC-00006', 'Raja Cahaya Prima', '1', '-', '-', 'RCP', '-', '-', NULL, '1');
 /*!40000 ALTER TABLE `master_branch` ENABLE KEYS */;
 
@@ -2886,7 +2939,7 @@ CREATE TABLE IF NOT EXISTS `master_customer` (
 -- Dumping data for table mtpdmulti.master_customer: ~0 rows (approximately)
 /*!40000 ALTER TABLE `master_customer` DISABLE KEYS */;
 INSERT INTO `master_customer` (`CUST_ID`, `COA_ID`, `CUST_CODE`, `CUST_NAME`, `CUST_ADDRESS`, `CUST_CITY`, `CUST_POSTAL`, `CUST_PROV`, `CUST_PHONE`, `CUST_FAX`, `CUST_ACC`, `CUST_NPWPNAME`, `CUST_NPWPACC`, `CUST_NPWPADD`, `CUST_NPKP`, `CUST_DTSTS`) VALUES
-	(1, NULL, 'CST-00001', 'Sampoerna', '-', 'Surabaya', '-', '-', '-', '-', NULL, 'Sampoerna', '1234567890', 'Surabaya', '1234567890', '1');
+	(1, NULL, 'CST-00001', 'Sampoerna', 'Jl. Rungkut Industri Raya No.18, Kali Rungkut, Rungkut', 'Surabaya', '60293', 'Jawa Timur', '-', '-', NULL, 'Sampoerna', '1234567890', 'Surabaya', '1234567890', '1');
 /*!40000 ALTER TABLE `master_customer` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.master_cust_intern
@@ -3252,12 +3305,14 @@ CREATE TABLE IF NOT EXISTS `other_settings` (
   `BRANCH_ID` int(11) NOT NULL DEFAULT '0',
   `PRINT_BANKINVOICE` varchar(1024) DEFAULT NULL,
   `PRC_COA` int(11) DEFAULT NULL,
+  `PRC_COAMAIN` int(11) DEFAULT NULL,
   `PRC_COASUB` int(11) DEFAULT NULL,
   `PRC_COAAG` int(11) DEFAULT NULL,
   `PRC_COADISC` int(11) DEFAULT NULL,
   `PRC_COAPPN` int(11) DEFAULT NULL,
   `PRC_COACOST` int(11) DEFAULT NULL,
   `PRC_COANAME` char(200) DEFAULT NULL,
+  `PRC_COAMAINNAME` char(200) DEFAULT NULL,
   `PRC_COASUBNAME` char(200) DEFAULT NULL,
   `PRC_COANAMEAG` char(200) DEFAULT NULL,
   `PRC_COANAMEDISC` char(200) DEFAULT NULL,
@@ -3286,13 +3341,13 @@ CREATE TABLE IF NOT EXISTS `other_settings` (
   CONSTRAINT `FK_other_settings_master_branch` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.other_settings: ~3 rows (approximately)
+-- Dumping data for table mtpdmulti.other_settings: ~4 rows (approximately)
 /*!40000 ALTER TABLE `other_settings` DISABLE KEYS */;
-INSERT INTO `other_settings` (`OS_ID`, `BRANCH_ID`, `PRINT_BANKINVOICE`, `PRC_COA`, `PRC_COASUB`, `PRC_COAAG`, `PRC_COADISC`, `PRC_COAPPN`, `PRC_COACOST`, `PRC_COANAME`, `PRC_COASUBNAME`, `PRC_COANAMEAG`, `PRC_COANAMEDISC`, `PRC_COANAMEPPN`, `PRC_COANAMECOST`, `NOTAFIN_ACC`, `NOTAFIN_ACCNAME`, `ACCRCVGIRO_ACC`, `ACCRCVGIRO_ACCNAME`, `DEBTGIRO_ACC`, `DEBTGIRO_ACCNAME`, `INV_COAPPN`, `INV_COANAMEPPN`, `PRCGA_COASUPPLY`, `PRCGA_COADEBT`, `PRCGA_COAPPN`, `PRCGA_COACOST`, `PRCGA_COADISC`, `PRCGA_COANAMESUPPLY`, `PRCGA_COANAMEDEBT`, `PRCGA_COANAMEPPN`, `PRCGA_COANAMECOST`, `PRCGA_COANAMEDISC`) VALUES
-	(1, 1, '', 241, NULL, 206, 242, 174, 246, 'HPP/PEMBELIAN - HO', NULL, 'HUTANG USAHA', 'POTONGAN PEMBELIAN - HO', 'PPN MASUKAN - HO', 'ONGKOS KIRIM PEMBELIAN - HO', 1, 'KAS HO', 144, 'PIUTANG GIRO', 208, 'HUTANG GIRO', 216, 'HUTANG PAJAK PPN KELUARAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	(2, 3, '', 1190, NULL, 206, 1191, 1150, 1195, 'HPP/PEMBELIAN - MATCH', NULL, 'HUTANG USAHA', 'POTONGAN PEMBELIAN - MATCH', 'PPN MASUKAN - MATCH', 'ONGKOS KIRIM PEMBELIAN - MATCH', 1125, 'NOTA GANTUNG MATCH', NULL, NULL, NULL, NULL, 1877, 'HUTANG PAJAK PPN KELUARAN MATCH', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	(3, 5, '', 58, NULL, 322, 59, 25, 63, 'HPP/PEMBELIAN - WIKLAN', NULL, 'HUTANG USAHA WIKLAN', 'POTONGAN PEMBELIAN - WIKLAN', 'PPN MASUKAN - WIKLAN', 'ONGKOS KIRIM PEMBELIAN - WIKLAN', NULL, NULL, NULL, NULL, NULL, NULL, 323, 'HUTANG PAJAK PPN KELUARAN WIKLAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	(4, 6, NULL, 1682, 1878, 1673, 1683, 1659, 1687, 'HPP/PEMBELIAN - WPI', 'HUTANG USAHA WPI SUB', 'HUTANG USAHA WPI', 'POTONGAN PEMBELIAN - WPI', 'PPN MASUKAN - WPI', 'ONGKOS KIRIM PEMBELIAN - WPI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `other_settings` (`OS_ID`, `BRANCH_ID`, `PRINT_BANKINVOICE`, `PRC_COA`, `PRC_COAMAIN`, `PRC_COASUB`, `PRC_COAAG`, `PRC_COADISC`, `PRC_COAPPN`, `PRC_COACOST`, `PRC_COANAME`, `PRC_COAMAINNAME`, `PRC_COASUBNAME`, `PRC_COANAMEAG`, `PRC_COANAMEDISC`, `PRC_COANAMEPPN`, `PRC_COANAMECOST`, `NOTAFIN_ACC`, `NOTAFIN_ACCNAME`, `ACCRCVGIRO_ACC`, `ACCRCVGIRO_ACCNAME`, `DEBTGIRO_ACC`, `DEBTGIRO_ACCNAME`, `INV_COAPPN`, `INV_COANAMEPPN`, `PRCGA_COASUPPLY`, `PRCGA_COADEBT`, `PRCGA_COAPPN`, `PRCGA_COACOST`, `PRCGA_COADISC`, `PRCGA_COANAMESUPPLY`, `PRCGA_COANAMEDEBT`, `PRCGA_COANAMEPPN`, `PRCGA_COANAMECOST`, `PRCGA_COANAMEDISC`) VALUES
+	(1, 1, '', 241, NULL, NULL, 206, 242, 174, 246, 'HPP/PEMBELIAN - HO', NULL, NULL, 'HUTANG USAHA', 'POTONGAN PEMBELIAN - HO', 'PPN MASUKAN - HO', 'ONGKOS KIRIM PEMBELIAN - HO', 1, 'KAS HO', 144, 'PIUTANG GIRO', 208, 'HUTANG GIRO', 216, 'HUTANG PAJAK PPN KELUARAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(2, 3, 'BANK A SURABAYA A/C 098765 A/N ATAS NAMA', 1190, NULL, NULL, 206, 1191, 1150, 1195, 'HPP/PEMBELIAN - MATCH', NULL, NULL, 'HUTANG USAHA', 'POTONGAN PEMBELIAN - MATCH', 'PPN MASUKAN - MATCH', 'ONGKOS KIRIM PEMBELIAN - MATCH', 1125, 'NOTA GANTUNG MATCH', NULL, NULL, NULL, NULL, 1877, 'HUTANG PAJAK PPN KELUARAN MATCH', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(3, 5, '', 58, NULL, NULL, 322, 59, 25, 63, 'HPP/PEMBELIAN - WIKLAN', NULL, NULL, 'HUTANG USAHA WIKLAN', 'POTONGAN PEMBELIAN - WIKLAN', 'PPN MASUKAN - WIKLAN', 'ONGKOS KIRIM PEMBELIAN - WIKLAN', NULL, NULL, NULL, NULL, NULL, NULL, 323, 'HUTANG PAJAK PPN KELUARAN WIKLAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(4, 6, NULL, 1682, 1878, 1879, 1673, 1683, 1659, 1687, 'HPP/PEMBELIAN - WPI', 'HUTANG USAHA WPI MAIN', 'HUTANG USAHA WPI SUB', 'HUTANG USAHA WPI', 'POTONGAN PEMBELIAN - WPI', 'PPN MASUKAN - WPI', 'ONGKOS KIRIM PEMBELIAN - WPI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `other_settings` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.parent_chart
@@ -3452,9 +3507,9 @@ CREATE TABLE IF NOT EXISTS `po_details` (
   KEY `FK_R21` (`GD_ID`),
   CONSTRAINT `FK_R20` FOREIGN KEY (`PO_ID`) REFERENCES `trx_po` (`PO_ID`),
   CONSTRAINT `FK_R21` FOREIGN KEY (`GD_ID`) REFERENCES `master_goods` (`GD_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.po_details: ~8 rows (approximately)
+-- Dumping data for table mtpdmulti.po_details: ~17 rows (approximately)
 /*!40000 ALTER TABLE `po_details` DISABLE KEYS */;
 INSERT INTO `po_details` (`PODET_ID`, `PO_ID`, `GD_ID`, `PODET_QTYUNIT`, `PODET_SUB`) VALUES
 	(2, 1, 1, 2.00, 20000.00),
@@ -3464,7 +3519,16 @@ INSERT INTO `po_details` (`PODET_ID`, `PO_ID`, `GD_ID`, `PODET_QTYUNIT`, `PODET_
 	(6, 5, 3, 5.00, 5000000.00),
 	(7, 6, 1, 1.00, 10000.00),
 	(8, 7, 4, 1.00, 1000000.00),
-	(9, 8, 5, 10.00, 100000.00);
+	(9, 8, 5, 10.00, 100000.00),
+	(10, 6, 1, 1.00, 10000.00),
+	(11, 6, 1, 1.00, 10000.00),
+	(12, 6, 1, 1.00, 10000.00),
+	(13, 6, 1, 1.00, 10000.00),
+	(14, 6, 1, 1.00, 10000.00),
+	(15, 6, 1, 1.00, 10000.00),
+	(16, 6, 1, 1.00, 10000.00),
+	(17, 6, 1, 1.00, 10000.00),
+	(18, 6, 1, 1.00, 10000.00);
 /*!40000 ALTER TABLE `po_details` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.prcga_details
@@ -3799,9 +3863,9 @@ CREATE TABLE IF NOT EXISTS `trx_approvalbill` (
   CONSTRAINT `FK_R14` FOREIGN KEY (`CUST_ID`) REFERENCES `master_customer` (`CUST_ID`),
   CONSTRAINT `FK_R18` FOREIGN KEY (`BB_ID`) REFERENCES `master_bboard` (`BB_ID`),
   CONSTRAINT `FK_R59` FOREIGN KEY (`PLC_ID`) REFERENCES `master_placement` (`PLC_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.trx_approvalbill: ~8 rows (approximately)
+-- Dumping data for table mtpdmulti.trx_approvalbill: ~9 rows (approximately)
 /*!40000 ALTER TABLE `trx_approvalbill` DISABLE KEYS */;
 INSERT INTO `trx_approvalbill` (`APPR_ID`, `USER_ID`, `BRANCH_ID`, `PLC_ID`, `BB_ID`, `LOC_ID`, `CUST_ID`, `SALES_ID`, `CURR_ID`, `APPR_CODE`, `APPR_STS`, `APPR_OWN`, `APPR_BRANCHID`, `APPR_BRANCH`, `APPR_BRCNAME`, `APPR_PO`, `APPR_DATE`, `APPR_RECOV`, `APPR_INFO`, `APPR_HEIGHT`, `APPR_WIDTH`, `APPR_LENGTH`, `APPR_SUMSIZE`, `APPR_SIDE`, `APPR_PLCSUM`, `APPR_CONTRACT_START`, `APPR_CONTRACT_END`, `APPR_VISUAL`, `APPR_PAYMENT_TYPE`, `APPR_BRANCH_INCOME`, `APPR_DPP_INCOME`, `APPR_BBTAX`, `APPR_DISC_PERC1`, `APPR_DISC_PERC2`, `APPR_DISC_SUM1`, `APPR_DISC_SUM2`, `APPR_PPN_PERC`, `APPR_PPH_PERC`, `APPR_PPN_SUM`, `APPR_PPH_SUM`, `APPR_TOT_INCOME`, `APPR_JOBDESC`, `APPR_SUB_DSC`, `APPR_SUB_PPN`) VALUES
 	(1, 2, 1, 1, 1, 1, 1, 3, 1, 'AB/1809/000001', '1', '0', 0, '', 'Holding', '', '2018-09-18', 'Kolom Free recovering', '', NULL, 8.00, 4.00, 32.00, 'Depan', '1', '2018-09-18', '2018-11-18', 'Kolom Materi Visual', NULL, 0, 100000000, 10000000, 10.00, 0.00, 10000000, 0, 10.00, 2.00, 9000000, 1800000, 107200000, NULL, 90000000, 109000000),
@@ -3811,7 +3875,10 @@ INSERT INTO `trx_approvalbill` (`APPR_ID`, `USER_ID`, `BRANCH_ID`, `PLC_ID`, `BB
 	(5, 6, 3, 1, 1, 1, 1, 1, 1, 'AB/1809/000003', '1', '1', 0, '', 'Match Advertising', '', '2018-09-30', 'Kolom free recovering', 'Kolom keterangan tambahan', NULL, 8.00, 4.00, 32.00, 'depan', '1', '2018-09-30', '2018-11-30', 'kolom materi visual', NULL, 0, 100000, NULL, 0.00, 0.00, 0, 0, NULL, NULL, 10000, 2000, 108000, NULL, 100000, 110000),
 	(6, NULL, 3, NULL, NULL, NULL, NULL, NULL, NULL, 'AB/1810/000001', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 	(7, 6, 3, 1, 1, 1, 1, 1, 1, 'AB/1810/000002', '2', '1', 0, '', 'Match Advertising', '', '2018-10-02', 'free 1x cetak, free 2x pasang', 'penggunaan media selama 1 bulan\r\n', NULL, 10.00, 5.00, 50.00, 'Depan', '1', '2018-11-08', '2018-12-07', 'tokopedia all brands', NULL, 0, 55000000, NULL, 0.00, 0.00, 0, 0, NULL, NULL, 5500000, 200000, 60300000, NULL, 55000000, 60500000),
-	(8, 9, 6, 1, 1, 1, 1, 5, 1, 'AB/1810/000001', '1', '1', 0, '', 'Wijaya Persada Indonesia', '', '2018-10-16', 'tes kolom', 'tes', NULL, 3.00, 4.00, 12.00, 'depan', '1', '2018-10-16', '2018-10-31', 'tes', NULL, 0, 1000000, 0, 0.00, 0.00, 0, 0, 10.00, 0.00, 100000, 0, 1100000, NULL, 1000000, 1100000);
+	(8, 9, 6, 1, 1, 1, 1, 5, 1, 'AB/1810/000001', '1', '1', 0, '', 'Wijaya Persada Indonesia', '', '2018-10-16', 'tes kolom', 'tes', NULL, 3.00, 4.00, 12.00, 'depan', '1', '2018-10-16', '2018-10-31', 'tes', NULL, 0, 1000000, 0, 0.00, 0.00, 0, 0, 10.00, 0.00, 100000, 0, 1100000, NULL, 1000000, 1100000),
+	(9, 6, 3, 1, 1, 1, 1, 1, 1, 'AB/1811/000001', '2', '1', NULL, NULL, 'Match Advertising', '123', '2018-11-05', 'aaaaa', 'aaaaa', NULL, 6.00, 4.00, 24.00, 'depan', '1', '2018-11-05', '2018-11-05', 'aaa', NULL, NULL, 1000000, NULL, 0.00, 0.00, 0, 0, NULL, NULL, 0, 0, 1000000, NULL, 1000000, 1000000),
+	(10, 9, 6, NULL, 1, 1, 1, 5, 1, 'AB/1811/000001', '1', '1', NULL, NULL, 'Wijaya Persada Indonesia', '', '2018-11-05', 'aaaaaa', 'aaaaaa', NULL, NULL, NULL, NULL, NULL, NULL, '2018-11-05', '2018-11-05', NULL, NULL, NULL, 1000000, NULL, 0.00, 0.00, 0, 0, NULL, NULL, 0, 0, 1000000, NULL, 1000000, 1000000),
+	(11, 6, 3, 1, 1, 1, 1, 1, 1, 'AB/1812/000001', '1', '1', NULL, NULL, 'Match Advertising', 'po09876543', '2018-12-04', 'Keteranga posisi recovering', 'Keterangan tambahan deskripis dll', NULL, 10.00, 5.00, 50.00, 'depan', '1', '2018-12-03', '2019-01-03', 'Visual baru', NULL, NULL, 30000000, NULL, 0.00, 0.00, 0, 0, NULL, NULL, 2000000, 100000, 31900000, NULL, 30000000, 32000000);
 /*!40000 ALTER TABLE `trx_approvalbill` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.trx_bankin
@@ -3927,12 +3994,13 @@ CREATE TABLE IF NOT EXISTS `trx_bapp` (
   CONSTRAINT `FKBAPP1` FOREIGN KEY (`BRANCH_ID`) REFERENCES `master_branch` (`BRANCH_ID`),
   CONSTRAINT `FK_R46` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`),
   CONSTRAINT `FK_R47` FOREIGN KEY (`APPR_ID`) REFERENCES `trx_approvalbill` (`APPR_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.trx_bapp: ~0 rows (approximately)
+-- Dumping data for table mtpdmulti.trx_bapp: ~2 rows (approximately)
 /*!40000 ALTER TABLE `trx_bapp` DISABLE KEYS */;
 INSERT INTO `trx_bapp` (`BAPP_CODE`, `BAPP_ID`, `APPR_ID`, `USER_ID`, `BRANCH_ID`, `BAPP_DATE`, `BAPP_DATESTART`, `BAPP_DATEEND`, `BAPP_STS`, `BAPP_DOC`, `BAPP_TYPE`, `BAPP_OLDTXT`, `BAPP_NEWTXT`, `BAPP_FINDATE`, `BAPP_PERIODSTART`, `BAPP_PERIODEND`, `BAPP_INFO`) VALUES
-	('BA/1809/000001', 1, 1, 2, 1, '2018-09-18', '2018-09-18', '2018-09-30', '1', 'Kolom dokumen bapp', 'Billboard ( 2018-09-18 - 2018-11-18 )', 'Kolom teks lama bapp', 'Kolom teks baru bapp', '2018-09-30', '2018-09-18', '2018-11-18', 'Kolom keterangan tambahan bapp');
+	('BA/1809/000001', 1, 1, 2, 1, '2018-09-18', '2018-09-18', '2018-09-30', '0', 'Kolom dokumen bapp', 'Billboard ( 2018-09-18 - 2018-11-18 )', 'Kolom teks lama bapp', 'Kolom teks baru bapp', '2018-09-30', '2018-09-18', '2018-11-18', 'Kolom keterangan tambahan bapp'),
+	('BA/1810/000001', 2, 3, 6, 3, '2018-10-24', '2018-10-24', '2018-10-31', '1', 'a', 'a', 'a', 'a', '2018-10-31', '2018-09-26', '2018-11-26', 'a');
 /*!40000 ALTER TABLE `trx_bapp` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.trx_bapplog
@@ -4092,13 +4160,14 @@ CREATE TABLE IF NOT EXISTS `trx_cash_out` (
   CONSTRAINT `FK_R95` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`),
   CONSTRAINT `FK_R96` FOREIGN KEY (`CURR_ID`) REFERENCES `master_currency` (`CURR_ID`),
   CONSTRAINT `FK_R97` FOREIGN KEY (`COA_ID`) REFERENCES `chart_of_account` (`COA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.trx_cash_out: ~2 rows (approximately)
+-- Dumping data for table mtpdmulti.trx_cash_out: ~3 rows (approximately)
 /*!40000 ALTER TABLE `trx_cash_out` DISABLE KEYS */;
 INSERT INTO `trx_cash_out` (`CSHO_ID`, `USER_ID`, `BRANCH_ID`, `DEPT_ID`, `COA_ID`, `CURR_ID`, `CSHO_CODE`, `CSHO_DATE`, `CSHO_INFO`, `CSHO_STS`, `CSHO_DTSTS`, `CSHO_TAXHEADCODE`, `CSHO_TAXCODE`, `CSHO_APPR`, `CSHO_SUPP`, `CSHO_BUDGET`) VALUES
 	(1, 6, 3, NULL, 1124, 1, 'KK/1809/000001', '2018-09-26', 'Kolom info kas keluar induk', '1', NULL, '', '', NULL, NULL, NULL),
-	(2, 6, 3, NULL, 1124, 1, 'KK/1810/000001', '2018-10-02', 'bnbnbnbnbn', '1', NULL, '', '', NULL, NULL, NULL);
+	(2, 6, 3, NULL, 1124, 1, 'KK/1810/000001', '2018-10-02', 'bnbnbnbnbn', '1', NULL, '', '', NULL, NULL, NULL),
+	(3, 1, 1, NULL, 1, 1, 'KK/1810/000001', '2018-10-25', 'ertyuio', '2', NULL, '', '', NULL, '1', NULL);
 /*!40000 ALTER TABLE `trx_cash_out` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.trx_giro_in
@@ -4188,9 +4257,9 @@ CREATE TABLE IF NOT EXISTS `trx_invoice` (
   CONSTRAINT `FK_INV3` FOREIGN KEY (`CURR_ID`) REFERENCES `master_currency` (`CURR_ID`),
   CONSTRAINT `FK_INV4` FOREIGN KEY (`USER_ID`) REFERENCES `master_user` (`USER_ID`),
   CONSTRAINT `FK_R52` FOREIGN KEY (`INC_ID`) REFERENCES `invoice_type` (`INC_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mtpdmulti.trx_invoice: ~6 rows (approximately)
+-- Dumping data for table mtpdmulti.trx_invoice: ~8 rows (approximately)
 /*!40000 ALTER TABLE `trx_invoice` DISABLE KEYS */;
 INSERT INTO `trx_invoice` (`INV_ID`, `USER_ID`, `INC_ID`, `BRANCH_ID`, `CUST_ID`, `CURR_ID`, `INV_CODE`, `INV_DATE`, `INV_INFO`, `INV_TYPE`, `INV_TERM`, `INV_STS`, `INV_DTSTS`) VALUES
 	(1, 5, 1, 5, 1, 1, 'INV/1809/000001', '2018-09-20', 'Kolom info induk transaksi invoice', '0', '1', '1', NULL),
@@ -4198,7 +4267,9 @@ INSERT INTO `trx_invoice` (`INV_ID`, `USER_ID`, `INC_ID`, `BRANCH_ID`, `CUST_ID`
 	(3, 7, 3, 3, 1, 1, 'INV/1809/000001', '2018-09-26', 'Kolom info invoice induk', '0', '1', '1', NULL),
 	(4, 7, 4, 3, 1, 1, 'INV/1809/000002', '2018-09-26', 'Kolom info invoice induk', '1', '1', '1', NULL),
 	(5, 6, 3, 3, 1, 1, 'INV/1809/000003', '2018-09-26', 'info', '0', '1', '1', NULL),
-	(6, 6, 4, 3, 1, 1, 'INV/1810/000001', '2018-10-02', 'jkhihih', '0', '1', '1', NULL);
+	(6, 6, 4, 3, 1, 1, 'INV/1810/000001', '2018-10-02', 'jkhihih', '0', '1', '1', NULL),
+	(7, NULL, NULL, 6, NULL, NULL, 'INV/1811/000001', '2018-11-05', NULL, NULL, NULL, '0', NULL),
+	(8, 6, 3, 3, 1, 1, 'INV/1812/000001', '2018-12-04', 'info halaman invoice', '0', '2', '1', NULL);
 /*!40000 ALTER TABLE `trx_invoice` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.trx_permitappr
@@ -4295,7 +4366,7 @@ INSERT INTO `trx_po` (`PO_ID`, `USER_ID`, `BRANCH_ID`, `CURR_ID`, `APPR_ID`, `SU
 	(3, 7, 3, 1, 3, 1, 1, 'PO/1809/000001', '1', '2018-09-26', '', '7', 'Kolom info PO', 1000000, 1000000),
 	(4, 7, 3, 1, 4, 1, 1, 'PO/1809/000002', '1', '2018-09-26', '', '7', 'info', 1000000, 1000000),
 	(5, 6, 3, 1, 5, 1, 1, 'PO/1810/000001', '1', '2018-10-02', '', '', 'asjdmnjnfsjndfjnsd.jn', 5000000, 5000000),
-	(6, 1, 1, 1, 1, 1, 1, 'PO/1810/000001', '1', '2018-10-08', '', '4', 'aaa', 10000, 10000),
+	(6, 1, 1, 1, 1, 1, 1, 'PO/1810/000001', '1', '2018-10-08', '', '4', 'aaa', 100000, 100000),
 	(7, 9, 6, 1, 8, 2, 1, 'PO/1810/000001', '1', '2018-10-16', '', '7', '-', 1000000, 1000000),
 	(8, 9, 6, 1, 8, 1, 1, 'PO/1810/000002', '1', '2018-10-16', '', '7', '-', 100000, 100000);
 /*!40000 ALTER TABLE `trx_po` ENABLE KEYS */;
@@ -4378,6 +4449,7 @@ CREATE TABLE IF NOT EXISTS `trx_procurement` (
   `PRC_SUBCODE` char(30) DEFAULT NULL,
   `PRC_DATE` date DEFAULT NULL,
   `PRC_INVOICE` char(50) DEFAULT NULL,
+  `PRC_TERM` char(50) DEFAULT NULL,
   `PRC_INFO` varchar(1024) DEFAULT NULL,
   `PRC_STS` char(1) DEFAULT NULL,
   `PRC_SUB` decimal(20,2) DEFAULT NULL,
@@ -4398,14 +4470,14 @@ CREATE TABLE IF NOT EXISTS `trx_procurement` (
 
 -- Dumping data for table mtpdmulti.trx_procurement: ~7 rows (approximately)
 /*!40000 ALTER TABLE `trx_procurement` DISABLE KEYS */;
-INSERT INTO `trx_procurement` (`PRC_ID`, `PO_ID`, `USER_ID`, `BRANCH_ID`, `CURR_ID`, `PRC_CODE`, `PRC_SUBSTS`, `PRC_SUBID`, `PRC_SUBCODE`, `PRC_DATE`, `PRC_INVOICE`, `PRC_INFO`, `PRC_STS`, `PRC_SUB`, `PRC_DISC`, `PRC_PPN`, `PRC_COST`, `PRC_GTOTAL`) VALUES
-	(1, 1, 2, 1, 1, 'BL/1809/000001', NULL, NULL, NULL, '2018-09-19', '', 'Kolom info PO', '1', 20000.00, 0, 0, 10000, 30000.00),
-	(2, 2, 4, 5, 1, 'BL/1809/000001', NULL, NULL, NULL, '2018-09-20', '', 'Kolom info transaksi PO', '1', 30000.00, 0, 0, 5000, 35000.00),
-	(3, 3, 7, 3, 1, 'BL/1809/000001', NULL, NULL, NULL, '2018-09-26', '', 'Kolom info PO', '1', 1000000.00, 0, 100000, 0, 1100000.00),
-	(4, 4, 7, 3, 1, 'BL/1809/000002', NULL, NULL, NULL, '2018-09-26', '', 'info', '1', 1000000.00, 0, 100000, 100000, 1200000.00),
-	(5, 5, 6, 3, 1, 'BL/1810/000001', NULL, NULL, NULL, '2018-10-02', '', '123456789', '2', 5000000.00, 0, 0, 0, 5000000.00),
-	(6, 7, 9, 6, 1, 'BL/1810/000001', '0', NULL, NULL, '2018-10-16', '', '-', '1', 1000000.00, 0, 0, 0, 1000000.00),
-	(7, 8, 1, 6, 1, 'BL/1810/000002', '1', 6, 'BL/1810/000001', '2018-10-16', '', '-', '1', 100000.00, 0, 0, 0, 100000.00);
+INSERT INTO `trx_procurement` (`PRC_ID`, `PO_ID`, `USER_ID`, `BRANCH_ID`, `CURR_ID`, `PRC_CODE`, `PRC_SUBSTS`, `PRC_SUBID`, `PRC_SUBCODE`, `PRC_DATE`, `PRC_INVOICE`, `PRC_TERM`, `PRC_INFO`, `PRC_STS`, `PRC_SUB`, `PRC_DISC`, `PRC_PPN`, `PRC_COST`, `PRC_GTOTAL`) VALUES
+	(1, 1, 2, 1, 1, 'BL/1809/000001', NULL, NULL, NULL, '2018-09-19', '', NULL, 'Kolom info PO', '1', 20000.00, 0, 0, 10000, 30000.00),
+	(2, 2, 4, 5, 1, 'BL/1809/000001', NULL, NULL, NULL, '2018-09-20', '', NULL, 'Kolom info transaksi PO', '1', 30000.00, 0, 0, 5000, 35000.00),
+	(3, 3, 7, 3, 1, 'BL/1809/000001', NULL, NULL, NULL, '2018-09-26', '', NULL, 'Kolom info PO', '1', 1000000.00, 0, 100000, 0, 1100000.00),
+	(4, 4, 7, 3, 1, 'BL/1809/000002', NULL, NULL, NULL, '2018-09-26', '', NULL, 'info', '1', 1000000.00, 0, 100000, 100000, 1200000.00),
+	(5, 5, 6, 3, 1, 'BL/1810/000001', NULL, NULL, NULL, '2018-10-02', '', NULL, '123456789', '2', 5000000.00, 0, 0, 0, 5000000.00),
+	(6, 7, 9, 6, 1, 'BL/1810/000001', '0', NULL, NULL, '2018-10-16', '', NULL, '-', '1', 1000000.00, 0, 0, 0, 1000000.00),
+	(7, 8, 9, 6, 1, 'BL/1810/000002', '1', 6, 'BL/1810/000001', '2018-10-16', '', NULL, '-', '1', 100000.00, 0, 0, 0, 100000.00);
 /*!40000 ALTER TABLE `trx_procurement` ENABLE KEYS */;
 
 -- Dumping structure for table mtpdmulti.trx_tax_invoice

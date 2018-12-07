@@ -313,7 +313,7 @@
 			$data['title']='Match Terpadu - Dashboard Logistik';
 			$data['menu']='logistik';
 			$data['menulist']='report_logistik';
-			$this->load->view('menu/administrator/logistik/prc_print',$data);
+			$this->load->view('menu/administrator/logistik/prc_print_new',$data);
 		}
 
 		public function print_retprc()
@@ -2428,7 +2428,7 @@
 
 		public function ajax_pick_apprfull($id)
 		{
-			$data = $this->db->join('master_location b','b.loc_id = a.loc_id')->join('master_customer c','c.cust_id = a.cust_id')->get_where('trx_approvalbill a')->row();
+			$data = $this->db->join('master_location b','b.loc_id = a.loc_id')->join('master_customer c','c.cust_id = a.cust_id')->get_where('trx_approvalbill a',array('a.appr_id'=>$id))->row();
         	echo json_encode($data);
 		}
 
@@ -2480,9 +2480,21 @@
         	echo json_encode($data);
 		}
 
+		public function ajax_pick_prcfull($id)
+		{
+			$data = $this->db->join('trx_po b','b.po_id = a.po_id')->join('master_location c','c.loc_id = b.loc_id')->get_where('trx_procurement a')->row();
+        	echo json_encode($data);
+		}
+
 		public function ajax_pick_prcdet($id)
 		{
 			$data = $this->crud->get_by_id3('prc_details','master_goods','trx_procurement',array('prc_details.prc_id' => $id),'master_goods.gd_id = prc_details.gd_id','trx_procurement.prc_id = prc_details.prc_id');
+        	echo json_encode($data);
+		}
+
+		public function ajax_pick_prcdetfull($id)
+		{
+			$data = $this->db->join('trx_procurement b','b.prc_id = a.prc_id')->join('master_goods c','c.gd_id = a.gd_id')->join('trx_po d','d.po_id = b.po_id')->join('master_location e','e.loc_id = d.loc_id')->get_where('prc_details a')->result();
         	echo json_encode($data);
 		}
 
