@@ -3365,6 +3365,18 @@
         	echo json_encode($data);
         }
 
+        public function get_invdetfull($id)
+        {
+        	$data = $this->db->join('appr_terms_det e','e.termsdet_id = a.invdet_termid')->join('trx_approvalbill c','c.appr_id = a.appr_id')->join('master_location d','d.loc_id = c.loc_id')->join('trx_invoice b','b.inv_id = a.inv_id')->get_where('inv_details a',array('a.inv_id'=>$id))->result();
+        	echo json_encode($data);
+        }
+
+        public function get_apprcost($id)
+        {
+        	$data = $this->db->join('trx_approvalbill b','b.appr_id = a.appr_id')->join('master_location c','c.loc_id = b.loc_id')->join('appr_cost_det d','d.appr_id = b.appr_id')->get_where('appr_terms_det a',array('a.termsdet_id'=>$id))->result();
+        	echo json_encode($data);
+        }
+
 		public function get_apprterm($id)
 		{
 			// $data = $this->crud->get_by_id4('appr_terms_det',array('appr_id'=>$id));

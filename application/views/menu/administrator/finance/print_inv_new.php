@@ -91,27 +91,27 @@
         }
         .table thead th
         {
-            margin: 0 !important;
+            /*margin: 0 !important;
             padding-top: 0 !important;
-            padding-bottom: 0 !important;
+            padding-bottom: 0 !important;*/
             border: solid 1px black !important;
         }
         .table tfoot th
         {
-            margin: 0 !important;
+            /*margin: 0 !important;*/
             padding-top: 0 !important;
             padding-bottom: 0 !important;
             border: solid 1px black !important;
         }
         .table .notice-row
         {
-            height: 61px !important;
+            height: 80px !important;
         }
         .table td
         {
-            margin: 0 !important;
+            /*margin: 0 !important;
             padding-top: 0 !important;
-            padding-bottom: 0 !important;
+            padding-bottom: 0 !important;*/
             border-top: none !important;
             border-bottom: none !important;
             border-left: solid 1px black !important;
@@ -119,7 +119,7 @@
         }
         .table .blank-row
         {
-            height: 25px !important;
+            height: 36px !important;
             background-color: #FFFFFF;
             border: none;
         }
@@ -134,13 +134,22 @@
         }
         footer .signature
         {
-            padding-top: 20px;
+            padding-top: 60px;
             text-align: center;
         }
         footer .foot-notice
         {
             margin-top: 0;
             margin-bottom: 0;
+        }
+        footer .notices
+        {
+            padding-left: 6px;
+            border-left: 6px solid #3989c6
+        }
+        footer .notices-height
+        {
+            height: 60px;
         }
         @media print
         {
@@ -156,6 +165,9 @@
         <div class="row">
             <div class="col-sm-2 col-xs-3">
                 <button class="btn btn-block btn-primary" type="button" onclick="printDiv()">Print</button>
+            </div>
+            <div class="col-sm-2 col-xs-3">
+                <button class="btn btn-block btn-success addBtn" type="button">Tambah Kolom</button>
             </div>
         </div>
     </div>
@@ -191,71 +203,48 @@
                         <thead>
                             <tr>
                                 <th class="text-center col-xs-1 col-sm-1">#</th>
-                                <th class="text-center col-xs-7 col-sm-7">Deskripsi</th>
-                                <th class="text-center col-xs-2 col-sm-2">Qty</th>
+                                <th class="text-center col-xs-7 col-sm-9">Deskripsi</th>
                                 <th class="text-center col-xs-2 col-sm-2">Jumlah</th>
                             </tr>
                         </thead>
-                        <!-- <tbody id="tb_content"></tbody>
-                        <tfoot id="tb_foot">
+                        <tbody id="tb_content"></tbody>
+                        <tfoot>
                             <tr>
-                                <th rowspan="4" colspan="2">
-                                    <div name="loc-info"><span name="loc_info"></span></div>
-                                    <div class="loc-notice">Notice : <span name="prc_info"></span></div>
+                                <th colspan="2" class="notice-row">
+                                    <div class="row">
+                                        <div class="col-xs-8 col-sm-8"><span name="spelled"></span></div>
+                                        <div class="col-xs-4 col-sm-4 text-right"> SUB TOTAL</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-3 col-sm-3">Untuk Pembayaran</div>
+                                        <div class="col-xs-5 col-sm-5"><span name="inv-info"></span></div>
+                                        <div class="col-xs-4 col-sm-4 text-right"> PPN<br>GRAND TOTAL</div>
+                                    </div>
                                 </th>
-                                <th class="text-right">Diskon Rp</th>
-                                <th class="text-right chgnum" name="prc_disc"></th>
+                                <th class="text-right"><span name="sub-total"></span><br><span name="tax-total"></span><br><span name="grand-total"></span></th>
                             </tr>
-                            <tr>
-                                <th class="text-right">PPN Rp</th>
-                                <th class="text-right chgnum" name="prc_tax"></th>
-                            </tr>
-                            <tr>
-                                <th class="text-right">Biaya Rp</th>
-                                <th class="text-right chgnum" name="prc_cost"></th>
-                            </tr>
-                            <tr>
-                                <th class="text-right">Total Rp</th>
-                                <th class="text-right chgnum" name="prc_gt"></th>
-                            </tr>
-                        </tfoot> -->
+                        </tfoot>
                     </table>
                 </div>
             </div>
         </main>
-        <!-- <footer>
-            <div class="row text-center">
-                <div class="col-xs-3 col-sm-3">
-                    <div>Pemesan</div>
-                </div>
-                <div class="col-xs-3 col-sm-3">
-                    <div>Mengetahui</div>
-                </div>
-                <div class="col-xs-3 col-sm-3">
-                    <div>Penerima</div>
-                </div>
-                <div class="col-xs-3 col-sm-3">
-                    Surabaya, <span name="prc_print_date"></span>
-                </div>
-            </div>
-            <div class="row signature">
-                <div class="col-xs-3 col-sm-3">
-                    <div>(................)</div>
-                </div>
-                <div class="col-xs-3 col-sm-3">
-                    <div>(................)</div>
-                </div>
-                <div class="col-xs-3 col-sm-3">
-                    <div>(................)</div>
-                </div>
-            </div>
+        <footer>
             <div class="row">
-                <div class="col-xs-12 col-sm-12 text-center">
-                    <div class="foot-notice"><strong>Surat Order Asli HARUS dilampirkan saat penagihan</strong></div>
-                    <div class="foot-notice">CC : Lembar 1: Supplier; Lembar 2: Accounting; Lembar 3: Direksi; Lembar 4: Purchasing</div>
-                </div>                
+                <div class="col-sm-offset-1 col-xs-offset-1 col-sm-9 col-xs-9 notices">
+                    <div class="row">
+                        <div class="col-sm-5 col-xs-5 text-center notices-height">
+                            Pembayaran dapat ditransfer ke
+                        </div>
+                        <div class="col-sm-7 col-xs-7">
+                            <span name="bank-dest"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2 col-xs-2">
+                    <div class="text-center signature">(Dewi Puspo)</div>
+                </div>
             </div>
-        </footer> -->
+        </footer>
     </div>
     <!-- jQuery -->
     <?php include 'application/views/layout/administrator/jspack.php' ?>
@@ -266,6 +255,18 @@
             pick_branch(<?= $this->session->userdata('user_branch');?>);
             pick_invoice(id);
             pick_bankprint(<?= $this->session->userdata('user_branch');?>);
+            $('.addBtn').click(function(){
+                var name = $("#name").val();
+                var addr = $("#addr").val();
+                var markup = '<tr><td class="blank-row"></td><td></td><td class="text-center"><button type="button" class="btn btn-danger btn-sm hidden-print delBtn">X</button></td></tr>';
+                $('#tb_content').append(markup);
+            });
+            
+            $(function () {
+                $("table").on("click", ".delBtn", function () {
+                    $(this).closest('tr').remove();
+                });
+            });
         });
         function pick_branch(id)
         {
@@ -344,7 +345,7 @@
                     $('[name="grand-total"]').text(money_conv(data.gt1));
                     $('[name="sub-total"]').text(money_conv(data.sub1));
                     $('[name="tax-total"]').text(money_conv(data.ppn1));
-                    $('[name="inv_pph"]').text(money_conv(data.pph1));
+                    // $('[name="inv_pph"]').text(money_conv(data.pph1));
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
@@ -355,22 +356,30 @@
         function pick_invdet(id)
         {
             $.ajax({
-                url : "<?php echo site_url('administrator/Finance/get_invdet/')?>" + id,
+                url : "<?php echo site_url('administrator/Finance/get_invdetfull/')?>" + id,
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)
-                {   
+                {
+                    var blankrow = 18-data.length;
+
                     for (var i = 0; i < data.length; i++)
                     {
-                        var $tr = $('<tr>').append(
+                        expand = (data[0]["TERMSDET_PERC"]>0)?'<button type="button" class="hidden-print btn btn-sm btn-success" onclick="expd('+data[0]["TERMSDET_ID"]+')">+</button>':'';
+                        var $tr = $('<tr name="replace'+data[0]["TERMSDET_ID"]+'">').append(
                             $('<td class="no text-center">'+(i+1)+'</td>'),
-                            $('<td>').css('text-align','center').text(data[i]["APPR_CODE"]),
-                            $('<td>').css('text-align','center').text(data[i]["APPR_PO"]),
-                            $('<td>').css('text-align','center').text(data[i]["LOC_NAME"]),
-                            $('<td>').css('text-align','center').text(data[i]["TERMSDET_INFO"]),
-                            $('<td class="total text-right">'+money_conv(data[i]["INVDET_SUB"])+'</td>')
+                            $('<td class="text-center"><span>'+expand+' '+data[i]["APPR_CODE"]+' - '+data[i]["LOC_NAME"]+'-'+data[i]["LOC_ADDRESS"]+', '+data[i]["LOC_CITY"]+'</span></td>'),
+                            $('<td class="total text-right chgnum">'+data[i]["INVDET_SUB"]+'</td>')
                             ).appendTo('#tb_content');
-                    }                   
+                    }
+                    for (var j = 0; j < blankrow; j++)
+                    {
+                        var $tr = $('<tr>').append(
+                            $('<td class="blank-row"></td>'),
+                            $('<td></td>'),$('<td class="text-center"><button type="button" class="btn btn-danger btn-sm hidden-print delBtn">X</button></td>')
+                            ).appendTo('#tb_content');
+                    }
+                    $('td.chgnum').number(true);
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
@@ -415,7 +424,7 @@
                 dataType: "JSON",
                 success: function(data)
                 {   
-                    $('[name="spelled"]').text(data.terbilang+' Rupiah');
+                    $('[name="spelled"]').text('#'+data.terbilang+' Rupiah#');
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
@@ -438,6 +447,32 @@
                     alert('Error get data from ajax');
                 }
             });
+        }
+        function expd(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/get_apprcost/')?>"+id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    for(var i=0;i<data.length;i++)
+                    {
+                        var nom = (data[0]["TERMSDET_PERC"]/100)*((data[i]["CSTDT_PPNAMOUNT"]*1)+(data[i]["CSTDT_PPHAMOUNT"]*1)+(data[i]["CSTDT_AMOUNT"]*1));
+                        var $tr = $('<tr>').append(
+                            $('<td></td>'),$('<td class="text-center">'+data[i]["CSTDT_CODE"]+' : <span class="nums">'+nom+'</span></td>'),$('<td></td>')).insertAfter('[name="replace'+data[0]["TERMSDET_ID"]+'"]');
+                    }
+                    $('.nums').number(true);
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function printDiv()
+        {
+            window.print();
         }
     </script>
 </body>
