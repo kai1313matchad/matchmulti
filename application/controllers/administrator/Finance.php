@@ -629,7 +629,7 @@
 			$data['title']='Match Terpadu - Dashboard Finance';
 			$data['menu']='finance';
 			$data['menulist']='report_finance';
-			$this->load->view('menu/administrator/finance/fin_/km_print',$data);
+			$this->load->view('menu/administrator/finance/fin_/km_print_new',$data);
 		}
 
 		public function print_kk()
@@ -649,7 +649,7 @@
 			$data['title']='Match Terpadu - Dashboard Finance';
 			$data['menu']='finance';
 			$data['menulist']='report_finance';
-			$this->load->view('menu/administrator/finance/fin_/kk_print',$data);
+			$this->load->view('menu/administrator/finance/fin_/kk_print_new',$data);
 		}
 
 		public function print_bm()
@@ -2555,12 +2555,6 @@
 			$data = $this->crud->get_by_id('trx_invoice',array('inv_id' => $id));
         	echo json_encode($data);
 		}
-
-		// public function ajax_pick_inv_amount($id)
-		// {
-		// 	$data = $this->crud->get_by_id('inv_details',array('inv_id' => $id));
-        //  echo json_encode($data);
-		// }
 
 		public function ajax_pick_inv_ppn($id)
 		{
