@@ -636,7 +636,7 @@
             if(confirm('Are you sure delete this data?'))
             {                
                 $.ajax({
-                    url : "<?php echo site_url('administrator/Marketing/bapp_delimg')?>/"+id,
+                    url : "<?php echo site_url('administrator/Logistik/bapp_delimg')?>/"+id,
                     type: "POST",
                     dataType: "JSON",
                     success: function(data)
