@@ -132,7 +132,7 @@
         }
         footer .signature
         {
-            padding-top: 60px;
+            padding-top: 90px;
             text-align: center;
         }
         footer .foot-notice
@@ -191,7 +191,7 @@
                 </div>
                 <div class="col-sm-8 col-xs-8 invoice-info">
                     <h4 class="info-code" name="inv_code"></h4>
-                    <div class="reff-content">Tgl. BL : <span name="inv_date"></span></div>
+                    <div class="reff-content">Tgl. : <span name="inv_date"></span></div>
                     <div class="reff-content">Jatuh Tempo : <span name="inv_due_date"></span></div>
                 </div>
             </div>
@@ -234,7 +234,7 @@
                             Pembayaran dapat ditransfer ke
                         </div>
                         <div class="col-sm-7 col-xs-7">
-                            <span name="bank-dest"></span>
+                            <span name="bank-dest"></span><br>
                         </div>
                     </div>
                 </div>
@@ -242,8 +242,14 @@
                     <div class="text-center signature">(Dewi Puspo)</div>
                 </div>
             </div>
+            <div class="row">
+                <div class="text-center col-sm-12 col-xs-12">
+                    Setelah Melakukan Pembayaran Harap Memberikan Info
+                </div>
+            </div>
         </footer>
     </div>
+    <div></div>
     <!-- jQuery -->
     <?php include 'application/views/layout/administrator/jspack.php' ?>
     <script>
@@ -359,7 +365,7 @@
                 dataType: "JSON",
                 success: function(data)
                 {
-                    var blankrow = 18-data.length;
+                    var blankrow = 17-data.length;
 
                     for (var i = 0; i < data.length; i++)
                     {
