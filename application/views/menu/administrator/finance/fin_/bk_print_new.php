@@ -15,13 +15,13 @@
     <link href="<?php echo base_url('assets/sbadmin/css/sb-admin-2.css')?>" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="<?php echo base_url('assets/datatables/css/dataTables.bootstrap.min.css')?>" rel="stylesheet">
-    <link href="<?php echo base_url('assets/datatables/css/responsive.dataTables.min.css')?>" rel="stylesheet">
+    <link href="<?php echo base_url('assets/datatables/css/dataTables.responsive.css')?>" rel="stylesheet">
     <link href="<?php echo base_url('assets/addons/bootstrap-datetimepicker.min.css')?>" rel="stylesheet">
     <link href="<?php echo base_url('assets/addons/extra.css')?>" rel="stylesheet">
     <!-- Custom Fonts -->
-    <link href="<?php echo base_url('assets/font-awesome/css/font-awesome.min.css')?>" rel="stylesheet">
+    <link href="<?php echo base_url('assets/font-awesome/css/font-awesome.min.css')?>" rel="stylesheet"> 
     <style>
-        .cashin
+        .bank
         {
             position: relative;
             background-color: #FFF;
@@ -29,60 +29,60 @@
             padding: 0px;
             font-family: Times New Roman;
         }
-        .cashin header
+        .bank header
         {
             padding: 0px 0px 0px 0px;
             margin-bottom: 0px;
             border-bottom: 1px solid #3989c6;
         }
-        .cashin header img
+        .bank header img
         {
             max-width: 200px;
             margin-top: 0;
             margin-bottom: 0;
         }
-        .cashin .company-details
+        .bank .company-details
         {
             text-align: right;
             margin-top: 0;
             margin-bottom: 0;
         }
-        .cashin main
+        .bank main
         {
             padding: 0px 0px 0px 0px;
             margin-bottom: 0px;
         }
-        .cashin .to-details
+        .bank .to-details
         {
             text-align: left;
         }
-        .cashin .to-name
+        .bank .to-name
         {
             font-weight: bold;
         }
-        .cashin .to-name .to-address .to-city
+        .bank .to-name .to-address .to-city .to-phone
         {
             margin-top: 0;
             margin-bottom: 0;
         }
-        .cashin .cashin-reff
+        .bank .bank-reff
         {
             text-align: center;
         }        
-        .cashin .cashin-info
+        .bank .bank-info
         {
             text-align: right;
         }
-        .cashin-info .reff-content
+        .bank-info .reff-content
         {
             margin-top: 0;
             margin-bottom: 0;
         }
-        .cashin-info .info-code
+        .bank-info .info-code
         {
             font-weight: bold;
         }
-        .cashin-info .info-code .info-date
+        .bank-info .info-code .info-date
         {
             margin-top: 0;
             margin-bottom: 0;
@@ -103,7 +103,7 @@
         }
         .table .notice-row
         {
-            height: 63px !important;
+            height: 70px !important;
         }
         .table td
         {
@@ -121,7 +121,7 @@
             background-color: #FFFFFF;
             border: none;
         }
-        .cashin .loc-info .loc-notice
+        .bank .loc-info .loc-notice
         {
             margin-top: 0;
             margin-bottom: 0;
@@ -132,7 +132,7 @@
         }
         footer .signature
         {
-            padding-top: 40px;
+            padding-top: 35px;
             text-align: center;
         }
         footer .foot-notice
@@ -165,8 +165,8 @@
     <![endif]-->
 </head>
 <body>
-    <input type="hidden" name="km_id" value="<?= $id;?>">
-    <input type="hidden" name="cust_id" value="<?= $id;?>">
+    <input type="hidden" name="bk_id" value="<?php echo $id;?>">
+    <input type="hidden" name="supp_id" value="<?php echo $id;?>">
     <div class="container hidden-print">
         <div class="row">
             <div class="col-sm-2 col-xs-3">
@@ -177,7 +177,7 @@
             </div>
         </div>
     </div>
-    <div class="container cashin" id="cashin-div">
+    <div class="container bank" id="bank-div">
         <header>
             <div class="row">
                 <div class="col-sm-3 col-xs-3">
@@ -192,16 +192,16 @@
         </header>
         <main>
             <div class="row">
-                <div class="col-sm-4 col-xs-4 to-details">
-                    <div>Dari :</div>
+                <div class="col-sm-6 col-xs-6 to-details">
+                    <div>Kepada :</div>
                     <div class="to-name" name="to_name"></div>
                     <div class="to-phone" name="to_phone"></div>
                     <div class="to-address" name="to_address"></div>
                 </div>
-                <div class="col-sm-8 col-xs-8 cashin-info">
-                    <h4 class="info-code" name="cashin_code"></h4>
-                    <div class="reff-content">Tgl : <span name="cashin_date"></span></div>
-                    <div class="reff-content">Rekening : <span name="cash_acc"></span></div>
+                <div class="col-sm-6 col-xs-6 bank-info">
+                    <h4 class="info-code" name="bank_code"></h4>
+                    <div class="reff-content">Tgl : <span name="bank_date"></span></div>
+                    <div class="reff-content">Rekening : <span name="bank_acc"></span></div>
                 </div>
             </div>
             <div class="row">
@@ -218,13 +218,13 @@
                         <tfoot>
                             <tr>
                                 <th colspan="2" class="text-right">TOTAL</th>
-                                <th class="text-right chgnum-perc"><span name="cashin_total"></span></th>
+                                <th class="text-right chgnum-perc"><span name="bank_total"></span></th>
                             </tr>
                             <tr>
                                 <th colspan="3" class="notice-row">
                                     <div class="row">
-                                        <div class="col-sm-2 col-xs-2">TERBILANG<br>KETERANGAN</div>
-                                        <div class="col-sm-9 col-xs-9"><span name="cashin_spelled"></span><br><span name="cashin_info"></span></div>
+                                        <div class="col-sm-2 col-xs-2"><br>TERBILANG<br>KETERANGAN</div>
+                                        <div class="col-sm-9 col-xs-9"><span name="bank_details"></span><br><span name="bank_spelled"></span><br><span name="bank_info"></span></div>
                                     </div>
                                 </th>
                             </tr>
@@ -242,13 +242,13 @@
                     <div>Mengetahui</div>
                 </div>
                 <div class="col-xs-2 col-sm-2">
-                    <div>Menyetujui</div>
+                    <div>Disetujui</div>
                 </div>
                 <div class="col-xs-2 col-sm-2">
-                    <div>Kasir</div>
+                    <div>Dibuat</div>
                 </div>
                 <div class="col-xs-3 col-sm-3">
-                    <div>Yang Menyerahkan</div>
+                    <div>Diterima</div>
                 </div>
             </div>
             <div class="row signature">
@@ -276,9 +276,9 @@
         $(document).ready(function()
         {
             var id; var suppid; var prc; var qty; var sub;
-            id=$('[name="km_id"]').val();            
+            id=$('[name="bk_id"]').val();            
             prc = 0; qty = 0; sub = 0;
-            pick_km(id);
+            pick_bk(id);
             pick_branch("<?= $this->session->userdata('user_branch')?>");
             $('.addBtn').click(function(){
                 var name = $("#name").val();
@@ -293,22 +293,26 @@
                 });
             });
         });
-        function pick_km(id)
+        function pick_bk(id)
         {
             $.ajax({
-                url : "<?php echo site_url('administrator/Finance/ajax_pick_kmfull/')?>/" + id,
+                url : "<?php echo site_url('administrator/Finance/ajax_pick_bk/')?>/" + id,
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)
                 {
-                    $('[name="cashin_code"]').text(data.CSH_CODE);
-                    $('[name="cashin_date"]').text(moment(data.CSH_DATE).locale('id').format('DD-MMM-YYYY'));
-                    $('[name="cashin_info"]').text(data.CSH_INFO);
-                    cust = (data.CUST_CODE != null)?data.CUST_CODE:data.CSTIN_CODE;
-                    pick_sum_total_km($('[name="km_id"]').val());
+                    $('[name="bank_code"]').text(data.BNKO_CODE);
+                    $('[name="bank_date"]').text(moment(data.BNKO_DATE).locale('id').format('DD-MMM-YYYY'));
+                    $('[name="bank_info"]').text(data.BNKO_INFO);
+                    if (data.BNKO_SUPP != null)
+                    {
+                        pick_supp(data.BNKO_SUPP);
+                    }
                     pick_acc(data.COA_ID);
-                    pick_kmdet($('[name="km_id"]').val());
-                    pick_cust(cust);
+                    pick_bkdet($('[name="bk_id"]').val());
+                    pick_sum_total_bk($('[name="bk_id"]').val());
+                    pick_bktrxdet($('[name="bk_id"]').val());
+                    $('#modal_bk').modal('hide');
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
@@ -316,57 +320,23 @@
                 }
             });
         }
-        function pick_sum_total_km(id)
+        function pick_bkdet(id)
         {
             $.ajax({
-                url : "<?php echo site_url('administrator/Finance/ajax_pick_sum_km/')?>" + id,
-                type: "GET",
-                dataType: "JSON",
-                success: function(data)
-                {   
-                    $('[name="cashin_total"]').text(data.SubTotal);
-                    $('th.chgnum-perc').number(true,2);
-                    pick_terbilang_total_km(data.SubTotal);
-                },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
-                    alert('Error get data from ajax');
-                }
-            });
-        }
-        function pick_terbilang_total_km(total)
-        {
-            $.ajax({
-                url : "<?php echo site_url('administrator/Finance/get_numbsp/')?>" + total,
-                type: "GET",
-                dataType: "JSON",
-                success: function(data)
-                {   
-                    $('[name="cashin_spelled"]').text(data.terbilang+' Rupiah');
-                },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
-                    alert('Error get data from ajax');
-                }
-            });
-        }
-        function pick_kmdet(id)
-        {
-            $.ajax({
-                url : "<?php echo site_url('administrator/Finance/ajax_pick_kmdet/')?>" + id,
+                url : "<?php echo site_url('administrator/Finance/ajax_pick_bkdet/')?>" + id,
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)
                 {
-                    var blankrow = 7-data.length;
+                    var blankrow = 6-data.length;
                     for (var i = 0; i < data.length; i++)
                     {
                       var $tr = $('<tr>').append(
                             $('<td class="text-center">'+data[i]["COA_ACC"]+'</td>'),
-                            $('<td class="text-center text-uppercase">'+data[i]["COA_ACCNAME"]+' - '+data[i]["CSHINDET_INFO"]+'</td>'),
-                            $('<td class="text-right chgnum">'+data[i]["CSHDETIN_AMOUNT"]+'</td>')
+                            $('<td class="text-center text-uppercase">'+data[i]["COA_ACCNAME"]+' - '+data[i]["BNKODET_INFO"]+'</td>'),
+                            $('<td class="text-right chgnum">'+data[i]["BNKODET_AMOUNT"]+'</td>')
                             ).appendTo('#tb_content');
-                    }
+                    };
                     for (var j = 0; j < blankrow; j++)
                     {
                         var $tr = $('<tr>').append(
@@ -382,6 +352,41 @@
                 }
             });
         }
+        function pick_bktrxdet(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/ajax_pick_bktrxdet/')?>/" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    detail = data.BNKTRXO_NUM+' - '+moment(data.BNKTRXO_DATE).locale('id').format('DD-MMM-YYYY')+' - '+money_conv(data.BNKTRXO_AMOUNT);
+                    $('[name="bank_details"]').text(detail);
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function pick_supp(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/ajax_pick_supp/')?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {   
+                    $('[name="to_name"]').text(data.SUPP_NAME);
+                    $('[name="to_phone"]').text('Phone '+data.SUPP_PHONE);
+                    $('[name="to_address"]').text(data.SUPP_ADDRESS+', '+data.SUPP_CITY);
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
         function pick_acc(id)
         {
             $.ajax({
@@ -390,7 +395,41 @@
                 dataType: "JSON",
                 success: function(data)
                 {   
-                    $('[name="cash_acc"]').text(data.COA_ACC +" - "+ data.COA_ACCNAME);
+                    $('[name="bank_acc"]').text(data.COA_ACC +" - "+ data.COA_ACCNAME);
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function pick_sum_total_bk(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/ajax_pick_sum_bk/')?>/" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {   
+                    $('[name="bank_total"]').text(data.SubTotal);
+                    $('th.chgnum-perc').number(true,2);
+                    pick_terbilang_total_bk(data.SubTotal);
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function pick_terbilang_total_bk(total)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/get_numbsp/')?>" + total,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {   
+                    $('[name="bank_spelled"]').text(data.terbilang+' Rupiah');
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
@@ -418,38 +457,10 @@
                 }
             })
         }
-        function pick_cust(id)
-        {
-            var kd = id;
-            var kode = kd.substr(0,4);
-            $.ajax({
-                url : "<?php echo site_url('administrator/Finance/ajax_pick_cust/')?>" + id,
-                type: "GET",
-                dataType: "JSON",
-                success: function(data)
-                {   
-                    if (kode!='CSTI')
-                    {
-                        $('[name="to_name"]').text(data.CUST_NAME);
-                        $('[name="to_phone"]').text(data.CUST_PHONE);
-                        $('[name="to_address"]').text(data.CUST_ADDRESS+', '+data.CUST_CITY+', '+data.CUST_PROV+' '+data.CUST_POSTAL);
-                    }
-                    if (kode=='CSTI')
-                    {
-                        $('[name="to_name"]').text(data.PERSON_NAME);
-                        $('[name="to_phone"]').text(data.PERSON_PHONE);
-                        $('[name="to_address"]').text(data.PERSON_ADDRESS);
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
-                    alert('Error get data from ajax');
-                }
-            });
-        }
         function printDiv()
         {
             window.print();
         }
     </script>
 </body>
+</html>

@@ -394,7 +394,7 @@
                 dataType: "JSON",
                 success: function(data)
                 {
-                    var blankrow = 6-data.length;
+                    var blankrow = 7-data.length;
                     for (var i = 0; i < data.length; i++)
                     {
                       var $tr = $('<tr>').append(

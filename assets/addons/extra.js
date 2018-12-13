@@ -64,7 +64,7 @@ $('textarea').blur(function(){
 
 function money_conv(inp)
 {
-    var out = parseFloat(inp.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    var out = parseFloat(inp.replace(/,/g, "")).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return out;
 };
 

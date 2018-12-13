@@ -669,7 +669,7 @@
 			$data['title']='Match Terpadu - Dashboard Finance';
 			$data['menu']='finance';
 			$data['menulist']='report_finance';
-			$this->load->view('menu/administrator/finance/fin_/bm_print',$data);
+			$this->load->view('menu/administrator/finance/fin_/bm_print_new',$data);
 		}
 
 		public function print_bk()
@@ -689,7 +689,7 @@
 			$data['title']='Match Terpadu - Dashboard Finance';
 			$data['menu']='finance';
 			$data['menulist']='report_finance';
-			$this->load->view('menu/administrator/finance/fin_/bk_print',$data);
+			$this->load->view('menu/administrator/finance/fin_/bk_print_new',$data);
 		}
 
         public function print_gm()
@@ -2512,7 +2512,26 @@
         	echo json_encode($data);
 		}
 
+		public function ajax_pick_kmfull($id)
+		{
+			$data = $this->db->select('a.*,b.CUST_CODE,c.CSTIN_CODE')->join('master_customer b','b.cust_id = a.cust_id','left')->join('master_cust_intern c','c.cstin_id = a.cstin_id','left')->get_where('trx_cash_in a',array('CSH_ID' => $id))->row();
+        	echo json_encode($data);
+		}
+
         public function ajax_pick_cust($id)
+		{
+			if (substr($id,0,4)!='CSTI')
+			{
+			    $data = $this->crud->get_by_id('master_customer',array('CUST_CODE' => $id));
+			}
+			if (substr($id,0,4)=='CSTI')
+			{
+			    $data = $this->crud->get_by_id2('master_cust_intern','master_person',array('master_cust_intern.CSTIN_CODE' => $id),'master_cust_intern.PERSON_ID = master_person.PERSON_ID');
+			}
+        	echo json_encode($data);
+		}
+
+		public function ajax_pick_custbyid($par)
 		{
 			if (substr($id,0,4)!='CSTI')
 			{
@@ -2645,6 +2664,12 @@
         public function ajax_pick_bm($id)
 		{
 			$data = $this->crud->get_by_id('trx_bankin',array('BNK_ID' => $id));
+        	echo json_encode($data);
+		}
+
+		public function ajax_pick_bmfull($id)
+		{
+			$data = $this->db->select('a.*,b.CUST_CODE,c.CSTIN_CODE')->join('master_customer b','b.cust_id = a.cust_id','left')->join('master_cust_intern c','c.cstin_id = a.cstin_id','left')->get_where('trx_bankin a',array('BNK_ID' => $id))->row();
         	echo json_encode($data);
 		}
     
