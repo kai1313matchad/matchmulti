@@ -983,7 +983,7 @@
     		file.previewElement.querySelector('.start').setAttribute('disabled', 'disabled');
     	});
     	myDropzone.on('sending', function(file,xhr,formData){  
-    		var other_data = $('#form_bapp').serializeArray();
+    		var other_data = $('#form_bapplog').serializeArray();
 		    $.each(other_data,function(key,input){
 		        formData.append(input.name,input.value);
 		    });    		
