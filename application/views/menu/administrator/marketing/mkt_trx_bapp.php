@@ -334,7 +334,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal_bapp_edit" role="dialog">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -729,7 +729,7 @@
             table = $('#dtb_bapp_edit').DataTable({
                 "info": false,
                 "destroy": true,
-                "responsive": true,
+                // "responsive": true,
                 "processing": true,
                 "serverSide": true,
                 "order": [],                
@@ -808,28 +808,35 @@
         }
         function pick_bappopen(id)
         {
-            $.ajax({
-                url : "<?php echo site_url('administrator/Marketing/open_bapp/')?>" + id,
-                type: "POST",
-                data: $('#form_bapp').serialize(),
-                dataType: "JSON",
-                success: function(data)
-                {   
-                    if(data.status)
+            if($('[name="note_'+id+'"]').val() === '')
+            {
+                alert('Note Harus Diisi !!!');
+            }
+            else
+            {
+                $.ajax({
+                    url : "<?php echo site_url('administrator/Marketing/open_bapp/')?>" + id,
+                    type: "POST",
+                    data: {notes : $('[name="note_'+id+'"]').val()},
+                    dataType: "JSON",
+                    success: function(data)
+                    {   
+                        if(data.status)
+                        {
+                            alert('Record BAPP Sukses Dibuka');
+                            $('#modal_bapp_edit').modal('hide');
+                        }
+                        else
+                        {
+                            alert('Record BAPP masih digunakan di transaksi '+data.string);
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
                     {
-                        alert('Record BAPP Sukses Dibuka');
-                        $('#modal_bapp_edit').modal('hide');
+                        alert('Error get data from ajax');
                     }
-                    else
-                    {
-                        alert('Record BAPP masih digunakan di transaksi '+data.string);
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
-                    alert('Error get data from ajax');
-                }
-            });
+                });
+            }
         }
         function pick_bappedit(id)
         {

@@ -773,7 +773,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal_appr_edit" role="dialog">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -1456,7 +1456,7 @@
             table = $('#dtb_appr_edit').DataTable({
                 "info": false,
                 "destroy": true,
-                "responsive": true,
+                // "responsive": true,
                 "processing": true,
                 "serverSide": true,
                 "order": [],
@@ -1891,28 +1891,35 @@
     	}
     	function pick_appropen(id)
     	{
-    		$.ajax({
-	            url : "<?php echo site_url('administrator/Marketing/open_appr/')?>" + id,
-	            type: "POST",
-	            data: $('#form_appr').serialize(),
-	            dataType: "JSON",
-	            success: function(data)
-	            {   
-	                if(data.status)
-	                {
-	                	alert('Record Approval Sukses Dibuka');
-	                	$('#modal_appr_edit').modal('hide');
-	                }
-	                else
-	                {
-	                	alert('Record Approval masih digunakan di transaksi '+data.string);
-	                }
-	            },
-	            error: function (jqXHR, textStatus, errorThrown)
-	            {
-	                alert('Error get data from ajax');
-	            }
-	        });
+    		if($('[name="note_'+id+'"]').val() === '')
+    		{
+    			alert('Note Harus Diisi !!!');
+    		}
+    		else
+    		{
+    			$.ajax({
+		            url : "<?php echo site_url('administrator/Marketing/open_appr/')?>" + id,
+		            type: "POST",
+		            data: {notes : $('[name="note_'+id+'"]').val()},
+		            dataType: "JSON",
+		            success: function(data)
+		            {   
+		                if(data.status)
+		                {
+		                	alert('Record Approval Sukses Dibuka');
+		                	$('#modal_appr_edit').modal('hide');
+		                }
+		                else
+		                {
+		                	alert('Record Approval masih digunakan di transaksi '+data.string);
+		                }
+		            },
+		            error: function (jqXHR, textStatus, errorThrown)
+		            {
+		                alert('Error get data from ajax');
+		            }
+		        });
+    		}
     	}
     	function pick_appredit(id)
     	{

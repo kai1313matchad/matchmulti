@@ -248,7 +248,7 @@
 						'hisappr_sts' => 'Open by User '.$user,
 						'hisappr_old' => $his->HISAPPR_STS,
 						'hisappr_new' => 'Open By User '.$user,
-						'hisappr_info' => 'Open Record by appr form',
+						'hisappr_info' => 'Open Record by appr form. '.$this->input->post('notes'),
 						'hisappr_date' => date('Y-m-d'),
 						'hisappr_time' => date('H:i:s'),
 						'hisappr_upcount' => $his->HISAPPR_UPCOUNT+1
@@ -270,7 +270,7 @@
 					'hisbapp_sts' => 'Open by User '.$user,
 					'hisbapp_old' => $his->HISBAPP_STS,
 					'hisbapp_new' => 'Open By User '.$user,
-					'hisbapp_info' => 'Open Record by BAPP form',
+					'hisbapp_info' => 'Open Record by BAPP form. '.$this->input->post('notes'),
 					'hisbapp_date' => date('Y-m-d'),
 					'hisbapp_time' => date('H:i:s'),
 					'hisbapp_upcount' => $his->HISBAPP_UPCOUNT+1

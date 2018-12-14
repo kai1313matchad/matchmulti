@@ -246,7 +246,7 @@
 						$row[] = $dat->APPR_DATE;
 						$row[] = $dat->CUST_NAME;
 						$row[] = $dat->LOC_NAME;
-						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_appropen('."'".$dat->APPR_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$row[] = '<textarea class="form-control" name="note_'.$dat->APPR_ID.'"></textarea><a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_appropen('."'".$dat->APPR_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
 						$data[] = $row;
 					}
 					break;
@@ -391,7 +391,7 @@
 						$row[] = $dat->BAPP_DATE;
 						$row[] = $dat->CUST_NAME;
 						$row[] = $dat->LOC_NAME;
-						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bappopen('."'".$dat->BAPP_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
+						$row[] = '<textarea class="form-control" name="note_'.$dat->BAPP_ID.'"></textarea><a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_bappopen('."'".$dat->BAPP_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
 						$data[] = $row;
 					}
 					break;
