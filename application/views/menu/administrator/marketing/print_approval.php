@@ -128,7 +128,7 @@
         {
             .logo
             {
-                width: 60%;
+                width: 80%;
             }
             .happroval 
             {
@@ -190,7 +190,7 @@
     <div class="container">
         <input type="hidden" name="appr_id" value="<?php echo $id; ?>">
         <div class="row">
-            <div class="col-xs-4">
+            <div class="col-xs-6">
                 <img id="img_logo" class="img-responsive logo" src="">
             </div>
             <div class="col-sm-6 col-xs-6">
@@ -400,7 +400,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 text-center">
-                <h4 class="font-3rd">www.match-advertising.com</h4>
+                <h4 class="font-3rd">www.tritunggalmetalworks.com</h4>
             </div>
         </div>
         <div class="row top-row col-height">
@@ -454,8 +454,7 @@
         <div class="row">
             <div class="col-xs-12 text-center">
                 <address class="font-foot">
-                    Head Office : Jl. Lesti No.42 Surabaya 60241 - Telp.(031)5678 346(Hunting), Fax. (031)568 0646 - E-Mail : marketing@match-advertising.com<br>
-                    Branch Office : Jl. Balikpapan Raya No.19A, Jakarta 10160 - Telp.(021)351 2775(Hunting), Fax. (021)351 2776
+                    Head Office : Jl. Raya Taman No.15 Sidoarjo 61257 - Telp.(031)787 0870, Fax. (031)787 0870 <br>
                 </address>
             </div>
         </div>
