@@ -354,6 +354,16 @@
 			$this->load->view('layout/administrator/wrapper',$data);
 		}
 
+		public function rpt_agercv()
+		{
+			$this->authsys->trx_check_($_SESSION['user_id'],'FIN');
+			$data['title']='Match Terpadu - Dashboard Finance';
+			$data['menu']='finance';
+			$data['menulist']='report_finance';
+			$data['isi']='menu/administrator/finance/report_agercv';
+			$this->load->view('layout/administrator/wrapper',$data);
+		}
+
 		public function rpt_accpay()
 		{
 			$this->authsys->trx_check_($_SESSION['user_id'],'FIN');

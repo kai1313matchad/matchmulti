@@ -23,6 +23,11 @@
                         </a>
                     </div>
                     <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '3')?'':'style="display:none"');?>>
+                        <a href="javascript:void(0)" onclick="apr_gaprc()" class="btn btn-block btn-primary">
+                            <span class="glyphicon glyphicon-open"> Approve</span>
+                        </a>
+                    </div>
+                    <div class="col-sm-2" <?php echo (($this->session->userdata('user_level') != '3')?'':'style="display:none"');?>>
                         <a href="javascript:void(0)" onclick="open_gaprc()" class="btn btn-block btn-primary">
                             <span class="glyphicon glyphicon-open"> Open</span>
                         </a>
@@ -298,6 +303,12 @@
                                             <a href="javascript:void(0)" onclick="saveprc()" class="btn btn-block btn-primary btn-default btnCh">Simpan</a>
                                         </div>
                                     </div>
+                                    <div class="col-sm-2 text-center">
+                                        <button type="button" onclick="aprprc()" class="btn btn-block btn-primary btn-default btnApr" disabled>Approve</button>
+                                    </div>
+                                    <div class="col-sm-2 text-center">
+                                        <button type="button" onclick="disaprprc()" class="btn btn-block btn-primary btn-default btnApr" disabled>Disapprove</button>
+                                    </div>
                                     <br><br>
                                 </div>
                             </div>
@@ -470,9 +481,9 @@
     <!-- jQuery -->
     <?php include 'application/views/layout/administrator/jspack.php' ?>
     <script>
-        var id; var suppid; var prc; var qty; var sub;
         $(document).ready(function()
         {
+            var id; var suppid; var prc; var qty; var sub;
             $('#dtp1').datetimepicker({                
                 format: 'YYYY-MM-DD'
             });
@@ -536,6 +547,48 @@
                     if(data.status)
                     {
                         alert('Data Berhasil Disimpan');                        
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
+        function aprprc()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Genaff/ajax_approveprc')?>",
+                type: "POST",
+                data: $('#form_po').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Genaff/ga_trx_prc')?>";
+                        window.location = url;
+                    }                   
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error adding / update data');
+                }
+            });
+        }
+        function disaprprc()
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Genaff/ajax_disapproveprc')?>",
+                type: "POST",
+                data: $('#form_po').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                    if(data.status)
+                    {
+                        var url = "<?php echo site_url('administrator/Genaff/ga_trx_prc')?>";
+                        window.location = url;
                     }                   
                 },
                 error: function (jqXHR, textStatus, errorThrown)
@@ -966,6 +1019,34 @@
                 ],
             });
         }
+        function apr_gaprc()
+        {
+            $('#modal_prcga_edit').modal('show');
+            $('.modal-title').text('Cari Pembelian');            
+            table = $('#dtb_prcga_edit').DataTable({
+                "info": false,
+                "destroy": true,
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "order": [],                
+                "ajax": {
+                    "url": "<?php echo site_url('administrator/Searchdata/srch_prcgabysts')?>",
+                    "type": "POST",
+                    "data": function(data){
+                        data.sts = '2';
+                        data.brch = $('[name="user_branch"]').val();
+                        data.chk = '3';
+                    },
+                },                
+                "columnDefs": [
+                { 
+                    "targets": [ 0 ],
+                    "orderable": false,
+                },
+                ],
+            });
+        }
         function pick_prcgaopen(id)
         {
             $.ajax({
@@ -1048,6 +1129,38 @@
                     // $('[name="po_subs"]').val(data.PRCGA_SUB);
                     $('[name="prc_gtotal"]').val(data.PRCGA_GTOTAL);
                     $('.btnCh').css({'display':'none'});
+                    $('#modal_prcga_edit').modal('hide');
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Error get data from ajax');
+                }
+            });
+        }
+        function pick_prcgaapr(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Searchdata/pick_prcgagb/')?>" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {   
+                    $('[name="prc_id"]').val(data.PRCGA_ID);
+                    $('[name="prc_code"]').val(data.PRCGA_CODE);
+                    $('[name="prc_tgl"]').val(data.PRGA_DATE);
+                    $('[name="prc_inv"]').val(data.PRCGA_INVOICE);
+                    pick_po(data.POGA_ID);                    
+                    barang(data.PRCGA_ID);
+                    pick_curr(data.CURR_ID);
+                    sub_total(data.PRCGA_ID);
+                    $('[name="prc_disc"]').val(data.PRCGA_DISC);
+                    $('[name="disc_perc"]').val(Math.abs(data.PRCGA_DISC/data.PRCGA_SUB*100));
+                    $('[name="prc_ppn"]').val(data.PRCGA_PPN);
+                    $('[name="ppn_perc"]').val(Math.abs(data.PRCGA_PPN/(data.PRCGA_SUB-data.PRCGA_DISC)*100));
+                    $('[name="prc_cost"]').val(data.PRCGA_COST);
+                    $('[name="prc_gtotal"]').val(data.PRCGA_GTOTAL);
+                    $('.btnCh').css({'display':'none'});
+                    $('.btnApr').prop('disabled',false);
                     $('#modal_prcga_edit').modal('hide');
                 },
                 error: function (jqXHR, textStatus, errorThrown)

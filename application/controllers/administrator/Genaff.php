@@ -225,7 +225,7 @@
 			$data['title']='Match Terpadu - Dashboard GA';
 			$data['menu']='ga';
 			$data['menulist']='report_ga';
-			$this->load->view('menu/administrator/ga/po_print',$data);
+			$this->load->view('menu/administrator/ga/po_print_new',$data);
 		}
 
 		public function print_prc()
@@ -245,7 +245,7 @@
 			$data['title']='Match Terpadu - Dashboard GA';
 			$data['menu']='ga';
 			$data['menulist']='report_ga';
-			$this->load->view('menu/administrator/ga/prc_print',$data);
+			$this->load->view('menu/administrator/ga/prc_print_new',$data);
 		}
 
 		public function print_retprc()
@@ -461,7 +461,7 @@
 		            'user_id' => $this->input->post('user_id'),
 		            'curr_id' => $this->input->post('curr_id'),
 		            'supp_id' => $this->input->post('supp_id'),
-		            'poga_sts' => '1',
+		            'poga_sts' => '2',
 		            'poga_code' => $this->input->post('po_code'),
 		            'poga_date' => $this->input->post('po_tgl'),
 		            'poga_ordnum' => $this->input->post('po_so'),
@@ -472,6 +472,26 @@
 	            );
 	        $update = $this->crud->update('trx_po_ga',$data,array('poga_id' => $this->input->post('po_id')));
 	        $this->logupd_poga_save($this->input->post('po_id'),$this->input->post('user_name'));
+	        echo json_encode(array("status" => TRUE));
+		}
+
+		public function ajax_approvepo()
+		{
+			$data = array(
+	                'poga_sts' => '1'
+	            );
+	        $update = $this->crud->update('trx_po_ga',$data,array('poga_id' => $this->input->post('po_id')));
+	        $this->logupd_poga_save($this->input->post('po_id'),$this->input->post('user_name'),'Approved');
+	        echo json_encode(array("status" => TRUE));
+		}
+
+		public function ajax_disapprovepo()
+		{
+			$data = array(
+	                'poga_sts' => '0'
+	            );
+	        $update = $this->crud->update('trx_po_ga',$data,array('poga_id' => $this->input->post('po_id')));
+	        $this->logupd_poga_save($this->input->post('po_id'),$this->input->post('user_name'),'Disapproved');
 	        echo json_encode(array("status" => TRUE));
 		}
 
@@ -487,6 +507,7 @@
 						'hispoga_new' => 'Posted By User '.$user,
 						'hispoga_info' => 'Original Save by PO GA form',
 						'hispoga_date' => date('Y-m-d'),
+						'hispoga_time' => date('H:i:s'),
 						'hispoga_upcount' => $his->HISPOGA_UPCOUNT+1
 					);
 				$this->db->insert('his_poga',$data);
@@ -500,6 +521,7 @@
 						'hispoga_new' => 'Posted By User '.$user,
 						'hispoga_info' => 'Update by '.$user.' from PO GA form',
 						'hispoga_date' => date('Y-m-d'),
+						'hispoga_time' => date('H:i:s'),
 						'hispoga_upcount' => $his->HISPOGA_UPCOUNT
 					);
 				$this->db->insert('his_poga',$data);
@@ -518,7 +540,7 @@
 	                'user_id' => $this->input->post('user_id'),
 	                'curr_id' => $this->input->post('curr_id'),
 	                'poga_id' => $this->input->post('po_id'),	                
-	                'prcga_sts' => '1',
+	                'prcga_sts' => '2',
 	                'prcga_code' => $this->input->post('prc_code'),
 	                'prcga_date' => $this->input->post('prc_tgl'),
 	                'prcga_inv' => $this->input->post('prc_inv'),	                
@@ -530,75 +552,173 @@
 	                'prcga_gtotal' => $this->input->post('prc_gtotal')	                
 	            );
 	        $update = $this->crud->update('trx_prc_ga',$data,array('prcga_id' => $this->input->post('prc_id')));
-	        $this->logupd_prcga_save($this->input->post('prc_id'),$this->input->post('user_name'));
+	        $this->logupd_prcga_save($this->input->post('prc_id'),$this->input->post('user_name'),'Posted');
+	        echo json_encode(array("status" => TRUE));
+		}
+
+		public function ajax_approveprc()
+		{
+			$data = array(
+	                'prcga_sts' => '1'
+	            );
+	        $update = $this->crud->update('trx_prc_ga',$data,array('prcga_id'=>$this->input->post('prc_id')));
+	        $this->logupd_prcga_save($this->input->post('prc_id'),$this->input->post('user_name'),'Approved');
 	        //cek jurnal
-	    	$this->db->from('account_journal');
-	    	$this->db->where('jou_reff',$this->input->post('prc_code'));
-	    	$this->db->where('branch_id',$this->input->post('user_branch'));
-	    	$que = $this->db->get();
+	    	$prc_code = $this->input->post('prc_code');
+	    	$brc = $this->input->post('user_branch');
+	    	$que = $this->db->get_where('account_journal',array('jou_reff'=>$prc_code,'branch_id'=>$brc));
 	    	$get = $que->row();
-	    	$cou = count($get);
-	    	$hpp = $this->db->get_where('other_settings',array('os_id'=>'1'))->row()->PRC_COA;
-	    	$dbt = $this->db->get_where('other_settings',array('os_id'=>'1'))->row()->PRC_COAAG;
-	    	$infos = 'Jurnal Pembelian dari '.$this->input->post('supp_name');
-	    	if($cou > 0)
+	    	$hppnom = ($this->input->post('prc_gtotal')-($this->input->post('prc_disc')+$this->input->post('prc_ppn')+$this->input->post('prc_cost')));
+	    	$hpp = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRCGA_COASUPPLY;
+	    	$dbt = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRCGA_COADEBT;
+	    	$disc = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRCGA_COADISC;
+	    	$ppn = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRCGA_COAPPN;
+	    	$cost = $this->db->get_where('other_settings',array('branch_id'=>$brc))->row()->PRCGA_COACOST;
+	    	$infos = 'Jurnal Pembelian '.$prc_code.' dari '.$this->input->post('supp_name');
+	    	if($que->num_rows() > 0)
 	    	{
+	    		//Update Data Jurnal
 	    		$jou = array(
-		    			'branch_id'=>$this->input->post('user_branch'),
+		    			'branch_id'=>$brc,
 						'user_id'=>$this->input->post('user_id'),
-						'jou_reff'=>$this->input->post('prc_code'),
+						'jou_reff'=>$prc_code,
 						'jou_date'=>$this->input->post('prc_tgl'),
 						'jou_info'=>$infos,
 						'jou_sts'=>'1'
 		    	);
 		    	$update = $this->crud->update('account_journal',$jou,array('jou_id'=>$get->JOU_ID));
-		    	$this->crud->delete_by_id('jou_details',array('jou_id' => $get->JOU_ID));
+		    	//Hapus Detail Jurnal
+		    	$this->crud->delete_by_id('jou_details',array('jou_id'=>$get->JOU_ID));
+		    	//Input Detail Kredit
 		    	$joudet1 = array(
-						'jou_id'=>$get->JOU_ID,
-						'coa_id'=>$hpp,
-						'joudet_debit'=>$this->input->post('prc_gtotal'),
-						'joudet_credit'=>0,
-						);
-				$insjoudet1 = $this->crud->save('jou_details',$joudet1);
-				$joudet2 = array(
 						'jou_id'=>$get->JOU_ID,
 						'coa_id'=>$dbt,
 						'joudet_debit'=>0,
 						'joudet_credit'=>$this->input->post('prc_gtotal'),
 						);
-				$insjoudet2 = $this->crud->save('jou_details',$joudet2);
+				$insjoudet1 = $this->crud->save('jou_details',$joudet1);
+				//Input Detail Debet
+				$que2 = $this->db->get_where('prcga_details',array('prcga_id'=>$this->input->post('prc_id')));
+	    	    $get2 = $que2->result();
+	    	    foreach ($get2 as $dat)
+	    	    {
+	    	    	$joudet2 = array(
+							'jou_id'=>$get->JOU_ID,
+							'coa_id'=>$hpp,
+							'joudet_debit'=>$dat->PRCGADET_SUB,
+							'joudet_credit'=>0,
+							);
+					$insjoudet2 = $this->crud->save('jou_details',$joudet2);
+	    	    }
+				if($this->input->post('prc_disc')!='0')
+				{
+					$joudet3 = array(
+							'jou_id'=>$get->JOU_ID,
+							'coa_id'=>$disc,
+							'joudet_debit'=>$this->input->post('prc_disc'),
+							'joudet_credit'=>0,
+							);
+					$insjoudet3 = $this->crud->save('jou_details',$joudet3);
+				}
+				if($this->input->post('prc_ppn')!='0')
+				{
+					$joudet4 = array(
+							'jou_id'=>$get->JOU_ID,
+							'coa_id'=>$ppn,
+							'joudet_debit'=>$this->input->post('prc_ppn'),
+							'joudet_credit'=>0,
+							);
+					$insjoudet4 = $this->crud->save('jou_details',$joudet4);
+				}
+				if($this->input->post('prc_cost')!='0')
+				{
+					$joudet5 = array(
+							'jou_id'=>$get->JOU_ID,
+							'coa_id'=>$cost,
+							'joudet_debit'=>$this->input->post('prc_cost'),
+							'joudet_credit'=>0,
+							);
+					$insjoudet5 = $this->crud->save('jou_details',$joudet5);
+				}
 	    	}
 	    	else
 	    	{
-	    		//simpan jurnal
+	    		//Simpan Jurnal Baru
 		    	$gen = $this->gen->gen_numjou();
 				$jouid = $gen['insertId'];
 				$joucode = $gen['jou_code'];
 		    	$jou = array(
-		    			'branch_id'=>$this->input->post('user_branch'),
+		    			'branch_id'=>$brc,
 						'user_id'=>$this->input->post('user_id'),
 						'jou_code'=>$joucode,
-						'jou_reff'=>$this->input->post('prc_code'),
+						'jou_reff'=>$prc_code,
 						'jou_date'=>$this->input->post('prc_tgl'),
 						'jou_info'=>$infos,
 						'jou_sts'=>'1'
 		    	);
 		    	$update = $this->crud->update('account_journal',$jou,array('jou_id'=>$jouid));
+		    	//Input Detail Kredit
 		    	$joudet1 = array(
-						'jou_id'=>$jouid,
-						'coa_id'=>$hpp,
-						'joudet_debit'=>$this->input->post('prc_gtotal'),
-						'joudet_credit'=>0,
-						);
-				$insjoudet1 = $this->crud->save('jou_details',$joudet1);
-				$joudet2 = array(
 						'jou_id'=>$jouid,
 						'coa_id'=>$dbt,
 						'joudet_debit'=>0,
 						'joudet_credit'=>$this->input->post('prc_gtotal'),
 						);
-				$insjoudet2 = $this->crud->save('jou_details',$joudet2);
+				$insjoudet1 = $this->crud->save('jou_details',$joudet1);
+				//Input Detail Debet
+				$que2 = $this->db->get_where('prcga_details',array('prcga_id'=>$this->input->post('prc_id')));
+	    	    $get2 = $que2->result();
+	    	    foreach ($get2 as $dat)
+	    	    {
+	    	    	$joudet2 = array(
+							'jou_id'=>$jouid,
+							'coa_id'=>$hpp,
+							'joudet_debit'=>$dat->PRCGADET_SUB,
+							'joudet_credit'=>0,
+							);
+					$insjoudet2 = $this->crud->save('jou_details',$joudet2);
+	    	    }
+				if($this->input->post('prc_disc')!='0')
+				{
+					$joudet3 = array(
+							'jou_id'=>$jouid,
+							'coa_id'=>$disc,
+							'joudet_debit'=>$this->input->post('prc_disc'),
+							'joudet_credit'=>0,
+							);
+					$insjoudet3 = $this->crud->save('jou_details',$joudet3);
+				}
+				if($this->input->post('prc_ppn')!='0')
+				{
+					$joudet4 = array(
+							'jou_id'=>$jouid,
+							'coa_id'=>$ppn,
+							'joudet_debit'=>$this->input->post('prc_ppn'),
+							'joudet_credit'=>0,
+							);
+					$insjoudet4 = $this->crud->save('jou_details',$joudet4);
+				}
+				if($this->input->post('prc_cost')!='0')
+				{
+					$joudet5 = array(
+							'jou_id'=>$jouid,
+							'coa_id'=>$cost,
+							'joudet_debit'=>$this->input->post('prc_cost'),
+							'joudet_credit'=>0,
+							);
+					$insjoudet5 = $this->crud->save('jou_details',$joudet5);
+				}
 	    	}
+	        echo json_encode(array("status" => TRUE));
+		}
+
+		public function ajax_disapproveprc()
+		{
+			$data = array(
+	                'prcga_sts' => '0'
+	            );
+	        $update = $this->crud->update('trx_prc_ga',$data,array('prcga_id' => $this->input->post('prc_id')));
+	        $this->logupd_prcga_save($this->input->post('prc_id'),$this->input->post('user_name'),'Disapproved');
 	        echo json_encode(array("status" => TRUE));
 		}
 
@@ -614,6 +734,7 @@
 						'hisprcga_new' => 'Posted By User '.$user,
 						'hisprcga_info' => 'Original Save by Pembelian GA form',
 						'hisprcga_date' => date('Y-m-d'),
+						'hisprcga_time' => date('H:i:s'),
 						'hisprcga_upcount' => $his->HISPRCGA_UPCOUNT+1
 					);
 				$this->db->insert('his_prcga',$data);
@@ -627,6 +748,7 @@
 						'hisprcga_new' => 'Posted By User '.$user,
 						'hisprcga_info' => 'Update by '.$user.' from Pembelian GA form',
 						'hisprcga_date' => date('Y-m-d'),
+						'hisprcga_time' => date('H:i:s'),
 						'hisprcga_upcount' => $his->HISPRCGA_UPCOUNT
 					);
 				$this->db->insert('his_prcga',$data);
