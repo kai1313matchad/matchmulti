@@ -108,7 +108,7 @@
         </form>        
         <div class="row">
             <div class="col-sm-3 col-xs-3">
-                <img class="img-responsive logos" src="https://www.matchadonline.com/logo_n_watermark/mobile_1481852222932_2logo4.png">
+                <img id="img_logo" class="img-responsive" src="">
             </div>
             <div class="col-sm-6 col-xs-6">
                 <h2 class="text-center"><u>LAPORAN BUKU BANK</u></h2>
@@ -174,7 +174,6 @@
                     for (var i = 0; i < data['a'].length; i++)
                     {
                         var tr = $('<tr>').append(
-                            // $('<td class="text-center">'+data['a'][i]["BRANCH_NAME"]+'</td>'),
                             $('<td class="text-center">'+moment(data['a'][i]["BNK_DATE"]).locale('id').format('DD-MMM-YYYY')+'</td>'),
                             $('<td class="text-center">'+data['a'][i]["BNK_CODE"]+data['a'][i]["BRANCH_INIT"]+'</td>'),
                             $('<td class="text-center">'+data['a'][i]["COA_ACC"]+' - '+data['a'][i]["COA_ACCNAME"]+'</td>'),
@@ -186,7 +185,6 @@
                     for (var i = 0; i < data['b'].length; i++)
                     {
                         var tr = $('<tr>').append(
-                            // $('<td class="text-center">'+data['b'][i]["BRANCH_NAME"]+'</td>'),
                             $('<td class="text-center">'+moment(data['b'][i]["BNKO_DATE"]).locale('id').format('DD-MMM-YYYY')+'</td>'),
                             $('<td class="text-center">'+data['b'][i]["BNKO_CODE"]+data['b'][i]["BRANCH_INIT"]+'</td>'),
                             $('<td class="text-center">'+data['b'][i]["COA_ACC"]+' - '+data['b'][i]["COA_ACCNAME"]+'</td>'),
@@ -226,13 +224,13 @@
                         var sum = rows.data().pluck(4)
                         .reduce(function(a,b)
                         {
-                            return a+b.replace(/[^\d]/g, '')*1;
+                            return parseFloat(a) + parseFloat(b);
                         }, 0);
                         
                         var sum2 = rows.data().pluck(5)
                         .reduce(function(a,b)
                         {
-                            return a+b.replace(/[^\d]/g, '')*1;
+                            return parseFloat(a) + parseFloat(b);
                         }, 0);
                         var sum3 = (sum-sum2)*1;
                         sum3 = (sum3 > 0) ? $.fn.dataTable.render.number(',','.',0,'Rp ').display(sum3) : '('+$.fn.dataTable.render.number(',','.',0,'Rp ').display(Math.abs(sum3))+')';
@@ -256,7 +254,9 @@
                 type: "GET",
                 dataType: "JSON",
                 success: function(data)
-                {   
+                {
+                    var newSrc = "<?php echo base_url()?>/assets/img/branchlogo/"+data.BRANCH_LOGO;
+                    $('#img_logo').attr('src', newSrc);
                     $('[name="rptbank_branch"]').text(data.BRANCH_NAME);
                 },
                 error: function (jqXHR, textStatus, errorThrown)
