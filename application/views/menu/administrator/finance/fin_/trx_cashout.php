@@ -224,6 +224,12 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="col-sm-3 control-label">Total</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control curr-num-perc" name="grand_total" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <div class="col-sm-offset-3 col-sm-2 text-center">
                                             <a href="javascript:void(0)" onclick="save_cash_out()" class="btn btn-block btn-primary btn-default btnCh">
                                                 <span class="glyphicon glyphicon-floppy-disk"></span>
@@ -564,6 +570,7 @@
             $('#myDIV').css({'display':'none'});
             var id = $('[name="kas_id"]').val();
             kas_keluar_detail(id);
+            gen_total(id);
         })
         function hide_()
         {
@@ -614,6 +621,22 @@
                     $('[name="kas_id"]').val(data.id);
                     $('[name="kas_nomor"]').val(data.kode);
                     $('#genbtn').attr('disabled',true);
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Gagal Ambil Nomor Kas Masuk');
+                }
+            });
+        }
+        function gen_total(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/get_total_cashout/')?>"+id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('[name="grand_total"]').val(data.TOTAL);
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
@@ -1182,6 +1205,7 @@
                         alert('Data Berhasil Disimpan');
                         var id = $('[name="kas_id"]').val();
                         kas_keluar_detail(id);
+                        gen_total(id);
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown)
@@ -1225,6 +1249,7 @@
                         alert('Data Berhasil Dihapus');
                         var id = $('[name="kas_id"]').val();
                         kas_keluar_detail(id);
+                        gen_total(id);
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown)
@@ -1394,6 +1419,7 @@
                     $('[name="taxnumber"]').val(data.CSHO_TAXCODE);
                     pick_curr(data.CURR_ID);
                     kas_keluar_detail(data.CSHO_ID);
+                    gen_total(data.CSHO_ID);
                     $('#modal_cash_out_edit').modal('hide');
                 },
                 error: function (jqXHR, textStatus, errorThrown)
@@ -1426,6 +1452,7 @@
                     $('[name="taxnumber"]').val(data.CSHO_TAXCODE);
                     pick_curr(data.CURR_ID);
                     kas_keluar_detail(data.CSHO_ID);
+                    gen_total(data.CSHO_ID);
                     $('.btnCh').css({'display':'none'});
                     $('#modal_cash_out_edit').modal('hide');
                 },
@@ -1459,6 +1486,7 @@
                     $('[name="taxnumber"]').val(data.CSHO_TAXCODE);
                     pick_curr(data.CURR_ID);
                     kas_keluar_detail(data.CSHO_ID);
+                    gen_total(data.CSHO_ID);
                     $('.btnCh').css({'display':'none'});
                     $('.btnApr').prop('disabled',false);
                     $('#modal_cash_out_edit').modal('hide');

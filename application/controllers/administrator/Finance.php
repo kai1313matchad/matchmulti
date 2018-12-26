@@ -4280,5 +4280,17 @@
 			$data['menulist']='report_finance';
 			$this->load->view('menu/administrator/finance/print_rptaccpaysummary',$data);
 		}
+
+		public function get_total_cashin($id)
+		{
+			$data = $this->db->select('SUM(CSHDETIN_AMOUNT) as TOTAL')->get_where('cashin_det', array('csh_id'=>$id))->row();
+			echo json_encode($data);
+		}
+
+		public function get_total_cashout($id)
+		{
+			$data = $this->db->select('SUM(CSHODET_AMOUNT) as TOTAL')->get_where('cashout_det', array('csho_id'=>$id))->row();
+			echo json_encode($data);
+		}
 	}
 ?>
