@@ -183,6 +183,12 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="col-sm-3 control-label">Total</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control curr-num-perc" name="grand_total_" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-3 control-label">Detail Bank Masuk</label>
                                         <div class="col-sm-8">
                                             <label class="radio-inline"><input type="radio" onclick="hidebm_()" id="det_radioa0" name="det_radioa">Tampilkan</label>
@@ -259,6 +265,12 @@
                                                     </thead>
                                                 </table>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Total</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control curr-num-perc" name="grand_total" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -513,6 +525,8 @@
             var id = $('[name="bank_id"]').val();
             bank_masuk_detail1(id);
             bank_masuk_detail2(id);
+            gen_total(id);
+            gen_total_(id);
         })
         function hidebm_()
         {
@@ -575,6 +589,38 @@
                     $('[name="bank_id"]').val(data.id);
                     $('[name="bank_nomor"]').val(data.kode);
                     $('#genbtn').attr('disabled',true);
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Gagal Ambil Nomor Kas Masuk');
+                }
+            });
+        }
+        function gen_total(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/get_total_bankin/')?>"+id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('[name="grand_total"]').val(data.TOTAL);
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('Gagal Ambil Nomor Kas Masuk');
+                }
+            });
+        }
+        function gen_total_(id)
+        {
+            $.ajax({
+                url : "<?php echo site_url('administrator/Finance/get_total_bankintrx/')?>"+id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    $('[name="grand_total_"]').val(data.TOTAL);
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
@@ -1122,6 +1168,8 @@
                         alert('Data Berhasil Disimpan');
                         var id = $('[name="bank_id"]').val();
                         bank_masuk_detail1(id);
+                        gen_total(id);
+                        gen_total_(id);
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown)
@@ -1144,6 +1192,8 @@
                         alert('Data Berhasil Disimpan');
                         var id = $('[name="bank_id"]').val();
                         bank_masuk_detail2(id);
+                        gen_total(id);
+                        gen_total_(id);
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown)
@@ -1208,6 +1258,8 @@
                         alert('Data Berhasil Dihapus');
                         var id = $('[name="bank_id"]').val();
                         bank_masuk_detail1(id);
+                        gen_total(id);
+                        gen_total_(id);
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown)
@@ -1230,6 +1282,8 @@
                         alert('Data Berhasil Dihapus');
                         var id = $('[name="bank_id"]').val();
                         bank_masuk_detail2(id);
+                        gen_total(id);
+                        gen_total_(id);
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown)
@@ -1397,6 +1451,8 @@
                     pick_curr(data.CURR_ID)
                     bank_masuk_detail1(data.BNK_ID);
                     bank_masuk_detail2(data.BNK_ID);
+                    gen_total(data.BNK_ID);
+                    gen_total_(data.BNK_ID);
                     $('#modal_bank_in_edit').modal('hide');                    
                 },
                 error: function (jqXHR, textStatus, errorThrown)
@@ -1427,6 +1483,8 @@
                     pick_curr(data.CURR_ID)
                     bank_masuk_detail1(data.BNK_ID);
                     bank_masuk_detail2(data.BNK_ID);
+                    gen_total(data.BNK_ID);
+                    gen_total_(data.BNK_ID);
                     $('.btnCh').css({'display':'none'});
                     $('#modal_bank_in_edit').modal('hide');                    
                 },
@@ -1458,6 +1516,8 @@
                     pick_curr(data.CURR_ID)
                     bank_masuk_detail1(data.BNK_ID);
                     bank_masuk_detail2(data.BNK_ID);
+                    gen_total(data.BNK_ID);
+                    gen_total_(data.BNK_ID);
                     $('.btnCh').css({'display':'none'});
                     $('.btnApr').prop('disabled',false);
                     $('#modal_bank_in_edit').modal('hide');                    

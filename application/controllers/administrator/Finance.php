@@ -4292,5 +4292,29 @@
 			$data = $this->db->select('SUM(CSHODET_AMOUNT) as TOTAL')->get_where('cashout_det', array('csho_id'=>$id))->row();
 			echo json_encode($data);
 		}
+
+		public function get_total_bankout($id)
+		{
+			$data = $this->db->select('SUM(BNKODET_AMOUNT) as TOTAL')->get_where('bankout_det', array('bnko_id'=>$id))->row();
+			echo json_encode($data);
+		}
+
+		public function get_total_banktrxout($id)
+		{
+			$data = $this->db->select('SUM(BNKTRXO_AMOUNT) as TOTAL')->get_where('bankout_trxdet', array('bnko_id'=>$id))->row();
+			echo json_encode($data);
+		}
+
+		public function get_total_bankin($id)
+		{
+			$data = $this->db->select('SUM(BNKDET_AMOUNT) as TOTAL')->get_where('bankin_det', array('bnk_id'=>$id))->row();
+			echo json_encode($data);
+		}
+
+		public function get_total_bankintrx($id)
+		{
+			$data = $this->db->select('SUM(BNKTRX_AMOUNT) as TOTAL')->get_where('bankin_trxdet', array('bnk_id'=>$id))->row();
+			echo json_encode($data);
+		}
 	}
 ?>
