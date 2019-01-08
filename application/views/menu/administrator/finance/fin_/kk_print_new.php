@@ -304,9 +304,9 @@
                     $('[name="cashout_code"]').text(data.CSHO_CODE);
                     $('[name="cashout_date"]').text(moment(data.CSHO_DATE).locale('id').format('DD-MMM-YYYY'));
                     $('[name="cashout_info"]').text(data.CSHO_INFO);
-                    if (($('[name="supp_id"]').val()) != '')
+                    if (data.CSHO_SUPP != null)
                     {
-                        pick_supp($('[name="supp_id"]').val());
+                        pick_supp(data.CSHO_SUPP);
                     }
                     pick_acc(data.COA_ID);
                     pick_sum_total_kk($('[name="kk_id"]').val());

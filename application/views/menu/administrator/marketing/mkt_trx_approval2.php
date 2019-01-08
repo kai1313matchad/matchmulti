@@ -540,7 +540,7 @@
 	                                    <div class="col-sm-8">
 	                                    	<div class="input-group">
 	                                    		<span class="input-group-addon">Rp</span>
-	                                    		<input class="form-control termchgcount curr-num" type="text" name="dpp_appr" readonly>
+	                                    		<input class="form-control termchgcount curr-num-perc" type="text" name="dpp_appr" readonly>
 	                                    	</div>
 	                                    </div>
                             		</div>
@@ -549,7 +549,7 @@
 	                                    <div class="col-sm-8">
 	                                    	<div class="input-group">
 	                                    		<span class="input-group-addon">Rp</span>
-	                                    		<input class="form-control termchgcount curr-num" type="text" name="bbtax_appr" readonly>
+	                                    		<input class="form-control termchgcount curr-num-perc" type="text" name="bbtax_appr" readonly>
 	                                    		<input type="hidden" name="termbbtax">
 	                                    	</div>
 	                                    </div>
@@ -568,7 +568,7 @@
 	                                    <div class="col-sm-8">
 	                                    	<div class="input-group">
 	                                    		<span class="input-group-addon">Rp</span>
-	                                    		<input class="form-control termchgcount curr-num" type="text" name="termdpp" readonly>
+	                                    		<input class="form-control termchgcount curr-num-perc" type="text" name="termdpp" readonly>
 	                                    	</div>	                                        
 	                                    </div>
                             		</div>
@@ -577,7 +577,7 @@
 	                                    <div class="col-sm-8">
 	                                    	<div class="input-group">
 	                                    		<span class="input-group-addon">Rp</span>
-	                                    		<input class="form-control termchgcount curr-num" type="text" name="termsub" readonly>
+	                                    		<input class="form-control termchgcount curr-num-perc" type="text" name="termsub" readonly>
 	                                    	</div>
 	                                    </div>
                             		</div>
@@ -592,7 +592,7 @@
 			                            <div class="col-sm-4">
 			                            	<div class="input-group">
 			                            		<span class="input-group-addon">Rp</span>
-			                            		<input class="form-control curr-num" type="text" name="termppnn" readonly>
+			                            		<input class="form-control curr-num-perc" type="text" name="termppnn" readonly>
 			                            	</div>			                                
 			                            </div>
 			                        </div>			                        
@@ -607,7 +607,7 @@
 			                            <div class="col-sm-4">
 			                            	<div class="input-group">
 			                            		<span class="input-group-addon">Rp</span>
-			                            		<input class="form-control curr-num" type="text" name="termpphn" readonly>
+			                            		<input class="form-control curr-num-perc" type="text" name="termpphn" readonly>
 			                            	</div>			                                
 			                            </div>
 			                        </div>
@@ -616,7 +616,7 @@
 	                                    <div class="col-sm-8">
 	                                    	<div class="input-group">
 	                                    		<span class="input-group-addon">Rp</span>
-	                                    		<input class="form-control curr-num" type="text" name="termsum" readonly>
+	                                    		<input class="form-control curr-num-perc" type="text" name="termsum" readonly>
 	                                    	</div>	                                        
 	                                    </div>
                             		</div>

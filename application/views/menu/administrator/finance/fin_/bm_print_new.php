@@ -307,8 +307,11 @@
                     $('[name="cust_id"]').val(data.CUST_ID);
                     $('[name="pass"]').text(data.BNK_ID);
                     pick_acc(data.COA_ID);
-                    cust = (data.CUST_CODE != null)?data.CUST_CODE:data.CSTIN_CODE;
-                    pick_cust(cust);
+                    if(data.CUST_CODE != null && data.CSTIN_CODE != null)
+                    {
+                        cust = (data.CUST_CODE != null)?data.CUST_CODE:data.CSTIN_CODE;
+                        pick_cust(cust);
+                    }
                     pick_bmdet($('[name="bm_id"]').val());
                     pick_bmtrxdet($('[name="bm_id"]').val());
                     pick_sum_total_bm($('[name="bm_id"]').val());
