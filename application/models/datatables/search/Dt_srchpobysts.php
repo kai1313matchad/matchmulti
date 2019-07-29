@@ -13,7 +13,7 @@
 		private function _get_datatables_query($id,$brc)
 		{
 			$this->db->join('trx_approvalbill b','b.appr_id = a.appr_id','left');
-			$this->db->join('master_location c','c.loc_id = a.loc_id','left');
+			// $this->db->join('master_location c','c.loc_id = a.loc_id','left');
 			$this->db->join('master_supplier d','d.supp_id = a.supp_id','left');
 			$this->db->join('master_user e','e.user_id = a.user_id','left');
 			$this->db->join('master_branch f','f.branch_id = a.branch_id','left');

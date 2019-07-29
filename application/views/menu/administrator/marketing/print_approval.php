@@ -86,11 +86,16 @@
         }
         .div-height
         {
-            height: 120px;
+            height: 150px;
+        }
+        .signage
+        {
+            position: absolute;
+            bottom: 0;
         }
         .div-bd
         {
-            height: 120px;
+            height: 150px;
             border-left: solid 2px blue;
         }
         .col-height
@@ -99,7 +104,7 @@
         }
         .col-height-cost
         {
-            min-height: 800px;
+            min-height: 600px;
         }
         .td-amount
         {
@@ -128,7 +133,7 @@
         {
             .logo
             {
-                width: 80%;
+                width: 50%;
             }
             .happroval 
             {
@@ -146,25 +151,25 @@
             }
             .font-pr
             {
-               font-size: 12px; 
+               font-size: 14px; 
             }
             .font-nd
             {
-                font-size: 11px;
+                font-size: 13px;
             }
             .font-3rd
             {
-                font-size: 10px;
+                font-size: 12px;
                 font-weight: bold;
                 font-family: 'arial black'
             }
             .font-txt
             {
-                font-size: 11px;
+                font-size: 13px;
             }
             .font-foot
             {
-                font-size: 10px;
+                font-size: 12px;
                 color: blue !important;
             }
             .font-red
@@ -177,11 +182,11 @@
             }
             .col-height-cost
             {
-                min-height: 600px;
+                min-height: 450px;
             }
             .div-height
             {
-                height: 60px;
+                height: 150px;
             }
         }
     </style>
@@ -208,13 +213,23 @@
                 <span class="font-txt" name="print_clientname"> aaaaa</span>
             </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-sm-2 col-xs-2">
                 <label class="font-pr">NPWP</label>
             </div>
             <div class="col-sm-10 col-xs-10">
                 <label class="font-pr">: </label>
                 <span class="font-txt" name="print_clientnpwp"> 1234578</span>
+            </div>
+        </div> -->
+        <div class="row">
+            <div class="col-sm-2 col-xs-2">
+                <label class="font-pr">ALAMAT</label>
+            </div>
+            <div class="col-sm-10 col-xs-10">
+                <label class="font-pr">: </label>
+                <span class="font-txt" name="print_clientadd"> 1234578</span><br>
+                <span class="font-txt" name="print_clientphone"> 1234578</span>
             </div>
         </div>
         <div class="row top-row">
@@ -225,7 +240,7 @@
                 <label class="font-pr">: </label>
                 <span class="font-txt" name="print_apprcode"> aaaaa</span>
             </div>
-            <div class="col-sm-1 col-xs-1 left-bd">
+            <div class="col-sm-1 col-xs-1">
                 <label class="font-pr">DATE</label>
             </div>
             <div class="col-sm-3 col-xs-3">
@@ -255,30 +270,30 @@
                 <label class="font-pr">: </label>
             </div>
             <div class="row row-ins">
-                <div class="col-sm-2 col-xs-2">
+                <div class="col-sm-3 col-xs-3">
                     <label class="font-nd">Lokasi</label>
                 </div>
-                <div class="col-sm-10 col-xs-10">
+                <div class="col-sm-9 col-xs-9">
                     <label class="font-nd">: </label>
-                    <span class="font-txt" name="print_apprloc"> DEPAN PASAR LAWANG</span>
+                    <span class="font-txt text-uppercase" name="print_apprloc"> DEPAN PASAR LAWANG</span>
                 </div>
             </div>
             <div class="row row-ins">
-                <div class="col-sm-2 col-xs-2">
+                <div class="col-sm-3 col-xs-3">
                     <label class="font-nd">Tanggal</label>
                 </div>
-                <div class="col-sm-10 col-xs-10">
+                <div class="col-sm-9 col-xs-9">
                     <label class="font-nd">: </label>
-                    <span class="font-txt" name="print_apprcontract"> 18-12-2017 s/d 18-03-2018</span>
+                    <span class="font-txt text-uppercase" name="print_apprcontract"> 18-12-2017 s/d 18-03-2018</span>
                 </div>
             </div>
             <div class="row row-ins">
-                <div class="col-sm-2 col-xs-2">
+                <div class="col-sm-3 col-xs-3">
                     <label class="font-nd">Materi</label>
                 </div>
-                <div class="col-sm-10 col-xs-10">
+                <div class="col-sm-9 col-xs-9">
                     <label class="font-nd">: </label>
-                    <span class="font-txt" name="print_apprvis"> SEKAR LAUT ALL BRANDS</span>
+                    <span class="font-txt text-uppercase" name="print_apprvis"> SEKAR LAUT ALL BRANDS</span>
                 </div>
             </div>
             <div class="row row-ins">
@@ -295,14 +310,14 @@
                     <label class="font-nd">Disc 1</label>
                 </div>
                 <div class="col-sm-1 col-xs-1">
-                    <span class="font-txt" name="print_apprdiscperc1"></span>
+                    <!-- <span class="font-txt" name="print_apprdiscperc1"></span> -->
                 </div>
                 <div class="col-sm-2 col-xs-2">
                     <label class="font-nd">: </label>
                     <span class="font-txt font-red pull-right" name="print_apprdiscsum1"></span>
                 </div>
             </div>
-            <div class="row row-ins">
+            <!-- <div class="row row-ins">
                 <div class="col-sm-2 col-xs-2">
                     <label class="font-nd">Disc 2</label>
                 </div>
@@ -313,8 +328,8 @@
                     <label class="font-nd">: </label>
                     <span class="font-txt font-red pull-right" name="print_apprdiscsum2"></span>
                 </div>
-            </div>
-            <div class="row row-ins">
+            </div> -->
+            <!-- <div class="row row-ins">
                 <div class="col-sm-3 col-xs-3">
                     <label class="font-nd">Media Placement Sesudah Discount</label>
                 </div>
@@ -364,7 +379,7 @@
                     <label class="font-nd">: </label>
                     <span class="font-txt font-red pull-right" name="print_apprpphsum"></span>
                 </div>
-            </div>
+            </div> -->
             <div class="row row-ins">
                 <div class="col-sm-3 col-xs-3">
                     <label class="font-nd">Total</label>
@@ -380,13 +395,13 @@
                 </div>
                 <div class="col-sm-9 col-xs-9">
                     <label class="font-nd">: </label>
-                    <span class="font-txt" name="print_apprterbilang">
+                    <span class="font-txt text-uppercase" name="print_apprterbilang">
                     </span>
                 </div>
             </div>
             <div class="row row-ins-tb">
                 <div class="col-sm-12 col-xs-12">
-                    <table class="table table-bordered tb-body">
+                    <!-- <table class="table table-bordered tb-body">
                         <thead>
                             <th class="col-sm-1 col-xs-1 td-center">No</th>
                             <th class="col-sm-9 col-xs-9 td-center">Description</th>
@@ -394,13 +409,13 @@
                         </thead>
                         <tbody id="tb_content">
                         </tbody>
-                    </table>
+                    </table> -->
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12 text-center">
-                <h4 class="font-3rd">www.tritunggalmetalworks.com</h4>
+                <h4 class="font-3rd">www.wiklan.com</h4>
             </div>
         </div>
         <div class="row top-row col-height">
@@ -411,38 +426,53 @@
                 <label class="font-pr">: </label>
                 <span class="font-txt" name="print_apprrecov"></span>
                 <br>
-                <p class="font-txt" id="pcontent"></p>
+                <p class="font-txt" id="pcontent">
+                    TERMIN I : PEMBAYARAN 35% SETELAH APPROVAL<br />
+                    TERMIN II : PEMBAYARAN 65% SETELAH BAPP
+                </p>
             </div>
         </div>
         <div class="row top-row">
-            <div class="col-sm-2 col-xs-2 text-center">
+            <div class="col-sm-3 col-xs-3 text-center">
                 <label class="font-3rd">CEO</label>
             </div>
-            <div class="col-sm-2 col-xs-2 left-bd text-center">
+            <div class="col-sm-3 col-xs-3 text-center left-bd">
+                <label class="font-3rd">Finance Dept.</label>
+            </div>
+            <!-- <div class="col-sm-2 col-xs-2 left-bd text-center">
                 <label class="font-3rd">COO</label>
             </div>
             <div class="col-sm-3 col-xs-3 left-bd text-center">
                 <label class="font-3rd">Corp. Secretary</label>
-            </div>
-            <div class="col-sm-2 col-xs-2 left-bd text-center">
-                <label class="font-3rd">Finance Dept.</label>
+            </div> -->
+            <div class="col-sm-3 col-xs-3 left-bd text-center">
+                <label class="font-3rd">Komisaris</label>
             </div>
             <div class="col-sm-3 col-xs-3 left-bd text-center">
                 <label class="font-3rd">CLIENT APPROVAL</label>
             </div>
         </div>
         <div class="row top-row">
-            <div class="col-sm-2 col-xs-2 div-height text-center">
-                
+            <div class="col-sm-3 col-xs-3 div-height">
+                <div class="col-sm-12 col-xs-12 text-center signage">
+                    MARIA FELICIA N.
+                </div>
             </div>
-            <div class="col-sm-2 col-xs-2 div-height div-bd text-center">
+            <div class="col-sm-3 col-xs-3 div-height div-bd">
+                <div class="col-sm-12 col-xs-12 text-center signage">
+                    SEPTA PERMATA K.
+                </div>
+            </div>
+            <!-- <div class="col-sm-2 col-xs-2 div-height div-bd text-center">
                 
             </div>
             <div class="col-sm-3 col-xs-3 div-height div-bd text-center">
                 
-            </div>
-            <div class="col-sm-2 col-xs-2 div-height div-bd text-center">
-                
+            </div> -->
+            <div class="col-sm-3 col-xs-3 div-height div-bd">
+                <div class="col-sm-12 col-xs-12 text-center signage">
+                    RUDY WIJAYA
+                </div>
             </div>
             <div class="col-sm-3 col-xs-3 div-height div-bd">
                 <label class="font-nd">DATE</label><br>
@@ -454,7 +484,7 @@
         <div class="row">
             <div class="col-xs-12 text-center">
                 <address class="font-foot">
-                    Head Office : Jl. Raya Taman No.15 Sidoarjo 61257 - Telp.(031)787 0870, Fax. (031)787 0870 <br>
+                    Head Office : Jl. Adityawarman No.2 Surabaya 60241 - Telp.(031)51201088, WA. 0822-3111-3648 <br>
                 </address>
             </div>
         </div>
@@ -498,12 +528,12 @@
                     $('[name="appr_id"]').val(data.APPR_ID);
                     pick_cust(data.CUST_ID);
                     $('[name="print_apprcode"]').text(data.APPR_CODE);
-                    $('[name="print_apprdate"]').text(moment(data.APPR_DATE).format('DD-MMMM-YYYY'));
+                    $('[name="print_apprdate"]').text(moment(data.APPR_DATE).locale('id').format('DD-MMMM-YYYY'));
                     $('[name="print_apprinfo"]').text(data.APPR_INFO);
                     var size = 'Lebar: ' + data.APPR_WIDTH + 'm, Panjang: ' + data.APPR_LENGTH + 'm, Sisi: ' + data.APPR_SIDE + 'mk';
                     $('[name="print_apprsize"]').text(size);
                     pick_loc(data.LOC_ID);
-                    var ctr = moment(data.APPR_CONTRACT_START).format('DD-MMMM-YYYY') + ' s/d ' + moment(data.APPR_CONTRACT_END).format('DD-MMMM-YYYY');
+                    var ctr = moment(data.APPR_CONTRACT_START).locale('id').format('MMMM-YYYY') + ' s/d ' + moment(data.APPR_CONTRACT_END).locale('id').format('MMMM-YYYY');
                     $('[name="print_apprcontract"]').text(ctr);
                     $('[name="print_apprvis"]').text(data.APPR_VISUAL);
                     $('[name="print_apprdpp"]').text(money_conv(data.APPR_DPP_INCOME));
@@ -521,7 +551,7 @@
                     $('[name="print_apprgrandtotal"]').text(money_conv(data.APPR_TOT_INCOME));
                     $('[name="print_apprrecov"]').text(data.APPR_RECOV);                    
                     pick_getappcost(id);
-                    pick_getappterm(id);
+                    // pick_getappterm(id);
                     if(data.APPR_BBTAX == '0')
                     {
                         $('.tax-hid').css({'display':'none'});
@@ -543,6 +573,8 @@
                 {   
                     $('[name="print_clientname"]').text(data.CUST_NAME);
                     $('[name="print_clientnpwp"]').text(data.CUST_NPWPACC);
+                    $('[name="print_clientadd"]').text(data.CUST_ADDRESS+', '+data.CUST_CITY+', '+data.CUST_POSTAL);
+                    $('[name="print_clientphone"]').text(data.CUST_PHONE);
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
@@ -600,15 +632,16 @@
                     var all='';
                     for (var i = 0; i < data.length; i++)
                     {
-                        var $ctn = data[i]["TERMSDET_CODE"]+' :'+data[i]["TERMSDET_PERC"]+'% '+data[i]["TERMSDET_INFO"];                        
-                        if(i==0)
-                        {
-                            all = all + $ctn;
-                        }
-                        else
-                        {
-                            all = all +', '+ $ctn;
-                        }
+                        var $ctn = data[i]["TERMSDET_CODE"]+' : '+data[i]["TERMSDET_INFO"];                        
+                        // if(i==0)
+                        // {
+                        //     all = all + $ctn;
+                        // }
+                        // else
+                        // {
+                        //     all = all +'<br>'+ $ctn;
+                        // }
+                        $('<span>').text($ctn).appendTo('#pcontent');
                     }
                     $('<span>').text(all).appendTo('#pcontent');                    
                 },

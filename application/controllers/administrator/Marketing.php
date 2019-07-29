@@ -171,7 +171,6 @@
 					$this->load->view('menu/administrator/marketing/print_approvalt2',$data);
 					break;
 				default:
-				default:
 					$this->authsys->trx_check_($_SESSION['user_id'],'MKT');
 					$data['id']=$id;
 					$data['title']='Match Terpadu - Dashboard Marketing';

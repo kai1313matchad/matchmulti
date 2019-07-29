@@ -834,8 +834,10 @@
 				$row = array();
 				$row[] = $no;
 				$row[] = $dat->PO_CODE;
-				$row[] = $dat->APPR_CODE;
-				$row[] = $dat->CUST_NAME;
+				// $row[] = $dat->APPR_CODE;
+				$row[] = '';
+				// $row[] = $dat->CUST_NAME;
+				$row[] = '';
 				$row[] = $dat->PO_ORDNUM;				
 				$row[] = $dat->PO_DATE;				
 				$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_po('."'".$dat->PO_ID."'".')">Pilih</a>';
@@ -1352,7 +1354,7 @@
 	                'curr_id' => $this->input->post('curr_id'),
 	                'appr_id' => $appr,
 	                'supp_id' => $this->input->post('supp_id'),
-	                'loc_id' => $this->input->post('loc_id'),
+	                // 'loc_id' => $this->input->post('loc_id'),
 	                'po_sts' => '2',
 	                'po_code' => $this->input->post('po_code'),
 	                'po_date' => $this->input->post('po_tgl'),

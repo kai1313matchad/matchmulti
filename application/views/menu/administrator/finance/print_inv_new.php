@@ -143,7 +143,7 @@
         footer .notices
         {
             padding-left: 6px;
-            border-left: 6px solid #3989c6
+            /*border-left: 6px solid #3989c6*/
         }
         footer .notices-height
         {
@@ -184,12 +184,14 @@
         </header>
         <main>
             <div class="row">
-                <div class="col-sm-4 col-xs-4 to-details">
+                <div class="col-sm-6 col-xs-6 to-details">
                     <div>DITUJUKAN UNTUK :</div>
                     <div class="to-name" name="inv_to"></div>
                     <div class="to-address"><span name="inv_to_addr"></span></div>
+                    <div class="to-address"><span name="client-city-postal"></span></div>
+                    <div class="to-address"><span name="client-phone"></span></div>
                 </div>
-                <div class="col-sm-8 col-xs-8 invoice-info">
+                <div class="col-sm-6 col-xs-6 invoice-info">
                     <h4 class="info-code" name="inv_code"></h4>
                     <div class="reff-content">Tgl. : <span name="inv_date"></span></div>
                     <div class="reff-content">Jatuh Tempo : <span name="inv_due_date"></span></div>
@@ -210,8 +212,8 @@
                             <tr>
                                 <th colspan="2" class="notice-row">
                                     <div class="row">
-                                        <div class="col-xs-8 col-sm-8"><span name="spelled"></span></div>
-                                        <div class="col-xs-4 col-sm-4 text-right"> SUB TOTAL</div>
+                                        <div class="col-xs-9 col-sm-9"><span name="spelled"></span></div>
+                                        <div class="col-xs-3 col-sm-3 text-right"> SUB TOTAL</div>
                                     </div>
                                     <div class="row">
                                         <div class="col-xs-3 col-sm-3">Untuk Pembayaran</div>
@@ -230,11 +232,14 @@
             <div class="row">
                 <div class="col-sm-offset-1 col-xs-offset-1 col-sm-9 col-xs-9 notices">
                     <div class="row">
-                        <div class="col-sm-5 col-xs-5 text-center notices-height">
-                            Pembayaran dapat ditransfer ke
+                        <div class="col-sm-6 col-xs-6 text-center notices-height">
+                            PEMBAYARAN DAPAT DITRANSFER KE
                         </div>
-                        <div class="col-sm-7 col-xs-7">
-                            <span name="bank-dest"></span><br>
+                        <div class="col-sm-6 col-xs-6">
+                            <span name="">
+                                BANK BCA NO. REK 2582395501<br>
+                                A/N RUDY WIJAYA
+                            </span><br>
                         </div>
                     </div>
                 </div>
@@ -244,7 +249,7 @@
             </div>
             <div class="row">
                 <div class="text-center col-sm-12 col-xs-12">
-                    Setelah Melakukan Pembayaran Harap Memberikan Info
+                    SETELAH MELAKUKAN PEMBAYARAN HARAP MEMBERIKAN KONFIRMASI PADA KAMI
                 </div>
             </div>
         </footer>
@@ -309,6 +314,7 @@
                     $('[name="inv_to"]').text(data.CUST_NAME);
                     $('[name="inv_to_addr"]').text(data.CUST_ADDRESS);
                     $('[name="client-city-postal"]').text(data.CUST_CITY+', '+data.CUST_POSTAL);
+                    $('[name="client-phone"]').text(data.CUST_PHONE);
                     $('[name="client-name"]').text(data.CUST_NAME);
                     $('[name="inv-info"]').text(data.INV_INFO);
                     pick_invdet(id);

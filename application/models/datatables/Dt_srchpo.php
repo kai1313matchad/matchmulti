@@ -13,8 +13,8 @@
 		private function _get_datatables_query($brc)
 		{		
 			$this->db->from($this->table);
-			$this->db->join('trx_approvalbill b','b.appr_id = a.appr_id');
-			$this->db->join('master_customer c','c.cust_id = b.cust_id');
+			// $this->db->join('trx_approvalbill b','b.appr_id = a.appr_id');
+			// $this->db->join('master_customer c','c.cust_id = b.cust_id');
 			$this->db->join('master_branch d','d.branch_id = a.branch_id');
 			$this->db->where('a.po_id NOT IN (select d.po_id from trx_procurement d join trx_po e on e.po_id = d.po_id)');
 			$this->db->where('a.po_sts','1');

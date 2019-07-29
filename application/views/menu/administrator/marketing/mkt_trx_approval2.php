@@ -376,7 +376,7 @@
 			                            <div class="col-sm-4">
 			                            	<div class="input-group">
 			                            		<span class="input-group-addon curr">Rp</span>
-			                            		<input class="form-control curr-num" type="text" name="discn1" readonly>
+			                            		<input class="form-control chgcount curr-num" type="text" name="discn1" >
 			                            	</div>			                                
 			                            </div>
 			                        </div>
@@ -1151,7 +1151,7 @@
     		var dpp = $('[name="dpp"]').val();
     		var discp1 = $('[name="discp1"]').val();
     		var discp2 = $('[name="discp2"]').val();
-    		var discn1 = dpp*discp1/100;
+    		var discn1 = (discp1 < 1)?$('[name="discn1"]').val():dpp*discp1/100;
     		$('[name="discn1"]').val(discn1);
     		var discn2 = (dpp-discn1)*1*discp2/100;
     		$('[name="discn2"]').val(discn2);

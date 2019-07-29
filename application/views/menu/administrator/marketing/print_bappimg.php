@@ -51,7 +51,11 @@
           }
           img
           {
-            max-height: 415px;
+            max-height: 330px;
+          }
+          h4
+          {
+            font-size: 1.3em;
           }
         }
     </style> 
@@ -134,7 +138,8 @@
                 {   
                     for (var i = 0; i < data.length; i++)
                     {
-                        var cr = $('<div class=row>').append(
+                        var des = (i>0)?'FOTO MALAM':'FOTO SIANG';
+                        var cr = $('<div class=row><h4>'+des+'</h4>').append(
                                 $('<div class="panel panel-default"><div class="panel-body"><div class="col-xs-12"><img src="<?php echo base_url()?>'+data[i]['DETBAPP_IMGPATH']+'" class="img-responsive img-thumbnail center-block" title="'+data[i]['DETBAPP_IMGNAME']+'"></div></div></div>')
                             ).appendTo('#images');
                     }

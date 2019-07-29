@@ -76,7 +76,7 @@
             }
             .logo
             {
-                width: 50%;
+                width: 40%;
             }
             .tearea
             {
@@ -102,9 +102,9 @@
         <div class="row">
             <hr class="hr-top">
             <div class="text-center">
-                <h2><strong>Berita Acara Penyerahan Pekerjaan</strong></h2>
+                <h3><strong>Berita Acara Penyerahan Pekerjaan</strong></h3>
                 <hr class="hr-mid">
-                <h3><strong>No. : <span name="bapp_code"></span></strong></h3>
+                <h4><strong>No. : <span name="bapp_code"></span></strong></h43>
             </div>
         </div>
         <div class="row">
@@ -113,20 +113,19 @@
         <div class="row">
             <label class="col-xs-2 col-xs-offset-1 control-label">Nama</label>
             <div class="col-xs-9 bapp-border">
-                <strong>Gozali Puspo</strong>
+                <strong>YOHANES SETIYO</strong>
             </div>
         </div>
         <div class="row bapp-row">
             <label class="col-xs-2 col-xs-offset-1 control-label">Perusahaan</label>
             <div class="col-xs-9 bapp-border">
-                <strong>PT. Multi Artistikacithra (Match Ad.)</strong>
+                <strong>PT. WIJAYA IKLAN INDONESIA</strong>
             </div>
         </div>
         <div class="row bapp-row">
             <label class="col-xs-2 col-xs-offset-1 control-label">Perusahaan</label>
             <div class="col-xs-9 bapp-border">
-                <strong>Jl. Lesti No.42</strong><br>
-                <strong>Surabaya - 60241</strong>
+                <strong>Jl. ADITYAWARMAN N0.2, </strong><strong>SURABAYA - 60241</strong>
             </div>
         </div>
         <div class="row">
@@ -248,13 +247,13 @@
         <div class="row">
             <div class="col-xs-4 text-center">
                 <span>Yang Menyerahkan</span>
-                <br><br><br><br><br><br>
-                <strong><span>( Gozali Puspo )</span></strong><br>
-                <i>Director</i>
+                <br><br><br><br><br>
+                <strong><span>( YOHANES SETIYO )</span></strong><br>
+                <i>Manager</i>
             </div>
             <div class="col-xs-offset-4 col-xs-4 text-center">
                 <span>Yang Menerima</span>
-                <br><br><br><br><br><br>
+                <br><br><br><br><br>
                 <strong>
                     <span>
                         ( 
@@ -310,7 +309,7 @@
                     $('[name="bapp_oldtxt"]').text(data.BAPP_OLDTXT);
                     $('[name="bapp_newtxt"]').text(data.BAPP_NEWTXT);
                     $('[name="bapp_bboard"]').text(data.BAPP_TYPE);
-                    $('[name="bapp_findate"]').text(data.BAPP_FINDATE);
+                    $('[name="bapp_findate"]').text(moment(data.BAPP_FINDATE).locale('id').format('DD/MM/YYYY'));
                     pick_appr(data.APPR_ID);
                     $('#modal_bapp').modal('hide');
                 },
@@ -333,7 +332,7 @@
                     pick_cust(data.CUST_ID);
                     // var jenis = data.APPR_INFO + ' ( ' + data.APPR_CONTRACT_START + ' - ' + data.APPR_CONTRACT_END + ' )';
                     // $('[name="bapp_bboard"]').text(jenis);
-                    var size = 'Lebar: ' + data.APPR_WIDTH + 'm, Panjang: ' + data.APPR_LENGTH + 'm, Sisi: ' + data.APPR_SIDE + 'mk';
+                    var size = 'Lebar: ' + data.APPR_WIDTH + 'm, Panjang: ' + data.APPR_LENGTH + 'm, Sisi: ' + data.APPR_PLCSUM + 'mk';
                     $('[name="bapp_size"]').text(size);
                     $('[name="bapp_appr"]').text(data.APPR_CODE);
                     pick_loc(data.LOC_ID);
