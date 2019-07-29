@@ -82,6 +82,10 @@
             {
                 min-height: 40px;
             }
+            .stamp-post
+            {
+                height: 70px!important; position: absolute !important; left: 50%; transform: translateX(-50%); opacity: 0.5; z-index: -1;
+            }
         }
     </style> 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -246,8 +250,9 @@
         </div>
         <div class="row">
             <div class="col-xs-4 text-center">
-                <span>Yang Menyerahkan</span>
-                <br><br><br><br><br>
+                <span>Yang Menyerahkan</span><br>
+                <img class="stamp-post" src="<?= base_url()?>assets/img/stamp-wiklan.jpg" style="height: 100px; position: absolute; left: 50%; transform: translateX(-50%); opacity: 0.5;">
+                <br><br><br><br>
                 <strong><span>( YOHANES SETIYO )</span></strong><br>
                 <i>Manager</i>
             </div>
