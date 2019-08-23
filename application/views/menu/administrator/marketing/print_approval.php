@@ -427,8 +427,8 @@
                 <span class="font-txt" name="print_apprrecov"></span>
                 <br>
                 <p class="font-txt" id="pcontent">
-                    TERMIN I : PEMBAYARAN 35% SETELAH APPROVAL<br />
-                    TERMIN II : PEMBAYARAN 65% SETELAH BAPP
+                    <!-- TERMIN I : PEMBAYARAN 35% SETELAH APPROVAL<br />
+                    TERMIN II : PEMBAYARAN 65% SETELAH BAPP -->
                 </p>
             </div>
         </div>
@@ -455,7 +455,7 @@
         <div class="row top-row">
             <div class="col-sm-3 col-xs-3 div-height">
                 <div class="col-sm-12 col-xs-12 text-center signage">
-                    MARIA FELICIA N.
+                    YOHANES SETIYO
                 </div>
             </div>
             <div class="col-sm-3 col-xs-3 div-height div-bd">
@@ -533,7 +533,7 @@
                     var size = 'Lebar: ' + data.APPR_WIDTH + 'm, Panjang: ' + data.APPR_LENGTH + 'm, Sisi: ' + data.APPR_SIDE + 'mk';
                     $('[name="print_apprsize"]').text(size);
                     pick_loc(data.LOC_ID);
-                    var ctr = moment(data.APPR_CONTRACT_START).locale('id').format('MMMM-YYYY') + ' s/d ' + moment(data.APPR_CONTRACT_END).locale('id').format('MMMM-YYYY');
+                    var ctr = moment(data.APPR_CONTRACT_START).locale('id').format('DD-MMMM-YYYY') + ' s/d ' + moment(data.APPR_CONTRACT_END).locale('id').format('DD-MMMM-YYYY');
                     $('[name="print_apprcontract"]').text(ctr);
                     $('[name="print_apprvis"]').text(data.APPR_VISUAL);
                     $('[name="print_apprdpp"]').text(money_conv(data.APPR_DPP_INCOME));
@@ -551,7 +551,7 @@
                     $('[name="print_apprgrandtotal"]').text(money_conv(data.APPR_TOT_INCOME));
                     $('[name="print_apprrecov"]').text(data.APPR_RECOV);                    
                     pick_getappcost(id);
-                    // pick_getappterm(id);
+                    pick_getappterm(id);
                     if(data.APPR_BBTAX == '0')
                     {
                         $('.tax-hid').css({'display':'none'});
@@ -633,17 +633,17 @@
                     for (var i = 0; i < data.length; i++)
                     {
                         var $ctn = data[i]["TERMSDET_CODE"]+' : '+data[i]["TERMSDET_INFO"];                        
-                        // if(i==0)
-                        // {
-                        //     all = all + $ctn;
-                        // }
-                        // else
-                        // {
-                        //     all = all +'<br>'+ $ctn;
-                        // }
-                        $('<span>').text($ctn).appendTo('#pcontent');
+                        if(i==0)
+                        {
+                            all = all + $ctn;
+                        }
+                        else
+                        {
+                            all = all +'<br>'+ $ctn;
+                        }
+                        // $($ctn).appendTo('#pcontent');
                     }
-                    $('<span>').text(all).appendTo('#pcontent');                    
+                    $('<p>').html(all).appendTo('#pcontent');                    
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {

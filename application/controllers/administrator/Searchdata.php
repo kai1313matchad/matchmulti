@@ -490,7 +490,7 @@
 						$row[] = $dat->PO_CODE;
 						$row[] = $dat->APPR_CODE;
 						$row[] = $dat->PO_DATE;
-						$row[] = $dat->LOC_NAME;
+						$row[] = '';
 						$row[] = $dat->SUPP_NAME;
 						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_polgtedit('."'".$dat->PO_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
 						$data[] = $row;
@@ -504,7 +504,7 @@
 						$row[] = $dat->PO_CODE;
 						$row[] = $dat->APPR_CODE;
 						$row[] = $dat->PO_DATE;
-						$row[] = $dat->LOC_NAME;
+						$row[] = '';
 						$row[] = $dat->SUPP_NAME;
 						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_polgtopen('."'".$dat->PO_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
 						$data[] = $row;
@@ -518,7 +518,7 @@
 						$row[] = $dat->PO_CODE;
 						$row[] = $dat->APPR_CODE;
 						$row[] = $dat->PO_DATE;
-						$row[] = $dat->LOC_NAME;
+						$row[] = '';
 						$row[] = $dat->SUPP_NAME;
 						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_polgtchk('."'".$dat->PO_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
 						$data[] = $row;
@@ -532,7 +532,7 @@
 						$row[] = $dat->PO_CODE;
 						$row[] = $dat->APPR_CODE;
 						$row[] = $dat->PO_DATE;
-						$row[] = $dat->LOC_NAME;
+						$row[] = '';
 						$row[] = $dat->SUPP_NAME;
 						$row[] = '<a href="javascript:void(0)" title="Pilih Data" class="btn btn-sm btn-info btn-responsive" onclick="pick_polgtapr('."'".$dat->PO_ID."'".')"><span class="glyphicon glyphicon-check"></span> </a>';
 						$data[] = $row;
